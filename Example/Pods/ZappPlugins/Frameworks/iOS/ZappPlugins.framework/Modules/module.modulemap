@@ -1,0 +1,11 @@
+framework module ZappPlugins {
+  umbrella header "ZappPlugins.h"
+
+  export *
+  module * { export * }
+}
+
+module ZappPlugins.Swift {
+    header "ZappPlugins-Swift.h"
+    requires objc
+}

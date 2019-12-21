@@ -1,0 +1,6 @@
+framework module InPlayerLoginPlugin {
+  umbrella header "InPlayerLoginPlugin-umbrella.h"
+
+  export *
+  module * { export * }
+}

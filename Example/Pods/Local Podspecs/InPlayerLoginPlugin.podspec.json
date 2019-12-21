@@ -1,0 +1,38 @@
+{
+  "name": "InPlayerLoginPlugin",
+  "version": "0.1.0",
+  "summary": "InPlayerLoginPlugin",
+  "license": "MIT",
+  "homepage": "https://github.com/inplayer-org/zapp-ios-plugin",
+  "authors": {
+    "Maja Sapunova": "majasapunova@gmail.com"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "swift_versions": "5.1",
+  "source": {
+    "git": "https://github.com/inplayer-org/zapp-ios-plugin.git",
+    "tag": "0.1.0"
+  },
+  "source_files": "InPlayerLoginPlugin/Classes/**/*.{swift,h,m}",
+  "requires_arc": true,
+  "static_framework": true,
+  "dependencies": {
+    "ZappPlugins": [
+
+    ],
+    "Alamofire": [
+
+    ],
+    "CAM": [
+      "~> 2.0.0"
+    ]
+  },
+  "xcconfig": {
+    "CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES": "YES",
+    "ENABLE_BITCODE": "YES",
+    "SWIFT_VERSION": "5.1"
+  },
+  "swift_version": "5.1"
+}

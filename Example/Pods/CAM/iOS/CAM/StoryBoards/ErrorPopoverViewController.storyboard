@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Error Popover View Controller-->
+        <scene sceneID="9IO-w4-2Og">
+            <objects>
+                <viewController storyboardIdentifier="ErrorPopoverViewController" id="FVs-VH-RDK" customClass="ErrorPopoverViewController" customModule="CAM" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EpJ-V7-oze">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lqS-fb-J0k">
+                                <rect key="frame" x="0.0" y="44" width="375" height="122"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FMB-fM-QSH" userLabel="shadowView">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="122"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FOS-Ws-Quq" userLabel="bubbleView">
+                                        <rect key="frame" x="62.666666666666657" y="5" width="249.99999999999997" height="68"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="7aK-mi-2Wc"/>
+                                            <constraint firstAttribute="height" constant="68" id="n1f-PD-arN"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0gj-Eo-RDe" userLabel="messageLabel">
+                                        <rect key="frame" x="92.666666666666686" y="10" width="190" height="58"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="FMB-fM-QSH" firstAttribute="top" secondItem="lqS-fb-J0k" secondAttribute="top" id="6XT-2A-A3a"/>
+                                    <constraint firstItem="FOS-Ws-Quq" firstAttribute="centerX" secondItem="lqS-fb-J0k" secondAttribute="centerX" id="6Zb-nV-ZEO"/>
+                                    <constraint firstItem="0gj-Eo-RDe" firstAttribute="leading" secondItem="FOS-Ws-Quq" secondAttribute="leading" constant="30" id="Hia-EG-XHD"/>
+                                    <constraint firstAttribute="bottom" secondItem="FMB-fM-QSH" secondAttribute="bottom" id="IYU-kX-G7O"/>
+                                    <constraint firstItem="FOS-Ws-Quq" firstAttribute="bottom" secondItem="0gj-Eo-RDe" secondAttribute="bottom" constant="5" id="Ovm-83-8d9"/>
+                                    <constraint firstAttribute="trailing" secondItem="FMB-fM-QSH" secondAttribute="trailing" id="ZVn-WT-jY1"/>
+                                    <constraint firstItem="FOS-Ws-Quq" firstAttribute="top" secondItem="FMB-fM-QSH" secondAttribute="top" constant="5" id="aU4-An-PPQ"/>
+                                    <constraint firstItem="FMB-fM-QSH" firstAttribute="leading" secondItem="lqS-fb-J0k" secondAttribute="leading" id="k7J-Xg-14X"/>
+                                    <constraint firstItem="0gj-Eo-RDe" firstAttribute="top" secondItem="FOS-Ws-Quq" secondAttribute="top" constant="5" id="lSd-Iq-qVi"/>
+                                    <constraint firstItem="FOS-Ws-Quq" firstAttribute="trailing" secondItem="0gj-Eo-RDe" secondAttribute="trailing" constant="30" id="qJk-Tz-pcJ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="a0H-lU-rC9" firstAttribute="bottom" secondItem="lqS-fb-J0k" secondAttribute="bottom" id="NtQ-LQ-YqL"/>
+                            <constraint firstItem="lqS-fb-J0k" firstAttribute="top" secondItem="a0H-lU-rC9" secondAttribute="top" id="RFi-0G-zQp"/>
+                            <constraint firstItem="a0H-lU-rC9" firstAttribute="trailing" secondItem="lqS-fb-J0k" secondAttribute="trailing" id="Z8d-HY-SEl"/>
+                            <constraint firstItem="lqS-fb-J0k" firstAttribute="leading" secondItem="a0H-lU-rC9" secondAttribute="leading" id="gd5-rQ-DOf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="a0H-lU-rC9"/>
+                    </view>
+                    <size key="freeformSize" width="375" height="200"/>
+                    <connections>
+                        <outlet property="bubbleImageView" destination="FOS-Ws-Quq" id="O1E-Lp-TFS"/>
+                        <outlet property="bubbleWidthConstraint" destination="7aK-mi-2Wc" id="bLl-tk-Apy"/>
+                        <outlet property="messageLabel" destination="0gj-Eo-RDe" id="hau-ER-o4n"/>
+                        <outlet property="shadowImageView" destination="FMB-fM-QSH" id="sgr-d9-izT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WUf-5E-mrc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="67.96875" y="185.7421875"/>
+        </scene>
+    </scenes>
+</document>

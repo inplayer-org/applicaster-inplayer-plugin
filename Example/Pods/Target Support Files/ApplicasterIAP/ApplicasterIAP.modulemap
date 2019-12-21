@@ -1,0 +1,6 @@
+framework module ApplicasterIAP {
+  umbrella header "ApplicasterIAP-umbrella.h"
+
+  export *
+  module * { export * }
+}

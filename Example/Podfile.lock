@@ -1,0 +1,43 @@
+PODS:
+  - Alamofire (4.9.1)
+  - ApplicasterIAP (0.0.4)
+  - CAM (2.0.0):
+    - ApplicasterIAP
+    - ZappPlugins (>= 11.1.2)
+  - InPlayerLoginPlugin (0.1.0):
+    - Alamofire
+    - CAM (~> 2.0.0)
+    - ZappPlugins
+  - ZappCore (0.1.5)
+  - ZappPlugins (11.1.6):
+    - ZappCore
+
+DEPENDENCIES:
+  - InPlayerLoginPlugin (from `../`)
+
+SPEC REPOS:
+  "git@github.com:applicaster/applicaster-cam-framework":
+    - CAM
+  "git@github.com:applicaster/applicaster-iap-framework":
+    - ApplicasterIAP
+  "git@github.com:applicaster/CocoaPods.git":
+    - ZappCore
+    - ZappPlugins
+  trunk:
+    - Alamofire
+
+EXTERNAL SOURCES:
+  InPlayerLoginPlugin:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  ApplicasterIAP: 7feda96b051aa4e6ab36d2bc1a59e643a1e331a5
+  CAM: aa2e979ae72b63b248d647876c44072f35ffa40e
+  InPlayerLoginPlugin: e520cb053136765868a95ea296017199840b4edc
+  ZappCore: 25908b99a27d3daace5d5b134ff1f911c4ed1782
+  ZappPlugins: 31898fabef817af8226322897e2b612fae539932
+
+PODFILE CHECKSUM: 6d319d1b714b5ed7941c147c460697f744f07a9a
+
+COCOAPODS: 1.8.4
