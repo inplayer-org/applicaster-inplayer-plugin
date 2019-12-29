@@ -4,7 +4,7 @@
     "class_name": "InPlayerLoginPlugin.InPlayerLoginPluginAdapter"
   },
   "dependency_repository_url": [
-    "git@github.com:applicaster/Zapp-Login-Plugin-Starter.git",
+    "git@github.com:inplayer-org/zapp-ios-plugin.git",
     "git@github.com:applicaster/applicaster-cam-framework.git",
     "git@github.com:applicaster/applicaster-iap-framework.git"
   ],
@@ -19,7 +19,7 @@
   "type": "login",
   "screen": true,
   "preload": true,
-  "identifier": "CAMStartKit",
+  "identifier": "InPlayerLoginPlugin",
   "ui_builder_support": true,
   "dependency_name": "InPlayerLoginPlugin",
   "whitelisted_account_ids": [
