@@ -161,16 +161,22 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSIoT/AWSIoT.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ApplicasterIAP/ApplicasterIAP.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CAM/CAM.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/InPlayerSDK/InPlayerSDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZappCore/ZappCore.framework"
   install_framework "${PODS_ROOT}/ZappPlugins/Frameworks/iOS/ZappPlugins.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/AWSIoT/AWSIoT.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ApplicasterIAP/ApplicasterIAP.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CAM/CAM.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/InPlayerSDK/InPlayerSDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZappCore/ZappCore.framework"
   install_framework "${PODS_ROOT}/ZappPlugins/Frameworks/iOS/ZappPlugins.framework"
 fi
