@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  InPlayerLoginPlugin
-//
-//  Created by wbmd-msapunova on 12/21/2019.
-//  Copyright (c) 2019 wbmd-msapunova. All rights reserved.
-//
-
 import UIKit
 
 class ViewController: UIViewController {

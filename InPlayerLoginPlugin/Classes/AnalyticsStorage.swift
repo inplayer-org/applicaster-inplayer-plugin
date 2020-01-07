@@ -1,10 +1,3 @@
-//
-//  AnalyticsStorage.swift
-//  CAMStarterKit
-//
-//  Created by Roman Karpievich on 11/19/19.
-//
-
 import Foundation
 import CAM
 import ZappPlugins

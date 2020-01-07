@@ -1,10 +1,3 @@
-//
-//  UIViewController+Topmost.swift
-//  CAMStarterKit
-//
-//  Created by Roman Karpievich on 11/19/19.
-//
-
 import UIKit
 
 extension UIViewController {

@@ -1,15 +1,6 @@
-//
-//  InPlayerLoginPlugin.swift
-//  InPlayerLoginPlugin
-//
-//  Created by Maja Sapunova on 12/21/19.
-//
-
 import ZappPlugins
-//import ZappLoginPluginsSDK
 import CAM
-//import ComponentsSDK
-//import ApplicasterSDK
+import InPlayerSDK
 
 @objc public class InPlayerLoginPluginAdapter: NSObject, ZPLoginProviderUserDataProtocol, ZPAppLoadingHookProtocol, ZPScreenHookAdapterProtocol, ZPPluggableScreenProtocol {
     
