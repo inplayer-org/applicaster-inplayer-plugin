@@ -13,7 +13,7 @@
   "author_email": "majasapunova@gmail.com",
   "manifest_version": "0.0.1",
   "dependency_version": "0.0.1",
-  "name": "Login and Payments Plugin",
+  "name": "InPlayer Login and Payments Plugin",
   "description": "",
   "cover_image": "",
   "type": "login",
@@ -23,9 +23,6 @@
   "ui_builder_support": true,
   "dependency_name": "InPlayerLoginPlugin",
   "whitelisted_account_ids": [
-    "5a4516fa41442c000b0195d6",
-    "5af949534da8f300080050f9",
-    "5c882170bc9708000894152b"
   ],
   "min_zapp_sdk": "12.0.0",
   "deprecated_since_zapp_sdk": "",
