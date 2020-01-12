@@ -4,7 +4,6 @@ platform :ios, '10.0'
 source 'git@github.com:applicaster/CocoaPods.git'
 source 'git@github.com:applicaster/applicaster-iap-framework'
 source 'git@github.com:applicaster/applicaster-cam-framework'
-
 source 'https://cdn.cocoapods.org/'
 
 

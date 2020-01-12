@@ -16,6 +16,7 @@
 				359455F87F33A5349F8CED2083CE5775 /* PBXTargetDependency */,
 			);
 			name = ZappPlugins;
+			productName = ZappPlugins;
 		};
 /* End PBXAggregateTarget section */
 
@@ -95,7 +96,6 @@
 		2E99010383D25BBDD601D9686E6E8D7E /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0261788C15D647B7D3A7CF759C35E03 /* ViewControllerFactory.swift */; };
 		2EC29F32B79A4AED900F683CAE914032 /* CAM-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC49F10CDC6C553369123D145F6C66F /* CAM-dummy.m */; };
 		2F12E2835D41E638DF6EC4510BACC8C7 /* AWSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DB6E98978D82DD452157AF93528551 /* AWSCategory.m */; };
-		2F6A77A722E0DAC223148688E34DDCB2 /* InPlayerLoginPluginAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A22BE0261A346E03AD1DDA6A8F0A7C2 /* InPlayerLoginPluginAdapter.swift */; };
 		2FCDC863D52D176C8644700FAFCC4075 /* CAMKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E3CA15F5EB5A8B253D7C87434F5150 /* CAMKeys.swift */; };
 		30049BA4101D80AECF617E0A2CB86689 /* NSError+AWSMTLModelException.h in Headers */ = {isa = PBXBuildFile; fileRef = F17D7D9625AA54D8EF1256C694833F12 /* NSError+AWSMTLModelException.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		300D4B4D63D6D50DC52F020812E3DA4B /* Pods-InPlayerLoginPlugin_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 34FA21D05A6535572B3BFB8B8E3411EA /* Pods-InPlayerLoginPlugin_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -427,6 +427,9 @@
 		F27E75A74B411F091545A8CCAABF7B3A /* AWSMTLModel+NSCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = C478B21747FA94DCD3C3EB9CD798449F /* AWSMTLModel+NSCoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F28F579F807D22ED77EEC8E02A442BC6 /* AWSMTLReflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 43B020305A85693B89E5692A9599009B /* AWSMTLReflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F2C3760668C689363C28706D4C57E614 /* InPlayerLoginPlugin-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB1745A6214F1785E3EE0870396679B /* InPlayerLoginPlugin-dummy.m */; };
+		F2D45B3B23CBB44700263454 /* ConfigurationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D45B3823CBB44700263454 /* ConfigurationKeys.swift */; };
+		F2D45B3C23CBB44800263454 /* LoginPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D45B3923CBB44700263454 /* LoginPlugin.swift */; };
+		F2D45B3D23CBB44800263454 /* LoginPluginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D45B3A23CBB44700263454 /* LoginPluginError.swift */; };
 		F2E6AEE6EFCC0FBBD63395B54F9BC6D1 /* AWSURLRequestRetryHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 579786691ED19EFDA5608A3CB749C09F /* AWSURLRequestRetryHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F4DB98ED764C5C68A2949CADE4F3954E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DA7A16C860B335D2EE5D4DCE5E92FAE /* Foundation.framework */; };
 		F50F902D22E0221A1B2506570B0716C6 /* AWSSTSModel.h in Headers */ = {isa = PBXBuildFile; fileRef = A58E7C111443F3E81C77E3D33030A3EB /* AWSSTSModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -599,7 +602,7 @@
 		03B0F96F6FBA4393D90A07A950A198CA /* LoginPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoginPresenter.swift; path = iOS/CAM/Scenes/Login/LoginPresenter.swift; sourceTree = "<group>"; };
 		04088DB1F375AE12C909DEE78C5D46AE /* HTTPMethod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HTTPMethod.swift; path = Source/HTTPMethod.swift; sourceTree = "<group>"; };
 		047AB0912447F2E314A4B5669E7D1B93 /* EntitlementPickerViewController.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = EntitlementPickerViewController.storyboard; path = iOS/CAM/StoryBoards/EntitlementPickerViewController.storyboard; sourceTree = "<group>"; };
-		048C981FEB536BE8BA157261B32A72B5 /* Pods_InPlayerLoginPlugin_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_InPlayerLoginPlugin_Example.framework; path = "Pods-InPlayerLoginPlugin_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		048C981FEB536BE8BA157261B32A72B5 /* Pods_InPlayerLoginPlugin_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InPlayerLoginPlugin_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0524E11586B4247A1D2143271ABF4668 /* AWSIoTDataResources.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSIoTDataResources.m; path = AWSIoT/AWSIoTDataResources.m; sourceTree = "<group>"; };
 		05BE0898F934BFCD94838B5C1F601B45 /* AWSURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSURLRequestSerialization.h; path = AWSCore/Serialization/AWSURLRequestSerialization.h; sourceTree = "<group>"; };
 		0618C8B49DCDF61D9E73F440074AB1F4 /* AWSMTLModel+NSCoding.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "AWSMTLModel+NSCoding.m"; path = "AWSCore/Mantle/AWSMTLModel+NSCoding.m"; sourceTree = "<group>"; };
@@ -620,7 +623,7 @@
 		102589ED83CCBC75DB19640C819C3BFF /* UIImage+Scale.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Scale.swift"; path = "iOS/CAM/Extensions/UIImage+Scale.swift"; sourceTree = "<group>"; };
 		11059A70CE5B5B04F2C7272059205315 /* AWSEXTKeyPathCoding.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSEXTKeyPathCoding.h; path = AWSCore/Mantle/extobjc/AWSEXTKeyPathCoding.h; sourceTree = "<group>"; };
 		127E94BC2C69594C4CD275BAAC74E45F /* AWSTMCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSTMCache.h; path = AWSCore/TMCache/AWSTMCache.h; sourceTree = "<group>"; };
-		12C4AEBC7A1A972FB58A54F391316573 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		12C4AEBC7A1A972FB58A54F391316573 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		14D9D3A83863B3D956A2F4F4299D78F0 /* InPlayerUnknownError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InPlayerUnknownError.swift; path = Source/Core/Models/Errors/InPlayerUnknownError.swift; sourceTree = "<group>"; };
 		152450DBAA7B3C0049A27D4935D3F439 /* JwPlayerAsset.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JwPlayerAsset.swift; path = Source/Core/Models/Asset/AssetTypes/JwPlayerAsset.swift; sourceTree = "<group>"; };
 		15587C0676669570FFBE2F7D00339EC1 /* NetworkConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkConstants.swift; path = Source/Core/API/NetworkConstants.swift; sourceTree = "<group>"; };
@@ -634,7 +637,6 @@
 		18ACFEC847CDEF447D729ECA3CCB3F45 /* OperationQueue+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "OperationQueue+Alamofire.swift"; path = "Source/OperationQueue+Alamofire.swift"; sourceTree = "<group>"; };
 		192E72EA200C4A28FF8D4034B2F76D19 /* ZappCore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ZappCore-Info.plist"; sourceTree = "<group>"; };
 		193FBA8C30C64B7528499A3774B7494B /* Pods-InPlayerLoginPlugin_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-InPlayerLoginPlugin_Example.release.xcconfig"; sourceTree = "<group>"; };
-		1A22BE0261A346E03AD1DDA6A8F0A7C2 /* InPlayerLoginPluginAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InPlayerLoginPluginAdapter.swift; path = InPlayerLoginPlugin/Classes/InPlayerLoginPluginAdapter.swift; sourceTree = "<group>"; };
 		1A298B55B7ADF03EAB11D2F4968AE6FF /* InPlayerLoginPlugin-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "InPlayerLoginPlugin-Info.plist"; sourceTree = "<group>"; };
 		1AB9750C6FAF737CD767053643944D71 /* InPlayerFieldCountry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InPlayerFieldCountry.swift; path = Source/Core/Models/Account/InPlayerFieldCountry.swift; sourceTree = "<group>"; };
 		1ADB52819BB72CAA5DAC1B1E26A2BBEF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -692,14 +694,14 @@
 		355CD1C1202D52E768D86D53F7A38B53 /* InPlayerNotification.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InPlayerNotification.swift; path = Source/Notification/Models/InPlayerNotification.swift; sourceTree = "<group>"; };
 		357773425CA627EA34901A6A0C31F556 /* AWSDDASLLogCapture.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSDDASLLogCapture.h; path = AWSCore/Logging/AWSDDASLLogCapture.h; sourceTree = "<group>"; };
 		36931ABC57FF9CFEE528871EE0D1048C /* AWSDDContextFilterLogFormatter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSDDContextFilterLogFormatter.m; path = AWSCore/Logging/Extensions/AWSDDContextFilterLogFormatter.m; sourceTree = "<group>"; };
-		36DFB193C5D74F96815F47ADD4766716 /* InPlayerLoginPlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = InPlayerLoginPlugin.framework; path = InPlayerLoginPlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		36DFB193C5D74F96815F47ADD4766716 /* InPlayerLoginPlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InPlayerLoginPlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37434757391430983F657AD864F00DE3 /* AWSClientContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSClientContext.h; path = AWSCore/Service/AWSClientContext.h; sourceTree = "<group>"; };
 		37BF886B914605EC7A24B7DEB2F6C5B0 /* ZPPluginModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZPPluginModel.swift; path = Frameworks/ZappCore/Universal/PluginModel/ZPPluginModel.swift; sourceTree = "<group>"; };
 		3820B7704CBE5CDAF04C02EA15ED1425 /* AWSIoTKeychain.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSIoTKeychain.h; path = AWSIoT/Internal/AWSIoTKeychain.h; sourceTree = "<group>"; };
 		38C54F7EEDACBB8F8F7DA58B0840CB56 /* AWSMQTTEncoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSMQTTEncoder.h; path = AWSIoT/Internal/MQTTSDK/AWSMQTTEncoder.h; sourceTree = "<group>"; };
 		39499939090F8093B6D925D4F34FD946 /* AWSIoTResources.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSIoTResources.h; path = AWSIoT/AWSIoTResources.h; sourceTree = "<group>"; };
 		39BAB9447EA7CFDD82ADD807B30A61C8 /* AWSDDLog.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSDDLog.h; path = AWSCore/Logging/AWSDDLog.h; sourceTree = "<group>"; };
-		3A855A08247D0DDB696ADECAE7AE4DED /* ApplicasterIAP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ApplicasterIAP.framework; path = ApplicasterIAP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A855A08247D0DDB696ADECAE7AE4DED /* ApplicasterIAP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ApplicasterIAP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AC807FB9CC59B3F6B75D73EDC3A9E7C /* AWSFMResultSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSFMResultSet.m; path = AWSCore/FMDB/AWSFMResultSet.m; sourceTree = "<group>"; };
 		3B4C0B5B593FA550B62111D317F3017E /* Pods-InPlayerLoginPlugin_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-InPlayerLoginPlugin_Example.modulemap"; sourceTree = "<group>"; };
 		3B9A5E079426D414689F11C78BCD8F52 /* AWSCancellationTokenRegistration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSCancellationTokenRegistration.h; path = AWSCore/Bolts/AWSCancellationTokenRegistration.h; sourceTree = "<group>"; };
@@ -752,7 +754,7 @@
 		5217CEAA6A107B32BF74FF09FA572CF9 /* AWSSignature.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSSignature.h; path = AWSCore/Authentication/AWSSignature.h; sourceTree = "<group>"; };
 		543014F979030BF9279E929DE09F72A0 /* AWSMTLModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSMTLModel.m; path = AWSCore/Mantle/AWSMTLModel.m; sourceTree = "<group>"; };
 		557072B09BE07A5BD8A9429424603C41 /* LoadingPopover.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoadingPopover.swift; path = iOS/CAM/Scenes/CustomViews/LoadingPopover.swift; sourceTree = "<group>"; };
-		55A6B260381D1F8F9ACF8114C709198C /* InPlayerLoginPlugin.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = InPlayerLoginPlugin.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		55A6B260381D1F8F9ACF8114C709198C /* InPlayerLoginPlugin.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = InPlayerLoginPlugin.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		55C8902B7FAACEB7FA731EBBA45ADCF7 /* ApplicasterIAP-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ApplicasterIAP-prefix.pch"; sourceTree = "<group>"; };
 		567B5FF890972EB3FCC8F104D27A7389 /* AWSExecutor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSExecutor.m; path = AWSCore/Bolts/AWSExecutor.m; sourceTree = "<group>"; };
 		579786691ED19EFDA5608A3CB749C09F /* AWSURLRequestRetryHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSURLRequestRetryHandler.h; path = AWSCore/Serialization/AWSURLRequestRetryHandler.h; sourceTree = "<group>"; };
@@ -765,7 +767,7 @@
 		5C1DB2777107DF56E3FF7D1EF6C7885E /* AWSFMDatabaseAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSFMDatabaseAdditions.m; path = AWSCore/FMDB/AWSFMDatabaseAdditions.m; sourceTree = "<group>"; };
 		5CBEBA0E875355BAF1E6B32570932A6F /* ApplicasterIAP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ApplicasterIAP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF383080A18F949EA7552FFCA1E79A3 /* AWSCognitoIdentityResources.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSCognitoIdentityResources.h; path = AWSCore/CognitoIdentity/AWSCognitoIdentityResources.h; sourceTree = "<group>"; };
-		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D85DD57F686D3AA554B6CB96C189C0C /* AWSIoTWebSocketOutputStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSIoTWebSocketOutputStream.h; path = AWSIoT/Internal/AWSIoTWebSocketOutputStream.h; sourceTree = "<group>"; };
 		5DEF604691F3A1FBE79225E46C8491B3 /* Pods-InPlayerLoginPlugin_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-InPlayerLoginPlugin_Example-Info.plist"; sourceTree = "<group>"; };
 		5E56FB512A887EF3A4B82F3B95640C4C /* AWSDDLog.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSDDLog.m; path = AWSCore/Logging/AWSDDLog.m; sourceTree = "<group>"; };
@@ -818,7 +820,7 @@
 		7CDBA539FA8B0FABEF632F1E64D72F1B /* NotificationNetworkConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationNetworkConstants.swift; path = Source/Notification/API/NotificationNetworkConstants.swift; sourceTree = "<group>"; };
 		7D33A05B593834BD4865D1913DF2BC61 /* AWSSTSModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSSTSModel.m; path = AWSCore/STS/AWSSTSModel.m; sourceTree = "<group>"; };
 		7E5051E6F2243684B6781F9678A28299 /* Alamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Alamofire.modulemap; sourceTree = "<group>"; };
-		7E5F6E426622C529FCF920847890D1CC /* CAM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CAM.framework; path = CAM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E5F6E426622C529FCF920847890D1CC /* CAM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CAM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ECB0C7A7D54ECDD336D52EE971C72C8 /* InPlayerItemAccess.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InPlayerItemAccess.swift; path = Source/Core/Models/Asset/InPlayerItemAccess.swift; sourceTree = "<group>"; };
 		7F26D2C4AEB23AEE29D567DC1B49BED6 /* AWSCancellationTokenRegistration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSCancellationTokenRegistration.m; path = AWSCore/Bolts/AWSCancellationTokenRegistration.m; sourceTree = "<group>"; };
 		804C7A8C4D6C2A1EE19FA9D585022269 /* EntitlementPickerPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EntitlementPickerPresenter.swift; path = iOS/CAM/Scenes/OffersPickerViewController/EntitlementPickerPresenter.swift; sourceTree = "<group>"; };
@@ -828,7 +830,7 @@
 		811FBD1CF37988BE555EB544FEE72ABE /* AWSCore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "AWSCore-Info.plist"; sourceTree = "<group>"; };
 		81F37379BFBD9CFB205DF1C57F7C0BEC /* DispatchQueue+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Alamofire.swift"; path = "Source/DispatchQueue+Alamofire.swift"; sourceTree = "<group>"; };
 		83AD81F1C3367DECD6333C24D777D13B /* ApplicasterIAP-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ApplicasterIAP-dummy.m"; sourceTree = "<group>"; };
-		83C080E2C5D7B14C7A4018ACD00A6DD7 /* ZappCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ZappCore.framework; path = ZappCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		83C080E2C5D7B14C7A4018ACD00A6DD7 /* ZappCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZappCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83DF783DEC8074A28FA46129DF013643 /* InPlayerSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "InPlayerSDK-dummy.m"; sourceTree = "<group>"; };
 		83F2DC6304D8B0817A09EB7BBB43DC40 /* AWSCredentialsProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSCredentialsProvider.h; path = AWSCore/Authentication/AWSCredentialsProvider.h; sourceTree = "<group>"; };
 		8403A13FE7327334FCE03ED93D0A86C3 /* PlayerObserverProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlayerObserverProtocol.swift; path = Frameworks/ZappCore/Universal/Plugins/Player/PlayerObserverProtocol.swift; sourceTree = "<group>"; };
@@ -879,8 +881,8 @@
 		9BA930723FB1733DC338F7D5FDCF90C5 /* DictionaryExt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DictionaryExt.swift; path = Source/Core/Extensions/DictionaryExt.swift; sourceTree = "<group>"; };
 		9C5560CC0150F94A61C771B15BCCA006 /* LogoutViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LogoutViewController.swift; path = iOS/CAM/Scenes/Logout/LogoutViewController.swift; sourceTree = "<group>"; };
 		9D65D1AEBA2EE8E87013FE36209F2D63 /* AWSFMDB.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSFMDB.h; path = AWSCore/FMDB/AWSFMDB.h; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9E8F038EDEC7AAF2292552C3E64EB0F4 /* countries.json */ = {isa = PBXFileReference; includeInIndex = 1; name = countries.json; path = Source/Core/Resource/countries.json; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9E8F038EDEC7AAF2292552C3E64EB0F4 /* countries.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; name = countries.json; path = Source/Core/Resource/countries.json; sourceTree = "<group>"; };
 		9F000A7838465A987AE48F6A4838B848 /* AWSValidation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSValidation.m; path = AWSCore/Serialization/AWSValidation.m; sourceTree = "<group>"; };
 		9F3A91EF54904B6C0FB8EC3A96EE46B5 /* AWSIoTDataManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSIoTDataManager.m; path = AWSIoT/AWSIoTDataManager.m; sourceTree = "<group>"; };
 		9F6F67136B265C626F068661505E7CC6 /* AlamofireExtended.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AlamofireExtended.swift; path = Source/AlamofireExtended.swift; sourceTree = "<group>"; };
@@ -919,7 +921,7 @@
 		AF9DB5C19F7B7378489BF698885EA66D /* AWSExecutor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSExecutor.h; path = AWSCore/Bolts/AWSExecutor.h; sourceTree = "<group>"; };
 		B01DCD5F3E649A2364F602CE93FEE590 /* AWSFMDatabaseQueue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSFMDatabaseQueue.m; path = AWSCore/FMDB/AWSFMDatabaseQueue.m; sourceTree = "<group>"; };
 		B01E6D3D598B5E0CF274EDE0709BEFF5 /* AWSCocoaLumberjack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSCocoaLumberjack.h; path = AWSCore/Logging/AWSCocoaLumberjack.h; sourceTree = "<group>"; };
-		B03197A98D7161776446E79E0C0DEBD8 /* Pods_InPlayerLoginPlugin_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_InPlayerLoginPlugin_Tests.framework; path = "Pods-InPlayerLoginPlugin_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B03197A98D7161776446E79E0C0DEBD8 /* Pods_InPlayerLoginPlugin_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InPlayerLoginPlugin_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B54B75DD3FC86ED6BDDFBD5178A167 /* AWSDDLogMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSDDLogMacros.h; path = AWSCore/Logging/AWSDDLogMacros.h; sourceTree = "<group>"; };
 		B14F504018E71AA2EEA64B61C2C76AA6 /* InPlayerRegisterFieldsResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InPlayerRegisterFieldsResponse.swift; path = Source/Core/Models/Account/InPlayerRegisterFieldsResponse.swift; sourceTree = "<group>"; };
 		B217E9FF26B3EA5E2650FFB00E683F27 /* Fabric+FABKits.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "Fabric+FABKits.h"; path = "AWSCore/Fabric/Fabric+FABKits.h"; sourceTree = "<group>"; };
@@ -943,7 +945,7 @@
 		BAB2F9EE0336958A73A0DDDBB6F1887B /* UserInterfaceLayerProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserInterfaceLayerProtocol.swift; path = Frameworks/ZappCore/Universal/UserInterfaceLayer/UserInterfaceLayerProtocol/UserInterfaceLayerProtocol.swift; sourceTree = "<group>"; };
 		BB3B5E333A625988554183F5D81AD48C /* AWSCredentialsProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSCredentialsProvider.m; path = AWSCore/Authentication/AWSCredentialsProvider.m; sourceTree = "<group>"; };
 		BBF883F7EC746D00500DC9C94B9F1179 /* AWSURLResponseSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSURLResponseSerialization.h; path = AWSCore/Serialization/AWSURLResponseSerialization.h; sourceTree = "<group>"; };
-		BCFA8B0DFA1B29B1CA5464304A6F34DB /* AWSIoT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AWSIoT.framework; path = AWSIoT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCFA8B0DFA1B29B1CA5464304A6F34DB /* AWSIoT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AWSIoT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD13555C5016636EA43958A694E0E08D /* URLSessionConfiguration+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URLSessionConfiguration+Alamofire.swift"; path = "Source/URLSessionConfiguration+Alamofire.swift"; sourceTree = "<group>"; };
 		BD3CC4D90A2AD3FA3718D2E8CE27E2A5 /* AWSBolts.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSBolts.m; path = AWSCore/Bolts/AWSBolts.m; sourceTree = "<group>"; };
 		BE6CB432F727EC852ABE96BD9F198248 /* AWSTMMemoryCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSTMMemoryCache.h; path = AWSCore/TMCache/AWSTMMemoryCache.h; sourceTree = "<group>"; };
@@ -970,7 +972,7 @@
 		CB8EABED65FBFCD7B415CF0CC4279DFB /* PlayableItemInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlayableItemInfo.swift; path = iOS/CAM/Analytics/PlayableItemInfo.swift; sourceTree = "<group>"; };
 		CBE61CC290CA1B63D449C5F6C8578CBD /* AlertInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AlertInfo.swift; path = iOS/CAM/Analytics/AlertInfo.swift; sourceTree = "<group>"; };
 		CC1682A2492E6F2A1625174A5607AB9B /* AWSIoTDataManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSIoTDataManager.h; path = AWSIoT/AWSIoTDataManager.h; sourceTree = "<group>"; };
-		CCFB8F03867DB892EFC47B53186590C4 /* AWSCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AWSCore.framework; path = AWSCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCFB8F03867DB892EFC47B53186590C4 /* AWSCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AWSCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9068A49DADDA164391409A6EAD424E /* AWSSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSSerialization.h; path = AWSCore/Serialization/AWSSerialization.h; sourceTree = "<group>"; };
 		CE8A807E47697943D00110AE2D6F029D /* AWSMQTTDecoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSMQTTDecoder.m; path = AWSIoT/Internal/MQTTSDK/AWSMQTTDecoder.m; sourceTree = "<group>"; };
 		CEC0D36DFD072F0092A0487F222ACBEB /* InPlayerSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "InPlayerSDK-prefix.pch"; sourceTree = "<group>"; };
@@ -1046,12 +1048,15 @@
 		EFE373EE438F6B7DC60D6418FE2C959E /* Pods-InPlayerLoginPlugin_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-InPlayerLoginPlugin_Example-dummy.m"; sourceTree = "<group>"; };
 		EFEE2583498C0F2807EB0D74E621A9A0 /* PaymentNetworkConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaymentNetworkConstants.swift; path = Source/Payment/API/PaymentNetworkConstants.swift; sourceTree = "<group>"; };
 		F11F0931CE48ECED296C20D86BECD5C4 /* UserDefaultsExt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserDefaultsExt.swift; path = Source/Core/Extensions/UserDefaultsExt.swift; sourceTree = "<group>"; };
-		F1387E71BA86B7E73729B19CFA283EC6 /* InPlayerSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = InPlayerSDK.framework; path = InPlayerSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1387E71BA86B7E73729B19CFA283EC6 /* InPlayerSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InPlayerSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1455E4D6679E1D1CF0CBC6275CC8C50 /* InPlayerNotificationAPIManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InPlayerNotificationAPIManager.swift; path = Source/Notification/API/InPlayerNotificationAPIManager.swift; sourceTree = "<group>"; };
 		F17D7D9625AA54D8EF1256C694833F12 /* NSError+AWSMTLModelException.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSError+AWSMTLModelException.h"; path = "AWSCore/Mantle/NSError+AWSMTLModelException.h"; sourceTree = "<group>"; };
 		F1934086DEFAB139993D8941CDC59FB1 /* AWSIoTDataResources.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSIoTDataResources.h; path = AWSIoT/AWSIoTDataResources.h; sourceTree = "<group>"; };
-		F1DAE5516EACC9649D338500A39249B8 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		F1DAE5516EACC9649D338500A39249B8 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F1E3CA15F5EB5A8B253D7C87434F5150 /* CAMKeys.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CAMKeys.swift; path = iOS/CAM/CAMKeys.swift; sourceTree = "<group>"; };
+		F2D45B3823CBB44700263454 /* ConfigurationKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationKeys.swift; sourceTree = "<group>"; };
+		F2D45B3923CBB44700263454 /* LoginPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPlugin.swift; sourceTree = "<group>"; };
+		F2D45B3A23CBB44700263454 /* LoginPluginError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPluginError.swift; sourceTree = "<group>"; };
 		F39AE47CB9285C5D7ACA99D6160B3308 /* Alamofire-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-prefix.pch"; sourceTree = "<group>"; };
 		F3D8352DA70095014BC3C1537CDC80EA /* FABKitProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FABKitProtocol.h; path = AWSCore/Fabric/FABKitProtocol.h; sourceTree = "<group>"; };
 		F4322C68239D0176BCB9E22201639068 /* AWSMTLReflection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSMTLReflection.m; path = AWSCore/Mantle/AWSMTLReflection.m; sourceTree = "<group>"; };
@@ -1222,7 +1227,6 @@
 				E6B71CE6FCB8CD1DD4AB1C24A51D13D8 /* AWSSRWebSocket.m */,
 				B540CC262B8C53F6802B67E25222DA09 /* Support Files */,
 			);
-			name = AWSIoT;
 			path = AWSIoT;
 			sourceTree = "<group>";
 		};
@@ -1280,8 +1284,10 @@
 		1FD22FC45F19D487FA82FC96BA116FA0 /* InPlayerLoginPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				F2D45B3923CBB44700263454 /* LoginPlugin.swift */,
+				F2D45B3823CBB44700263454 /* ConfigurationKeys.swift */,
+				F2D45B3A23CBB44700263454 /* LoginPluginError.swift */,
 				068D0B16E62EFE76D7AA3A1F665290F0 /* AnalyticsStorage.swift */,
-				1A22BE0261A346E03AD1DDA6A8F0A7C2 /* InPlayerLoginPluginAdapter.swift */,
 				B0A9F0BF073D0D149157C454F8B6F109 /* Extensions */,
 				47DDEDBE11746B74C982DBA20F86F005 /* Pod */,
 				CF9CC7B9F2EDFC7FE3F9CCBF54D22627 /* Support Files */,
@@ -1336,7 +1342,6 @@
 				CE4113478260852D5085A7C34A84FB7A /* Frameworks */,
 				DB6A6987500C51DA375515CA32E6DA0A /* Support Files */,
 			);
-			name = ZappPlugins;
 			path = ZappPlugins;
 			sourceTree = "<group>";
 		};
@@ -1426,7 +1431,6 @@
 				DC9DB1F07D037900947D59E233098841 /* StoreObserver.swift */,
 				6B1D87E6D3A604EA524748FCE8E0BF3B /* Support Files */,
 			);
-			name = ApplicasterIAP;
 			path = ApplicasterIAP;
 			sourceTree = "<group>";
 		};
@@ -1514,7 +1518,6 @@
 				0ECDAF5CA97C96B3A8BA4FA1A862CBE9 /* Payment */,
 				0C780E73B4CDAD820B01C738BF3A21ED /* Support Files */,
 			);
-			name = InPlayerSDK;
 			path = InPlayerSDK;
 			sourceTree = "<group>";
 		};
@@ -1544,7 +1547,6 @@
 				37BF886B914605EC7A24B7DEB2F6C5B0 /* ZPPluginModel.swift */,
 				C3A262D45896F49EF7667B28C033E31B /* Support Files */,
 			);
-			name = ZappCore;
 			path = ZappCore;
 			sourceTree = "<group>";
 		};
@@ -1585,7 +1587,6 @@
 				9B8F14011BB1436F76D8C3EFFB9E9FD9 /* Validation.swift */,
 				80CE8F022619C6694EC8F20CDBD9987F /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -1659,7 +1660,6 @@
 				1DF2362D7EFEF79ADBC3C4CE1550CE28 /* Resources */,
 				48819BAC7CDF6C99D61FE419A6F6CBDE /* Support Files */,
 			);
-			name = CAM;
 			path = CAM;
 			sourceTree = "<group>";
 		};
@@ -1896,7 +1896,6 @@
 				B84B762BAD04F39D0AAD5A4A259BDF97 /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m */,
 				4FD9AED3B7D85F9B82D755ACF5E869BB /* Support Files */,
 			);
-			name = AWSCore;
 			path = AWSCore;
 			sourceTree = "<group>";
 		};
@@ -2649,9 +2648,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2D45B3C23CBB44800263454 /* LoginPlugin.swift in Sources */,
+				F2D45B3D23CBB44800263454 /* LoginPluginError.swift in Sources */,
 				82EC9B1712DA817A9684BEC1F5A65130 /* AnalyticsStorage.swift in Sources */,
 				F2C3760668C689363C28706D4C57E614 /* InPlayerLoginPlugin-dummy.m in Sources */,
-				2F6A77A722E0DAC223148688E34DDCB2 /* InPlayerLoginPluginAdapter.swift in Sources */,
+				F2D45B3B23CBB44700263454 /* ConfigurationKeys.swift in Sources */,
 				83DB0E9EFE1950864267D84E0E8BF45D /* Result+Success.swift in Sources */,
 				1AE534C0E6471381C2AD3422F8173584 /* UIViewController+Topmost.swift in Sources */,
 			);
@@ -3528,8 +3529,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};

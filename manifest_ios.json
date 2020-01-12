@@ -1,7 +1,7 @@
 {
   "api": {
     "require_startup_execution": true,
-    "class_name": "InPlayerLoginPlugin.InPlayerLoginPluginAdapter"
+    "class_name": "InPlayerLoginPlugin.InPlayer.LoginPlugin"
   },
   "dependency_repository_url": [
     "git@github.com:inplayer-org/zapp-ios-plugin.git",
@@ -22,14 +22,51 @@
   "identifier": "InPlayerLoginPlugin",
   "ui_builder_support": true,
   "dependency_name": "InPlayerLoginPlugin",
-  "whitelisted_account_ids": [
-  ],
+  "whitelisted_account_ids": [],
   "min_zapp_sdk": "12.0.0",
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "react_native": false,
   "general": {
     "fields": [
+      {
+        "group": true,
+        "label": "InPlayer Configuration",
+        "tooltop": "These configuration fields are mandatory in order to initialize the InPlayer SDK",
+        "folded": true,
+        "fields": [
+          {
+            "key": "client_id",
+            "type": "text_input",
+            "label_tooltip": "<p>Client Id</p>"
+          },
+          {
+            "key": "referrer",
+            "type": "text_input",
+            "label_tooltip": "<p>Referrer</p>"
+          },
+          {
+            "key": "environment",
+            "type": "select",
+            "label_tooltip": "<p>Environment</p>",
+            "initial_value": "staging",
+            "options": [
+              {
+                "text": "Debug",
+                "value": "debug"
+              },
+              {
+                "text": "Staging",
+                "value": "staging"
+              },
+              {
+                "text": "Production",
+                "value": "production"
+              }
+            ]
+          }
+        ]
+      },
       {
         "group": true,
         "label": "General Settings",
@@ -1587,7 +1624,7 @@
     {
       "key": "ios_assets_bundle",
       "type": "uploader",
-      "label_tooltip": "Please upload a zip file which will provide all the relevant design assets to required for the screens of this plugin. For a guide on how to create such a zip file, please direct your designer to the resource \u003ca href='https://assets-production.applicaster.com.s3.amazonaws.com/applicaster-employees/marketplace/OPT/Login%20Plugin%20-%20Designer%20Documentation.sketch'\u003ehere\u003c/a\u003e."
+      "label_tooltip": "Please upload a zip file which will provide all the relevant design assets to required for the screens of this plugin. For a guide on how to create such a zip file, please direct your designer to the resource <a href='https://assets-production.applicaster.com.s3.amazonaws.com/applicaster-employees/marketplace/OPT/Login%20Plugin%20-%20Designer%20Documentation.sketch'>here</a>."
     }
   ],
   "hooks": {

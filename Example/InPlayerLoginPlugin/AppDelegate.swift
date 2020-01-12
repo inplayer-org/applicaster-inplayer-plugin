@@ -1,5 +1,6 @@
 import UIKit
 import InPlayerLoginPlugin
+import InPlayerSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

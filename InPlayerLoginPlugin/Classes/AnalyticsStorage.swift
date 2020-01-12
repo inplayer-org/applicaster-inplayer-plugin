@@ -3,6 +3,7 @@ import CAM
 import ZappPlugins
 
 public class AnalyticsStorage: AnalyticsStorageProtocol {
+    
     public var trigger: Trigger = .appLaunch
     private(set) public var itemName: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? ""
     private(set) public var itemType: String = "App"
