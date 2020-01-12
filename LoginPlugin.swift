@@ -60,8 +60,8 @@ public extension InPlayer {
             }
             #warning("Set referrer")
             let environment = InPlayerEnvironmentType(rawValue: environmentRaw) ?? .staging
-            let configuration = InPlayer.Configuration(clientId: clientId, referrer: nil, environment: environment)
-            InPlayer.initialize(configuration: configuration)            
+            let configuration = InPlayer.Configuration(clientId: clientId, referrer: "http://example.com", environment: environment)
+            InPlayer.initialize(configuration: configuration)
         }
         
         public func login(_ additionalParameters: [String : Any]?, completion: @escaping ((ZPLoginOperationStatus) -> Void)) {

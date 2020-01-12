@@ -17,7 +17,6 @@
 		F2ABDCDF23AE3245008B238C /* ios-assets-sample.zip in Resources */ = {isa = PBXBuildFile; fileRef = F2ABDCDD23AE3245008B238C /* ios-assets-sample.zip */; };
 		F2ABDCE023AE3245008B238C /* manifest_ios.json in Resources */ = {isa = PBXBuildFile; fileRef = F2ABDCDE23AE3245008B238C /* manifest_ios.json */; };
 		F2D45B3323CBAACC00263454 /* mock_config.json in Resources */ = {isa = PBXBuildFile; fileRef = F2D45B3223CBAACC00263454 /* mock_config.json */; };
-		F2D45B3523CBAAEF00263454 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D45B3423CBAAEF00263454 /* ViewController.swift */; };
 		F2D45B3723CBAC7200263454 /* ZappIOSMockedFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D45B3623CBAC7200263454 /* ZappIOSMockedFunctions.swift */; };
 		F2D45B8D23CBB7B800263454 /* cam_alert_button_asset@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2D45B3F23CBB7B700263454 /* cam_alert_button_asset@3x.png */; };
 		F2D45B8E23CBB7B800263454 /* cam_cancel_button_asset@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2D45B4023CBB7B700263454 /* cam_cancel_button_asset@2x.png */; };
@@ -97,6 +96,7 @@
 		F2D45BD823CBB7B800263454 /* cam_signin_component_done.png in Resources */ = {isa = PBXBuildFile; fileRef = F2D45B8A23CBB7B700263454 /* cam_signin_component_done.png */; };
 		F2D45BD923CBB7B800263454 /* cam_alert_button_asset@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F2D45B8B23CBB7B700263454 /* cam_alert_button_asset@2x~ipad.png */; };
 		F2D45BDA23CBB7B800263454 /* cam_alert_component@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2D45B8C23CBB7B700263454 /* cam_alert_component@3x.png */; };
+		F2D45BDC23CBC0CE00263454 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D45BDB23CBC0CE00263454 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,7 +130,6 @@
 		F2ABDCDD23AE3245008B238C /* ios-assets-sample.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "ios-assets-sample.zip"; path = "../ios-assets-sample.zip"; sourceTree = "<group>"; };
 		F2ABDCDE23AE3245008B238C /* manifest_ios.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = manifest_ios.json; path = ../manifest_ios.json; sourceTree = "<group>"; };
 		F2D45B3223CBAACC00263454 /* mock_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mock_config.json; sourceTree = "<group>"; };
-		F2D45B3423CBAAEF00263454 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = "../../../Zapp-Login-Plugin-Starter/iOS/StarterKitPluginSample/StarterKitPluginSample/ViewController.swift"; sourceTree = "<group>"; };
 		F2D45B3623CBAC7200263454 /* ZappIOSMockedFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZappIOSMockedFunctions.swift; sourceTree = "<group>"; };
 		F2D45B3F23CBB7B700263454 /* cam_alert_button_asset@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cam_alert_button_asset@3x.png"; sourceTree = "<group>"; };
 		F2D45B4023CBB7B700263454 /* cam_cancel_button_asset@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cam_cancel_button_asset@2x.png"; sourceTree = "<group>"; };
@@ -210,6 +209,7 @@
 		F2D45B8A23CBB7B700263454 /* cam_signin_component_done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cam_signin_component_done.png; sourceTree = "<group>"; };
 		F2D45B8B23CBB7B700263454 /* cam_alert_button_asset@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cam_alert_button_asset@2x~ipad.png"; sourceTree = "<group>"; };
 		F2D45B8C23CBB7B700263454 /* cam_alert_component@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cam_alert_component@3x.png"; sourceTree = "<group>"; };
+		F2D45BDB23CBC0CE00263454 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F3C1309AC30EC901E331B657 /* Pods-InPlayerLoginPlugin_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InPlayerLoginPlugin_Tests.debug.xcconfig"; path = "Target Support Files/Pods-InPlayerLoginPlugin_Tests/Pods-InPlayerLoginPlugin_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -268,8 +268,8 @@
 		607FACD21AFB9204008FA782 /* Example for InPlayerLoginPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				F2D45BDB23CBC0CE00263454 /* ViewController.swift */,
 				F2D45B3623CBAC7200263454 /* ZappIOSMockedFunctions.swift */,
-				F2D45B3423CBAAEF00263454 /* ViewController.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -681,7 +681,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2D45B3523CBAAEF00263454 /* ViewController.swift in Sources */,
+				F2D45BDC23CBC0CE00263454 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				F2D45B3723CBAC7200263454 /* ZappIOSMockedFunctions.swift in Sources */,
 			);
