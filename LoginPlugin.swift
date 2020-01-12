@@ -60,7 +60,7 @@ public extension InPlayer {
             }
             #warning("Set referrer")
             let environment = InPlayerEnvironmentType(rawValue: environmentRaw) ?? .staging
-            let configuration = InPlayer.Configuration(clientId: clientId, referrer: "http://example.com", environment: environment)
+            let configuration = InPlayer.Configuration(clientId: clientId, referrer: nil, environment: environment)
             InPlayer.initialize(configuration: configuration)
         }
         
