@@ -58,9 +58,9 @@ public extension InPlayer {
                     assert(false, "Couldn't initialize InPlayer SDK.Missing InPlayer configuration info. ")
                     return
             }
-            #warning("Set referrer")
+    
             let environment = InPlayerEnvironmentType(rawValue: environmentRaw) ?? .staging
-            let configuration = InPlayer.Configuration(clientId: clientId, referrer: nil, environment: environment)
+            let configuration = InPlayer.Configuration(clientId: clientId, referrer: referrer, environment: environment)
             InPlayer.initialize(configuration: configuration)
         }
         

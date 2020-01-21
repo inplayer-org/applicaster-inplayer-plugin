@@ -9,7 +9,7 @@
     "advertising": {},
     "general": {
         "client_id": "cd3f233c-4045-47ef-bece-f7221b0bd07c",
-        "referrer": "zapp-ios-test",
+        "referrer": "https://example.com",
         "environment": "staging",
         "legal_details_color": "#ffffff",
         "action_button_size_tablet": "14",
