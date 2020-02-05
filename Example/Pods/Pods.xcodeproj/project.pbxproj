@@ -424,9 +424,9 @@
 		EDD0447E5B52E55D0635274CF139B037 /* FacadeConnectorAnalyticsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA30BA5019E0DDFA63F64E95078F03D4 /* FacadeConnectorAnalyticsProtocol.swift */; };
 		EE1CB032EA536AC9BD1FEC22F4FF73EC /* UIImage+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102589ED83CCBC75DB19640C819C3BFF /* UIImage+Scale.swift */; };
 		F00A3C8EBF9F92E504C02A5AC9AF7C41 /* ZappCore-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B67DC462641EE6EC72A4A89D9D310C /* ZappCore-dummy.m */; };
-		F259571F23EA900A00B4EB7B /* ConfigurationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F259571923EA900200B4EB7B /* ConfigurationKeys.swift */; };
-		F259572023EA900E00B4EB7B /* LoginPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F259571A23EA900200B4EB7B /* LoginPlugin.swift */; };
-		F259572123EA901100B4EB7B /* LoginPluginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F259571B23EA900200B4EB7B /* LoginPluginError.swift */; };
+		F259572523EA91D600B4EB7B /* LoginPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F259572223EA91D500B4EB7B /* LoginPlugin.swift */; };
+		F259572623EA91D600B4EB7B /* LoginPluginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F259572323EA91D600B4EB7B /* LoginPluginError.swift */; };
+		F259572723EA91D600B4EB7B /* ConfigurationKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F259572423EA91D600B4EB7B /* ConfigurationKeys.swift */; };
 		F27E75A74B411F091545A8CCAABF7B3A /* AWSMTLModel+NSCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = C478B21747FA94DCD3C3EB9CD798449F /* AWSMTLModel+NSCoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F28F579F807D22ED77EEC8E02A442BC6 /* AWSMTLReflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 43B020305A85693B89E5692A9599009B /* AWSMTLReflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F2C3760668C689363C28706D4C57E614 /* InPlayerLoginPlugin-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB1745A6214F1785E3EE0870396679B /* InPlayerLoginPlugin-dummy.m */; };
@@ -1054,9 +1054,9 @@
 		F1934086DEFAB139993D8941CDC59FB1 /* AWSIoTDataResources.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSIoTDataResources.h; path = AWSIoT/AWSIoTDataResources.h; sourceTree = "<group>"; };
 		F1DAE5516EACC9649D338500A39249B8 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F1E3CA15F5EB5A8B253D7C87434F5150 /* CAMKeys.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CAMKeys.swift; path = iOS/CAM/CAMKeys.swift; sourceTree = "<group>"; };
-		F259571923EA900200B4EB7B /* ConfigurationKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationKeys.swift; sourceTree = "<group>"; };
-		F259571A23EA900200B4EB7B /* LoginPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPlugin.swift; sourceTree = "<group>"; };
-		F259571B23EA900200B4EB7B /* LoginPluginError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPluginError.swift; sourceTree = "<group>"; };
+		F259572223EA91D500B4EB7B /* LoginPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginPlugin.swift; path = InPlayerLoginPlugin/Classes/LoginPlugin.swift; sourceTree = "<group>"; };
+		F259572323EA91D600B4EB7B /* LoginPluginError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginPluginError.swift; path = InPlayerLoginPlugin/Classes/LoginPluginError.swift; sourceTree = "<group>"; };
+		F259572423EA91D600B4EB7B /* ConfigurationKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurationKeys.swift; path = InPlayerLoginPlugin/Classes/ConfigurationKeys.swift; sourceTree = "<group>"; };
 		F39AE47CB9285C5D7ACA99D6160B3308 /* Alamofire-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-prefix.pch"; sourceTree = "<group>"; };
 		F3D8352DA70095014BC3C1537CDC80EA /* FABKitProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FABKitProtocol.h; path = AWSCore/Fabric/FABKitProtocol.h; sourceTree = "<group>"; };
 		F4322C68239D0176BCB9E22201639068 /* AWSMTLReflection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSMTLReflection.m; path = AWSCore/Mantle/AWSMTLReflection.m; sourceTree = "<group>"; };
@@ -1284,9 +1284,9 @@
 		1FD22FC45F19D487FA82FC96BA116FA0 /* InPlayerLoginPlugin */ = {
 			isa = PBXGroup;
 			children = (
-				F259571923EA900200B4EB7B /* ConfigurationKeys.swift */,
-				F259571A23EA900200B4EB7B /* LoginPlugin.swift */,
-				F259571B23EA900200B4EB7B /* LoginPluginError.swift */,
+				F259572423EA91D600B4EB7B /* ConfigurationKeys.swift */,
+				F259572223EA91D500B4EB7B /* LoginPlugin.swift */,
+				F259572323EA91D600B4EB7B /* LoginPluginError.swift */,
 				068D0B16E62EFE76D7AA3A1F665290F0 /* AnalyticsStorage.swift */,
 				B0A9F0BF073D0D149157C454F8B6F109 /* Extensions */,
 				47DDEDBE11746B74C982DBA20F86F005 /* Pod */,
@@ -2648,13 +2648,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F259572023EA900E00B4EB7B /* LoginPlugin.swift in Sources */,
-				F259572123EA901100B4EB7B /* LoginPluginError.swift in Sources */,
 				82EC9B1712DA817A9684BEC1F5A65130 /* AnalyticsStorage.swift in Sources */,
 				F2C3760668C689363C28706D4C57E614 /* InPlayerLoginPlugin-dummy.m in Sources */,
-				F259571F23EA900A00B4EB7B /* ConfigurationKeys.swift in Sources */,
 				83DB0E9EFE1950864267D84E0E8BF45D /* Result+Success.swift in Sources */,
+				F259572723EA91D600B4EB7B /* ConfigurationKeys.swift in Sources */,
+				F259572623EA91D600B4EB7B /* LoginPluginError.swift in Sources */,
 				1AE534C0E6471381C2AD3422F8173584 /* UIViewController+Topmost.swift in Sources */,
+				F259572523EA91D600B4EB7B /* LoginPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
