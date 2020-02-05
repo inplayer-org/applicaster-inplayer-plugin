@@ -52,21 +52,16 @@ public extension InPlayer {
             self.pluginConfiguration = ZAAppConnector.sharedInstance().genericDelegate.screenModelForPluginID(pluginID: pluginID, dataSource: nil)?.general ?? [:]
             
             ///Initialize InPlayer SDK
-            let customFields = pluginConfiguration[ConfigurationKeys.customConfigurationFields] as? [String: Any]
-            
-            print(self.pluginConfiguration)
-            
-            guard let clientId = customFields?[ConfigurationKeys.CustomFields.clientId] as? String,
-                let referrer = customFields?[ConfigurationKeys.CustomFields.referrer] as? String,
-                let environmentRaw = customFields?[ConfigurationKeys.CustomFields.clientId] as? String else {
-                    assert(false, "Missing InPlayer configuration info. Couldn't initialize InPlayer SDK.")
+            guard let clientId = pluginConfiguration[ConfigurationKeys.clientId] as? String,
+                let referrer = pluginConfiguration[ConfigurationKeys.referrer] as? String,
+                let environmentRaw = pluginConfiguration[ConfigurationKeys.clientId] as? String else {
+                    assert(false, "Couldn't initialize InPlayer SDK.Missing InPlayer configuration info. ")
                     return
             }
-            #warning("Set referrer")
+    
             let environment = InPlayerEnvironmentType(rawValue: environmentRaw) ?? .staging
-            let configuration = InPlayer.Configuration(clientId: clientId, referrer: nil, environment: environment)
+            let configuration = InPlayer.Configuration(clientId: clientId, referrer: referrer, environment: environment)
             InPlayer.initialize(configuration: configuration)
-            
         }
         
         public func login(_ additionalParameters: [String : Any]?, completion: @escaping ((ZPLoginOperationStatus) -> Void)) {
@@ -128,9 +123,10 @@ public extension InPlayer {
                                 dataDict: [String: Any]?,
                                 taskFinishedWithCompletion: @escaping (Bool, NSError?, [String: Any]?) -> Void) {
             analytics.trigger = .tapCell
-            login(nil) { (operationStatus) in
+            login(nil) { [weak self] (operationStatus) in
                 switch operationStatus {
                 case .completedSuccessfully:
+                    self?.subscribeToNotificationsIfNeeded()
                     taskFinishedWithCompletion(true, nil, nil)
                 case .failed, .cancelled:
                     taskFinishedWithCompletion(false, nil, nil)
@@ -183,6 +179,26 @@ public extension InPlayer {
             }
             contentAccessManager.startFlow()
         }
+        
+        //MARK: - InPlayer Notification Subscription
+        
+        private func subscribeToNotificationsIfNeeded() {
+            guard isAuthenticated() && !InPlayer.Notification.isSubscribed() else { return }
+            
+            InPlayer.Notification.subscribe(onStatusChanged: { (notificationStatus) in
+                
+            }, onMessageReceived: { (notification) in
+                //check access
+                //update playable object
+                //hook completed
+            }) { (error) in
+                
+            }
+        }
+        
+        private func unsubscribeFromNotifications() {
+            InPlayer.Notification.unsubscribe()
+        }
     }
 }
 
@@ -194,7 +210,7 @@ extension InPlayer.LoginPlugin: CAMDelegate {
     }
     
     public func isPurchaseNeeded() -> Bool {
-        return false //true
+        return true
     }
     
     public func isUserLoggedIn() -> Bool {
@@ -218,15 +234,18 @@ extension InPlayer.LoginPlugin: CAMDelegate {
             return
         }
         
-        InPlayer.Account.authenticate(username: email, password: password, success: { (authorization) in
+        InPlayer.Account.authenticate(username: email, password: password, success: {[weak self] (authorization) in
+            self?.subscribeToNotificationsIfNeeded()
             completion(.success)
+            
         }) { (error) in
             completion(.failure(error))
         }
     }
     
     public func logout(completion: @escaping (Result<Void, Error>) -> Void) {
-        InPlayer.Account.signOut(success: {
+        InPlayer.Account.signOut(success: { [weak self] in
+            self?.unsubscribeFromNotifications()
             completion(.success)
         }) { (error) in
             completion(.failure(error))
@@ -248,7 +267,8 @@ extension InPlayer.LoginPlugin: CAMDelegate {
                               ConfigurationKeys.AuthFields.fullName]
         let additionalFields = authData.filter {!requiredFields.contains($0.key)}
         
-        InPlayer.Account.signUp(fullName: fullName, email: email, password: password, passwordConfirmation: confirmPassword, metadata: additionalFields, success: { (authorization) in
+        InPlayer.Account.signUp(fullName: fullName, email: email, password: password, passwordConfirmation: confirmPassword, metadata: additionalFields, success: {[weak self] (authorization) in
+            self?.subscribeToNotificationsIfNeeded()
             completion(.success)
         }) { (error) in
             completion(.failure(error))
@@ -276,7 +296,7 @@ extension InPlayer.LoginPlugin: CAMDelegate {
      */
     
     public func availableProducts(completion: @escaping (Result<[String], Error>) -> Void) {
-        
+        //ping Inplayer API to fetch the product ids and then call the completion block
     }
     
     /**
@@ -284,7 +304,12 @@ extension InPlayer.LoginPlugin: CAMDelegate {
      */
     
     public func itemPurchased(purchasedItem: PurchasedProduct, completion: @escaping (Result<Void, Error>) -> Void) {
-        
+        let receiptStr = String(decoding: purchasedItem.receipt, as: UTF8.self)
+        InPlayer.Payment.validateByProductName(productName: purchasedItem.productIdentifier, receipt: receiptStr, success: {
+            completion(.success)
+        }) { (error) in
+            completion(.failure(error))
+        }
     }
     
     /**
