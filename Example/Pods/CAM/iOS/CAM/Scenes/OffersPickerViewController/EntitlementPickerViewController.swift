@@ -25,6 +25,7 @@ class EntitlementPickerViewController: UIViewController {
     @IBOutlet private var entitlementCollectionView: UICollectionView!
     @IBOutlet private var restoreText: UITextView!
     
+    @IBOutlet weak var camLinksContainer: CamLinksView!
     @IBOutlet private var helpInfoContainer: UIView!
     @IBOutlet private var helpInfoTextView: UITextView!
     private var gradientLayer: CAGradientLayer!
@@ -35,6 +36,24 @@ class EntitlementPickerViewController: UIViewController {
     
     var configDictionary: [String: String] {
         return presenter?.camDelegate.getPluginConfig() ?? [String: String]()
+    }
+    
+    var isCustomLinksVisible: Bool {
+        let firstLink = CamScreen.storefront.firstLink
+        let secondLink = CamScreen.storefront.secondLink
+        var isFirstLinkVisible = false
+        var isSecondLinkVisible = false
+        
+        if let link = configDictionary[firstLink.link.rawValue], !link.isEmpty,
+           let text = configDictionary[firstLink.text.rawValue], !text.isEmpty {
+            isFirstLinkVisible = true
+        }
+        
+        if let link = configDictionary[secondLink.link.rawValue], !link.isEmpty,
+           let text = configDictionary[secondLink.text.rawValue], !text.isEmpty {
+            isSecondLinkVisible = true
+        }
+        return isFirstLinkVisible || isSecondLinkVisible
     }
     
     var itemSize: CGSize {
@@ -49,7 +68,13 @@ class EntitlementPickerViewController: UIViewController {
         return CGFloat(itemSize.width + itemSpacing)
     }
     
-    private var offerViewModels: [OfferViewModel] = []
+    private var offerViewModels: [OfferViewModel] = [] {
+        didSet {
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                camLinksContainer.isHidden = !(isCustomLinksVisible && self.offerViewModels.count <= 1)
+            }
+        }
+    }
     
     var viewModel: OffersViewModel? {
         didSet {
@@ -62,6 +87,7 @@ class EntitlementPickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupCamLinks()
         setupCollectionView()
         presenter?.viewDidLoad()
         
@@ -121,6 +147,17 @@ class EntitlementPickerViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    
+    private func setupCamLinks() {
+        camLinksContainer.isHidden = !isCustomLinksVisible && self.offerViewModels.count > 1
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            camLinksContainer.isHidden = !isCustomLinksVisible
+        }
+        camLinksContainer.openLinkErrorAction = { [unowned self] in
+            self.showAlert(description: self.configDictionary[CAMKeys.defaultAlertText.rawValue])
+        }
+        camLinksContainer.setupParameters(camScreen: .storefront, configDictionary: configDictionary)
+    }
     
     private func setupGradient() {
         self.gradientLayer = CAGradientLayer()
@@ -241,5 +278,31 @@ extension EntitlementPickerViewController: UICollectionViewDelegate, UICollectio
         return UIDevice.current.userInterfaceIdiom == .pad
             ? CGPoint(x: CGFloat(currentItemIndex) * pageWidth, y: 0)
             : proposedContentOffset
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if UIDevice.current.userInterfaceIdiom == .phone &&
+           self.offerViewModels.count > 1 &&
+           isCustomLinksVisible {
+            return CGSize(width: collectionView.bounds.width, height: 39)
+        }
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionFooter:
+            guard let camLinksFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CamLinksFooter", for: indexPath)
+                as? CamLinksFooterReusableView else {
+                return UICollectionReusableView()
+            }
+            camLinksFooter.camLinksView.openLinkErrorAction = { [unowned self] in
+                self.showAlert(description: self.configDictionary[CAMKeys.defaultAlertText.rawValue])
+            }
+            camLinksFooter.setupParameters(camScreen: .storefront, configDictionary: configDictionary)
+            return camLinksFooter
+        default:
+            return UICollectionReusableView()
+        }
     }
 }

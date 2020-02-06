@@ -8,6 +8,8 @@
 import UIKit
 
 class SignUpViewController: UIViewController {
+    let cellHeight: CGFloat = 48.0
+    let cellSpacing: CGFloat = 7.0
     
     var loadingPopover = LoadingPopover.nibInstance()
     var authFields = [AuthField]()
@@ -33,7 +35,10 @@ class SignUpViewController: UIViewController {
     
     @IBOutlet var loginContainer: UIView!
     @IBOutlet var loginButton: UIButton!
+  
     
+    @IBOutlet var camLinksContainer: CamLinksView!
+    @IBOutlet var camLinksHeightConstraint: NSLayoutConstraint!
     @IBOutlet var authFieldsTableHeightConstraint: NSLayoutConstraint!
     @IBOutlet var socialNetworksContainerTopConstraint: NSLayoutConstraint!
     @IBOutlet var inputContainerYConstraint: NSLayoutConstraint!
@@ -44,14 +49,32 @@ class SignUpViewController: UIViewController {
     }
     var presenter: SignUpPresenter?
     
+    var isCustomLinksVisible: Bool {
+        let firstLink = CamScreen.signUp.firstLink
+        let secondLink = CamScreen.signUp.secondLink
+        var isFirstLinkVisible = false
+        var isSecondLinkVisible = false
+        
+        if let link = configDictionary[firstLink.link.rawValue], !link.isEmpty,
+           let text = configDictionary[firstLink.text.rawValue], !text.isEmpty {
+            isFirstLinkVisible = true
+        }
+        
+        if let link = configDictionary[secondLink.link.rawValue], !link.isEmpty,
+           let text = configDictionary[secondLink.text.rawValue], !text.isEmpty {
+            isSecondLinkVisible = true
+        }
+        return isFirstLinkVisible || isSecondLinkVisible
+    }
+    
     var visibleAuthFieldsCount: Int {
         let centerFreeSpace = loginContainer.frame.minY - logoImageView.frame.maxY
         let topSpace: CGFloat = 50.0
         var bottomSpace = socialNetworksContainer.isHidden ? 0 : socialNetworksContainer.frame.height + 20 // 20 - min spacing
         bottomSpace = bottomSpace == 0 ? 50 : bottomSpace
         let inputComponentMaxHeight = centerFreeSpace - topSpace - bottomSpace
-        let tableMaxHeight = inputComponentMaxHeight - 13 - 46
-        var maxCount = Int((tableMaxHeight - 7) / (48 + 7))
+        let tableMaxHeight = inputComponentMaxHeight - 13 - signUpButton.bounds.height
+        var maxCount = Int((tableMaxHeight - cellSpacing) / (cellHeight + cellSpacing))
         let fieldsCount = authFields.count
         if UIDevice.current.userInterfaceIdiom == .phone {
             maxCount = maxCount > 4 ? 4 : maxCount
@@ -62,7 +85,7 @@ class SignUpViewController: UIViewController {
     }
     
     var authFieldsTableHeight: CGFloat {
-        let height = CGFloat(visibleAuthFieldsCount * 48 + (visibleAuthFieldsCount - 1) * 7)
+        let height = CGFloat(visibleAuthFieldsCount) * cellHeight + CGFloat(visibleAuthFieldsCount - 1) * cellSpacing
         return height
     }
     
@@ -96,9 +119,11 @@ class SignUpViewController: UIViewController {
         closeButton.isHidden = presenter?.camDelegate.analyticsStorage().trigger == .appLaunch
         loginButton.titleLabel?.numberOfLines = 0
         loginButton.titleLabel?.textAlignment = .center
+        loginButton.isUserInteractionEnabled = (configDictionary[CAMKeys.singUpLoginActionText.rawValue] ?? "").isEmpty ? false : true
         socialNetworksContainer.isHidden = !(configDictionary[CAMKeys.isAlternativeAuthenticationEnabled.rawValue]?.bool ?? false)
         authFieldsTable.backgroundView = UIView()
         authFieldsTable.allowsSelection = false
+        setupCamLinks()
         setupSocialNetworksContainer()
         configureElements()
     }
@@ -118,7 +143,15 @@ class SignUpViewController: UIViewController {
         stackView.addArrangedSubview(facebookButton)
     }
     
+    func setupCamLinks() {
+        camLinksContainer.openLinkErrorAction = { [unowned self] in
+            self.showAlert(description: self.configDictionary[CAMKeys.defaultAlertText.rawValue])
+        }
+        camLinksContainer.setupParameters(camScreen: .signUp, configDictionary: configDictionary)
+    }
+    
     func setupConstraints() {
+        camLinksHeightConstraint.constant = isCustomLinksVisible ? 39 : 0
         let inputContainerHeight = authFieldsTableHeight + signUpButton.frame.height + 13
         authFieldsTableHeightConstraint.constant = authFieldsTableHeight
         inputContainerHeightConstraint.constant = inputContainerHeight

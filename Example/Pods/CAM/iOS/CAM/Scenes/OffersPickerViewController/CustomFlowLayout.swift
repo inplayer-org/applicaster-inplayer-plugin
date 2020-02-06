@@ -12,6 +12,7 @@ class CustomFlowLayout: UICollectionViewFlowLayout {
     
     override open func prepare() {
         super.prepare()
+        self.sectionFootersPinToVisibleBounds = false
         updateInsets()
     }
     
@@ -35,11 +36,11 @@ class CustomFlowLayout: UICollectionViewFlowLayout {
             self.sectionInset.left = inset
             self.sectionInset.right = inset
         } else {
-            self.sectionInset.bottom = 64
+            collectionView.contentInset.bottom = 49
+            self.sectionInset.bottom = 5
         }
         
     }
-    
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }

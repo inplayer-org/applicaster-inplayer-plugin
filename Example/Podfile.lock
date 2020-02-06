@@ -1,10 +1,10 @@
 PODS:
   - Alamofire (5.0.0-rc.3)
-  - ApplicasterIAP (0.0.4)
+  - ApplicasterIAP (0.0.5)
   - AWSCore (2.12.1)
   - AWSIoT (2.12.1):
     - AWSCore (= 2.12.1)
-  - CAM (2.0.0):
+  - CAM (2.0.4):
     - ApplicasterIAP
     - ZappPlugins (>= 11.1.2)
   - InPlayerLoginPlugin (0.1.0):
@@ -12,19 +12,19 @@ PODS:
     - CAM (~> 2.0.0)
     - InPlayerSDK
     - ZappPlugins
-  - InPlayerSDK (1.5.7):
-    - InPlayerSDK/Core (= 1.5.7)
-    - InPlayerSDK/Notification (= 1.5.7)
-    - InPlayerSDK/Payment (= 1.5.7)
-  - InPlayerSDK/Core (1.5.7):
+  - InPlayerSDK (1.5.12):
+    - InPlayerSDK/Core (= 1.5.12)
+    - InPlayerSDK/Notification (= 1.5.12)
+    - InPlayerSDK/Payment (= 1.5.12)
+  - InPlayerSDK/Core (1.5.12):
     - Alamofire (= 5.0.0-rc.3)
-  - InPlayerSDK/Notification (1.5.7):
+  - InPlayerSDK/Notification (1.5.12):
     - AWSIoT (= 2.12.1)
     - InPlayerSDK/Core
-  - InPlayerSDK/Payment (1.5.7):
+  - InPlayerSDK/Payment (1.5.12):
     - InPlayerSDK/Core
-  - ZappCore (0.1.5)
-  - ZappPlugins (11.1.6):
+  - ZappCore (0.5.0)
+  - ZappPlugins (11.3.0):
     - ZappCore
 
 DEPENDENCIES:
@@ -50,15 +50,15 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
-  ApplicasterIAP: 7feda96b051aa4e6ab36d2bc1a59e643a1e331a5
+  ApplicasterIAP: 52b26e42126693cf42926b8d9e86fd4445533ee8
   AWSCore: 0a4431f74d9dbf084d420b887a6a21042b423c5c
   AWSIoT: f8e75c66fa89d99c4496a34137d7204f5e2cbda9
-  CAM: aa2e979ae72b63b248d647876c44072f35ffa40e
+  CAM: 17a0d0ad5d0920d840b4b6a9a2e8345ddf1bfc0a
   InPlayerLoginPlugin: 0fd8340373821f3a1b9a30caaec74d867cce37a3
-  InPlayerSDK: c9185ddc6ab5bdf04f62c6a3bf127d8700eab166
-  ZappCore: 25908b99a27d3daace5d5b134ff1f911c4ed1782
-  ZappPlugins: 31898fabef817af8226322897e2b612fae539932
+  InPlayerSDK: d5370ab150e67f112d3163e3855a3b5634b6453e
+  ZappCore: f92ff80112b8dfac6ebba117b393df0665e93241
+  ZappPlugins: 3a6592c577790586d519b021dcc143bab15bf49c
 
-PODFILE CHECKSUM: 6d319d1b714b5ed7941c147c460697f744f07a9a
+PODFILE CHECKSUM: 84c50033c7ee1475dbe1210e80f6a74d9d996bcb
 
 COCOAPODS: 1.8.4

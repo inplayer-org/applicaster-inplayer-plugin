@@ -17,6 +17,8 @@
 @property (readonly, assign) BOOL isLoaded;
 
 - (void)loadModelWithCompletion:(void (^)(BOOL success, id<APContainerProtocol> loadedModel))completion;
+- (void)loadModel:(BOOL)shouldInvalidateCache completion:(void (^)(BOOL success, id<APContainerProtocol> loadedModel))completion;
+
 
 @end
 

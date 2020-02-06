@@ -242,13 +242,6 @@ SWIFT_CLASS("_TtC11ZappPlugins6APFile")
 @end
 
 
-SWIFT_CLASS("_TtC11ZappPlugins20APLoadingTimeMeasure")
-@interface APLoadingTimeMeasure : NSObject
-+ (void)appReadyForUse;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
 SWIFT_CLASS("_TtC11ZappPlugins19APLocalSplashHelper")
 @interface APLocalSplashHelper : NSObject
 + (NSString * _Nonnull)localSplashImageNameForScreenSize SWIFT_WARN_UNUSED_RESULT;
@@ -261,6 +254,13 @@ SWIFT_CLASS("_TtC11ZappPlugins19APLocalSplashHelper")
 SWIFT_CLASS("_TtC11ZappPlugins27APScreenMultiplierConverter")
 @interface APScreenMultiplierConverter : NSObject
 + (CGFloat)convertedValueForScreenMultiplierWithValue:(CGFloat)value SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC11ZappPlugins13APTimeMeasure")
+@interface APTimeMeasure : NSObject
++ (void)retrieveMeasurePoint;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -398,6 +398,8 @@ SWIFT_CLASS("_TtC11ZappPlugins16NavigationButton")
 ///
 - (void)setColorWithKey:(NSString * _Nonnull)key from:(NSDictionary<NSString *, id> * _Nullable)dictionary;
 @end
+
+
 
 
 
@@ -754,7 +756,6 @@ SWIFT_PROTOCOL("_TtP11ZappPlugins38ZAAppDelegateConnectorIdentityProtocol_")
 @end
 
 @class UIImageView;
-@class UIImage;
 
 SWIFT_PROTOCOL("_TtP11ZappPlugins35ZAAppDelegateConnectorImageProtocol_")
 @protocol ZAAppDelegateConnectorImageProtocol
@@ -1667,22 +1668,11 @@ SWIFT_CLASS("_TtC11ZappPlugins9ZPContent")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@protocol ZPCrashlogsPluginProtocol;
+@protocol CrashlogsPluginProtocol;
 
 SWIFT_PROTOCOL("_TtP11ZappPlugins32ZPCrashlogPluginsManagerProtocol_")
 @protocol ZPCrashlogPluginsManagerProtocol
-- (NSArray<id <ZPCrashlogsPluginProtocol>> * _Nullable)create SWIFT_WARN_UNUSED_RESULT;
-@end
-
-
-SWIFT_PROTOCOL("_TtP11ZappPlugins25ZPCrashlogsPluginProtocol_")
-@protocol ZPCrashlogsPluginProtocol <ZPAdapterProtocol>
-/// Activate plugin function to be implemented on plugin
-/// \param object - APModel or other model object that should have the plugin required info
-///
-/// \param completion - some filled NSObject
-///
-- (void)activateWithObject:(NSObject * _Nullable)object completion:(void (^ _Nullable)(NSObject * _Nullable))completion;
+- (NSArray<id <CrashlogsPluginProtocol>> * _Nullable)create SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -3029,13 +3019,6 @@ SWIFT_CLASS("_TtC11ZappPlugins6APFile")
 @end
 
 
-SWIFT_CLASS("_TtC11ZappPlugins20APLoadingTimeMeasure")
-@interface APLoadingTimeMeasure : NSObject
-+ (void)appReadyForUse;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
 SWIFT_CLASS("_TtC11ZappPlugins19APLocalSplashHelper")
 @interface APLocalSplashHelper : NSObject
 + (NSString * _Nonnull)localSplashImageNameForScreenSize SWIFT_WARN_UNUSED_RESULT;
@@ -3048,6 +3031,13 @@ SWIFT_CLASS("_TtC11ZappPlugins19APLocalSplashHelper")
 SWIFT_CLASS("_TtC11ZappPlugins27APScreenMultiplierConverter")
 @interface APScreenMultiplierConverter : NSObject
 + (CGFloat)convertedValueForScreenMultiplierWithValue:(CGFloat)value SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC11ZappPlugins13APTimeMeasure")
+@interface APTimeMeasure : NSObject
++ (void)retrieveMeasurePoint;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -3185,6 +3175,8 @@ SWIFT_CLASS("_TtC11ZappPlugins16NavigationButton")
 ///
 - (void)setColorWithKey:(NSString * _Nonnull)key from:(NSDictionary<NSString *, id> * _Nullable)dictionary;
 @end
+
+
 
 
 
@@ -3541,7 +3533,6 @@ SWIFT_PROTOCOL("_TtP11ZappPlugins38ZAAppDelegateConnectorIdentityProtocol_")
 @end
 
 @class UIImageView;
-@class UIImage;
 
 SWIFT_PROTOCOL("_TtP11ZappPlugins35ZAAppDelegateConnectorImageProtocol_")
 @protocol ZAAppDelegateConnectorImageProtocol
@@ -4454,22 +4445,11 @@ SWIFT_CLASS("_TtC11ZappPlugins9ZPContent")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@protocol ZPCrashlogsPluginProtocol;
+@protocol CrashlogsPluginProtocol;
 
 SWIFT_PROTOCOL("_TtP11ZappPlugins32ZPCrashlogPluginsManagerProtocol_")
 @protocol ZPCrashlogPluginsManagerProtocol
-- (NSArray<id <ZPCrashlogsPluginProtocol>> * _Nullable)create SWIFT_WARN_UNUSED_RESULT;
-@end
-
-
-SWIFT_PROTOCOL("_TtP11ZappPlugins25ZPCrashlogsPluginProtocol_")
-@protocol ZPCrashlogsPluginProtocol <ZPAdapterProtocol>
-/// Activate plugin function to be implemented on plugin
-/// \param object - APModel or other model object that should have the plugin required info
-///
-/// \param completion - some filled NSObject
-///
-- (void)activateWithObject:(NSObject * _Nullable)object completion:(void (^ _Nullable)(NSObject * _Nullable))completion;
+- (NSArray<id <CrashlogsPluginProtocol>> * _Nullable)create SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -5820,13 +5800,6 @@ SWIFT_CLASS("_TtC11ZappPlugins6APFile")
 @end
 
 
-SWIFT_CLASS("_TtC11ZappPlugins20APLoadingTimeMeasure")
-@interface APLoadingTimeMeasure : NSObject
-+ (void)appReadyForUse;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
 SWIFT_CLASS("_TtC11ZappPlugins19APLocalSplashHelper")
 @interface APLocalSplashHelper : NSObject
 + (NSString * _Nonnull)localSplashImageNameForScreenSize SWIFT_WARN_UNUSED_RESULT;
@@ -5839,6 +5812,13 @@ SWIFT_CLASS("_TtC11ZappPlugins19APLocalSplashHelper")
 SWIFT_CLASS("_TtC11ZappPlugins27APScreenMultiplierConverter")
 @interface APScreenMultiplierConverter : NSObject
 + (CGFloat)convertedValueForScreenMultiplierWithValue:(CGFloat)value SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC11ZappPlugins13APTimeMeasure")
+@interface APTimeMeasure : NSObject
++ (void)retrieveMeasurePoint;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -5976,6 +5956,8 @@ SWIFT_CLASS("_TtC11ZappPlugins16NavigationButton")
 ///
 - (void)setColorWithKey:(NSString * _Nonnull)key from:(NSDictionary<NSString *, id> * _Nullable)dictionary;
 @end
+
+
 
 
 
@@ -6332,7 +6314,6 @@ SWIFT_PROTOCOL("_TtP11ZappPlugins38ZAAppDelegateConnectorIdentityProtocol_")
 @end
 
 @class UIImageView;
-@class UIImage;
 
 SWIFT_PROTOCOL("_TtP11ZappPlugins35ZAAppDelegateConnectorImageProtocol_")
 @protocol ZAAppDelegateConnectorImageProtocol
@@ -7245,22 +7226,11 @@ SWIFT_CLASS("_TtC11ZappPlugins9ZPContent")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@protocol ZPCrashlogsPluginProtocol;
+@protocol CrashlogsPluginProtocol;
 
 SWIFT_PROTOCOL("_TtP11ZappPlugins32ZPCrashlogPluginsManagerProtocol_")
 @protocol ZPCrashlogPluginsManagerProtocol
-- (NSArray<id <ZPCrashlogsPluginProtocol>> * _Nullable)create SWIFT_WARN_UNUSED_RESULT;
-@end
-
-
-SWIFT_PROTOCOL("_TtP11ZappPlugins25ZPCrashlogsPluginProtocol_")
-@protocol ZPCrashlogsPluginProtocol <ZPAdapterProtocol>
-/// Activate plugin function to be implemented on plugin
-/// \param object - APModel or other model object that should have the plugin required info
-///
-/// \param completion - some filled NSObject
-///
-- (void)activateWithObject:(NSObject * _Nullable)object completion:(void (^ _Nullable)(NSObject * _Nullable))completion;
+- (NSArray<id <CrashlogsPluginProtocol>> * _Nullable)create SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -8607,13 +8577,6 @@ SWIFT_CLASS("_TtC11ZappPlugins6APFile")
 @end
 
 
-SWIFT_CLASS("_TtC11ZappPlugins20APLoadingTimeMeasure")
-@interface APLoadingTimeMeasure : NSObject
-+ (void)appReadyForUse;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
 SWIFT_CLASS("_TtC11ZappPlugins19APLocalSplashHelper")
 @interface APLocalSplashHelper : NSObject
 + (NSString * _Nonnull)localSplashImageNameForScreenSize SWIFT_WARN_UNUSED_RESULT;
@@ -8626,6 +8589,13 @@ SWIFT_CLASS("_TtC11ZappPlugins19APLocalSplashHelper")
 SWIFT_CLASS("_TtC11ZappPlugins27APScreenMultiplierConverter")
 @interface APScreenMultiplierConverter : NSObject
 + (CGFloat)convertedValueForScreenMultiplierWithValue:(CGFloat)value SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC11ZappPlugins13APTimeMeasure")
+@interface APTimeMeasure : NSObject
++ (void)retrieveMeasurePoint;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -8763,6 +8733,8 @@ SWIFT_CLASS("_TtC11ZappPlugins16NavigationButton")
 ///
 - (void)setColorWithKey:(NSString * _Nonnull)key from:(NSDictionary<NSString *, id> * _Nullable)dictionary;
 @end
+
+
 
 
 
@@ -9119,7 +9091,6 @@ SWIFT_PROTOCOL("_TtP11ZappPlugins38ZAAppDelegateConnectorIdentityProtocol_")
 @end
 
 @class UIImageView;
-@class UIImage;
 
 SWIFT_PROTOCOL("_TtP11ZappPlugins35ZAAppDelegateConnectorImageProtocol_")
 @protocol ZAAppDelegateConnectorImageProtocol
@@ -10032,22 +10003,11 @@ SWIFT_CLASS("_TtC11ZappPlugins9ZPContent")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@protocol ZPCrashlogsPluginProtocol;
+@protocol CrashlogsPluginProtocol;
 
 SWIFT_PROTOCOL("_TtP11ZappPlugins32ZPCrashlogPluginsManagerProtocol_")
 @protocol ZPCrashlogPluginsManagerProtocol
-- (NSArray<id <ZPCrashlogsPluginProtocol>> * _Nullable)create SWIFT_WARN_UNUSED_RESULT;
-@end
-
-
-SWIFT_PROTOCOL("_TtP11ZappPlugins25ZPCrashlogsPluginProtocol_")
-@protocol ZPCrashlogsPluginProtocol <ZPAdapterProtocol>
-/// Activate plugin function to be implemented on plugin
-/// \param object - APModel or other model object that should have the plugin required info
-///
-/// \param completion - some filled NSObject
-///
-- (void)activateWithObject:(NSObject * _Nullable)object completion:(void (^ _Nullable)(NSObject * _Nullable))completion;
+- (NSArray<id <CrashlogsPluginProtocol>> * _Nullable)create SWIFT_WARN_UNUSED_RESULT;
 @end
 
 

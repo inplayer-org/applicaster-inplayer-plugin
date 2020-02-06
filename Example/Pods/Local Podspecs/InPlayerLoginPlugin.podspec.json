@@ -19,11 +19,8 @@
   "requires_arc": true,
   "static_framework": true,
   "dependencies": {
-    "ZappPlugins": [
-
-    ],
     "Alamofire": [
-
+      ">= 0"
     ],
     "CAM": [
       "~> 2.0.0"

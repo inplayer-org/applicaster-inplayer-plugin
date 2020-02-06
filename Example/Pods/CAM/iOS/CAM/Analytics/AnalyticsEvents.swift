@@ -40,6 +40,42 @@ extension CAMFlow {
     }
 }
 
+enum CamScreen: String {
+    case login = "Login"
+    case signUp = "Signup"
+    case storefront = "Storefront"
+    
+    var firstLink: (text: CAMKeys,
+                    link: CAMKeys) {
+        switch self {
+        case .login:
+            return (text: CAMKeys.loginScreenFirstCustomLinkText,
+                    link: CAMKeys.loginScreenFirstCustomLink)
+        case .signUp:
+            return (text: CAMKeys.signUpScreenFirstCustomLinkText,
+                    link: CAMKeys.signUpScreenFirstCustomLink)
+        case .storefront:
+            return (text: CAMKeys.storefrontScreenFirstCustomLinkText,
+                    link: CAMKeys.storefrontScreenFirstCustomLink)
+        }
+    }
+    
+    var secondLink: (text: CAMKeys,
+                     link: CAMKeys) {
+        switch self {
+        case .login:
+            return (text: CAMKeys.loginScreenSecondCustomLinkText,
+                    link: CAMKeys.loginScreenSecondCustomLink)
+        case .signUp:
+            return (text: CAMKeys.signUpScreenSecondCustomLinkText,
+                    link: CAMKeys.signUpScreenSecondCustomLink)
+        case .storefront:
+            return (text: CAMKeys.storefrontScreenSecondCustomLinkText,
+                    link: CAMKeys.storefrontScreenSecondCustomLink)
+        }
+    }
+}
+
 enum AnalyticsEvents {
     case tapStandardLoginButton(PlayableItemInfo)
     case standardLoginSuccess(PlayableItemInfo)
@@ -70,7 +106,7 @@ enum AnalyticsEvents {
     case startRestorePurchase(PlayableItemInfo)
     case completeRestorePurchase(PlayableItemInfo, [PurchaseProperties?])
     case storeRestorePurchaseError(Error, PlayableItemInfo, PurchaseProperties?)
-    
+    case tapCustomLink(link: String, text: String, screenName: String)
     static var userFlow: [String] = []
     
     var key: String {
@@ -104,6 +140,7 @@ enum AnalyticsEvents {
         case .startRestorePurchase: return "Start Restore Purchase"
         case .completeRestorePurchase: return "Complete Restore Purchase"
         case .storeRestorePurchaseError: return "Store Restore Purchase Error"
+        case .tapCustomLink: return "Tap Custom Link"
         }
     }
     
@@ -180,6 +217,11 @@ enum AnalyticsEvents {
                 .merge(["Error Code ID": error.code])
                 .merge(["Purchase Entity Name": info.name])
                 .merge([PurchaseProperties.key: kNoneProvided])
+        case .tapCustomLink(let link, let text, let screenName):
+            metadata = metadata
+                .merge(["Custom Link": link,
+                        "Custom Link Text": text,
+                        "Screen Name": screenName])
         }
         
         return metadata

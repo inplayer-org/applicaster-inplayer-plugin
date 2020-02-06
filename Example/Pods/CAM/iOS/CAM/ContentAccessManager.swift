@@ -35,6 +35,7 @@ open class ContentAccessManager {
         self.camFlow = camFlow
         self.completion = completion
         self.navigationController = UINavigationController()
+        self.navigationController.modalPresentationStyle = .fullScreen
         self.navigationController.isNavigationBarHidden = true
     }
     
