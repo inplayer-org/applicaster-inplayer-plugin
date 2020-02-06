@@ -22,7 +22,7 @@
   "identifier": "InPlayerLoginPlugin",
   "ui_builder_support": true,
   "dependency_name": "InPlayerLoginPlugin",
-  "whitelisted_account_ids": [],
+  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
   "min_zapp_sdk": "12.0.0",
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
