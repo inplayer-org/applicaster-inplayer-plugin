@@ -12,7 +12,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.static_framework = true
   s.dependency 'ZappPlugins'
-  s.dependency 'Alamofire'
   s.dependency 'CAM', '~> 2.0.0'
   s.dependency 'InPlayerSDK'
   s.xcconfig =  {
