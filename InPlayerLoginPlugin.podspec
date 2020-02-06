@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'InPlayerLoginPlugin'
-  s.version      = '0.1.0'
+  s.version      = '0.0.3'
   s.summary      = 'InPlayerLoginPlugin'
   s.license      = 'MIT'
   s.homepage     = 'https://github.com/inplayer-org/zapp-ios-plugin'

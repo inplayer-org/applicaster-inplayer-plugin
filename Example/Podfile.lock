@@ -7,8 +7,7 @@ PODS:
   - CAM (2.0.4):
     - ApplicasterIAP
     - ZappPlugins (>= 11.1.2)
-  - InPlayerLoginPlugin (0.1.0):
-    - Alamofire
+  - InPlayerLoginPlugin (0.0.3):
     - CAM (~> 2.0.0)
     - InPlayerSDK
     - ZappPlugins
@@ -54,7 +53,7 @@ SPEC CHECKSUMS:
   AWSCore: 0a4431f74d9dbf084d420b887a6a21042b423c5c
   AWSIoT: f8e75c66fa89d99c4496a34137d7204f5e2cbda9
   CAM: 17a0d0ad5d0920d840b4b6a9a2e8345ddf1bfc0a
-  InPlayerLoginPlugin: 0fd8340373821f3a1b9a30caaec74d867cce37a3
+  InPlayerLoginPlugin: 68dcf34d7d801ad9c52f559fe5a82ba669e865de
   InPlayerSDK: d5370ab150e67f112d3163e3855a3b5634b6453e
   ZappCore: f92ff80112b8dfac6ebba117b393df0665e93241
   ZappPlugins: 3a6592c577790586d519b021dcc143bab15bf49c
