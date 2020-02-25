@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.0.0-rc.3)
+  - Alamofire (4.9.1)
   - ApplicasterIAP (0.0.5)
   - AWSCore (2.12.1)
   - AWSIoT (2.12.1):
@@ -9,18 +9,18 @@ PODS:
     - ZappPlugins (>= 11.1.2)
   - InPlayerLoginPlugin (0.0.3):
     - CAM (~> 2.0.0)
-    - InPlayerSDK
+    - InPlayerSDK (~> 2.0.0)
     - ZappPlugins
-  - InPlayerSDK (1.5.12):
-    - InPlayerSDK/Core (= 1.5.12)
-    - InPlayerSDK/Notification (= 1.5.12)
-    - InPlayerSDK/Payment (= 1.5.12)
-  - InPlayerSDK/Core (1.5.12):
-    - Alamofire (= 5.0.0-rc.3)
-  - InPlayerSDK/Notification (1.5.12):
+  - InPlayerSDK (2.0.0):
+    - InPlayerSDK/Core (= 2.0.0)
+    - InPlayerSDK/Notification (= 2.0.0)
+    - InPlayerSDK/Payment (= 2.0.0)
+  - InPlayerSDK/Core (2.0.0):
+    - Alamofire (= 4.9.1)
+  - InPlayerSDK/Notification (2.0.0):
     - AWSIoT (= 2.12.1)
     - InPlayerSDK/Core
-  - InPlayerSDK/Payment (1.5.12):
+  - InPlayerSDK/Payment (2.0.0):
     - InPlayerSDK/Core
   - ZappCore (0.5.0)
   - ZappPlugins (11.3.0):
@@ -48,13 +48,13 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   ApplicasterIAP: 52b26e42126693cf42926b8d9e86fd4445533ee8
   AWSCore: 0a4431f74d9dbf084d420b887a6a21042b423c5c
   AWSIoT: f8e75c66fa89d99c4496a34137d7204f5e2cbda9
   CAM: 17a0d0ad5d0920d840b4b6a9a2e8345ddf1bfc0a
-  InPlayerLoginPlugin: 68dcf34d7d801ad9c52f559fe5a82ba669e865de
-  InPlayerSDK: d5370ab150e67f112d3163e3855a3b5634b6453e
+  InPlayerLoginPlugin: dc26990915106c27d4bf1f933354dc9fc0f88971
+  InPlayerSDK: 243004daec2039331940af60142779ee01b9669e
   ZappCore: f92ff80112b8dfac6ebba117b393df0665e93241
   ZappPlugins: 3a6592c577790586d519b021dcc143bab15bf49c
 
