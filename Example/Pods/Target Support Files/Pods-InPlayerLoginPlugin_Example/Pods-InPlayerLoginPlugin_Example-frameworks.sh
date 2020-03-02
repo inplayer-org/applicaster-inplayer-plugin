@@ -168,7 +168,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CAM/CAM.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/InPlayerSDK/InPlayerSDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZappCore/ZappCore.framework"
-  install_framework "${PODS_ROOT}/ZappPlugins/Frameworks/iOS/ZappPlugins.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZappPlugins/ZappPlugins.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework"
@@ -178,7 +178,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CAM/CAM.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/InPlayerSDK/InPlayerSDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ZappCore/ZappCore.framework"
-  install_framework "${PODS_ROOT}/ZappPlugins/Frameworks/iOS/ZappPlugins.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZappPlugins/ZappPlugins.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

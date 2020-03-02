@@ -654,7 +654,7 @@
 				"${BUILT_PRODUCTS_DIR}/CAM/CAM.framework",
 				"${BUILT_PRODUCTS_DIR}/InPlayerSDK/InPlayerSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/ZappCore/ZappCore.framework",
-				"${PODS_ROOT}/ZappPlugins/Frameworks/iOS/ZappPlugins.framework",
+				"${BUILT_PRODUCTS_DIR}/ZappPlugins/ZappPlugins.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
