@@ -125,7 +125,6 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		A90B3AD63DBB38446B33A3A4 /* Pods-InPlayerLoginPlugin_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InPlayerLoginPlugin_Example.debug.xcconfig"; path = "Target Support Files/Pods-InPlayerLoginPlugin_Example/Pods-InPlayerLoginPlugin_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		B91F44322EAC10DA83494914 /* InPlayerLoginPlugin.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = InPlayerLoginPlugin.podspec; path = ../InPlayerLoginPlugin.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		CA46EBD802455529718763EB /* Pods_InPlayerLoginPlugin_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InPlayerLoginPlugin_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2ABDCDD23AE3245008B238C /* ios-assets-sample.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "ios-assets-sample.zip"; path = "../ios-assets-sample.zip"; sourceTree = "<group>"; };
 		F2ABDCDE23AE3245008B238C /* manifest_ios.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = manifest_ios.json; path = ../manifest_ios.json; sourceTree = "<group>"; };
@@ -312,7 +311,6 @@
 			children = (
 				F2ABDCDD23AE3245008B238C /* ios-assets-sample.zip */,
 				F2ABDCDE23AE3245008B238C /* manifest_ios.json */,
-				B91F44322EAC10DA83494914 /* InPlayerLoginPlugin.podspec */,
 				3F8F21837363AB428272E677 /* README.md */,
 				39E58A65FDCF5278D8ED28F9 /* LICENSE */,
 			);
