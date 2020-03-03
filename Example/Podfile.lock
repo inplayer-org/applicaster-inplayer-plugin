@@ -7,7 +7,7 @@ PODS:
   - CAM (2.0.4):
     - ApplicasterIAP
     - ZappPlugins (>= 11.1.2)
-  - InPlayerLoginPlugin (0.0.4):
+  - InPlayerLoginPlugin (0.0.5):
     - CAM (~> 2.0.0)
     - InPlayerSDK (~> 2.0.0)
     - ZappPlugins
@@ -22,12 +22,12 @@ PODS:
     - InPlayerSDK/Core
   - InPlayerSDK/Payment (2.0.0):
     - InPlayerSDK/Core
-  - ZappCore (0.8.3)
-  - ZappPlugins (11.6.0):
+  - ZappCore (0.8.5)
+  - ZappPlugins (11.6.1):
     - ZappCore
 
 DEPENDENCIES:
-  - InPlayerLoginPlugin (from `../Specs/0.0.4`)
+  - InPlayerLoginPlugin (from `../`)
 
 SPEC REPOS:
   "git@github.com:applicaster/applicaster-cam-framework":
@@ -45,7 +45,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   InPlayerLoginPlugin:
-    :path: "../Specs/0.0.4"
+    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -53,11 +53,11 @@ SPEC CHECKSUMS:
   AWSCore: 0a4431f74d9dbf084d420b887a6a21042b423c5c
   AWSIoT: f8e75c66fa89d99c4496a34137d7204f5e2cbda9
   CAM: 17a0d0ad5d0920d840b4b6a9a2e8345ddf1bfc0a
-  InPlayerLoginPlugin: ab0ae6813a761507811b51fcbdf1cbd33495c685
+  InPlayerLoginPlugin: 7083a5a1a37ac026b8320e5aee0dd16ac938ef41
   InPlayerSDK: 243004daec2039331940af60142779ee01b9669e
-  ZappCore: 628a56faa834d6fb48c8f38a43e31c96420d9f9c
-  ZappPlugins: c31b785a68534fcaaea2c5c60982ffb4313b03b6
+  ZappCore: 55e3088d66fe9a25823f908e7fe73ec12599101b
+  ZappPlugins: 3df39f7ee3dcf864361297e0226d8bc8fa238ad4
 
-PODFILE CHECKSUM: 210cda0b88ee589a7d414237bd2d5ec2a37e01f3
+PODFILE CHECKSUM: 84c50033c7ee1475dbe1210e80f6a74d9d996bcb
 
 COCOAPODS: 1.8.4

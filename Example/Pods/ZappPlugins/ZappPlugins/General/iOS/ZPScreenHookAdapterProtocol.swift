@@ -45,6 +45,17 @@ import ZappCore
     @objc func executeHook(presentationIndex:NSInteger,
                            dataDict:[String:Any]?,
                            taskFinishedWithCompletion:@escaping (_ succeed:Bool, _ error:NSError?, _ dataDict:[String:Any]?) -> Void)
+    
+    /// Execute hook
+    ///
+    /// - Parameters:
+    ///   - presentationIndex: Index of presenatation for same hook
+    ///   - model: model that can be passed beetween hooks
+    ///   - taskFinishedWithCompletion: Completion hook finish it task
+    @objc optional func executeHook(presentationIndex:NSInteger,
+                           model:NSObject?,
+                           taskFinishedWithCompletion:@escaping (_ succeed:Bool, _ error:NSError?, _ dataDict:[String:Any]?) -> Void)
+    
     init?(pluginModel:ZPPluginModel,
           dataSourceModel:NSObject?)
 }

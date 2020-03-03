@@ -1,6 +1,6 @@
 {
   "name": "InPlayerLoginPlugin",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "summary": "InPlayerLoginPlugin",
   "license": "MIT",
   "homepage": "https://github.com/inplayer-org/zapp-ios-plugin",
@@ -13,7 +13,7 @@
   "swift_versions": "5.1",
   "source": {
     "git": "git@github.com:inplayer-org/zapp-ios-plugin.git",
-    "tag": "0.0.4"
+    "tag": "0.0.5"
   },
   "source_files": "InPlayerLoginPlugin/Classes/**/*.{swift,h,m}",
   "requires_arc": true,

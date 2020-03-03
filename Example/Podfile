@@ -8,7 +8,7 @@ source 'https://cdn.cocoapods.org/'
 
 
 target 'InPlayerLoginPlugin_Example' do
-  pod 'InPlayerLoginPlugin', :path => '../Specs/0.0.4'
+  pod 'InPlayerLoginPlugin', :path => '../'
 
   target 'InPlayerLoginPlugin_Tests' do
     inherit! :search_paths

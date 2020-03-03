@@ -28,11 +28,11 @@ This respository is the main container for general frameworks and plugins for [Z
 
 ## :fax: Frameworks List
 
-##### ZappCore: *0.8.3*
+##### ZappCore: *0.8.5*
 - **Description:** Contain plugin protocols, helper methods that can be used by any Zapp plugin or framework
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappCore/index.html)
 
-##### ZappApple: *0.6.7*
+##### ZappApple: *0.6.12*
 - **Description:** Contain data stucture to start Zapp application.
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappApple/index.html)
 
@@ -40,7 +40,7 @@ This respository is the main container for general frameworks and plugins for [Z
 
 #### Type: Analytics
 
-##### Google Analytics Web Based API: *0.7.0*
+##### Google Analytics Web Based API: *0.7.2*
 - **Description:** This plugin allow to add Google Analytics as agent.
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/ZappGoogleAnalytics/index.html)
 - **Manifest:**
@@ -81,7 +81,7 @@ This respository is the main container for general frameworks and plugins for [Z
   - [tvOS](https://zapp.applicaster.com/admin/plugin_versions?id=video_playing_now_apple&platform=tvos)
 
 
-##### Firebase Base Settings: *2.0.1*
+##### Firebase Base Settings: *2.0.4*
 - **Description:** This plugin provides GoogleService-Info.plist that require for all Firebase plugins. Also plugin make intialization of the Firebase.
 - [**Documentation**](https://applicaster.github.io/AppleApplicasterFrameworks/FirebaseBaseSettings/index.html)
 - **Manifest:**
@@ -531,3 +531,4 @@ Dictionary
         - Update Frameworks list template `Readme.md.ejs` to update latest availible framework version for documentation.
         - Update file `.versions_automation.json` with latest changes if format `{framework_name:version_id}`
         - Commit, push and create tag git repo
+	- Push Framework to [Cocoapods-Applicaster public repo](https://github.com/applicaster/CocoaPods) (Frameworks only )

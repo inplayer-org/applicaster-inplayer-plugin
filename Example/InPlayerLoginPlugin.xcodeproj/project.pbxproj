@@ -14,6 +14,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		B356833FD6D5690150010F84 /* Pods_InPlayerLoginPlugin_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01434F31389853C4C7C697FE /* Pods_InPlayerLoginPlugin_Example.framework */; };
+		F2595729240E6C6C00B4EB7B /* InPlayerLoginPlugin.podspec in Resources */ = {isa = PBXBuildFile; fileRef = F2595728240E6C6B00B4EB7B /* InPlayerLoginPlugin.podspec */; };
 		F2ABDCDF23AE3245008B238C /* ios-assets-sample.zip in Resources */ = {isa = PBXBuildFile; fileRef = F2ABDCDD23AE3245008B238C /* ios-assets-sample.zip */; };
 		F2ABDCE023AE3245008B238C /* manifest_ios.json in Resources */ = {isa = PBXBuildFile; fileRef = F2ABDCDE23AE3245008B238C /* manifest_ios.json */; };
 		F2D45B3323CBAACC00263454 /* mock_config.json in Resources */ = {isa = PBXBuildFile; fileRef = F2D45B3223CBAACC00263454 /* mock_config.json */; };
@@ -126,6 +127,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		A90B3AD63DBB38446B33A3A4 /* Pods-InPlayerLoginPlugin_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InPlayerLoginPlugin_Example.debug.xcconfig"; path = "Target Support Files/Pods-InPlayerLoginPlugin_Example/Pods-InPlayerLoginPlugin_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		CA46EBD802455529718763EB /* Pods_InPlayerLoginPlugin_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InPlayerLoginPlugin_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2595728240E6C6B00B4EB7B /* InPlayerLoginPlugin.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = InPlayerLoginPlugin.podspec; path = ../InPlayerLoginPlugin.podspec; sourceTree = "<group>"; };
 		F2ABDCDD23AE3245008B238C /* ios-assets-sample.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = "ios-assets-sample.zip"; path = "../ios-assets-sample.zip"; sourceTree = "<group>"; };
 		F2ABDCDE23AE3245008B238C /* manifest_ios.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = manifest_ios.json; path = ../manifest_ios.json; sourceTree = "<group>"; };
 		F2D45B3223CBAACC00263454 /* mock_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mock_config.json; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 		607FACF51AFB993E008FA782 /* Metadata */ = {
 			isa = PBXGroup;
 			children = (
+				F2595728240E6C6B00B4EB7B /* InPlayerLoginPlugin.podspec */,
 				F2ABDCDD23AE3245008B238C /* ios-assets-sample.zip */,
 				F2ABDCDE23AE3245008B238C /* manifest_ios.json */,
 				3F8F21837363AB428272E677 /* README.md */,
@@ -554,6 +557,7 @@
 				F2D45BD123CBB7B800263454 /* cam_alert_button_asset~ipad.png in Resources */,
 				F2D45BBC23CBB7B800263454 /* cam_input_field_asset@2x~ipad.png in Resources */,
 				F2D45BB423CBB7B800263454 /* cam_background_image@2x.png in Resources */,
+				F2595729240E6C6C00B4EB7B /* InPlayerLoginPlugin.podspec in Resources */,
 				F2D45BB323CBB7B800263454 /* cam_separator_asset_left@3x.png in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				F2D45BC723CBB7B800263454 /* cam_alert_component@2x.png in Resources */,
