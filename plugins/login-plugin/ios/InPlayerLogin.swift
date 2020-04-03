@@ -24,12 +24,13 @@ class InPlayerLogin: NSObject, GeneralProviderProtocol {
         return "InPlayer"
     }
 
-    func prepareProvider(_ defaultParams: [String: Any], completion: ((Bool) -> Void)?) {
+    func prepareProvider(_ defaultParams: [String: Any],
+                         completion: ((Bool) -> Void)?) {
         let configuration = InPlayer.Configuration(clientId: "",
                                                    referrer: nil,
                                                    environment: .staging)
         InPlayer.initialize(configuration: configuration)
-
+        
         completion?(true)
     }
 
@@ -37,3 +38,4 @@ class InPlayerLogin: NSObject, GeneralProviderProtocol {
         completion?(true)
     }
 }
+
