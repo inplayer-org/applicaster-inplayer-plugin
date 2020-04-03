@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import R from "ramda";
+import R, { prop } from "ramda";
 import moment from "moment";
 import globalSessionManager from "../globalSessionManager";
 import { Login } from "./Login";
 import { showAlert } from "./Utils";
-
+import { container } from "./Styles";
+import { AccountModule } from "../NativeModules/AccountModule";
 import {
   View,
   Text,
@@ -18,9 +19,12 @@ import {
 } from "react-native";
 import LoadingScreen from "./LoadingScreen";
 import SignUp from "./SignUp";
+// callback: ({ success: boolean, error: ?{}, payload: ?{} }) => void,
 
 const parseJSON = R.tryCatch(JSON.parse, () => null);
-
+const styles = StyleSheet.create({
+  container,
+});
 const InPlayer = (props) => {
   const riverScreen = Object.values(props.rivers).find(
     (river) => river.type === "my-plugin-identifier"
@@ -29,7 +33,6 @@ const InPlayer = (props) => {
   const [loading, setLoading] = useState(true);
   const [screen, setScreen] = useState(true);
   const ScreensData = {
-    LOADING: "Loading",
     LOGIN: "Login",
     SIGN_UP: "SignUp",
     FORGOT_PASSWORD: "ForgotPassword",
@@ -96,7 +99,20 @@ const InPlayer = (props) => {
     //   .catch(console.err);
   };
   const login = (payload) => {
+    const { callback } = props;
     console.log("login", { payload });
+    setLoading(true);
+    AccountModule.authenticate(payload)
+      .then((data) => {
+        console.log("Authenticated", { data });
+        setLoading(false);
+        callback({ success: true, error: null, payload: props.payload });
+      })
+      .catch((e) => {
+        console.log("Authentication Failed", { e });
+        setLoading(false);
+        showAlert("Authentefication Failed", "Try again");
+      });
   };
   const signUp = () => {
     console.log("SignUP");
@@ -111,16 +127,25 @@ const InPlayer = (props) => {
 
   createAccount = (payload) => {
     console.log("createAccount", { payload });
+    setLoading(true);
+    AccountModule.signUp(payload)
+      .then((data) => {
+        console.log("Sign Up complete", { data });
+        setLoading(false);
+        callback({ success: true, error: null, payload: props.payload });
+      })
+      .catch((e) => {
+        console.log("Sign Up  Failed", { e });
+        setLoading(false);
+        showAlert("Sign Up  Failed", "Try again");
+      });
   };
-  const renderScreen = () => {
+  const renderAuthenteficationScreen = () => {
     console.log("renderScreen");
     if (!screen) {
       return null;
     }
     switch (screen) {
-      case ScreensData.LOADING:
-        return <LoadingScreen />;
-
       case ScreensData.LOGIN:
         return <Login login={login} signUp={signUp} />;
 
@@ -132,7 +157,12 @@ const InPlayer = (props) => {
     return null;
   };
 
-  return renderScreen;
+  return (
+    <SafeAreaView style={styles.container}>
+      {renderAuthenteficationScreen()}
+      {loading && <LoadingScreen />}
+    </SafeAreaView>
+  );
 };
 
 export default InPlayer;

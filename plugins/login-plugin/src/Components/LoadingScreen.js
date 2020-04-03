@@ -12,14 +12,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width,
     position: "absolute",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
 });
 
 const LoadingScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <ActivityIndicator />
+      <ActivityIndicator color={"white"} size={"large"} />
     </SafeAreaView>
   );
 };

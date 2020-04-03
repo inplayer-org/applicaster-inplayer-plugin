@@ -64,7 +64,7 @@ export const Login = (props) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>InPlayer Demo</Text>
       <TextInput
         autoCapitalize="none"
@@ -96,6 +96,6 @@ export const Login = (props) => {
           <Text style={styles.newUserButtonText}>No user? Sigin Up!</Text>
         </View>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };

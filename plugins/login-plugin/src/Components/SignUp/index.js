@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  SafeAreaView,
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import R from "ramda";
 
@@ -14,7 +14,10 @@ import { container, title, input, button, buttonText } from "../Styles";
 import { validateEmail, showAlert, validatePassword } from "../Utils";
 
 const styles = StyleSheet.create({
-  container,
+  container: {
+    ...container,
+    width: Dimensions.get("window").width,
+  },
   title: {
     fontFamily: "Montserrat-Bold",
     fontSize: 15,
@@ -71,7 +74,7 @@ const SignUp = (props) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity
         style={styles.backButton}
         onPress={props?.onSiginUpBack}
@@ -119,7 +122,7 @@ const SignUp = (props) => {
           <Text style={styles.buttonText}>SIGN UP</Text>
         </View>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 
