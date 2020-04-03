@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import R from "ramda";
 import moment from "moment";
 import globalSessionManager from "../globalSessionManager";
-import { SignIn } from "./SignIn";
+import { Login } from "./Login";
 import { showAlert } from "./Utils";
 
 import {
@@ -41,7 +41,7 @@ const App = (props) => {
     }
     getLoginStatus();
     //TODO MAKE LOGIC FOR SCREENS AND SKIP
-    setScreen(ScreensData.SIGN_UP);
+    setScreen(ScreensData.LOGIN);
   }, []);
 
   const isTokenValid = (expiresAt) => moment().diff(expiresAt, "second") < 0;
@@ -96,16 +96,18 @@ const App = (props) => {
     //   .catch(console.err);
   };
   const login = (payload) => {
-    showAlert("Login Good", "Complete");
+    console.log("login", { payload });
   };
   const signUp = () => {
     console.log("SignUP");
     setScreen(ScreensData.SIGN_UP);
   };
-  console.log({ SignIn });
+
   console.disableYellowBox = true;
 
-  createAccount = (payload) => {};
+  createAccount = (payload) => {
+    console.log("createAccount", { payload });
+  };
   const renderScreen = () => {
     console.log("renderScreen");
     if (!screen) {
@@ -113,10 +115,10 @@ const App = (props) => {
     }
     switch (screen) {
       case ScreensData.LOADING:
-        return <LoadingScreen login={login} signUp={signUp} />;
+        return <LoadingScreen />;
 
       case ScreensData.LOGIN:
-        return <SignIn login={login} signUp={signUp} />;
+        return <Login login={login} signUp={signUp} />;
 
       case ScreensData.SIGN_UP:
         return <SignUp createAccount={createAccount} />;

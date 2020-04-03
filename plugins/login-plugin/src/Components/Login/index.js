@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const SignIn = (props) => {
+export const Login = (props) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
@@ -63,7 +63,7 @@ export const SignIn = (props) => {
     }
     login({ username, password });
   };
-  console.log({ props });
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>InPlayer Demo</Text>
