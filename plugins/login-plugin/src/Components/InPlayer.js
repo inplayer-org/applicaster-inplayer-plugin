@@ -21,7 +21,7 @@ import SignUp from "./SignUp";
 
 const parseJSON = R.tryCatch(JSON.parse, () => null);
 
-const App = (props) => {
+const InPlayer = (props) => {
   const riverScreen = Object.values(props.rivers).find(
     (river) => river.type === "my-plugin-identifier"
   );
@@ -129,4 +129,4 @@ const App = (props) => {
   return renderScreen();
 };
 
-export default App;
+export default InPlayer;
