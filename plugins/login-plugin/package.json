@@ -1,0 +1,30 @@
+{
+  "name": "@applicaster/quick-brick-inplayer",
+  "version": "0.0.5",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.1",
+    "moment": "^2.24.0",
+    "ramda": "^0.26.1"
+  },
+  "peerDependencies": {
+    "react": "16.8.3",
+    "react-native": "0.59.10",
+    "@applicaster/zapp-react-native-redux": "^2.3.1",
+    "@applicaster/zapp-react-native-utils": "^2.3.1"
+  },
+  "applicaster": {
+    "supportedPlatforms": [
+      "ios",
+      "android"
+    ],
+    "zappOwnerAccountId": "5e12fac7666333000ec0f8ab"
+  }
+}

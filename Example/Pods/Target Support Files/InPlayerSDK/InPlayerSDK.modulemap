@@ -1,6 +1,0 @@
-framework module InPlayerSDK {
-  umbrella header "InPlayerSDK-umbrella.h"
-
-  export *
-  module * { export * }
-}

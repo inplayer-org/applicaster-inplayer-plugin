@@ -1,0 +1,36 @@
+{
+  "name": "inplayer-plugins-workspace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "plugins",
+    "development-app"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare_app": "node_modules/.bin/zapplicaster-cli prepare --yarn -d ./development-app",
+    "reload": "node_modules/.bin/zapplicaster-cli reload_config --yarn -d ./development-app",
+    "reset_dev_app": "rm -rf ./development-app/* ./development-app/.babelrc",
+    "start": "node_modules/.bin/react-native start --projectRoot ./development-app",
+    "publish:plugin": "node_modules/.bin/zapplicaster-cli publish_plugin -y"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/applicaster/InPlayerPlugins.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/applicaster/InPlayerPlugins/issues"
+  },
+  "homepage": "https://github.com/applicaster/InPlayerPlugins#readme",
+  "dependencies": {
+    "@applicaster/zapplicaster-cli": "^2.3.1",
+    "ramda": "^0.27.0",
+    "react": "16.8.3",
+    "react-native": "0.59.10"
+  }
+}
