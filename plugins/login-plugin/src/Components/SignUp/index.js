@@ -15,10 +15,27 @@ import { validateEmail, showAlert, validatePassword } from "../Utils";
 
 const styles = StyleSheet.create({
   container,
-  title,
+  title: {
+    fontFamily: "Montserrat-Bold",
+    fontSize: 15,
+    color: "white",
+    marginTop: 62,
+    marginBottom: 80,
+  },
+
   input,
   button,
   buttonText,
+  backButton: {
+    alignSelf: "flex-start",
+    marginLeft: 35,
+    marginTop: 20,
+  },
+  backButtonText: {
+    color: "white",
+    fontFamily: "Montserrat-Bold",
+    fontSize: 15,
+  },
 });
 
 const parseJSON = R.tryCatch(JSON.parse, () => null);
@@ -55,6 +72,12 @@ const SignUp = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={props?.onSiginUpBack}
+      >
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>InPlayer Demo</Text>
       <TextInput
         autoCapitalize="characters"

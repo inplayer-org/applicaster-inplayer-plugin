@@ -12,7 +12,6 @@ import {
   StyleSheet,
   NativeModules,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 

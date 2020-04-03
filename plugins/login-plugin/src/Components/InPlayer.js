@@ -103,6 +103,10 @@ const InPlayer = (props) => {
     setScreen(ScreensData.SIGN_UP);
   };
 
+  const onSiginUpBack = () => {
+    setScreen(ScreensData.LOGIN);
+  };
+
   console.disableYellowBox = true;
 
   createAccount = (payload) => {
@@ -121,7 +125,9 @@ const InPlayer = (props) => {
         return <Login login={login} signUp={signUp} />;
 
       case ScreensData.SIGN_UP:
-        return <SignUp createAccount={createAccount} />;
+        return (
+          <SignUp createAccount={createAccount} onSiginUpBack={onSiginUpBack} />
+        );
     }
     return null;
   };
