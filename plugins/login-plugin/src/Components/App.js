@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import R from "ramda";
 import moment from "moment";
 import globalSessionManager from "../globalSessionManager";
+import { SignIn } from "./SignIn";
+import { showAlert } from "./Utils";
+
 import {
   View,
   Text,
@@ -11,83 +14,44 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   NativeModules,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import LoadingScreen from "./LoadingScreen";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center"
-  },
-  title: {
-    fontFamily: "Montserrat-Bold",
-    fontSize: 15,
-    color: "white",
-    marginTop: 100,
-    marginBottom: 80
-  },
-  input: {
-    fontFamily: "Montserrat-SemiBold",
-    backgroundColor: "transparent",
-    fontSize: 13,
-    color: "white",
-    width: 250,
-    height: 50,
-    borderBottomWidth: 1,
-    borderBottomColor: "#A9A9A9",
-    marginBottom: 10,
-    paddingHorizontal: 15
-  },
-  button: {
-    height: 50,
-    width: 250,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#F1AD12",
-    borderRadius: 50
-  },
-  buttonText: {
-    color: "white",
-    fontFamily: "Montserrat-Bold",
-    fontSize: 15
-  },
-  remindPassword: {
-    color: "rgba(169, 169, 169, 1)",
-    fontFamily: "Montserrat-Regular",
-    fontSize: 11,
-    marginBottom: 30
-  }
-});
+import SignUp from "./SignUp";
 
 const parseJSON = R.tryCatch(JSON.parse, () => null);
 
-const App = props => {
+const App = (props) => {
   const riverScreen = Object.values(props.rivers).find(
-    river => river.type === "my-plugin-identifier"
+    (river) => river.type === "my-plugin-identifier"
   );
 
-  const [fullName, setFullName] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [passwordConfirmation, setPasswordConfirmation] = useState(null);
-  const [password, setPassword] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [screen, setScreen] = useState(true);
+  const ScreensData = {
+    LOADING: "Loading",
+    LOGIN: "Login",
+    SIGN_UP: "SignUp",
+    FORGOT_PASSWORD: "ForgotPassword",
+  };
 
   useEffect(() => {
     async function getLoginStatus() {
       await checkLoginStatus();
     }
     getLoginStatus();
+    //TODO MAKE LOGIC FOR SCREENS AND SKIP
+    setScreen(ScreensData.SIGN_UP);
   }, []);
 
-  const isTokenValid = expiresAt => moment().diff(expiresAt, "second") < 0;
+  const isTokenValid = (expiresAt) => moment().diff(expiresAt, "second") < 0;
 
   const checkLoginStatus = async () => {
     const { callback, payload } = props;
     const loginDetails = await NativeModules.LocalStorage.getItem(
       "loginDetails",
       "dev_demo_login"
-    ).catch(err => {
+    ).catch((err) => {
       setLoading(false);
       globalSessionManager.logOut();
     });
@@ -95,7 +59,7 @@ const App = props => {
     if (loginDetails && isTokenValid(parseJSON(loginDetails).expiresAt)) {
       callback({
         success: true,
-        payload
+        payload,
       });
     } else {
       setLoading(false);
@@ -113,12 +77,10 @@ const App = props => {
       .catch(console.log);
   };
 
-  const createExpirationDate = expiresIn =>
-    moment()
-      .add(expiresIn, "second")
-      .format();
+  const createExpirationDate = (expiresIn) =>
+    moment().add(expiresIn, "second").format();
 
-  const onSuccess = credentials => {
+  const onSuccess = (credentials) => {
     // this is the example of the logic on auth0
     // to be replaced with what inPlayer needs
     // auth0.auth
@@ -133,73 +95,36 @@ const App = props => {
     //   })
     //   .catch(console.err);
   };
+  const login = (payload) => {
+    showAlert("Login Good", "Complete");
+  };
   const signUp = () => {
-    const { callback, payload } = props;
+    console.log("SignUP");
+    setScreen(ScreensData.SIGN_UP);
+  };
+  console.log({ SignIn });
+  console.disableYellowBox = true;
 
-    // example login flow for auth0
-    // to be changed
+  createAccount = (payload) => {};
+  const renderScreen = () => {
+    console.log("renderScreen");
+    if (!screen) {
+      return null;
+    }
+    switch (screen) {
+      case ScreensData.LOADING:
+        return <LoadingScreen login={login} signUp={signUp} />;
 
-    // auth0.auth
-    //   .passwordRealm({
-    //     username,
-    //     password,
-    //     realm: "Username-Password-Authentication"
-    //   })
-    //   .then(credentials => {
-    //     onSuccess(credentials);
-    //     callback({
-    //       success: true,
-    //       payload
-    //     });
-    //   })
-    //   .catch(error => console.log({ error }));
+      case ScreensData.LOGIN:
+        return <SignIn login={login} signUp={signUp} />;
+
+      case ScreensData.SIGN_UP:
+        return <SignUp createAccount={createAccount} />;
+    }
+    return null;
   };
 
-  return loading ? null : (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>InPlayer Demo</Text>
-      <TextInput
-        autoCapitalize="characters"
-        placeholder="Enter your name"
-        placeholderTextColor={"white"}
-        style={styles.input}
-        value={fullName}
-        onChangeText={setFullName}
-      />
-      <TextInput
-        autoCapitalize="none"
-        placeholder="E-mail"
-        placeholderTextColor={"white"}
-        style={styles.input}
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Password"
-        placeholderTextColor={"white"}
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Password Confirmation"
-        placeholderTextColor={"white"}
-        style={styles.input}
-        value={passwordConfirmation}
-        onChangeText={setPasswordConfirmation}
-        secureTextEntry
-      />
-
-      <TouchableOpacity onPress={signUp}>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>SIGN UP</Text>
-        </View>
-      </TouchableOpacity>
-    </SafeAreaView>
-  );
+  return renderScreen();
 };
 
 export default App;
