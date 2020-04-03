@@ -1,6 +1,6 @@
 {
   "name": "@applicaster/quick-brick-inplayer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,10 +15,10 @@
     "ramda": "^0.26.1"
   },
   "peerDependencies": {
-    "react": "16.8.3",
-    "react-native": "0.59.10",
     "@applicaster/zapp-react-native-redux": "^2.3.1",
-    "@applicaster/zapp-react-native-utils": "^2.3.1"
+    "@applicaster/zapp-react-native-utils": "^2.3.1",
+    "react": "16.8.3",
+    "react-native": "0.59.10"
   },
   "applicaster": {
     "supportedPlatforms": [

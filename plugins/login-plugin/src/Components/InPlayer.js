@@ -157,6 +157,7 @@ const InPlayer = (props) => {
     return null;
   };
 
+  console.log({ props });
   return (
     <SafeAreaView style={styles.container}>
       {renderAuthenteficationScreen()}
