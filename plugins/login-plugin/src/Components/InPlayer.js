@@ -132,7 +132,7 @@ const InPlayer = (props) => {
     return null;
   };
 
-  return renderScreen();
+  return renderScreen;
 };
 
 export default InPlayer;

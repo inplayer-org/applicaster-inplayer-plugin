@@ -3,7 +3,7 @@ import {
   ActivityIndicator,
   StyleSheet,
   SafeAreaView,
-  Dimensions
+  Dimensions,
 } from "react-native";
 
 const styles = StyleSheet.create({
@@ -11,8 +11,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    height: Dimensions.get("window").height
-  }
+    height: Dimensions.get("window").height,
+    position: "absolute",
+  },
 });
 
 const LoadingScreen = () => {

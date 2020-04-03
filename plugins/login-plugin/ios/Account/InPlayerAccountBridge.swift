@@ -16,10 +16,10 @@ struct InPlayerAccountBridgeKeys {
     static let password = "password"
 }
 
-@objc(InPlayerAccount)
+@objc(InPlayerAccountBridge)
 class InPlayerAccountBridge: NSObject, RCTBridgeModule {
     static func moduleName() -> String! {
-        return "InPlayerAccount"
+        return "InPlayerAccountBridge"
     }
 
     public class func requiresMainQueueSetup() -> Bool {

@@ -9,7 +9,7 @@ const defaultAccount = {
   signOut: nullPromise,
 };
 
-const { InPlayerAccount = defaultAccount } = NativeModules;
+const { InPlayerAccountBridge = defaultAccount } = NativeModules;
 
 export const AccountModule = {
   /**

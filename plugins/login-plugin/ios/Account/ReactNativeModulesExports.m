@@ -1,6 +1,6 @@
 @import React;
 
-@interface RCT_EXTERN_MODULE (InPlayerAccount, NSObject)
+@interface RCT_EXTERN_MODULE (InPlayerAccountBridge, NSObject)
 
 RCT_EXTERN_METHOD(signUp:(NSString *)payload
                       resolver:(RCTPromiseResolveBlock)resolver
