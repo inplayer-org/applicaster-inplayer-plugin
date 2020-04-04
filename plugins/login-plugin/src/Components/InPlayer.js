@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import R, { prop } from "ramda";
+import { Keyboard } from "react-native";
 import moment from "moment";
 import globalSessionManager from "../globalSessionManager";
 import { Login } from "./Login";
@@ -99,6 +100,7 @@ const InPlayer = (props) => {
     //   .catch(console.err);
   };
   const login = (payload) => {
+    Keyboard.dismiss();
     const { callback } = props;
     console.log("login", { payload });
     setLoading(true);
@@ -111,7 +113,11 @@ const InPlayer = (props) => {
       .catch((e) => {
         console.log("Authentication Failed", { e });
         setLoading(false);
-        showAlert("Authentefication Failed", "Try again");
+        const { code = -1, message = "Unknown Error" } = e;
+        showAlert(
+          "Error: Authentefication Failed",
+          `Code:${code}, Message: ${message}`
+        );
       });
   };
   const signUp = () => {
@@ -126,18 +132,21 @@ const InPlayer = (props) => {
   console.disableYellowBox = true;
 
   createAccount = (payload) => {
+    Keyboard.dismiss();
     console.log("createAccount", { payload });
     setLoading(true);
+    const { callback } = props;
     AccountModule.signUp(payload)
       .then((data) => {
-        console.log("Sign Up complete", { data });
+        console.log("Sign Up complete", { data, callback });
         setLoading(false);
         callback({ success: true, error: null, payload: props.payload });
       })
       .catch((e) => {
         console.log("Sign Up  Failed", { e });
         setLoading(false);
-        showAlert("Sign Up  Failed", "Try again");
+        const { code = -1, message = "Unknown Error" } = e;
+        showAlert("Error: Sign Up Failed", `Code:${code}, Message: ${message}`);
       });
   };
   const renderAuthenteficationScreen = () => {

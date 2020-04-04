@@ -9,14 +9,15 @@ import Foundation
 import InPlayerSDK
 import ZappCore
 
+struct InPlayerLoginKey {
+    static let publisherUUID = "in_player_publisher_id"
+    static let referrer = "in_player_referrer"
+}
+
 class InPlayerLogin: NSObject, GeneralProviderProtocol {
     required init(pluginModel: ZPPluginModel) {
         model = pluginModel
     }
-
-    lazy var pluginConfiguration: [AnyHashable: Any] = {
-        [:]
-    }()
 
     var model: ZPPluginModel?
 
@@ -26,11 +27,15 @@ class InPlayerLogin: NSObject, GeneralProviderProtocol {
 
     func prepareProvider(_ defaultParams: [String: Any],
                          completion: ((Bool) -> Void)?) {
-        let configuration = InPlayer.Configuration(clientId: "",
-                                                   referrer: nil,
-                                                   environment: .staging)
-        InPlayer.initialize(configuration: configuration)
-        
+        if let configurationJSON = model?.configurationJSON,
+            let uuid = configurationJSON[InPlayerLoginKey.publisherUUID] as? String,
+            let reffer = configurationJSON[InPlayerLoginKey.referrer] as? String {
+            let configuration = InPlayer.Configuration(clientId: uuid,
+                                                       referrer: reffer,
+                                                       environment: .staging)
+            InPlayer.initialize(configuration: configuration)
+        }
+
         completion?(true)
     }
 
@@ -38,4 +43,3 @@ class InPlayerLogin: NSObject, GeneralProviderProtocol {
         completion?(true)
     }
 }
-

@@ -18,7 +18,7 @@ export const AccountModule = {
    */
   async signUp(payload) {
     try {
-      return InPlayerAccount.signUp(payload);
+      return InPlayerAccountBridge.signUp(payload);
     } catch (e) {
       throw e;
     }
@@ -29,8 +29,9 @@ export const AccountModule = {
    * @param {Array} payload Dictionary with user data
    */
   async authenticate(payload) {
+    console.log({ InPlayerAccountBridge });
     try {
-      return InPlayerAccount.signUp(payload);
+      return InPlayerAccountBridge.authenticate(payload);
     } catch (e) {
       throw e;
     }
@@ -41,7 +42,7 @@ export const AccountModule = {
    */
   async isAuthenticated() {
     try {
-      return InPlayerAccount.signUp(payload);
+      return InPlayerAccountBridge.signUp(payload);
     } catch (e) {
       throw e;
     }
@@ -52,7 +53,7 @@ export const AccountModule = {
    */
   async signOut() {
     try {
-      return InPlayerAccount.signUp(payload);
+      return InPlayerAccountBridge.signUp(payload);
     } catch (e) {
       throw e;
     }

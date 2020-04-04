@@ -75,10 +75,10 @@
   resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-default-cell-renderer/-/quick-brick-default-cell-renderer-1.0.0.tgz#f93f65e623ebd0b2779aa072874e3d9648597a19"
   integrity sha512-xGjzRo/ZhvhcM9akfzxnCyTNqcG0LglyUTLXN6WN/JzkiOzErgYxfFquJNGG+ioqTmCrz4Y8r1+5vXFAMEDSkw==
 
-"@applicaster/quick-brick-inplayer@0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.0.5.tgz#68e2b5749b218d00f967090ce2b696a03dfc29f6"
-  integrity sha512-bbncomKcUqnecY5G2VRAlg5921QH9/ECxNZI7FxbUWIJoHZwzE4R+QqxbWsXRhFyBTqypBmlRMeOmUkgU0B7mw==
+"@applicaster/quick-brick-inplayer@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.0.6.tgz#00488d8f49dbc0d742ff5d9ca6f5921da3aa09f2"
+  integrity sha512-CFqSbBMVYbinBRTcCGbhmlftbTW9p0u2bzrIr8Y5DbPPmdvQYvrF4rg1K6AQeMMe++HD2sh27x58Rg/6GZrOfQ==
   dependencies:
     axios "^0.19.1"
     moment "^2.24.0"
