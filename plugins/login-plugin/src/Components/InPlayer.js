@@ -101,10 +101,10 @@ const InPlayer = (props) => {
   };
   const login = (payload) => {
     Keyboard.dismiss();
-    const { callback } = props;
+    const { callback, configuration } = props;
     console.log("login", { payload });
     setLoading(true);
-    AccountModule.authenticate(payload)
+    AccountModule.authenticate({ ...payload, ...configuration })
       .then((data) => {
         console.log("Authenticated", { data });
         setLoading(false);
@@ -133,10 +133,11 @@ const InPlayer = (props) => {
 
   createAccount = (payload) => {
     Keyboard.dismiss();
-    console.log("createAccount", { payload });
+    const { configuration } = this.props;
+    console.log("createAccount", { ...payload, ...configuration });
     setLoading(true);
     const { callback } = props;
-    AccountModule.signUp(payload)
+    AccountModule.signUp({ ...payload, ...configuration })
       .then((data) => {
         console.log("Sign Up complete", { data, callback });
         setLoading(false);

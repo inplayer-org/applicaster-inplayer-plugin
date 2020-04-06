@@ -40,7 +40,7 @@ export const AccountModule = {
   /**
    * Check if user currently authenticated
    */
-  async isAuthenticated() {
+  async isAuthenticated(payload) {
     try {
       return InPlayerAccountBridge.signUp(payload);
     } catch (e) {
@@ -51,7 +51,7 @@ export const AccountModule = {
   /**
    * Sign our user from InPlayer account
    */
-  async signOut() {
+  async signOut(payload) {
     try {
       return InPlayerAccountBridge.signUp(payload);
     } catch (e) {
