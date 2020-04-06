@@ -97,7 +97,7 @@ const InPlayer = (props) => {
 
   createAccount = (payload) => {
     Keyboard.dismiss();
-    const { configuration } = this.props;
+    const { configuration } = props;
     console.log("createAccount", { ...payload, ...configuration });
     setLoading(true);
     const { callback } = props;

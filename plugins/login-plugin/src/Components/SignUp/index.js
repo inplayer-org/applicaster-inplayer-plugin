@@ -93,7 +93,7 @@ const SignUp = (props) => {
       </TouchableOpacity>
       <Text style={styles.title}>InPlayer Demo</Text>
       <TextInput
-        autoCapitalize="characters"
+        autoCapitalize="words"
         placeholder="Enter your name"
         placeholderTextColor={"white"}
         style={styles.input}
