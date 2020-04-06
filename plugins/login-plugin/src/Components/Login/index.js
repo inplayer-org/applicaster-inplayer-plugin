@@ -101,7 +101,7 @@ export const Login = (props) => {
       </TouchableOpacity>
       <TouchableOpacity onPress={props?.signUp}>
         <View style={styles.newUserButton}>
-          <Text style={styles.newUserButtonText}>No user? Sigin Up!</Text>
+          <Text style={styles.newUserButtonText}>No user? Sign Up!</Text>
         </View>
       </TouchableOpacity>
     </View>

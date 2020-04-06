@@ -77,11 +77,11 @@ const InPlayer = (props) => {
     setLoading(true);
     AccountModule.authenticate({ ...payload, ...configuration })
       .then((data) => {
-        console.log("Authenticated", { data });
+        console.log("authenticated", { data });
         onSuccess();
       })
       .catch((e) => {
-        onFail(e, "Error: Authentefication Failed");
+        onFail(e, "Error: Authentication Failed");
       });
   };
   const signUp = () => {
