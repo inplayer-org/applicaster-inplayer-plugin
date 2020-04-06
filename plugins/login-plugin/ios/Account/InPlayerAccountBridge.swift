@@ -12,7 +12,7 @@ import ZappCore
 
 struct InPlayerAccountBridgeKeys {
     static let fullName = "fullName"
-    static let email = "email"
+    static let email = "username"
     static let password = "password"
 }
 
@@ -31,13 +31,21 @@ class InPlayerAccountBridge: NSObject, RCTBridgeModule {
         return DispatchQueue.main
     }
 
-    @objc func signUp(payload: [String: Any]?,
+    @objc func signUp(_ payload: [String: Any]?,
                       resolver: @escaping RCTPromiseResolveBlock,
                       rejecter: @escaping RCTPromiseRejectBlock) {
+        guard InPlayer.inPlayerSDKInitialization(payload: payload) else {
+            rejecter(noCredentialsError.code,
+                     noCredentialsError.message,
+                     nil)
+            return
+        }
         guard let fullName = payload?[InPlayerAccountBridgeKeys.fullName] as? String,
             let email = payload?[InPlayerAccountBridgeKeys.email] as? String,
             let password = payload?[InPlayerAccountBridgeKeys.password] as? String else {
-            rejecter("ErrorCode", "Error", nil)
+            rejecter(noExpectedPayloadParams.code,
+                     "\(noExpectedPayloadParams.message): fullName, email, password",
+                     nil)
 
             return
         }
@@ -57,13 +65,21 @@ class InPlayerAccountBridge: NSObject, RCTBridgeModule {
         }
     }
 
-    @objc func authenticate(payload: [String: Any]?,
+    @objc func authenticate(_ payload: [String: Any]?,
                             resolver: @escaping RCTPromiseResolveBlock,
                             rejecter: @escaping RCTPromiseRejectBlock) {
+        guard InPlayer.inPlayerSDKInitialization(payload: payload) else {
+            rejecter(noCredentialsError.code,
+                     noCredentialsError.message,
+                     nil)
+            return
+        }
+
         guard let email = payload?[InPlayerAccountBridgeKeys.email] as? String,
             let password = payload?[InPlayerAccountBridgeKeys.password] as? String else {
-            rejecter("ErrorCode", "Error", nil)
-
+            rejecter(noExpectedPayloadParams.code,
+                     "\(noExpectedPayloadParams.message): email, password",
+                     nil)
             return
         }
 
@@ -79,13 +95,28 @@ class InPlayerAccountBridge: NSObject, RCTBridgeModule {
         }
     }
 
-    @objc func isAuthenticated(resolver: @escaping RCTPromiseResolveBlock,
+    @objc func isAuthenticated(_ payload: [String: Any]?,
+                               resolver: @escaping RCTPromiseResolveBlock,
                                rejecter: @escaping RCTPromiseRejectBlock) {
+        guard InPlayer.inPlayerSDKInitialization(payload: payload) else {
+            rejecter(noCredentialsError.code,
+                     noCredentialsError.message,
+                     nil)
+            return
+        }
         resolver(InPlayer.Account.isAuthenticated())
     }
 
-    @objc func signOut(resolver: @escaping RCTPromiseResolveBlock,
+    @objc func signOut(_ payload: [String: Any]?,
+                       resolver: @escaping RCTPromiseResolveBlock,
                        rejecter: @escaping RCTPromiseRejectBlock) {
+        guard InPlayer.inPlayerSDKInitialization(payload: payload) else {
+            rejecter(noCredentialsError.code,
+                     noCredentialsError.message,
+                     nil)
+            return
+        }
+
         InPlayer.Account.signOut(success: {
             resolver(true)
         }) { (error: InPlayerError) in
