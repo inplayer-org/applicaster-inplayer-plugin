@@ -1,0 +1,41 @@
+{
+  "api": {
+    "require_startup_execution": false,
+    "modules": []
+  },
+  "dependency_repository_url": [],
+  "platform": "ios",
+  "dependency_name": "@applicaster/quick-brick-inplayer-logout",
+  "dependency_version": "0.0.1",
+  "author_name": "Applicaster",
+  "author_email": "zapp@applicaster.com",
+  "manifest_version": "0.0.1",
+  "name": "inPlayer Hook Plugin Logout QuickBrick",
+  "description": "InPlayer Hook Plugin Logout",
+  "type": "general",
+  "screen": true,
+  "react_native": true,
+  "identifier": "quick-brick-inplayer-logout",
+  "ui_builder_support": true,
+  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
+  "min_zapp_sdk": "20.2.0-Dev",
+  "deprecated_since_zapp_sdk": "",
+  "unsupported_since_zapp_sdk": "",
+  "preload": true,
+  "extra_dependencies": [],
+  "custom_configuration_fields": [
+    {
+      "type": "text",
+      "key": "in_player_publisher_id",
+      "tooltip_text": "Publisher UUID",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "key": "in_player_referrer",
+      "tooltip_text": "Referrer URL",
+      "default": ""
+    }
+  ],
+  "targets": ["mobile"]
+}
