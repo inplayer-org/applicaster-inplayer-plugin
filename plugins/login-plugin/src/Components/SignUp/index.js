@@ -50,24 +50,34 @@ const SignUp = (props) => {
   const [password, setPassword] = useState(null);
 
   const signUp = () => {
-    const { createAccount } = props;
+    const { createAccount, onSignUpError } = props;
 
     console.log({
       email: validateEmail(username),
       password: validatePassword(password),
     });
     console.log({ fullName });
+    const title = "Sign Up form issue";
     if (!fullName || fullName.length == 0) {
-      showAlert("Sign Up Failed", "Name can not be empty");
+      onSignUpError({
+        title,
+        message: "Name can not be empty",
+      });
       return;
     } else if (validateEmail(username) == false) {
-      showAlert("Sign Up Failed", "Email is not valid");
+      onSignUpError({ title, message: "Email is not valid" });
       return;
     } else if (validatePassword(password) == false) {
-      showAlert("Sign Up Failed", "Password must be at least 8 characters");
+      onSignUpError({
+        title,
+        message: "Password must be at least 8 characters",
+      });
       return;
     } else if (password !== passwordConfirmation) {
-      showAlert("Sign Up Failed", "Password not equal confirmation password");
+      onSignUpError({
+        title,
+        message: "Password not equal confirmation password",
+      });
       return;
     }
     createAccount({ fullName, username, password });

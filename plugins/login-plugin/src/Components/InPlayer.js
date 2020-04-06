@@ -4,19 +4,17 @@ import { Keyboard } from "react-native";
 import moment from "moment";
 import globalSessionManager from "../globalSessionManager";
 import { Login } from "./Login";
-import { showAlert } from "./Utils";
 import { container } from "./Styles";
 import { AccountModule } from "../NativeModules/AccountModule";
+// https://github.com/testshallpass/react-native-dropdownalert#usage
+import DropdownAlert from "react-native-dropdownalert";
+
 import {
   View,
-  Text,
   Button,
   SafeAreaView,
-  TextInput,
   StyleSheet,
-  TouchableWithoutFeedback,
   NativeModules,
-  TouchableOpacity,
 } from "react-native";
 import LoadingScreen from "./LoadingScreen";
 import SignUp from "./SignUp";
@@ -31,93 +29,59 @@ const InPlayer = (props) => {
     (river) => river.type === "my-plugin-identifier"
   );
 
-  const [loading, setLoading] = useState(true);
-  const [screen, setScreen] = useState(true);
   const ScreensData = {
+    EMPTY: "Empty",
     LOGIN: "Login",
     SIGN_UP: "SignUp",
     FORGOT_PASSWORD: "ForgotPassword",
   };
+  const [loading, setLoading] = useState(true);
+  const [screen, setScreen] = useState(ScreensData.EMPTY);
 
   useEffect(() => {
-    async function getLoginStatus() {
-      await checkLoginStatus();
-    }
-    getLoginStatus();
-    //TODO MAKE LOGIC FOR SCREENS AND SKIP
-    setScreen(ScreensData.LOGIN);
+    const { configuration } = props;
+    // Check is Autheticated
+    AccountModule.isAuthenticated(configuration)
+      .then((isLogedIn) => {
+        console.log({ isLogedIn });
+        setLoading(false);
+        isLogedIn == true ? onSuccess() : setScreen(ScreensData.LOGIN);
+        console.log({ isLogedIn });
+      })
+      .catch((err) => {
+        console.log({ err });
+      });
   }, []);
 
-  const isTokenValid = (expiresAt) => moment().diff(expiresAt, "second") < 0;
-
-  const checkLoginStatus = async () => {
-    const { callback, payload } = props;
-    const loginDetails = await NativeModules.LocalStorage.getItem(
-      "loginDetails",
-      "dev_demo_login"
-    ).catch((err) => {
-      setLoading(false);
-      globalSessionManager.logOut();
-    });
-
-    if (loginDetails && isTokenValid(parseJSON(loginDetails).expiresAt)) {
-      callback({
-        success: true,
-        payload,
-      });
-    } else {
-      setLoading(false);
-      globalSessionManager.logOut();
-    }
+  const onSuccess = () => {
+    const { callback } = props;
+    setLoading(false);
+    callback &&
+      callback({ success: true, error: null, payload: props.payload });
   };
 
-  const saveLoginData = ({ token, userId, expiresAt }) => {
-    NativeModules.LocalStorage.setItem(
-      "loginDetails",
-      JSON.stringify({ token, userId, expiresAt }),
-      "dev_demo_login"
-    )
-      .then(console.log)
-      .catch(console.log);
+  const onFail = (error, errorMessage) => {
+    const { code = -1, message = "Unknown Error" } = error;
+    setLoading(false);
+    this.dropDownAlertRef.alertWithType(
+      "error",
+      errorMessage,
+      `Code:${code}, ${message}`
+    );
   };
 
-  const createExpirationDate = (expiresIn) =>
-    moment().add(expiresIn, "second").format();
-
-  const onSuccess = (credentials) => {
-    // this is the example of the logic on auth0
-    // to be replaced with what inPlayer needs
-    // auth0.auth
-    //   .userInfo({ token: credentials.accessToken })
-    //   .then(profile => {
-    //     globalSessionManager.logIn(credentials);
-    //     saveLoginData({
-    //       token: credentials.accessToken,
-    //       userId: profile.sub,
-    //       expiresAt: createExpirationDate(credentials.expiresIn)
-    //     });
-    //   })
-    //   .catch(console.err);
-  };
   const login = (payload) => {
     Keyboard.dismiss();
-    const { callback, configuration } = props;
+    const { configuration } = props;
     console.log("login", { payload });
     setLoading(true);
     AccountModule.authenticate({ ...payload, ...configuration })
       .then((data) => {
         console.log("Authenticated", { data });
-        setLoading(false);
-        callback({ success: true, error: null, payload: props.payload });
+        onSuccess();
       })
       .catch((e) => {
-        console.log("Authentication Failed", { e });
-        setLoading(false);
-        const { code = -1, message = "Unknown Error" } = e;
-        showAlert(
-          "Error: Authentefication Failed",
-          `Code:${code}, Message: ${message}`
-        );
+        onFail(e, "Error: Authentefication Failed");
       });
   };
   const signUp = () => {
@@ -140,15 +104,19 @@ const InPlayer = (props) => {
     AccountModule.signUp({ ...payload, ...configuration })
       .then((data) => {
         console.log("Sign Up complete", { data, callback });
-        setLoading(false);
-        callback({ success: true, error: null, payload: props.payload });
+        onSuccess();
       })
       .catch((e) => {
-        console.log("Sign Up  Failed", { e });
-        setLoading(false);
-        const { code = -1, message = "Unknown Error" } = e;
-        showAlert("Error: Sign Up Failed", `Code:${code}, Message: ${message}`);
+        onFail(e, "Error: Error: Sign Up Failed");
       });
+  };
+
+  onLoginError = ({ title, message }) => {
+    this.dropDownAlertRef.alertWithType("warn", title, message);
+  };
+
+  onSignUpError = ({ title, message }) => {
+    this.dropDownAlertRef.alertWithType("warn", title, message);
   };
   const renderAuthenteficationScreen = () => {
     console.log("renderScreen");
@@ -157,22 +125,31 @@ const InPlayer = (props) => {
     }
     switch (screen) {
       case ScreensData.LOGIN:
-        return <Login login={login} signUp={signUp} />;
+        return (
+          <Login login={login} signUp={signUp} onLoginError={onLoginError} />
+        );
 
       case ScreensData.SIGN_UP:
         return (
-          <SignUp createAccount={createAccount} onSiginUpBack={onSiginUpBack} />
+          <SignUp
+            createAccount={createAccount}
+            onSiginUpBack={onSiginUpBack}
+            onSignUpError={onSignUpError}
+          />
         );
     }
     return null;
   };
 
-  console.log({ props });
+  console.log({ props, AccountModule });
   return (
-    <SafeAreaView style={styles.container}>
-      {renderAuthenteficationScreen()}
-      {loading && <LoadingScreen />}
-    </SafeAreaView>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        {renderAuthenteficationScreen()}
+        {loading && <LoadingScreen />}
+      </SafeAreaView>
+      <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
+    </View>
   );
 };
 

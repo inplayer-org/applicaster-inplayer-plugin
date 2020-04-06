@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import R from "ramda";
 import moment from "moment";
 import globalSessionManager from "../../globalSessionManager";
-import { validateEmail, showAlert, validatePassword } from "../Utils";
+import { validateEmail, validatePassword } from "../Utils";
 import { container, title, input, button, buttonText } from "../Styles";
 import {
   View,
@@ -47,17 +47,25 @@ export const Login = (props) => {
   const [password, setPassword] = useState(null);
 
   const login = () => {
-    const { login } = props;
+    const { login, onLoginError } = props;
 
     console.log({
       email: validateEmail(username),
       password: validatePassword(password),
     });
+    const title = "Login form issue";
+
     if (validateEmail(username) == false) {
-      showAlert("Login Failed", "Email is not valid");
+      onLoginError({
+        title,
+        message: "Email is not valid",
+      });
       return;
     } else if (validatePassword(password) == false) {
-      showAlert("Login Failed", "Password must be at least 8 characters");
+      onLoginError({
+        title,
+        message: "Password must be at least 8 characters",
+      });
       return;
     }
     login({ username, password });

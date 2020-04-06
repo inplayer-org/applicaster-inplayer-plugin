@@ -42,7 +42,7 @@ export const AccountModule = {
    */
   async isAuthenticated(payload) {
     try {
-      return InPlayerAccountBridge.signUp(payload);
+      return InPlayerAccountBridge.isAuthenticated(payload);
     } catch (e) {
       throw e;
     }
@@ -53,7 +53,7 @@ export const AccountModule = {
    */
   async signOut(payload) {
     try {
-      return InPlayerAccountBridge.signUp(payload);
+      return InPlayerAccountBridge.signOut(payload);
     } catch (e) {
       throw e;
     }

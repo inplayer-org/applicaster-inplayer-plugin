@@ -18,4 +18,4 @@ let noCredentialsError = InPlayerRejection(code: "-1",
                                            message: "Can not initialize inPlayer, Payload does not contain expected inPlayer credentials: in_player_publisher_id, in_player_referrer")
 
 let noExpectedPayloadParams = InPlayerRejection(code: "-2",
-                                                message: "One of the expected params was not provided in Paylod:")
+                                                message: "One of the expected params was not provided in Payload:")

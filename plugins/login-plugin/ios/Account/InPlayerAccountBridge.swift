@@ -44,7 +44,7 @@ class InPlayerAccountBridge: NSObject, RCTBridgeModule {
             let email = payload?[InPlayerAccountBridgeKeys.email] as? String,
             let password = payload?[InPlayerAccountBridgeKeys.password] as? String else {
             rejecter(noExpectedPayloadParams.code,
-                     "\(noExpectedPayloadParams.message): fullName, email, password",
+                     "\(noExpectedPayloadParams.message) fullName, email, password",
                      nil)
 
             return
@@ -78,7 +78,7 @@ class InPlayerAccountBridge: NSObject, RCTBridgeModule {
         guard let email = payload?[InPlayerAccountBridgeKeys.email] as? String,
             let password = payload?[InPlayerAccountBridgeKeys.password] as? String else {
             rejecter(noExpectedPayloadParams.code,
-                     "\(noExpectedPayloadParams.message): email, password",
+                     "\(noExpectedPayloadParams.message) email, password",
                      nil)
             return
         }
