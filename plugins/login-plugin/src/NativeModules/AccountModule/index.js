@@ -14,7 +14,7 @@ const { InPlayerAccountBridge = defaultAccount } = NativeModules;
 export const AccountModule = {
   /**
    * Sign Up InPlayer user's account
-   * @param {Array} payload Dictionary with user data
+   * @param {Dictionary} payload Dictionary with user data
    */
   async signUp(payload) {
     try {
@@ -26,7 +26,7 @@ export const AccountModule = {
 
   /**
    * Login to InPlayer user's account
-   * @param {Array} payload Dictionary with user data
+   * @param {Dictionary} payload Dictionary with user data
    */
   async authenticate(payload) {
     console.log({ InPlayerAccountBridge });
