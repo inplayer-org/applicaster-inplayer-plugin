@@ -1,6 +1,6 @@
 {
   "name": "@applicaster/quick-brick-inplayer-logout",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "ramda": "^0.26.1"
+  },
   "peerDependencies": {
     "@applicaster/zapp-react-native-redux": "^2.3.1",
     "@applicaster/zapp-react-native-utils": "^2.3.1",

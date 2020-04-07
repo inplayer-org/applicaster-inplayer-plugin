@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import R, { prop } from "ramda";
 import { AccountModule } from "./src/NativeModules/AccountModule";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { connectToStore } from "@applicaster/zapp-react-native-redux";
