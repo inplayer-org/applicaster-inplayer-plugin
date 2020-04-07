@@ -3,8 +3,8 @@ import R, { prop } from "ramda";
 import { AccountModule } from "./src/NativeModules/AccountModule";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { connectToStore } from "@applicaster/zapp-react-native-redux";
-
-import { Text, SafeAreaView } from "react-native";
+import { fixColorHexCode } from "@applicaster/zapp-react-native-utils/stylesUtils";
+import { Text, SafeAreaView, Platform, ActivityIndicator } from "react-native";
 
 const InPlayerLogout = (props) => {
   const [loading, setLoading] = useState(true);
