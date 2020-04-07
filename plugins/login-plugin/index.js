@@ -9,6 +9,7 @@ if (!global.devDemoLogin) {
 }
 
 export default {
+  hasPlayerHook: true,
   isFlowBlocker: () => true,
   presentFullScreen: true,
   skipHook: () => R.pathEq(["devDemoLogin", "isLoggedIn"], true)(global),

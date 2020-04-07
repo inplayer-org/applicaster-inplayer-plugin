@@ -3,6 +3,7 @@ import R, { prop } from "ramda";
 import { Keyboard } from "react-native";
 import { container } from "./Styles";
 import AccountFlow from "./AccountFlow";
+import AssetFlow from "./AssetFlow";
 import { AccountModule } from "../NativeModules/AccountModule";
 import { StyleSheet } from "react-native";
 
@@ -28,17 +29,18 @@ const InPlayer = (props) => {
 
   useEffect(() => {
     const { payload } = props;
+    console.log("InPlayer", { props });
+
     //TODO figure out if it is player or screen
   }, []);
 
   const assetFlowCallback = ({ success, data }) => {
     const { callback, payload } = props;
-
     callback &&
       callback({ success, error: null, payload: { ...payload, ...data } });
   };
 
-  const accoutFlowCallback = ({ success }) => {
+  const accountFlowCallback = ({ success }) => {
     const { callback, payload } = props;
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
@@ -55,7 +57,7 @@ const InPlayer = (props) => {
       <AssetFlow callBack={assetFlowCallback} {...props} />
     ) : (
       <AccountFlow
-        callBack={accoutFlowCallback}
+        callBack={accountFlowCallback}
         {...props}
         backButton={hookType === HookTypeData.PLAYER_HOOK}
       />

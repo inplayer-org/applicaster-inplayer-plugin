@@ -5,9 +5,9 @@ import { Keyboard } from "react-native";
 import { Login } from "../Login";
 import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
-import { container } from "../../Styles";
-import { AssetModule } from "../NativeModules/AssetModule";
-import { PaymentModule } from "../NativeModules/PaymentModule";
+import { container } from "../Styles";
+import { AssetModule } from "../../NativeModules/AssetModule";
+import { PaymentModule } from "../../NativeModules/PaymentModule";
 
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
@@ -21,7 +21,28 @@ const AssetFlow = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { configuration } = props;
+    const { configuration, payload, assetFlowCallback } = props;
+    AssetModule.checkAccessForAsset({ ...configuration, payload })
+      .then((itemAccess) => {
+        setLoading(false);
+        assetFlowCallback({ success: true, data: itemAccess });
+      })
+      .catch((error) => {
+        console.log({ error });
+        const { code = -1, message = "Unknown Error" } = error;
+        setLoading(false);
+        assetFlowCallback({ success: false, data: itemAccess });
+        this.dropDownAlertRef.alertWithType(
+          "error",
+          errorMessage,
+          `Code:${code}, ${message}`
+        );
+        // const { code } = err;
+        // check if error code 402 which means it requires payment
+        // if (code === 402) {
+        //     //TODO: Decide where will be purchases
+        // }
+      });
   }, []);
 
   console.log({ props, AccountModule });

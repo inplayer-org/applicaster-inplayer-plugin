@@ -5,8 +5,8 @@ import { Keyboard } from "react-native";
 import { Login } from "../Login";
 import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
-import { container } from "../../Styles";
-import { AccountModule } from "../NativeModules/AccountModule";
+import { container } from "../Styles";
+import { AccountModule } from "../../NativeModules/AccountModule";
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
 
@@ -118,7 +118,12 @@ const AccountFlow = (props) => {
     switch (screen) {
       case ScreensData.LOGIN:
         return (
-          <Login login={login} signUp={signUp} onLoginError={onLoginError} />
+          <Login
+            login={login}
+            signUp={signUp}
+            onLoginError={onLoginError}
+            {...props}
+          />
         );
 
       case ScreensData.SIGN_UP:
@@ -127,6 +132,7 @@ const AccountFlow = (props) => {
             createAccount={createAccount}
             onSiginUpBack={onSiginUpBack}
             onSignUpError={onSignUpError}
+            {...props}
           />
         );
     }

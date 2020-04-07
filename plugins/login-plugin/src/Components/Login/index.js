@@ -21,6 +21,16 @@ const styles = StyleSheet.create({
   input,
   button,
   buttonText,
+  backButton: {
+    alignSelf: "flex-start",
+    marginLeft: 35,
+    marginTop: 20,
+  },
+  backButtonText: {
+    color: "white",
+    fontFamily: "Montserrat-Bold",
+    fontSize: 15,
+  },
   newUserButton: {
     height: 50,
     width: 250,
@@ -71,8 +81,19 @@ export const Login = (props) => {
     login({ username, password });
   };
 
+  const onBackButton = () => {
+    const { accountFlowCallback } = props;
+    accountFlowCallback && accountFlowCallback(false);
+  };
+  const { backButton } = props;
+
   return (
     <View style={styles.container}>
+      {backButton === true ? (
+        <TouchableOpacity style={styles.backButton} onPress={onBackButton}>
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+      ) : null}
       <Text style={styles.title}>InPlayer Demo</Text>
       <TextInput
         autoCapitalize="none"
