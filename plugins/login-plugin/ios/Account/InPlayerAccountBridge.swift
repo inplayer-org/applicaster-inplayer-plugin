@@ -1,10 +1,3 @@
-//
-//  InPlayerAccountBridge.swift
-//  InPlayerLogin
-//
-//  Created by Anton Kononenko on 4/3/20.
-//
-
 import Foundation
 import InPlayerSDK
 import React

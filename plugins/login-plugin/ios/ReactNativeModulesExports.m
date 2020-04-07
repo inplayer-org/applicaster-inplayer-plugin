@@ -19,3 +19,15 @@ RCT_EXTERN_METHOD(signOut:(NSDictionary *)payload
                           rejecter:(RCTPromiseRejectBlock)rejecter);
 
 @end
+
+@interface RCT_EXTERN_MODULE (InPlayerAssetBridge, NSObject)
+RCT_EXTERN_METHOD(checkAccessForAsset:(NSDictionary *)payload
+                      resolver:(RCTPromiseResolveBlock)resolver
+                          rejecter:(RCTPromiseRejectBlock)rejecter);
+@end
+
+@interface RCT_EXTERN_MODULE (InPlayerPaymentBridge, NSObject)
+RCT_EXTERN_METHOD(validate:(NSDictionary *)payload
+                      resolver:(RCTPromiseResolveBlock)resolver
+                          rejecter:(RCTPromiseRejectBlock)rejecter);
+@end
