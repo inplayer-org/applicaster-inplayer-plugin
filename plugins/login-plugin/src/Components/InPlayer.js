@@ -1,23 +1,11 @@
 import React, { useState, useEffect } from "react";
 import R, { prop } from "ramda";
 import { Keyboard } from "react-native";
-import moment from "moment";
-import globalSessionManager from "../globalSessionManager";
-import { Login } from "./Login";
 import { container } from "./Styles";
+import AccountFlow from "./AccountFlow";
 import { AccountModule } from "../NativeModules/AccountModule";
-// https://github.com/testshallpass/react-native-dropdownalert#usage
-import DropdownAlert from "react-native-dropdownalert";
+import { StyleSheet } from "react-native";
 
-import {
-  View,
-  Button,
-  SafeAreaView,
-  StyleSheet,
-  NativeModules,
-} from "react-native";
-import LoadingScreen from "./LoadingScreen";
-import SignUp from "./SignUp";
 // callback: ({ success: boolean, error: ?{}, payload: ?{} }) => void,
 
 const parseJSON = R.tryCatch(JSON.parse, () => null);
@@ -29,128 +17,53 @@ const InPlayer = (props) => {
     (river) => river.type === "my-plugin-identifier"
   );
 
-  const ScreensData = {
-    EMPTY: "Empty",
-    LOGIN: "Login",
-    SIGN_UP: "SignUp",
-    FORGOT_PASSWORD: "ForgotPassword",
+  const HookTypeData = {
+    UNDEFINED: "Undefined",
+    PLAYER_HOOK: "PlayerHook",
+    SCREEN_HOOK: "ScreenHook",
   };
-  const [loading, setLoading] = useState(true);
-  const [screen, setScreen] = useState(ScreensData.EMPTY);
+
+  const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
+  const [isAuthenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const { configuration } = props;
-    // Check is Autheticated
-    AccountModule.isAuthenticated(configuration)
-      .then((isLogedIn) => {
-        console.log({ isLogedIn });
-        setLoading(false);
-        isLogedIn == true ? onSuccess() : setScreen(ScreensData.LOGIN);
-        console.log({ isLogedIn });
-      })
-      .catch((err) => {
-        console.log({ err });
-      });
+    const { payload } = props;
+    //TODO figure out if it is player or screen
   }, []);
 
-  const onSuccess = () => {
-    const { callback } = props;
-    setLoading(false);
+  const assetFlowCallback = ({ success, data }) => {
+    const { callback, payload } = props;
+
     callback &&
-      callback({ success: true, error: null, payload: props.payload });
+      callback({ success, error: null, payload: { ...payload, ...data } });
   };
 
-  const onFail = (error, errorMessage) => {
-    const { code = -1, message = "Unknown Error" } = error;
-    setLoading(false);
-    this.dropDownAlertRef.alertWithType(
-      "error",
-      errorMessage,
-      `Code:${code}, ${message}`
+  const accoutFlowCallback = ({ success }) => {
+    const { callback, payload } = props;
+    if (hookType === HookTypeData.SCREEN_HOOK && success) {
+      const { callback } = props;
+      callback && callback({ success, error: null, payload: payload });
+    } else if (hookType === HookTypeData.PLAYER_HOOK) {
+      success
+        ? setAuthenticated(true)
+        : callback && callback({ success, error: null, payload: payload });
+    }
+  };
+
+  const renderFlow = () => {
+    return isAuthenticated ? (
+      <AssetFlow callBack={assetFlowCallback} {...props} />
+    ) : (
+      <AccountFlow
+        callBack={accoutFlowCallback}
+        {...props}
+        backButton={hookType === HookTypeData.PLAYER_HOOK}
+      />
     );
   };
 
-  const login = (payload) => {
-    Keyboard.dismiss();
-    const { configuration } = props;
-    console.log("login", { payload });
-    setLoading(true);
-    AccountModule.authenticate({ ...payload, ...configuration })
-      .then((data) => {
-        console.log("authenticated", { data });
-        onSuccess();
-      })
-      .catch((e) => {
-        onFail(e, "Error: Authentication Failed");
-      });
-  };
-  const signUp = () => {
-    console.log("SignUP");
-    setScreen(ScreensData.SIGN_UP);
-  };
-
-  const onSiginUpBack = () => {
-    setScreen(ScreensData.LOGIN);
-  };
-
-  console.disableYellowBox = true;
-
-  createAccount = (payload) => {
-    Keyboard.dismiss();
-    const { configuration } = props;
-    console.log("createAccount", { ...payload, ...configuration });
-    setLoading(true);
-    const { callback } = props;
-    AccountModule.signUp({ ...payload, ...configuration })
-      .then((data) => {
-        console.log("Sign Up complete", { data, callback });
-        onSuccess();
-      })
-      .catch((e) => {
-        onFail(e, "Error: Error: Sign Up Failed");
-      });
-  };
-
-  onLoginError = ({ title, message }) => {
-    this.dropDownAlertRef.alertWithType("warn", title, message);
-  };
-
-  onSignUpError = ({ title, message }) => {
-    this.dropDownAlertRef.alertWithType("warn", title, message);
-  };
-  const renderAuthenteficationScreen = () => {
-    console.log("renderScreen");
-    if (!screen) {
-      return null;
-    }
-    switch (screen) {
-      case ScreensData.LOGIN:
-        return (
-          <Login login={login} signUp={signUp} onLoginError={onLoginError} />
-        );
-
-      case ScreensData.SIGN_UP:
-        return (
-          <SignUp
-            createAccount={createAccount}
-            onSiginUpBack={onSiginUpBack}
-            onSignUpError={onSignUpError}
-          />
-        );
-    }
-    return null;
-  };
-
   console.log({ props, AccountModule });
-  return (
-    <View style={styles.container}>
-      <SafeAreaView style={styles.container}>
-        {renderAuthenteficationScreen()}
-        {loading && <LoadingScreen />}
-      </SafeAreaView>
-      <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
-    </View>
-  );
+  return hookType !== HookTypeData.UNDEFINED ? renderFlow() : null;
 };
 
 export default InPlayer;
