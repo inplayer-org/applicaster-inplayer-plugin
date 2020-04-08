@@ -4,6 +4,7 @@ import { AccountModule } from "./src/NativeModules/AccountModule";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { connectToStore } from "@applicaster/zapp-react-native-redux";
 import { fixColorHexCode } from "@applicaster/zapp-react-native-utils/stylesUtils";
+
 import { Text, SafeAreaView, Platform, ActivityIndicator } from "react-native";
 
 const InPlayerLogout = (props) => {
@@ -11,6 +12,7 @@ const InPlayerLogout = (props) => {
   const navigator = useNavigation();
 
   useEffect(() => {
+    navigator.hideNavBar();
     const { configuration } = props;
     AccountModule.signOut(configuration)
       .then((isSignedOut) => {
@@ -36,7 +38,7 @@ const InPlayerLogout = (props) => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: bgColor,
+        // backgroundColor: bgColor,
         alignItems: "center",
         height: "100%",
         justifyContent: "center",

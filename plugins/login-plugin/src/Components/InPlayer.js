@@ -1,31 +1,23 @@
 import React, { useState, useEffect } from "react";
+import {} from "react-native";
 import R, { prop } from "ramda";
-import { Keyboard } from "react-native";
 import { container } from "./Styles";
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
 import { AccountModule } from "../NativeModules/AccountModule";
 import { PayloadUtils } from "../Utils";
-import { StyleSheet } from "react-native";
 
+const {
+  isVideoEntry,
+  isNotEntry,
+  inPlayerAssetId,
+  ignoreAuthenticationFlow,
+  payloadWithCombinedInPlayerData,
+} = PayloadUtils;
 // callback: ({ success: boolean, error: ?{}, payload: ?{} }) => void,
 
-const parseJSON = R.tryCatch(JSON.parse, () => null);
-const styles = StyleSheet.create({
-  container,
-});
 const InPlayer = (props) => {
   const { payload } = props;
-  console.log({ PayloadUtils });
-  const requiresAuthentication = R.path([
-    "extensions",
-    "inplayer_requires_authentication",
-  ])(payload);
-  const inPlayerAssetId = R.path(["extensions", "inplayer_asset_id"])(payload);
-
-  const riverScreen = Object.values(props.rivers).find(
-    (river) => river.type === "my-plugin-identifier"
-  );
 
   const HookTypeData = {
     UNDEFINED: "Undefined",
@@ -34,7 +26,7 @@ const InPlayer = (props) => {
   };
 
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
-  const [isAuthenticated, setAuthenticated] = useState(false);
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
   useEffect(() => {
     const { payload, callback } = props;
@@ -43,14 +35,17 @@ const InPlayer = (props) => {
     const src = R.path(["content", "src"])(payload);
 
     console.log("InPlayer", { props, value });
-    if (value && value === "video") {
-      if (inPlayerAssetId) {
+    if (isVideoEntry(payload)) {
+      if (inPlayerAssetId(payload)) {
+        console.log("Setting PLayer HOOk");
         setHookType(HookTypeData.PLAYER_HOOK);
       } else {
+        console.log("I am going to callback", callback);
+
         callback && callback({ success: true, error: null, payload });
       }
       console.log({ hook: HookTypeData.PLAYER_HOOK });
-    } else if (!value) {
+    } else if (isNotEntry(payload)) {
       console.log({ hook: HookTypeData.SCREEN_HOOK });
       setHookType(HookTypeData.SCREEN_HOOK);
     }
@@ -64,7 +59,10 @@ const InPlayer = (props) => {
       callback({
         success,
         error: null,
-        payload: { ...payload, content: { src } },
+        payload: payloadWithCombinedInPlayerData({
+          payload,
+          inPlayerData: data,
+        }),
       });
   };
 
@@ -76,25 +74,39 @@ const InPlayer = (props) => {
       callback && callback({ success, error: null, payload: payload });
     } else if (hookType === HookTypeData.PLAYER_HOOK) {
       success
-        ? setAuthenticated(true)
+        ? setIsUserAuthenticated(true)
         : callback && callback({ success, error: null, payload: payload });
     }
   };
 
-  const renderFlow = () => {
-    return (!requiresAuthentication && hookType === HookTypeData.PLAYER_HOOK) ||
-      isAuthenticated ? (
+  const renderPlayerHook = () => {
+    return ignoreAuthenticationFlow(payload) || isUserAuthenticated ? (
       <AssetFlow assetFlowCallback={assetFlowCallback} {...props} />
     ) : (
       <AccountFlow
         accountFlowCallback={accountFlowCallback}
-        {...props}
         backButton={hookType === HookTypeData.PLAYER_HOOK}
+        {...props}
       />
     );
   };
 
-  console.log({ props, AccountModule });
+  const renderScreenHook = () => {
+    return (
+      <AccountFlow
+        accountFlowCallback={accountFlowCallback}
+        backButton={hookType === HookTypeData.PLAYER_HOOK}
+        {...props}
+      />
+    );
+  };
+
+  const renderFlow = () => {
+    return hookType === HookTypeData.PLAYER_HOOK
+      ? renderPlayerHook()
+      : renderScreenHook();
+  };
+
   return hookType !== HookTypeData.UNDEFINED ? renderFlow() : null;
 };
 

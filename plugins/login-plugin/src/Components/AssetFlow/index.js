@@ -7,6 +7,9 @@ import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";
 import { AssetModule } from "../../NativeModules/AssetModule";
+import { PayloadUtils } from "../../Utils";
+
+const { inPlayerAssetId } = PayloadUtils;
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
 
@@ -22,18 +25,15 @@ const AssetFlow = (props) => {
     const { configuration, payload, assetFlowCallback } = props;
     console.log("I am in AssetFlow", AssetModule);
 
-    const inPlayerAssetId = R.path(["extensions", "inplayer_asset_id"])(
-      payload
-    );
     console.log("Params to path", {
       ...configuration,
-      id: inPlayerAssetId,
+      id: inPlayerAssetId(payload),
       entryId: null,
     });
 
     AssetModule.checkAccessForAsset({
       ...configuration,
-      id: inPlayerAssetId,
+      id: inPlayerAssetId(payload),
       entryId: null,
     })
       .then((itemAccess) => {
