@@ -73,7 +73,6 @@ const InPlayer = (props) => {
   };
 
   const accountFlowCallback = ({ success }) => {
-    console.log("accountFlowCallback", { success });
     const { callback, payload } = props;
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;

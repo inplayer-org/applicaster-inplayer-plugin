@@ -26,14 +26,14 @@
   "custom_configuration_fields": [
     {
       "type": "text",
-      "key": "in_player_publisher_id",
-      "tooltip_text": "Publisher UUID",
+      "key": "in_player_client_id",
+      "tooltip_text": "In Player Client ID",
       "default": ""
     },
     {
       "type": "text",
       "key": "in_player_referrer",
-      "tooltip_text": "Referrer URL",
+      "tooltip_text": "In Player Referrer URL",
       "default": ""
     }
   ],

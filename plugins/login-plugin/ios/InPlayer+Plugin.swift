@@ -10,7 +10,7 @@ import InPlayerSDK
 import ZappCore
 
 struct InPlayerLoginKey {
-    static let publisherUUID = "in_player_publisher_id"
+    static let clientId = "in_player_client_id"
     static let referrer = "in_player_referrer"
 }
 
@@ -28,12 +28,12 @@ extension InPlayer {
             return true
         }
 
-        guard let uuid = payload?[InPlayerLoginKey.publisherUUID] as? String,
-            let referrer = payload?[InPlayerLoginKey.referrer] as? String else {
+        guard let clientId = payload?[InPlayerLoginKey.clientId] as? String else {
             return false
         }
 
-        let configuration = InPlayer.Configuration(clientId: uuid,
+        let referrer = payload?[InPlayerLoginKey.referrer] as? String
+        let configuration = InPlayer.Configuration(clientId: clientId,
                                                    referrer: referrer,
                                                    environment: .staging)
         InPlayer.initialize(configuration: configuration)
