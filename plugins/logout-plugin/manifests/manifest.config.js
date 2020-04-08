@@ -1,40 +1,37 @@
 const baseManifest = {
   api: {},
   dependency_repository_url: [],
-  dependency_name: "@applicaster/dev-demo-login",
+  dependency_name: "@applicaster/quick-brick-inplayer-logout",
   author_name: "Applicaster",
   author_email: "zapp@applicaster.com",
-  name: "dev_demo_login",
-  description: "Quick Brick Developers Demo login plugin",
+  name: "inPlayer Hook Plugin Logout QuickBrick",
+  description: "InPlayer Hook Plugin Logout",
   type: "general",
   screen: true,
   react_native: true,
-  identifier: "dev_demo_login",
+  identifier: "quick-brick-inplayer-logout",
   ui_builder_support: true,
-  whitelisted_account_ids: ["5e132c906663330008c0f8ab"],
-  min_zapp_sdk: "0.0.1",
+  whitelisted_account_ids: ["5c9ce7917b225c000f02dfbc"],
+  min_zapp_sdk: "20.2.0-Dev",
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
   preload: true,
-  general: {
-    fields: [
-      {
-        type: "switch",
-        key: "is_flow_blocker",
-        tooltip_text: "Define if hook will block flow in case cancelation",
-        initial_value: false
-      },
-      {
-        type: "switch",
-        key: "allow_screen_plugin_presentation",
-        tooltip_text: "Define if",
-        initial_value: false
-      }
-    ]
-  },
-  custom_configuration_fields: [],
+  custom_configuration_fields: [
+    {
+      type: "text",
+      key: "in_player_client_id",
+      tooltip_text: "In Player Client ID",
+      default: "",
+    },
+    {
+      type: "text",
+      key: "in_player_referrer",
+      tooltip_text: "In Player Referrer URL",
+      default: "",
+    },
+  ],
   targets: ["mobile"],
-  ui_frameworks: ["quickbrick"]
+  ui_frameworks: ["quickbrick"],
 };
 
 function createManifest({ version, platform }) {
@@ -42,7 +39,7 @@ function createManifest({ version, platform }) {
     ...baseManifest,
     platform,
     dependency_version: version,
-    manifest_version: version
+    manifest_version: version,
   };
 
   return manifest;
