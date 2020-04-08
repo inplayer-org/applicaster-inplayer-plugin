@@ -37,7 +37,6 @@ const baseManifest = {
       default: "",
     },
   ],
-  custom_configuration_fields: [],
   targets: ["mobile"],
   ui_frameworks: ["quickbrick"],
 };
