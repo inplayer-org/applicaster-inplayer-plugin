@@ -8,14 +8,14 @@ const defaultAsset = {
 
 const { InPlayerAssetBridge = defaultAsset } = NativeModules;
 
-export const AccountModule = {
+export const AssetModule = {
   /**
    * This method checks and retrieves a customer’s entitlement to an asset
    * @param {Dictionary} payload Dictionary with user data
    */
   async checkAccessForAsset(payload) {
     try {
-      return InPlayerAssetBridge.signUp(payload);
+      return InPlayerAssetBridge.checkAccessForAsset(payload);
     } catch (e) {
       throw e;
     }

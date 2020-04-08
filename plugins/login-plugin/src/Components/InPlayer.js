@@ -14,6 +14,14 @@ const styles = StyleSheet.create({
   container,
 });
 const InPlayer = (props) => {
+  const { payload } = props;
+
+  const requiresAuthentication = R.path([
+    "extensions",
+    "inplayer_requires_authentication",
+  ])(payload);
+  const inPlayerAssetId = R.path(["extensions", "inplayer_asset_id"])(payload);
+
   const riverScreen = Object.values(props.rivers).find(
     (river) => river.type === "my-plugin-identifier"
   );
@@ -28,19 +36,39 @@ const InPlayer = (props) => {
   const [isAuthenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const { payload } = props;
-    console.log("InPlayer", { props });
+    const { payload, callback } = props;
 
-    //TODO figure out if it is player or screen
+    const value = R.path(["type", "value"])(payload);
+    const src = R.path(["content", "src"])(payload);
+
+    console.log("InPlayer", { props, value });
+    if (value && value === "video") {
+      if (inPlayerAssetId) {
+        setHookType(HookTypeData.PLAYER_HOOK);
+      } else {
+        callback && callback({ success: true, error: null, payload });
+      }
+      console.log({ hook: HookTypeData.PLAYER_HOOK });
+    } else if (!value) {
+      console.log({ hook: HookTypeData.SCREEN_HOOK });
+      setHookType(HookTypeData.SCREEN_HOOK);
+    }
   }, []);
 
   const assetFlowCallback = ({ success, data }) => {
+    console.log("assetFlowCallback", { success, data });
     const { callback, payload } = props;
+    const src = R.path(["item", "content"])(data);
     callback &&
-      callback({ success, error: null, payload: { ...payload, ...data } });
+      callback({
+        success,
+        error: null,
+        payload: { ...payload, content: { src } },
+      });
   };
 
   const accountFlowCallback = ({ success }) => {
+    console.log("accountFlowCallback", { success });
     const { callback, payload } = props;
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
@@ -53,11 +81,12 @@ const InPlayer = (props) => {
   };
 
   const renderFlow = () => {
-    return isAuthenticated ? (
-      <AssetFlow callBack={assetFlowCallback} {...props} />
+    return (!requiresAuthentication && hookType === HookTypeData.PLAYER_HOOK) ||
+      isAuthenticated ? (
+      <AssetFlow assetFlowCallback={assetFlowCallback} {...props} />
     ) : (
       <AccountFlow
-        callBack={accountFlowCallback}
+        accountFlowCallback={accountFlowCallback}
         {...props}
         backButton={hookType === HookTypeData.PLAYER_HOOK}
       />

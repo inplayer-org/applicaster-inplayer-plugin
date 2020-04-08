@@ -6,9 +6,9 @@ const defaultPayment = {
   checkAccessForAsset: nullPromise,
 };
 
-const { InPlayerPaymentBridge = defaultAsset } = NativeModules;
+const { InPlayerPaymentBridge = defaultPayment } = NativeModules;
 
-export const AccountModule = {
+export const PaymentModule = {
   /**
    * Contact InPlayer server and validate if purchase was successfull.
    * @param {Dictionary} payload Dictionary with user data

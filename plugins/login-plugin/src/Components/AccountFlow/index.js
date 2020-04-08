@@ -46,15 +46,18 @@ const AccountFlow = (props) => {
   }, []);
 
   const onSuccess = () => {
-    const { callback } = props;
+    const { accountFlowCallback } = props;
     setLoading(false);
-    callback &&
-      callback({ success: true, error: null, payload: props.payload });
+    accountFlowCallback({ success: true });
+    // callback &&
+    //   callback({ success: true, error: null, payload: props.payload });
   };
 
   const onFail = (error, errorMessage) => {
+    const { accountFlowCallback } = props;
     const { code = -1, message = "Unknown Error" } = error;
     setLoading(false);
+    accountFlowCallback({ success: false });
     this.dropDownAlertRef.alertWithType(
       "error",
       errorMessage,

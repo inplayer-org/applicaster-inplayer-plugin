@@ -31,7 +31,8 @@ class InPlayerAssetBridge: NSObject, RCTBridgeModule {
                      nil)
             return
         }
-        guard let id = payload?[InPlayerAssetBridgeKeys.id] as? Int else {
+        guard let idString = payload?[InPlayerAssetBridgeKeys.id] as? String,
+            let id = Int(idString) else {
             rejecter(noExpectedPayloadParams.code,
                      "\(noExpectedPayloadParams.message) \(InPlayerAssetBridgeKeys.id)",
                      nil)

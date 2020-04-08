@@ -7,8 +7,6 @@ import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";
 import { AssetModule } from "../../NativeModules/AssetModule";
-import { PaymentModule } from "../../NativeModules/PaymentModule";
-
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
 
@@ -22,34 +20,42 @@ const AssetFlow = (props) => {
 
   useEffect(() => {
     const { configuration, payload, assetFlowCallback } = props;
-    AssetModule.checkAccessForAsset({ ...configuration, payload })
+    console.log("I am in AssetFlow", AssetModule);
+
+    const inPlayerAssetId = R.path(["extensions", "inplayer_asset_id"])(
+      payload
+    );
+    console.log("Params to path", {
+      ...configuration,
+      id: inPlayerAssetId,
+      entryId: null,
+    });
+
+    AssetModule.checkAccessForAsset({
+      ...configuration,
+      id: inPlayerAssetId,
+      entryId: null,
+    })
       .then((itemAccess) => {
         setLoading(false);
         assetFlowCallback({ success: true, data: itemAccess });
       })
       .catch((error) => {
-        console.log({ error });
+        console.log({ error, assetFlowCallback });
         const { code = -1, message = "Unknown Error" } = error;
         setLoading(false);
-        assetFlowCallback({ success: false, data: itemAccess });
         this.dropDownAlertRef.alertWithType(
           "error",
-          errorMessage,
+          "Unable to retrieve Asset",
           `Code:${code}, ${message}`
         );
-        // const { code } = err;
-        // check if error code 402 which means it requires payment
-        // if (code === 402) {
-        //     //TODO: Decide where will be purchases
-        // }
+        assetFlowCallback({ success: false, data: null });
       });
   }, []);
 
-  console.log({ props, AccountModule });
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.container}>
-        {renderAuthenteficationScreen()}
         {loading && <LoadingScreen />}
       </SafeAreaView>
       <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
