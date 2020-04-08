@@ -29,7 +29,6 @@ export const AccountModule = {
    * @param {Dictionary} payload Dictionary with user data
    */
   async authenticate(payload) {
-    console.log({ InPlayerAccountBridge });
     try {
       return InPlayerAccountBridge.authenticate(payload);
     } catch (e) {

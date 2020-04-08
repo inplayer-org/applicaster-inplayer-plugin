@@ -35,14 +35,10 @@ const AccountFlow = (props) => {
     // Check is Autheticated
     AccountModule.isAuthenticated(configuration)
       .then((isLogedIn) => {
-        console.log({ isLogedIn });
         setLoading(false);
         isLogedIn == true ? onSuccess() : setScreen(ScreensData.LOGIN);
-        console.log({ isLogedIn });
       })
-      .catch((err) => {
-        console.log({ err });
-      });
+      .catch((err) => {});
   }, []);
 
   const onSuccess = () => {
@@ -68,11 +64,9 @@ const AccountFlow = (props) => {
   const login = (payload) => {
     Keyboard.dismiss();
     const { configuration } = props;
-    console.log("login", { payload });
     setLoading(true);
     AccountModule.authenticate({ ...payload, ...configuration })
       .then((data) => {
-        console.log("authenticated", { data });
         onSuccess();
       })
       .catch((e) => {
@@ -80,7 +74,6 @@ const AccountFlow = (props) => {
       });
   };
   const signUp = () => {
-    console.log("SignUP");
     setScreen(ScreensData.SIGN_UP);
   };
 
@@ -93,12 +86,10 @@ const AccountFlow = (props) => {
   createAccount = (payload) => {
     Keyboard.dismiss();
     const { configuration } = props;
-    console.log("createAccount", { ...payload, ...configuration });
     setLoading(true);
     const { callback } = props;
     AccountModule.signUp({ ...payload, ...configuration })
       .then((data) => {
-        console.log("Sign Up complete", { data, callback });
         onSuccess();
       })
       .catch((e) => {
@@ -114,7 +105,6 @@ const AccountFlow = (props) => {
     this.dropDownAlertRef.alertWithType("warn", title, message);
   };
   const renderAuthenteficationScreen = () => {
-    console.log("renderScreen");
     if (!screen) {
       return null;
     }
@@ -142,7 +132,6 @@ const AccountFlow = (props) => {
     return null;
   };
 
-  console.log({ props, AccountModule });
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.container}>
