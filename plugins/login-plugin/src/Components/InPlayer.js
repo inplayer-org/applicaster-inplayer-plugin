@@ -5,6 +5,7 @@ import { container } from "./Styles";
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
 import { AccountModule } from "../NativeModules/AccountModule";
+import { PayloadUtils } from "../Utils";
 import { StyleSheet } from "react-native";
 
 // callback: ({ success: boolean, error: ?{}, payload: ?{} }) => void,
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
 });
 const InPlayer = (props) => {
   const { payload } = props;
-
+  console.log({ PayloadUtils });
   const requiresAuthentication = R.path([
     "extensions",
     "inplayer_requires_authentication",
