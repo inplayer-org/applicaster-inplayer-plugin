@@ -59,10 +59,6 @@ export const Login = (props) => {
   const login = () => {
     const { login, onLoginError } = props;
 
-    console.log({
-      email: validateEmail(username),
-      password: validatePassword(password),
-    });
     const title = "Login form issue";
 
     if (validateEmail(username) == false) {

@@ -12,14 +12,12 @@ export default PayloadUtils = {
       "extensions",
       "requires_authentication",
     ])(payload);
-    console.log({ requiresAuthentication, requiresAuthenticationFallback });
     return requiresAuthentication || requiresAuthenticationFallback
       ? false
       : true;
   },
 
   inPlayerAssetId: (payload) => {
-    console.log("inPlayerAssetId", { payload });
     const assetId = R.path(["extensions", "inplayer_asset_id"])(payload);
 
     // Legacy keys, should not be used if future
@@ -27,7 +25,6 @@ export default PayloadUtils = {
       R.ifElse(Array.isArray, R.head, R.always(null)),
       R.path(["extensions", "ds_product_ids"])
     )(payload);
-    console.log({ assetId, assetIdFallback });
     return assetId || assetIdFallback;
   },
 
@@ -39,7 +36,7 @@ export default PayloadUtils = {
     return R.path(["type", "value"]);
   },
 
-  payloadWithCombinedInPlayerData: ({ payload, inPlayerData }) => {
+  payloadWithCombinedInPlayerData: ({ inPlayerData }) => {
     const findValueInInPlayerMetadataByName = (inPlayerData, value) => {
       return R.compose(
         R.prop("value"),
@@ -65,25 +62,15 @@ export default PayloadUtils = {
       return assetType === "video" ? streamUrl : null;
     };
 
-    const { content = null } = payload;
     const applicasterStreamUrl = findApplicasterStreamURL(inPlayerData);
-    const newContent = applicasterStreamUrl
-      ? { src: applicasterStreamUrl }
-      : content;
 
-    console.log({
-      ...payload,
-      extensions: {
-        inPlayerData,
-      },
-      content: newContent,
-    });
-    return {
-      ...payload,
-      extensions: {
-        inPlayerData,
-      },
-      content: newContent,
-    };
+    return applicasterStreamUrl
+      ? {
+          extensions: {
+            inPlayerData,
+          },
+          content: { src: applicasterStreamUrl },
+        }
+      : null;
   },
 };

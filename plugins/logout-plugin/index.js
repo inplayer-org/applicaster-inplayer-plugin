@@ -16,7 +16,6 @@ const InPlayerLogout = (props) => {
     const { configuration } = props;
     AccountModule.signOut(configuration)
       .then((isSignedOut) => {
-        console.log({ isSignedOut });
         setLoading(false);
         navigator.goHome();
       })

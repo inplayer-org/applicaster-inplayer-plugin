@@ -34,36 +34,42 @@ const InPlayer = (props) => {
     const value = R.path(["type", "value"])(payload);
     const src = R.path(["content", "src"])(payload);
 
-    console.log("InPlayer", { props, value });
     if (isVideoEntry(payload)) {
       if (inPlayerAssetId(payload)) {
-        console.log("Setting PLayer HOOk");
         setHookType(HookTypeData.PLAYER_HOOK);
       } else {
-        console.log("I am going to callback", callback);
-
         callback && callback({ success: true, error: null, payload });
       }
-      console.log({ hook: HookTypeData.PLAYER_HOOK });
     } else if (isNotEntry(payload)) {
-      console.log({ hook: HookTypeData.SCREEN_HOOK });
       setHookType(HookTypeData.SCREEN_HOOK);
     }
   }, []);
 
   const assetFlowCallback = ({ success, data }) => {
-    console.log("assetFlowCallback", { success, data });
     const { callback, payload } = props;
     const src = R.path(["item", "content"])(data);
-    callback &&
-      callback({
-        success,
-        error: null,
-        payload: payloadWithCombinedInPlayerData({
+    const inPlayerMappedData = payloadWithCombinedInPlayerData({
+      payload,
+      inPlayerData: data,
+    });
+    if (inPlayerMappedData) {
+      callback &&
+        callback({
+          success,
+          error: null,
+          payload: {
+            ...payload,
+            ...inPlayerMappedData,
+          },
+        });
+    } else {
+      callback &&
+        callback({
+          success: false,
+          error: null,
           payload,
-          inPlayerData: data,
-        }),
-      });
+        });
+    }
   };
 
   const accountFlowCallback = ({ success }) => {

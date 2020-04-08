@@ -52,11 +52,6 @@ const SignUp = (props) => {
   const signUp = () => {
     const { createAccount, onSignUpError } = props;
 
-    console.log({
-      email: validateEmail(username),
-      password: validatePassword(password),
-    });
-    console.log({ fullName });
     const title = "Sign Up form issue";
     if (!fullName || fullName.length == 0) {
       onSignUpError({

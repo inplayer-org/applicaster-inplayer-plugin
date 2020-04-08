@@ -23,13 +23,6 @@ const AssetFlow = (props) => {
 
   useEffect(() => {
     const { configuration, payload, assetFlowCallback } = props;
-    console.log("I am in AssetFlow", AssetModule);
-
-    console.log("Params to path", {
-      ...configuration,
-      id: inPlayerAssetId(payload),
-      entryId: null,
-    });
 
     AssetModule.checkAccessForAsset({
       ...configuration,
@@ -41,25 +34,15 @@ const AssetFlow = (props) => {
         assetFlowCallback({ success: true, data: itemAccess });
       })
       .catch((error) => {
-        console.log({ error, assetFlowCallback });
-        const { code = -1, message = "Unknown Error" } = error;
         setLoading(false);
-        this.dropDownAlertRef.alertWithType(
-          "error",
-          "Unable to retrieve Asset",
-          `Code:${code}, ${message}`
-        );
         assetFlowCallback({ success: false, data: null });
       });
   }, []);
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={styles.container}>
-        {loading && <LoadingScreen />}
-      </SafeAreaView>
-      <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
-    </View>
+    <SafeAreaView style={styles.container}>
+      {loading && <LoadingScreen />}
+    </SafeAreaView>
   );
 };
 
