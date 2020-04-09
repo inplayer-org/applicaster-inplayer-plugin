@@ -26,7 +26,20 @@
   "npm_dependencies": [
     "react-native-dropdownalert@4.2.1"
   ],
-  "custom_configuration_fields": [],
+  "custom_configuration_fields": [
+    {
+      "type": "text",
+      "key": "in_player_client_id",
+      "tooltip_text": "In Player Client ID",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "key": "in_player_referrer",
+      "tooltip_text": "In Player Referrer URL",
+      "default": ""
+    }
+  ],
   "targets": [
     "mobile"
   ],
@@ -34,6 +47,6 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.0.10",
-  "manifest_version": "0.0.10"
+  "dependency_version": "0.0.13",
+  "manifest_version": "0.0.13"
 }
