@@ -23,7 +23,7 @@ const AssetFlow = (props) => {
 
   useEffect(() => {
     const { configuration, payload, assetFlowCallback } = props;
-
+    console.log("AssetFlow Did finish");
     AssetModule.checkAccessForAsset({
       ...configuration,
       id: inPlayerAssetId(payload),
@@ -31,11 +31,12 @@ const AssetFlow = (props) => {
     })
       .then((itemAccess) => {
         setLoading(false);
-        assetFlowCallback({ success: true, data: itemAccess });
+        assetFlowCallback({ success: true, data: itemAccess, error: null });
       })
       .catch((error) => {
         setLoading(false);
-        assetFlowCallback({ success: false, data: null });
+        console.log("Error catched", { error });
+        assetFlowCallback({ success: false, data: null, error });
       });
   }, []);
 

@@ -33,12 +33,16 @@ const AccountFlow = (props) => {
   useEffect(() => {
     const { configuration } = props;
     // Check is Autheticated
+    console.log("Account Flow", { configuration });
     AccountModule.isAuthenticated(configuration)
       .then((isLogedIn) => {
         setLoading(false);
+        console.log({ isLogedIn });
         isLogedIn == true ? onSuccess() : setScreen(ScreensData.LOGIN);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log({ err });
+      });
   }, []);
 
   const onSuccess = () => {

@@ -12,11 +12,15 @@ import {
   StyleSheet,
   NativeModules,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 
 const styles = StyleSheet.create({
-  container,
+  container: {
+    ...container,
+    width: Dimensions.get("window").width,
+  },
   title,
   input,
   button,

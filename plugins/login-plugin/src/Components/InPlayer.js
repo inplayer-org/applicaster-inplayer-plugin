@@ -6,6 +6,7 @@ import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
 import { AccountModule } from "../NativeModules/AccountModule";
 import { PayloadUtils } from "../Utils";
+import { showAlert } from "./Utils";
 
 const {
   isVideoEntry,
@@ -13,6 +14,7 @@ const {
   inPlayerAssetId,
   ignoreAuthenticationFlow,
   payloadWithCombinedInPlayerData,
+  isJwPlayerAsset,
 } = PayloadUtils;
 // callback: ({ success: boolean, error: ?{}, payload: ?{} }) => void,
 
@@ -31,48 +33,54 @@ const InPlayer = (props) => {
   useEffect(() => {
     const { payload, callback } = props;
 
-    const value = R.path(["type", "value"])(payload);
-    const src = R.path(["content", "src"])(payload);
-
     if (isVideoEntry(payload)) {
       if (inPlayerAssetId(payload)) {
         setHookType(HookTypeData.PLAYER_HOOK);
       } else {
         callback && callback({ success: true, error: null, payload });
       }
+      console.log({ hook: HookTypeData.PLAYER_HOOK });
     } else if (isNotEntry(payload)) {
+      console.log({ hook: HookTypeData.SCREEN_HOOK });
       setHookType(HookTypeData.SCREEN_HOOK);
     }
   }, []);
 
-  const assetFlowCallback = ({ success, data }) => {
+  const assetFlowCallback = ({ success, data, error }) => {
+    console.log("assetFlowCallback", { success, data });
     const { callback, payload } = props;
-    const src = R.path(["item", "content"])(data);
-    const inPlayerMappedData = payloadWithCombinedInPlayerData({
-      payload,
-      inPlayerData: data,
-    });
-    if (inPlayerMappedData) {
-      callback &&
-        callback({
-          success,
-          error: null,
-          payload: {
-            ...payload,
-            ...inPlayerMappedData,
-          },
-        });
-    } else {
+
+    //TODO: This behaviour should be removed:
+    // when QuickBrick will support JWPlayer and/or option two enable two player at once
+    if (isJwPlayerAsset({ inPlayerData: data })) {
+      showAlert("(Demo Only) Error!", "JWPLayer not yet supported");
       callback &&
         callback({
           success: false,
           error: null,
-          payload,
+          payload: payloadWithCombinedInPlayerData({
+            payload,
+            inPlayerData: data,
+          }),
+        });
+    } else {
+      if (error) {
+        showAlert("(Demo Only) Error!", error.message);
+      }
+      callback &&
+        callback({
+          success,
+          error: null,
+          payload: payloadWithCombinedInPlayerData({
+            payload,
+            inPlayerData: data,
+          }),
         });
     }
   };
 
   const accountFlowCallback = ({ success }) => {
+    console.log("accountFlowCallback", { success });
     const { callback, payload } = props;
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
@@ -85,6 +93,10 @@ const InPlayer = (props) => {
   };
 
   const renderPlayerHook = () => {
+    console.log("renderPlayerHook", {
+      ignoreAuth: ignoreAuthenticationFlow(payload),
+      isUserAuthenticated,
+    });
     return ignoreAuthenticationFlow(payload) || isUserAuthenticated ? (
       <AssetFlow assetFlowCallback={assetFlowCallback} {...props} />
     ) : (
