@@ -17,10 +17,10 @@
     metro-react-native-babel-preset "0.48.1"
     react-hot-loader "^4.12.5"
 
-"@applicaster/horizontal-list-qb@0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/horizontal-list-qb/-/horizontal-list-qb-0.1.8.tgz#21af78aa245a6a6360ce67f167c2228bddd85980"
-  integrity sha512-joGUyHs2HH7VqPSMO7Lgbu4upMIVwbMsjubIo2umz93zg2p+jhgOlEFejDziTzAxwAg6whA1gHg/Lw7ERbFaIQ==
+"@applicaster/horizontal-list-qb@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/horizontal-list-qb/-/horizontal-list-qb-0.2.0.tgz#7aabae25ebddcdbecedcd78875ec0f45294c3610"
+  integrity sha512-3EsqTJHjRDSxypO6PMfD+BRzHwicHsP3lmNbrLIHqQ/Q3wCQ+BEExWag3k9Xy7sgNlXxbQ0eDfjKCJN7Ulpu4A==
   dependencies:
     ramda "^0.26.1"
     react "16.8.3"
@@ -75,45 +75,45 @@
   resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-default-cell-renderer/-/quick-brick-default-cell-renderer-1.0.0.tgz#f93f65e623ebd0b2779aa072874e3d9648597a19"
   integrity sha512-xGjzRo/ZhvhcM9akfzxnCyTNqcG0LglyUTLXN6WN/JzkiOzErgYxfFquJNGG+ioqTmCrz4Y8r1+5vXFAMEDSkw==
 
-"@applicaster/quick-brick-grid@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-grid/-/quick-brick-grid-1.1.1.tgz#e76fb8030682fc8189e08b304bebd0ffd685e37d"
-  integrity sha512-ke94g+PArOlczSTCS2ICr4wc11tTFpsN1dPSE4zoyfgKWVljy1qnbn2vuQZuYx2Kxviu+lRp/AcakmToPB2QwA==
+"@applicaster/quick-brick-grid@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-grid/-/quick-brick-grid-1.2.1.tgz#e9585976ab5b75aa9eebfd676c81d5ed27646e5f"
+  integrity sha512-TVUxW6jrE35LNwlnTyypZ8iC7xAK/r9vDd5KAxxWQXKa8P5AhExEiXdcPziFplBhkCYXcU5l6pdkUUOajGx9DQ==
   dependencies:
     ramda "^0.26.1"
     react "16.8.3"
     react-native "0.59.10"
 
-"@applicaster/quick-brick-hero@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-hero/-/quick-brick-hero-0.2.1.tgz#50ae5ed391f1c2490502928b00571e5a2a29fa50"
-  integrity sha512-oYAq8K+RnztZQURGzhPP7+5gscyuplkTsyOCLZ2lFSCC0+JJhpVyQC/OKw64xK1BQPFNj4ZFJzBS1UAGQEw5eQ==
+"@applicaster/quick-brick-hero@0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-hero/-/quick-brick-hero-0.2.3.tgz#6af32c133ba30772bfdbc111771daab34f942553"
+  integrity sha512-V8WDgr3X/ba8CxOEcBimapAVYKxJjesOFQzpZcciuOc1qsV05mDbWbp+I9mdV5vvmYMG/acK7Qt5rQQ+7GeedQ==
   dependencies:
     ramda "^0.26.1"
     react "16.8.3"
     react-native "0.59.10"
 
-"@applicaster/quick-brick-inplayer-logout@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer-logout/-/quick-brick-inplayer-logout-0.0.3.tgz#9640e8c130477facc8151f6f0c2eaf892d7927a3"
-  integrity sha512-2QNEAVTtvSSKCnPvtqCG4fJdbFCZ6tjEIhW7TxnoKUfwFyea3vfhbyB5ZZkGthy6FsbJcoGuejYNjRxwtoCeDw==
+"@applicaster/quick-brick-inplayer-logout@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer-logout/-/quick-brick-inplayer-logout-0.0.5.tgz#31b445182dc24ca2717179ab22fc3d1b774e1a5f"
+  integrity sha512-i0vQDod4fB65hA49wBq08B4FVddssyf30PpFmwSdU8ZKXDEjbwOtttC0hQT0l3v26hIG5XLkvnWq8XlfK7MIvw==
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-inplayer@0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.0.9.tgz#f7bd7997c05ad1203421f5c126c85257c41b4966"
-  integrity sha512-T1mXJpXZLZn3ewLsOBqD7A5Kn97KJsGWnnI8awdi1ew7TrXKDcZLTISAGCstGO7+piiIoTSdPo52XPLXwIEtRA==
+"@applicaster/quick-brick-inplayer@0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.0.12.tgz#774168d1db398687cbe4bf5a1bb1f1d5025ddb44"
+  integrity sha512-GWt8SSaqzWdFntYavk9BlsyC47Hx3B3D65wKye4V/PX1Z9f6TE+E+9KzXX9QDSiL54+9Mr2f4QE/l9uYH+SLfg==
   dependencies:
     axios "^0.19.1"
     moment "^2.24.0"
     ramda "^0.26.1"
     react-native-dropdownalert "^4.2.1"
 
-"@applicaster/quick-brick-list@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-list/-/quick-brick-list-1.2.1.tgz#4f90111fcb7aaaeb49532a18a63f1736f6f825d9"
-  integrity sha512-d2pC6Wv2p3f0vBYwa5SSc7fn47gmxOhO8v4yJjTlsmrB/s7NhJAIV6TeDNWeOQkediHo7B3XKWqTdMUBddyMSA==
+"@applicaster/quick-brick-list@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-list/-/quick-brick-list-1.2.2.tgz#5496056e7d9abb047eacd96d8a9d74246e9bca8a"
+  integrity sha512-uXHEEoNvJRXD4wc8rZuAxCxi12fMiW7fjDfzRWoWO9q7bDipQCsabImyB12lRNi5i19mk3JZYttUmxJCgUnkzA==
   dependencies:
     ramda "^0.26.1"
 

@@ -8,7 +8,9 @@ export function validateEmail(email) {
 }
 
 export function showAlert(title, message) {
-  Alert.alert(title, message);
+  setTimeout(() => {
+    Alert.alert(title, message);
+  }, 500);
 }
 
 export function validatePassword(password) {
