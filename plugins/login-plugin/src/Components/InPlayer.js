@@ -53,7 +53,7 @@ const InPlayer = (props) => {
     //TODO: This behaviour should be removed:
     // when QuickBrick will support JWPlayer and/or option two enable two player at once
     if (isJwPlayerAsset({ inPlayerData: data })) {
-      showAlert("(Demo Only) Error!", "JWPLayer not yet supported");
+      // showAlert("(Demo Only) Error!", "JWPLayer not yet supported");
       callback &&
         callback({
           success: false,
@@ -64,9 +64,9 @@ const InPlayer = (props) => {
           }),
         });
     } else {
-      if (error) {
-        showAlert("(Demo Only) Error!", error.message);
-      }
+      // if (error) {
+      //   showAlert("(Demo Only) Error!", error.message);
+      // }
       callback &&
         callback({
           success,
