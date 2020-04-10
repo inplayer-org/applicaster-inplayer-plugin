@@ -20,7 +20,9 @@
       "content": { "src": "" },
       "extensions": {
         "inplayer_requires_authentication": true,
-        "inplayer_asset_id": "72343"
+        "inplayer_asset_id": "72343",
+        "ios_purchase_id": "com.applicaster.inplayerdemo.nonConsumable",
+        "ios_subscription_id": "com.applicaster.inplayerdemo.subscription"
       }
     },
     {
