@@ -8,6 +8,7 @@ import SignUp from "../SignUp";
 import { container } from "../Styles";
 import { AssetModule } from "../../NativeModules/AssetModule";
 import { PayloadUtils } from "../../Utils";
+import { showAlert } from "../Utils";
 
 const { inPlayerAssetId } = PayloadUtils;
 // https://github.com/testshallpass/react-native-dropdownalert#usage
@@ -36,6 +37,7 @@ const AssetFlow = (props) => {
       .catch((error) => {
         setLoading(false);
         console.log("Error catched", { error });
+        showAlert({ error });
         assetFlowCallback({ success: false, data: null, error });
       });
   }, []);
