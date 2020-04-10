@@ -47,6 +47,6 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.0.13",
-  "manifest_version": "0.0.13"
+  "dependency_version": "0.0.14",
+  "manifest_version": "0.0.14"
 }
