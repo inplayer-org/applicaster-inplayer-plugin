@@ -1,8 +1,12 @@
 {
-  "type": { "value": "feed" },
+  "type": {
+    "value": "feed"
+  },
   "entry": [
     {
-      "type": { "value": "video" },
+      "type": {
+        "value": "video"
+      },
       "id": "asset-72343",
       "title": "Generic HTML Purchasable asset_id: 72343",
       "published": "1970-01-19T07:14:18+00:00",
@@ -11,22 +15,25 @@
           "type": "image",
           "media_item": [
             {
-              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover1.jpg",
+              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover3.jpg",
               "key": "image_base"
             }
           ]
         }
       ],
-      "content": { "src": "" },
+      "content": {
+        "src": ""
+      },
       "extensions": {
         "inplayer_requires_authentication": true,
         "inplayer_asset_id": "72343",
-        "ios_purchase_id": "com.applicaster.inplayerdemo.nonConsumable",
-        "ios_subscription_id": "com.applicaster.inplayerdemo.subscription"
+        "ios_purchase_id": "72348_17074"
       }
     },
     {
-      "type": { "value": "video" },
+      "type": {
+        "value": "video"
+      },
       "id": "asset-72344",
       "title": "Generic HTML Free Login Only asset_id: 72344",
       "published": "1970-01-19T07:14:18+00:00",
@@ -35,20 +42,24 @@
           "type": "image",
           "media_item": [
             {
-              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover1.jpg",
+              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover2.jpg",
               "key": "image_base"
             }
           ]
         }
       ],
-      "content": { "src": "" },
+      "content": {
+        "src": ""
+      },
       "extensions": {
         "inplayer_requires_authentication": true,
         "inplayer_asset_id": "72344"
       }
     },
     {
-      "type": { "value": "video" },
+      "type": {
+        "value": "video"
+      },
       "id": "asset-72275",
       "title": "Generic HTML asset_id: 72275",
       "published": "1970-01-19T07:14:18+00:00",
@@ -63,14 +74,18 @@
           ]
         }
       ],
-      "content": { "src": "" },
+      "content": {
+        "src": ""
+      },
       "extensions": {
         "inplayer_requires_authentication": true,
         "inplayer_asset_id": "72275"
       }
     },
     {
-      "type": { "value": "video" },
+      "type": {
+        "value": "video"
+      },
       "id": "asset-72276",
       "title": "JW Platform asset_id: 72276",
       "published": "1970-01-19T07:14:18+00:00",
@@ -85,14 +100,18 @@
           ]
         }
       ],
-      "content": { "src": "" },
+      "content": {
+        "src": ""
+      },
       "extensions": {
         "inplayer_requires_authentication": true,
         "inplayer_asset_id": "72276"
       }
     },
     {
-      "type": { "value": "video" },
+      "type": {
+        "value": "video"
+      },
       "id": "asset-72275-legacy",
       "title": "Legacy fields support: Generic HTML asset_id: 72275",
       "published": "1970-01-19T07:14:18+00:00",
@@ -107,14 +126,18 @@
           ]
         }
       ],
-      "content": { "src": "" },
+      "content": {
+        "src": ""
+      },
       "extensions": {
         "requires_authentication": true,
         "ds_product_ids": ["72275"]
       }
     },
     {
-      "type": { "value": "video" },
+      "type": {
+        "value": "video"
+      },
       "id": "asset-no-inplayer",
       "title": "Item without InPlayer extensions",
       "published": "1970-01-19T07:14:18+00:00",
@@ -135,7 +158,9 @@
       "extensions": {}
     },
     {
-      "type": { "value": "video" },
+      "type": {
+        "value": "video"
+      },
       "id": "asset-1234",
       "title": "Item with non-existing inplayer_asset_id",
       "published": "1970-01-19T07:14:18+00:00",
@@ -150,7 +175,9 @@
           ]
         }
       ],
-      "content": { "src": "" },
+      "content": {
+        "src": ""
+      },
       "extensions": {
         "inplayer_requires_authentication": true,
         "inplayer_asset_id": "1234"
