@@ -27,7 +27,7 @@
       "extensions": {
         "inplayer_requires_authentication": true,
         "inplayer_asset_id": "72343",
-        "ios_purchase_id": "72348_17074"
+        "purchase_id": "72348_17074"
       }
     },
     {
