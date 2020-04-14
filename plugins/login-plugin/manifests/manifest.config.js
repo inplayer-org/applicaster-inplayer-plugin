@@ -21,8 +21,15 @@ const baseManifest = {
       InPlayerLogin:
         ":path => './quick_brick/node_modules/@applicaster/quick-brick-inplayer/InPlayerLogin.podspec'",
     },
+    {
+      ApplicasterIAP:
+        ":path => './quick_brick/node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
+    },
   ],
-  npm_dependencies: ["react-native-dropdownalert@4.2.1"],
+  npm_dependencies: [
+    "react-native-dropdownalert@4.2.1",
+    "@applicaster/applicaster-iap@0.1.0",
+  ],
   custom_configuration_fields: [
     {
       type: "text",

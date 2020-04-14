@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import {} from "react-native";
 import R, { prop } from "ramda";
-import { container } from "./Styles";
+
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
-import { AccountModule } from "../NativeModules/AccountModule";
 import { PayloadUtils } from "../Utils";
 import { showAlert } from "./Utils";
 
@@ -39,15 +38,12 @@ const InPlayer = (props) => {
       } else {
         callback && callback({ success: true, error: null, payload });
       }
-      console.log({ hook: HookTypeData.PLAYER_HOOK });
     } else if (isNotEntry(payload)) {
-      console.log({ hook: HookTypeData.SCREEN_HOOK });
       setHookType(HookTypeData.SCREEN_HOOK);
     }
   }, []);
 
   const assetFlowCallback = ({ success, data, error }) => {
-    console.log("assetFlowCallback", { success, data });
     const { callback, payload } = props;
 
     //TODO: This behaviour should be removed:
@@ -80,7 +76,6 @@ const InPlayer = (props) => {
   };
 
   const accountFlowCallback = ({ success }) => {
-    console.log("accountFlowCallback", { success });
     const { callback, payload } = props;
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
@@ -93,10 +88,6 @@ const InPlayer = (props) => {
   };
 
   const renderPlayerHook = () => {
-    console.log("renderPlayerHook", {
-      ignoreAuth: ignoreAuthenticationFlow(payload),
-      isUserAuthenticated,
-    });
     return ignoreAuthenticationFlow(payload) || isUserAuthenticated ? (
       <AssetFlow assetFlowCallback={assetFlowCallback} {...props} />
     ) : (

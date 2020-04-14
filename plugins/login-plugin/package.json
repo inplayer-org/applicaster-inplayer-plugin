@@ -18,6 +18,7 @@
   "peerDependencies": {
     "@applicaster/zapp-react-native-redux": "^2.3.1",
     "@applicaster/zapp-react-native-utils": "^2.3.1",
+    "@applicaster/applicaster-iap": "0.1.0",
     "react": "16.8.3",
     "react-native": "0.59.10"
   },

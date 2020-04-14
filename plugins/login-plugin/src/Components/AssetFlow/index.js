@@ -7,7 +7,8 @@ import { AssetModule } from "../../NativeModules/AssetModule";
 import { PaymentModule } from "../../NativeModules/PaymentModule";
 
 import { PayloadUtils } from "../../Utils";
-import { ApplicasterIAPModule } from "../../../ApplicasterIAP";
+import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
+
 const { inPlayerAssetId, retrievePurchaseProductId } = PayloadUtils;
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 
