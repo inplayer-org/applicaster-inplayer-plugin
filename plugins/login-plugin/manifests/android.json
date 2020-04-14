@@ -28,7 +28,7 @@
   ],
   "npm_dependencies": [
     "react-native-dropdownalert@4.2.1",
-    "@applicaster/applicaster-iap@0.1.0"
+    "@applicaster/applicaster-iap@0.1.1"
   ],
   "custom_configuration_fields": [
     {
@@ -51,6 +51,6 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.0.19",
-  "manifest_version": "0.0.19"
+  "dependency_version": "0.0.20",
+  "manifest_version": "0.0.20"
 }
