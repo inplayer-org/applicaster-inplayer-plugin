@@ -23,7 +23,7 @@ const baseManifest = {
     },
     {
       ApplicasterIAP:
-        ":path => './quick_brick/node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
+        ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
     },
   ],
   npm_dependencies: [
