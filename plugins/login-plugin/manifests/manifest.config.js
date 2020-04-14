@@ -28,7 +28,7 @@ const baseManifest = {
   ],
   npm_dependencies: [
     "react-native-dropdownalert@4.2.1",
-    "@applicaster/applicaster-iap@0.1.0",
+    "@applicaster/applicaster-iap@0.1.1",
   ],
   custom_configuration_fields: [
     {
