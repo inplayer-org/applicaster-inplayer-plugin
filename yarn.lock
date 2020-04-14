@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@applicaster/applicaster-iap@0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@applicaster/applicaster-iap/-/applicaster-iap-0.1.3.tgz#75b13eda1d6ea8141c3f7120a4fcd029c3110021"
+  integrity sha512-IewX77BTrGwjghGOcq1zA0aVov475mWanvG+yLhb93rQuP0LzckGHGrRUvqXp8DHedOy2TCy2IFoR13FRM+RHA==
+  dependencies:
+    react "^16.8.0"
+    react-native "^0.59.10"
+
 "@applicaster/babel-preset-quick-brick@2.3.1":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@applicaster/babel-preset-quick-brick/-/babel-preset-quick-brick-2.3.1.tgz#94a3e066e3edd59e479f5a46ac872b498d623be5"
@@ -4679,7 +4687,7 @@ react-native-status-bar-height@^2.4.0:
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.5.0.tgz#bc0fb85230603850aab9667ee8111a62954de90c"
   integrity sha512-sYBCPYA/NapBSHkdm/IVL4ID3LLlIuLqINi2FBDyMkc2BU9pfSGOtkz9yfxoK39mYJuTrlTOQ7mManARUsYDSA==
 
-react-native@0.59.10:
+react-native@0.59.10, react-native@^0.59.10:
   version "0.59.10"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.10.tgz#352f381e382f93a0403be499c9e384bf51c2591c"
   integrity sha512-guB9YW+pBqS1dnfZ4ntzjINopiCUAbdmshU2wMWD1W32fRczLAopi/7Q2iHKP8LTCdxuYZV3fa9Mew5PSuANAw==
@@ -4810,6 +4818,15 @@ react@16.8.3:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.13.3"
+
+react@^16.8.0:
+  version "16.13.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
+  integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
 
 read-pkg-up@^2.0.0:
   version "2.0.0"
