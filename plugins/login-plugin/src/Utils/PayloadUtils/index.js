@@ -53,16 +53,21 @@ export default PayloadUtils = {
     };
 
     const findApplicasterStreamURL = (inPlayerData) => {
-      const streamUrl = findValueInInPlayerMetadataByName(
-        inPlayerData,
-        "asset_zapp-stream-url"
-      );
+      if (inPlayerData) {
+        console.log("findApplicasterStreamURL");
+        const streamUrl = findValueInInPlayerMetadataByName(
+          inPlayerData,
+          "asset_zapp-stream-url"
+        );
 
-      const assetType = findValueInInPlayerMetadataByName(
-        inPlayerData,
-        "asset_type"
-      );
-      return assetType === "video" ? streamUrl : null;
+        const assetType = findValueInInPlayerMetadataByName(
+          inPlayerData,
+          "asset_type"
+        );
+        console.log({ streamUrl, assetType });
+        return assetType === "video" ? streamUrl : null;
+      }
+      return null;
     };
 
     const { content = null } = payload;
@@ -100,5 +105,9 @@ export default PayloadUtils = {
       }
     }
     return false;
+  },
+
+  retrievePurchaseProductId: ({ payload }) => {
+    return R.compose(R.path(["extensions", "purchase_id"]))(payload);
   },
 };

@@ -15,7 +15,7 @@ export const PaymentModule = {
    */
   async validate(payload) {
     try {
-      return InPlayerPaymentBridge.signUp(payload);
+      return InPlayerPaymentBridge.validate(payload);
     } catch (e) {
       throw e;
     }

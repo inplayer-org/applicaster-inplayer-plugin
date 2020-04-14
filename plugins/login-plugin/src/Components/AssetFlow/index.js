@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import R from "ramda";
-import { Keyboard } from "react-native";
-import { Login } from "../Login";
 import LoadingScreen from "../LoadingScreen";
-import SignUp from "../SignUp";
 import { container } from "../Styles";
 import { AssetModule } from "../../NativeModules/AssetModule";
+import { PaymentModule } from "../../NativeModules/PaymentModule";
+
 import { PayloadUtils } from "../../Utils";
-
-const { inPlayerAssetId } = PayloadUtils;
+import { ApplicasterIAPModule } from "../../../ApplicasterIAP";
+const { inPlayerAssetId, retrievePurchaseProductId } = PayloadUtils;
 // https://github.com/testshallpass/react-native-dropdownalert#usage
-import DropdownAlert from "react-native-dropdownalert";
-
-// callback: ({ success: boolean, error: ?{}, payload: ?{} }) => void,
 
 const styles = StyleSheet.create({
   container,
@@ -22,23 +18,101 @@ const AssetFlow = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { configuration, payload, assetFlowCallback } = props;
-    console.log("AssetFlow Did finish");
-    AssetModule.checkAccessForAsset({
+    loadInPlayerAsset();
+  }, []);
+
+  const loadInPlayerAsset = async () => {
+    const { assetFlowCallback } = props;
+    try {
+      const itemAccess = await checkAssetForAsset();
+      setLoading(false);
+      assetFlowCallback({ success: true, data: itemAccess, error: null });
+    } catch (originalError) {
+      const { itemAccess, error } = await handleErrorLogic(originalError);
+      setLoading(false);
+      assetFlowCallback({ success: !error, data: itemAccess, error });
+    }
+  };
+
+  const handleErrorLogic = async (error) => {
+    const { code } = error;
+    if (code === "402") {
+      return await tryPurchaseItem();
+    } else {
+      return { error };
+    }
+  };
+
+  const tryPurchaseItem = async () => {
+    const { payload } = props;
+
+    try {
+      const purchaseId = retrievePurchaseProductId({ payload });
+      if (purchaseId) {
+        const productIdentifier = await retrieveProducts(purchaseId);
+        const { reciept } = await ApplicasterIAPModule.purchase(
+          productIdentifier
+        );
+        const succeed = await PaymentModule.validate({
+          receiptString: reciept,
+          productIdentifier,
+        });
+        const { error, itemAccess } = await tryLoadLoadAssets(500);
+
+        if (itemAccess) {
+          return { itemAccess };
+        } else if (error) {
+          throw error;
+        }
+      } else {
+        throw ("Error", "purchase_id not exist");
+      }
+    } catch (error) {
+      return { error };
+    }
+  };
+
+  const tryLoadLoadAssets = async (requestDelayTime) => {
+    try {
+      const itemAccess = await checkAssetForAsset();
+      return { itemAccess };
+    } catch (error) {
+      await sleep(requestDelayTime);
+      const newRequestDelayTime = requestDelayTime * 2;
+      if (newRequestDelayTime < 20000) {
+        return await tryLoadLoadAssets(newRequestDelayTime);
+      }
+      return { error };
+    }
+  };
+
+  const checkAssetForAsset = async () => {
+    const { configuration, payload } = props;
+    const assetData = await AssetModule.checkAccessForAsset({
       ...configuration,
       id: inPlayerAssetId(payload),
       entryId: null,
-    })
-      .then((itemAccess) => {
-        setLoading(false);
-        assetFlowCallback({ success: true, data: itemAccess, error: null });
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log("Error catched", { error });
-        assetFlowCallback({ success: false, data: null, error });
-      });
-  }, []);
+    });
+    return assetData;
+  };
+
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+  const retrieveProducts = async (purchaseId) => {
+    const { products } = await ApplicasterIAPModule.products([purchaseId]);
+    const productIdentifier = R.compose(
+      R.prop("productIdentifier"),
+      R.head
+    )(products);
+    if (productIdentifier !== purchaseId) {
+      throw (
+        ("Error",
+        `Can not retrive products with purchase product Identifier ${purchaseId}`)
+      );
+    }
+    return productIdentifier;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
