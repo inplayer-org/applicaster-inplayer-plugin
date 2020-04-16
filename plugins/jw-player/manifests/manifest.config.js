@@ -19,7 +19,7 @@ const baseManifest = {
   custom_configuration_fields: [
     {
       type: "text",
-      key: "plist_JWPlayerKey",
+      key: "plist.JWPlayerKey",
       tooltip_text: "JWPlayerKey Key",
       default: "",
     },
@@ -50,6 +50,10 @@ const extra_dependencies = {
   ios: [
     {
       "JWPlayer-SDK": "'= 3.12.0'",
+    },
+    {
+      "react-native-jw-media-player":
+        ":path => './quick_brick/node_modules/react-native-jw-media-player/ios/react-native-jw-media-player.podspec'",
     },
   ],
 };

@@ -1,3 +1,3 @@
-import JWPlayer from "./JWPlayer";
+import VideoPlayer from "./Components/VideoPlayer";
 
-export default JWPlayer;
+export default VideoPlayer;

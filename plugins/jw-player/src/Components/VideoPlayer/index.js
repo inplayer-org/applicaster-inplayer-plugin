@@ -85,22 +85,23 @@ const VideoPlayer = (props) => {
           >{`Your configuration of JWPlayer is wrong.\n\nDid you forget to add your JW key to your ${
             Platform.OS === "ios" ? "plist" : "manifest"
           }?\nDid you add a playlistItem with at least a file paramter?`}</Text>
-          <JWPlayer
+          {/* <JWPlayer
             style={styles.player}
             playlistItem={{
               mediaId: "1",
               file: "https://content.jwplatform.com/manifests/vM7nH0Kl.m3u8",
               autostart: false,
             }}
-            onBeforePlay={() => this.onBeforePlay()}
-            onPlay={() => this.onPlay()}
-            onSetupPlayerError={(e) => this.onSetupPlayerError(e)}
-            onPlayerError={(e) => this.onPlayerError(e)}
-            onBuffer={() => this.onBuffer()}
-            onTime={(time) => this.onTime(time)}
-          />
+            onBeforePlay={onBeforePlay}
+            onPlay={onPlay}
+            onSetupPlayerError={onSetupPlayerError}
+            onPlayerError={onPlayerError}
+            onBuffer={onBuffer}
+            onTime={onTime}
+          /> */}
         </View>
       </View>
     </SafeAreaView>
   );
 };
+export default VideoPlayer;
