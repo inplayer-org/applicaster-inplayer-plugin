@@ -12,7 +12,7 @@ const baseManifest = {
   react_native: true,
   identifier: "quick-brick-jw-player",
   ui_builder_support: true,
-  whitelisted_account_ids: ["5e132c906663330008c0f8ab"],
+  whitelisted_account_ids: ["5c9ce7917b225c000f02dfbc"],
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
   general: {
