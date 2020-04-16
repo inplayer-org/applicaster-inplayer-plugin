@@ -15,18 +15,15 @@ const baseManifest = {
   whitelisted_account_ids: ["5c9ce7917b225c000f02dfbc"],
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
-  general: {
-    fields: [
-      {
-        type: "text",
-        key: "plist_JWPlayerKey",
-        tooltip_text: "JWPlayerKey Key",
-        default: "",
-      },
-    ],
-  },
   npm_dependencies: ["react-native-jw-media-player@0.1.36"],
-  custom_configuration_fields: [],
+  custom_configuration_fields: [
+    {
+      type: "text",
+      key: "plist_JWPlayerKey",
+      tooltip_text: "JWPlayerKey Key",
+      default: "",
+    },
+  ],
   targets: ["mobile"],
   ui_frameworks: ["quickbrick"],
 };
