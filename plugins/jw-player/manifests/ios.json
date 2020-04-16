@@ -21,7 +21,7 @@
   "custom_configuration_fields": [
     {
       "type": "text",
-      "key": "plist_JWPlayerKey",
+      "key": "plist.JWPlayerKey",
       "tooltip_text": "JWPlayerKey Key",
       "default": ""
     }
@@ -33,12 +33,15 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.0.5",
-  "manifest_version": "0.0.5",
+  "dependency_version": "0.0.6",
+  "manifest_version": "0.0.6",
   "min_zapp_sdk": "20.2.0-Dev",
   "extra_dependencies": [
     {
       "JWPlayer-SDK": "'= 3.12.0'"
+    },
+    {
+      "react-native-jw-media-player": ":path => './quick_brick/node_modules/react-native-jw-media-player/ios/react-native-jw-media-player.podspec'"
     }
   ]
 }
