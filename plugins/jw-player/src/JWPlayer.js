@@ -1,3 +1,3 @@
-import VideoPlayer from "./ios/Components/VideoPlayer";
+import VideoPlayer from "./Components/VideoPlayer";
 
 export default VideoPlayer;
