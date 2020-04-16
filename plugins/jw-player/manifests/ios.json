@@ -1,0 +1,47 @@
+{
+  "api": {},
+  "dependency_repository_url": [],
+  "dependency_name": "@applicaster/quick-brick-jw-player",
+  "author_name": "Applicaster",
+  "author_email": "zapp@applicaster.com",
+  "name": "JWPlayer QuickBrick",
+  "description": "Quick Brick JW Player plugin",
+  "type": "player",
+  "react_native": true,
+  "identifier": "quick-brick-jw-player",
+  "ui_builder_support": true,
+  "whitelisted_account_ids": [
+    "5e132c906663330008c0f8ab"
+  ],
+  "deprecated_since_zapp_sdk": "",
+  "unsupported_since_zapp_sdk": "",
+  "general": {
+    "fields": [
+      {
+        "type": "text",
+        "key": "plist_JWPlayerKey",
+        "tooltip_text": "JWPlayerKey Key",
+        "default": ""
+      }
+    ]
+  },
+  "npm_dependencies": [
+    "react-native-jw-media-player@0.1.36"
+  ],
+  "custom_configuration_fields": [],
+  "targets": [
+    "mobile"
+  ],
+  "ui_frameworks": [
+    "quickbrick"
+  ],
+  "platform": "ios",
+  "dependency_version": "0.0.1",
+  "manifest_version": "0.0.1",
+  "min_zapp_sdk": "20.2.0-Dev",
+  "extra_dependencies": [
+    {
+      "JWPlayer-SDK": "'= 3.12.0'"
+    }
+  ]
+}
