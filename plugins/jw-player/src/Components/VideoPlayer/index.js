@@ -10,13 +10,13 @@ import {
 
 import R from "ramda";
 import JWPlayer from "react-native-jw-media-player";
-import { parseJsonIfNeeded } from "@applicaster/zapp-react-native-utils/functionUtils";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width,
+    height,
   },
   subContainer: {
     flex: 1,
@@ -26,11 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     alignItems: "center",
   },
-  text: {
-    fontSize: 18,
-    color: "white",
-    margin: 40,
-  },
+
   playerContainer: {
     height: 300,
     width: width - 40,
@@ -48,17 +44,19 @@ const styles = StyleSheet.create({
   },
 });
 
+// Player mediaId: "X8hnQSj3"
+// Entry  videoId: "3IAGTDeS"
+//content.jwplatform.com/players/3IAGTDeS-XeVTBbkG
+// https://content.jwplatform.com/videos/IfLGdOMF-dZH6UPjW.mp4
 const VideoPlayer = (props) => {
   const {
     source: { uri, entry },
     playableItem,
     controls,
   } = props;
-  console.log({ uri, entry, playableItem });
-
+  console.log({ width, height, uri, entry, playableItem });
   const playListItem = () => {
     const { title = null, summary = null } = playableItem;
-    const url = R.isEmpty(uri) ? null : uri;
 
     const image = R.compose(
       R.prop("src"),
@@ -68,30 +66,52 @@ const VideoPlayer = (props) => {
       R.prop("media_group")
     )(playableItem);
 
-    const mediaId = R.compose(
-      R.prop("player_id"),
-      parseJsonIfNeeded,
-      R.path(["extensions", "inPlayerData", "item", "content"])
-    )(playableItem);
-
-    // const { player_id, video_id } = jwPlayerData;
-
     const retVal = {
       title,
-      mediaId: R.isNil(mediaId) ? "-1" : mediaId,
+      mediaId: advertismentMediaId(playableItem),
       image,
       desc: summary,
       time: 0,
-      file: url,
+      file: videoStreamFromPlayableItem(playableItem),
       autostart: true,
       controls,
       repeat: false,
       displayDescription: true,
       displayTitle: true,
     };
-    console.log({ url, image, controls, title, summary, mediaId, retVal });
 
     return retVal;
+  };
+
+  const advertismentMediaId = (playableItem) => {
+    console.log("advertismentMediaId", { playableItem });
+    const {
+      extensions: { jwplayer_content_id },
+      id: entryId,
+    } = playableItem;
+    return jwplayer_content_id || entryId || "-1";
+  };
+
+  const videoStreamFromPlayableItem = (playableItem) => {
+    console.log("videoStreamFromPlayableItem", { playableItem });
+    const {
+      extensions: { jwplayer_content_id },
+    } = playableItem;
+
+    const url = R.isEmpty(uri) ? null : uri;
+
+    console.log({
+      url,
+      jwplayer_content_id,
+      playableItem,
+    });
+
+    if (jwplayer_content_id) {
+      return `https://content.jwplatform.com/videos/${jwplayer_content_id}`;
+    } else if (url) {
+      return url;
+    }
+    return null;
   };
 
   const onBeforePlay = () => {
@@ -107,7 +127,7 @@ const VideoPlayer = (props) => {
   const onPlayerError = () => {
     const { onError } = props;
     // eslint-disable-line
-    onError(error);
+    // onError(error);
     // eslint-disable-line
     console.log("onPlayerError was called with error: ", error);
   };
@@ -115,7 +135,7 @@ const VideoPlayer = (props) => {
   const onSetupPlayerError = (error) => {
     const { onError } = props;
     // eslint-disable-line
-    onError(error);
+    // onError(error);
     console.log("onSetupPlayerError was called with error: ", error);
   };
 
@@ -128,30 +148,31 @@ const VideoPlayer = (props) => {
     // eslint-disable-line
     // console.log('onTime was called with: ', position, duration);
   };
-
+  console.log("Render!!!");
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.subContainer}>
-        <Text style={styles.text}>Welcome to react-native-jw-media-player</Text>
-        <View style={styles.playerContainer}>
-          <Text
-            style={styles.warningText}
-          >{`Your configuration of JWPlayer is wrong.\n\nDid you forget to add your JW key to your ${
-            Platform.OS === "ios" ? "plist" : "manifest"
-          }?\nDid you add a playlistItem with at least a file paramter?`}</Text>
-          <JWPlayer
-            style={styles.player}
-            playlistItem={playListItem()}
-            onBeforePlay={onBeforePlay}
-            onPlay={onPlay}
-            onSetupPlayerError={onSetupPlayerError}
-            onPlayerError={onPlayerError}
-            onBuffer={onBuffer}
-            onTime={onTime}
-          />
-        </View>
-      </View>
-    </SafeAreaView>
+    // <SafeAreaView style={styles.container}>
+    <View style={{ width, height, backgroundColor: "red" }}>
+      <Text
+        style={styles.warningText}
+      >{`Your configuration of JWPlayer is wrong.\n\nDid you forget to add your JW key to your ${
+        Platform.OS === "ios" ? "plist" : "manifest"
+      }?\nDid you add a playlistItem with at least a file paramter?`}</Text>
+      <JWPlayer
+        style={{ flex: 1 }}
+        playlistItem={playListItem()}
+        onBeforePlay={onBeforePlay}
+        onPlay={onPlay}
+        onSetupPlayerError={onSetupPlayerError}
+        onPlayerError={onPlayerError}
+        onBuffer={onBuffer}
+        onTime={onTime}
+        nativeFullScreen={true}
+        fullScreenOnLandscape={true}
+        landscapeOnFullScreen={true}
+      />
+    </View>
+    // </SafeAreaView>
   );
 };
+
 export default VideoPlayer;

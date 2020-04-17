@@ -1,5 +1,5 @@
 import R from "ramda";
-
+import { mapOVPProviders } from "../OVPProvidersMapper";
 export default PayloadUtils = {
   ignoreAuthenticationFlow: (payload) => {
     const requiresAuthentication = R.path([
@@ -74,23 +74,11 @@ export default PayloadUtils = {
     return {
       ...payload,
       extensions: {
-        inPlayerData,
+        in_player_data: inPlayerData,
+        ...mapOVPProviders(inPlayerData),
       },
       content: newContent,
     };
-  },
-
-  isJwPlayerAsset: ({ inPlayerData }) => {
-    if (inPlayerData) {
-      const itemType = R.path(["item", "item_type"])(inPlayerData);
-      if (itemType) {
-        const { name } = itemType;
-        if (name === "jw_asset") {
-          return true;
-        }
-      }
-    }
-    return false;
   },
 
   retrievePurchaseProductId: ({ payload }) => {
