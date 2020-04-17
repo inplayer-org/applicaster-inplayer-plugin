@@ -1,0 +1,84 @@
+{
+  "type": {
+    "value": "feed"
+  },
+  "entry": [
+    {
+      "type": {
+        "value": "video"
+      },
+      "id": "3IAGTDeS",
+      "summary": "JWPlayer, Free, Login",
+      "title": "The Nutcracker and the Four Realms",
+      "published": "1970-01-19T07:14:18+00:00",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": [
+            {
+              "src": "https://content.jwplatform.com/thumbs/3IAGTDeS-1280.jpg",
+              "key": "image_base"
+            }
+          ]
+        }
+      ],
+      "content": {
+        "src": ""
+      },
+      "extensions": {
+        "inplayer_requires_authentication": true,
+        "inplayer_asset_id": "72420"
+      }
+    },
+    {
+      "type": {
+        "value": "video"
+      },
+      "id": "Lx2ncTTO",
+      "summary": "JWPlayer, SRC only, Free, Login",
+      "title": "Winchester",
+      "published": "1970-01-19T07:14:18+00:00",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": [
+            {
+              "src": "https://content.jwplatform.com/thumbs/Lx2ncTTO-1280.jpg",
+              "key": "image_base"
+            }
+          ]
+        }
+      ],
+      "content": {
+        "src": null
+      },
+      "extensions": {
+        "inplayer_requires_authentication": true
+      }
+    },
+    {
+      "type": {
+        "value": "video"
+      },
+      "id": "IfLGdOMF",
+      "summary": "JWPlayer, Free, SRC only, No InPlayer",
+      "title": "Traffik Trailer",
+      "published": "1970-01-19T07:14:18+00:00",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": [
+            {
+              "src": "https://content.jwplatform.com/thumbs/Lx2ncTTO-1280.jpg",
+              "key": "image_base"
+            }
+          ]
+        }
+      ],
+      "content": {
+        "src": "https://content.jwplatform.com/videos/IfLGdOMF-dZH6UPjW.mp4"
+      },
+      "extensions": {}
+    }
+  ]
+}
