@@ -116,6 +116,13 @@
     ramda "^0.26.1"
     react-native-dropdownalert "^4.2.1"
 
+"@applicaster/quick-brick-jw-player@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-jw-player/-/quick-brick-jw-player-0.0.6.tgz#0d7cfc82132f15ef9ea622a13e00549f3615bae0"
+  integrity sha512-+7jmcDJcyXtYyzk8amUO0i8nGBHyg1joQvuw0ARCgPS5PjjgDZSGadqyCS4QAgjgWrk3coSmTR8YWQLx8ChIKw==
+  dependencies:
+    react-native-jw-media-player "0.1.36"
+
 "@applicaster/quick-brick-list@1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-list/-/quick-brick-list-1.2.2.tgz#5496056e7d9abb047eacd96d8a9d74246e9bca8a"
@@ -325,13 +332,6 @@
     "@applicaster/zapp-react-native-app" "2.3.2-rc.7"
     "@applicaster/zapp-react-native-bridge" "2.3.2-rc.7"
     "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.7"
-
-"@applicaster/zapp-react-native-default-player@2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-default-player/-/zapp-react-native-default-player-2.0.7.tgz#48cd51f6ba65e5b5250319156bbd5b264019e4b9"
-  integrity sha512-PjV5LCnTVqe9CvkREQDl9akrxdUdJDsY0QRqs/PHb8Wa5F3dN8BDigFPexErs8yxTfxACwBdOLe1RgZZanhA4w==
-  dependencies:
-    keymirror "^0.1.1"
 
 "@applicaster/zapp-react-native-redux@2.3.2-rc.7":
   version "2.3.2-rc.7"
@@ -3686,11 +3686,6 @@ keycode@^2.2.0:
   resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
   integrity sha1-PQr1bce4uOXLqNCpfxByBO7CKwQ=
 
-keymirror@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
-  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
-
 kind-of@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-1.1.0.tgz#140a3d2d41a36d2efcfa9377b62c24f8495a5c44"
@@ -5085,6 +5080,11 @@ react-native-dropdownalert@^4.2.1:
   integrity sha512-FaGAnL4LMzVqM3a/qjkk5z/YlbJ4pQVv0a+x/06h0BwWFXUvii4RFt+6KRgYn7ZzZQo78SJcWVDCpqxjTKSZHw==
   dependencies:
     prop-types "15.5.10"
+
+react-native-jw-media-player@0.1.36:
+  version "0.1.36"
+  resolved "https://registry.yarnpkg.com/react-native-jw-media-player/-/react-native-jw-media-player-0.1.36.tgz#dc3ed6be60fe3b8ce2ab277f6654d5d36516a323"
+  integrity sha512-yP1vYNWtbEdll0TlSWG5Evmziewp+IU548dxk3RivTo6Ie+KkZAb0i76MY1oRywq4IpgD9P+Cngb3a9h2alNtA==
 
 react-native-status-bar-height@^2.4.0:
   version "2.5.0"

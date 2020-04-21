@@ -27,6 +27,7 @@ const AssetFlow = (props) => {
     try {
       const itemAccess = await checkAssetForAsset();
       setLoading(false);
+      console.log({ itemAccess });
       assetFlowCallback({ success: true, data: itemAccess, error: null });
     } catch (originalError) {
       const { itemAccess, error } = await handleErrorLogic(originalError);

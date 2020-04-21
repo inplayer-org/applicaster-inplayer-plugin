@@ -182,7 +182,7 @@ const VideoPlayer = (props) => {
         onPlayerError={onPlayerError}
         onTime={onTime}
         onComplete={onEnd}
-        onCloseButtonPush={onFullscreenPlayerDidDismiss}
+        onClose={onFullscreenPlayerDidDismiss}
         nativeFullScreen={false}
         fullScreenOnLandscape={false}
         landscapeOnFullScreen={false}
