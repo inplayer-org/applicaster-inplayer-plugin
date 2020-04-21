@@ -15,7 +15,7 @@ const baseManifest = {
   whitelisted_account_ids: ["5c9ce7917b225c000f02dfbc"],
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
-  npm_dependencies: ["react-native-jw-media-player@0.1.36"],
+  npm_dependencies: ["react-native-jw-media-player-applicaster@0.0.1"],
   custom_configuration_fields: [
     {
       type: "text",
