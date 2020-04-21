@@ -70,7 +70,6 @@ export default PayloadUtils = {
     const newContent = applicasterStreamUrl
       ? { src: applicasterStreamUrl }
       : content;
-
     return {
       ...payload,
       extensions: {

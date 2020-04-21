@@ -79,7 +79,8 @@
       },
       "extensions": {
         "inplayer_requires_authentication": true,
-        "inplayer_asset_id": "72275"
+        "inplayer_asset_id": "72275",
+        "purchase_id": "72348_17074"
       }
     },
     {
@@ -105,7 +106,8 @@
       },
       "extensions": {
         "requires_authentication": true,
-        "ds_product_ids": ["72275"]
+        "ds_product_ids": ["72275"],
+        "purchase_id": "72348_17074"
       }
     },
     {
