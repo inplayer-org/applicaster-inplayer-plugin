@@ -16,7 +16,7 @@
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "npm_dependencies": [
-    "react-native-jw-media-player@0.1.36"
+    "react-native-jw-media-player-applicaster@0.0.1"
   ],
   "custom_configuration_fields": [
     {
@@ -33,8 +33,8 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.0.7",
-  "manifest_version": "0.0.7",
+  "dependency_version": "0.0.8",
+  "manifest_version": "0.0.8",
   "min_zapp_sdk": "20.2.0-Dev",
   "extra_dependencies": [
     {
