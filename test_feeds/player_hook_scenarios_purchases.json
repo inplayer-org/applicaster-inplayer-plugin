@@ -86,32 +86,6 @@
       "type": {
         "value": "video"
       },
-      "id": "asset-72276",
-      "title": "JW Platform asset_id: 72276",
-      "published": "1970-01-19T07:14:18+00:00",
-      "media_group": [
-        {
-          "type": "image",
-          "media_item": [
-            {
-              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover2.jpg",
-              "key": "image_base"
-            }
-          ]
-        }
-      ],
-      "content": {
-        "src": ""
-      },
-      "extensions": {
-        "inplayer_requires_authentication": true,
-        "inplayer_asset_id": "72276"
-      }
-    },
-    {
-      "type": {
-        "value": "video"
-      },
       "id": "asset-72275-legacy",
       "title": "Legacy fields support: Generic HTML asset_id: 72275",
       "published": "1970-01-19T07:14:18+00:00",
