@@ -53,7 +53,7 @@ const extra_dependencies = {
     },
     {
       "react-native-jw-media-player":
-        ":path => './quick_brick/node_modules/react-native-jw-media-player/ios/react-native-jw-media-player.podspec'",
+        ":path => './quick_brick/node_modules/react-native-jw-media-player-applicaster/ios/react-native-jw-media-player.podspec'",
     },
   ],
 };
