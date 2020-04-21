@@ -1,4 +1,9 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  allowedOrientationsForScreen,
+  releaseOrientationsForScreen,
+  ORIENTATIONS,
+} from "@applicaster/zapp-react-native-utils/appUtils/orientationHelper";
 import {
   StyleSheet,
   View,
@@ -6,10 +11,12 @@ import {
   SafeAreaView,
   Dimensions,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 
 import R from "ramda";
 import JWPlayer from "react-native-jw-media-player";
+import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 
 const { width, height } = Dimensions.get("window");
 
@@ -49,10 +56,26 @@ const styles = StyleSheet.create({
 //content.jwplatform.com/players/3IAGTDeS-XeVTBbkG
 // https://content.jwplatform.com/videos/IfLGdOMF-dZH6UPjW.mp4
 const VideoPlayer = (props) => {
+  const navigator = useNavigation();
+
+  // const [isControlsVisible, setIsControlsVisible] = useState(true);
+  useEffect(() => {
+    console.log("Mount");
+    allowedOrientationsForScreen(ORIENTATIONS.landscapeSensor);
+  }, []);
+
+  useEffect(
+    () => () => {
+      console.log("UN-Mount");
+      releaseOrientationsForScreen();
+    },
+    []
+  );
+
   const {
     source: { uri, entry },
     playableItem,
-    controls,
+    controls: customControls,
   } = props;
   console.log({ width, height, uri, entry, playableItem });
   const playListItem = () => {
@@ -74,7 +97,7 @@ const VideoPlayer = (props) => {
       time: 0,
       file: videoStreamFromPlayableItem(playableItem),
       autostart: true,
-      controls,
+      controls: customControls,
       repeat: false,
       displayDescription: true,
       displayTitle: true,
@@ -114,64 +137,58 @@ const VideoPlayer = (props) => {
     return null;
   };
 
-  const onBeforePlay = () => {
-    // eslint-disable-line
-    // console.log('onBeforePlay was called');
+  const onPlay = (e) => {
+    props.onPlaybackRateChange({ playbackRate: 1 });
   };
 
-  const onPlay = () => {
-    // eslint-disable-line
-    // console.log('onPlay was called');
+  const onPause = (e) => {
+    props.onPlaybackRateChange({ playbackRate: 0 });
   };
 
-  const onPlayerError = () => {
+  const onPlayerError = (error) => {
     const { onError } = props;
-    // eslint-disable-line
-    // onError(error);
-    // eslint-disable-line
+    props.onError(error);
     console.log("onPlayerError was called with error: ", error);
   };
 
   const onSetupPlayerError = (error) => {
     const { onError } = props;
-    // eslint-disable-line
-    // onError(error);
+    props.onError(error);
     console.log("onSetupPlayerError was called with error: ", error);
   };
 
-  const onBuffer = (e) => {
+  const onTime = (e) => {
+    const {
+      nativeEvent: { position, duration },
+    } = e;
     // eslint-disable-line
-    // console.log('onBuffer was called');
+    if (position === 0) {
+      props.onLoad({ duration });
+    } else {
+      props.onProgress({ currentTime: position });
+    }
   };
 
-  const onTime = ({ position, duration }) => {
-    // eslint-disable-line
-    // console.log('onTime was called with: ', position, duration);
-  };
-  console.log("Render!!!");
+  console.log("Props", { props: props, width, height });
+  const { onEnd, onFullscreenPlayerDidDismiss } = props;
   return (
-    // <SafeAreaView style={styles.container}>
-    <View style={{ width, height, backgroundColor: "red" }}>
-      <Text
-        style={styles.warningText}
-      >{`Your configuration of JWPlayer is wrong.\n\nDid you forget to add your JW key to your ${
-        Platform.OS === "ios" ? "plist" : "manifest"
-      }?\nDid you add a playlistItem with at least a file paramter?`}</Text>
+    <View style={{ flex: 1, backgroundColor: "red" }}>
       <JWPlayer
         style={{ flex: 1 }}
         playlistItem={playListItem()}
-        onBeforePlay={onBeforePlay}
         onPlay={onPlay}
+        onPause={onPause}
         onSetupPlayerError={onSetupPlayerError}
         onPlayerError={onPlayerError}
-        onBuffer={onBuffer}
         onTime={onTime}
-        nativeFullScreen={true}
-        fullScreenOnLandscape={true}
-        landscapeOnFullScreen={true}
+        onComplete={onEnd}
+        onCloseButtonPush={onFullscreenPlayerDidDismiss}
+        nativeFullScreen={false}
+        fullScreenOnLandscape={false}
+        landscapeOnFullScreen={false}
+        playerStyle={"test"}
       />
     </View>
-    // </SafeAreaView>
   );
 };
 
