@@ -15,7 +15,7 @@ import {
 } from "react-native";
 
 import R from "ramda";
-import JWPlayer from "react-native-jw-media-player";
+import JWPlayer from "react-native-jw-media-player-applicaster";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 
 const { width, height } = Dimensions.get("window");
