@@ -79,6 +79,32 @@
         "src": "https://content.jwplatform.com/videos/IfLGdOMF-dZH6UPjW.mp4"
       },
       "extensions": {}
+    },
+    {
+      "type": {
+        "value": "video"
+      },
+      "id": "asset-72344",
+      "title": "Generic HTML Free Login Only asset_id: 72344",
+      "published": "1970-01-19T07:14:18+00:00",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": [
+            {
+              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover2.jpg",
+              "key": "image_base"
+            }
+          ]
+        }
+      ],
+      "content": {
+        "src": ""
+      },
+      "extensions": {
+        "inplayer_requires_authentication": true,
+        "inplayer_asset_id": "72344"
+      }
     }
   ]
 }
