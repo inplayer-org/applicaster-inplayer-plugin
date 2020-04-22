@@ -15,7 +15,7 @@ const baseManifest = {
   whitelisted_account_ids: ["5c9ce7917b225c000f02dfbc"],
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
-  npm_dependencies: ["react-native-jw-media-player-applicaster@0.0.1"],
+  npm_dependencies: ["react-native-jw-media-player-applicaster@0.0.2"],
   custom_configuration_fields: [
     {
       type: "text",
@@ -52,8 +52,8 @@ const extra_dependencies = {
       "JWPlayer-SDK": "'= 3.12.0'",
     },
     {
-      "react-native-jw-media-player":
-        ":path => 'node_modules/react-native-jw-media-player-applicaster/ios/react-native-jw-media-player.podspec'",
+      "react-native-jw-media-player-applicaster":
+        ":path => 'node_modules/react-native-jw-media-player-applicaster/ios/react-native-jw-media-player-applicaster.podspec'",
     },
   ],
 };
