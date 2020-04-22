@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import {
   View,
@@ -8,16 +8,16 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import R from "ramda";
 
-import { container, title, input, button, buttonText } from "../Styles";
-import { validateEmail, showAlert, validatePassword } from "../Utils";
+import { container, input, button, buttonText } from "../Styles";
+import { validateEmail, validatePassword } from "../../Utils/Account";
 
 const styles = StyleSheet.create({
   container: {
     ...container,
     width: Dimensions.get("window").width,
   },
+
   title: {
     fontFamily: "Montserrat-Bold",
     fontSize: 15,
@@ -41,8 +41,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const parseJSON = R.tryCatch(JSON.parse, () => null);
-
 const SignUp = (props) => {
   const [fullName, setFullName] = useState(null);
   const [username, setUsername] = useState(null);
@@ -51,7 +49,6 @@ const SignUp = (props) => {
 
   const signUp = () => {
     const { createAccount, onSignUpError } = props;
-
     const title = "Sign Up form issue";
     if (!fullName || fullName.length == 0) {
       onSignUpError({

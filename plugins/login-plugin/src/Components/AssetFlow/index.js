@@ -6,15 +6,16 @@ import { container } from "../Styles";
 import { AssetModule } from "../../NativeModules/AssetModule";
 import { PaymentModule } from "../../NativeModules/PaymentModule";
 
-import { PayloadUtils } from "../../Utils";
+import {
+  inPlayerAssetId,
+  retrievePurchaseProductId,
+} from "../../Utils/PayloadUtils";
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
-
-const { inPlayerAssetId, retrievePurchaseProductId } = PayloadUtils;
-// https://github.com/testshallpass/react-native-dropdownalert#usage
 
 const styles = StyleSheet.create({
   container,
 });
+
 const AssetFlow = (props) => {
   const [loading, setLoading] = useState(true);
 
@@ -55,7 +56,7 @@ const AssetFlow = (props) => {
         const { reciept } = await ApplicasterIAPModule.purchase(
           productIdentifier
         );
-        const succeed = await PaymentModule.validate({
+        await PaymentModule.validate({
           receiptString: reciept,
           productIdentifier,
         });

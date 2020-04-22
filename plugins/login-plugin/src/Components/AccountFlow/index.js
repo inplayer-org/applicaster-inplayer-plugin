@@ -10,23 +10,17 @@ import { AccountModule } from "../../NativeModules/AccountModule";
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
 
-// callback: ({ success: boolean, error: ?{}, payload: ?{} }) => void,
-
-const parseJSON = R.tryCatch(JSON.parse, () => null);
 const styles = StyleSheet.create({
   container,
 });
 const AccountFlow = (props) => {
-  const riverScreen = Object.values(props.rivers).find(
-    (river) => river.type === "my-plugin-identifier"
-  );
-
   const ScreensData = {
     EMPTY: "Empty",
     LOGIN: "Login",
     SIGN_UP: "SignUp",
     FORGOT_PASSWORD: "ForgotPassword",
   };
+
   const [loading, setLoading] = useState(true);
   const [screen, setScreen] = useState(ScreensData.EMPTY);
 
@@ -34,6 +28,7 @@ const AccountFlow = (props) => {
     const { configuration } = props;
     // Check is Autheticated
     console.log("Account Flow", { configuration });
+
     AccountModule.isAuthenticated(configuration)
       .then((isLogedIn) => {
         setLoading(false);
@@ -49,8 +44,6 @@ const AccountFlow = (props) => {
     const { accountFlowCallback } = props;
     setLoading(false);
     accountFlowCallback({ success: true });
-    // callback &&
-    //   callback({ success: true, error: null, payload: props.payload });
   };
 
   const onFail = (error, errorMessage) => {
@@ -70,7 +63,7 @@ const AccountFlow = (props) => {
     const { configuration } = props;
     setLoading(true);
     AccountModule.authenticate({ ...payload, ...configuration })
-      .then((data) => {
+      .then(() => {
         onSuccess();
       })
       .catch((e) => {
@@ -85,13 +78,10 @@ const AccountFlow = (props) => {
     setScreen(ScreensData.LOGIN);
   };
 
-  console.disableYellowBox = true;
-
   createAccount = (payload) => {
     Keyboard.dismiss();
     const { configuration } = props;
     setLoading(true);
-    const { callback } = props;
     AccountModule.signUp({ ...payload, ...configuration })
       .then((data) => {
         onSuccess();
@@ -108,10 +98,8 @@ const AccountFlow = (props) => {
   onSignUpError = ({ title, message }) => {
     this.dropDownAlertRef.alertWithType("warn", title, message);
   };
+
   const renderAuthenteficationScreen = () => {
-    if (!screen) {
-      return null;
-    }
     switch (screen) {
       case ScreensData.LOGIN:
         return (

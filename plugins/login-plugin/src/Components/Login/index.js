@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from "react";
-import R from "ramda";
-import moment from "moment";
-import globalSessionManager from "../../globalSessionManager";
-import { validateEmail, validatePassword } from "../Utils";
+import React, { useState } from "react";
+import { validateEmail, validatePassword } from "../../Utils/Account";
 import { container, title, input, button, buttonText } from "../Styles";
 import {
   View,
   Text,
-  SafeAreaView,
   TextInput,
   StyleSheet,
-  NativeModules,
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import LoadingScreen from "../LoadingScreen";
 
 const styles = StyleSheet.create({
   container: {
@@ -85,6 +79,7 @@ export const Login = (props) => {
     const { accountFlowCallback } = props;
     accountFlowCallback && accountFlowCallback(false);
   };
+
   const { backButton } = props;
 
   return (

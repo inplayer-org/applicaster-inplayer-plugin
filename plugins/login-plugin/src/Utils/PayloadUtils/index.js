@@ -1,86 +1,62 @@
 import R from "ramda";
 import { mapOVPProviders } from "../OVPProvidersMapper";
-export default PayloadUtils = {
-  ignoreAuthenticationFlow: (payload) => {
-    const requiresAuthentication = R.path([
-      "extensions",
-      "inplayer_requires_authentication",
-    ])(payload);
 
-    // Legacy keys, should not be used if future
-    const requiresAuthenticationFallback = R.path([
-      "extensions",
-      "requires_authentication",
-    ])(payload);
-    return requiresAuthentication || requiresAuthenticationFallback
-      ? false
-      : true;
-  },
+export const inPlayerAssetId = (payload) => {
+  const assetId = R.path(["extensions", "inplayer_asset_id"])(payload);
 
-  inPlayerAssetId: (payload) => {
-    const assetId = R.path(["extensions", "inplayer_asset_id"])(payload);
+  // Legacy keys, should not be used if future.
+  // Remove at once we will make sure that not needed
+  const assetIdFallback = R.compose(
+    R.ifElse(Array.isArray, R.head, R.always(null)),
+    R.path(["extensions", "ds_product_ids"])
+  )(payload);
+  return assetId || assetIdFallback;
+};
 
-    // Legacy keys, should not be used if future
-    const assetIdFallback = R.compose(
-      R.ifElse(Array.isArray, R.head, R.always(null)),
-      R.path(["extensions", "ds_product_ids"])
-    )(payload);
-    return assetId || assetIdFallback;
-  },
+export const isVideoEntry = (payload) => {
+  return R.compose(R.equals("video"), R.path(["type", "value"]))(payload);
+};
 
-  isVideoEntry: (payload) => {
-    return R.compose(R.equals("video"), R.path(["type", "value"]))(payload);
-  },
+export const mergeInPlayerData = ({ payload, inPlayerData }) => {
+  const { content = null } = payload;
+  const applicasterStreamUrl = findApplicasterStreamURL(inPlayerData);
+  const newContent = applicasterStreamUrl
+    ? { src: applicasterStreamUrl }
+    : content;
+  return {
+    ...payload,
+    extensions: {
+      in_player_data: inPlayerData,
+      ...mapOVPProviders(inPlayerData),
+    },
+    content: newContent,
+  };
+};
 
-  isNotEntry: (payload) => {
-    return R.path(["type", "value"]);
-  },
+const findValueInInPlayerMetadataByName = (inPlayerData, value) => {
+  return R.compose(
+    R.prop("value"),
+    R.ifElse(Array.isArray, R.find(R.propEq("name", value)), R.always(null)),
+    R.path(["item", "metadata"])
+  )(inPlayerData);
+};
 
-  payloadWithCombinedInPlayerData: ({ payload, inPlayerData }) => {
-    const findValueInInPlayerMetadataByName = (inPlayerData, value) => {
-      return R.compose(
-        R.prop("value"),
-        R.ifElse(
-          Array.isArray,
-          R.find(R.propEq("name", value)),
-          R.always(null)
-        ),
-        R.path(["item", "metadata"])
-      )(inPlayerData);
-    };
+const findApplicasterStreamURL = (inPlayerData) => {
+  if (inPlayerData) {
+    const streamUrl = findValueInInPlayerMetadataByName(
+      inPlayerData,
+      "asset_zapp-stream-url"
+    );
 
-    const findApplicasterStreamURL = (inPlayerData) => {
-      if (inPlayerData) {
-        const streamUrl = findValueInInPlayerMetadataByName(
-          inPlayerData,
-          "asset_zapp-stream-url"
-        );
+    const assetType = findValueInInPlayerMetadataByName(
+      inPlayerData,
+      "asset-type"
+    );
+    return assetType === "video" ? streamUrl : null;
+  }
+  return null;
+};
 
-        const assetType = findValueInInPlayerMetadataByName(
-          inPlayerData,
-          "asset_type"
-        );
-        return assetType === "video" ? streamUrl : null;
-      }
-      return null;
-    };
-
-    const { content = null } = payload;
-    const applicasterStreamUrl = findApplicasterStreamURL(inPlayerData);
-    const newContent = applicasterStreamUrl
-      ? { src: applicasterStreamUrl }
-      : content;
-    return {
-      ...payload,
-      extensions: {
-        in_player_data: inPlayerData,
-        ...mapOVPProviders(inPlayerData),
-      },
-      content: newContent,
-    };
-  },
-
-  retrievePurchaseProductId: ({ payload }) => {
-    return R.compose(R.path(["extensions", "purchase_id"]))(payload);
-  },
+export const retrievePurchaseProductId = ({ payload }) => {
+  return R.compose(R.path(["extensions", "purchase_id"]))(payload);
 };

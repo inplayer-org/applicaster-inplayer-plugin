@@ -105,10 +105,10 @@
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-inplayer@0.0.25":
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.0.25.tgz#69c3b09bf3190ede5bcd47c49fd1ed9b2cf4f181"
-  integrity sha512-doap14GX7YEmxEJP0ith25ucw09keeZsVhDJWdN6mYPo3YtdnkyFScehkpMxLGlCxtpLWBw5pZv2iDhGX47zvQ==
+"@applicaster/quick-brick-inplayer@0.0.26":
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.0.26.tgz#4f5a62eb48a0c676c2733ac4876f85e7931c4144"
+  integrity sha512-RHCLM24wkmIdUUeMq3ehpAHPmvO0GUqXOXvvgJMO0hiUF8ZN/LAjeml2VEybxYP8i3jF7XpCFEzSU1fsK+Ywvg==
   dependencies:
     "@applicaster/applicaster-iap" "0.1.4"
     axios "^0.19.1"

@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {} from "react-native";
-import R, { prop } from "ramda";
-
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
-import { PayloadUtils } from "../Utils";
-import { showAlert } from "./Utils";
-
-const {
+import {
   isVideoEntry,
-  isNotEntry,
   inPlayerAssetId,
-  ignoreAuthenticationFlow,
-  payloadWithCombinedInPlayerData,
-} = PayloadUtils;
-// callback: ({ success: boolean, error: ?{}, payload: ?{} }) => void,
+  mergeInPlayerData,
+} from "../Utils/PayloadUtils";
+import { showAlert } from "../Utils/Account";
 
 const InPlayer = (props) => {
   const { payload } = props;
@@ -37,7 +29,7 @@ const InPlayer = (props) => {
       } else {
         callback && callback({ success: true, error: null, payload });
       }
-    } else if (isNotEntry(payload)) {
+    } else {
       setHookType(HookTypeData.SCREEN_HOOK);
     }
   }, []);
@@ -47,14 +39,18 @@ const InPlayer = (props) => {
     if (error) {
       showAlert("(Demo Only) Error!", error);
     }
+    const newPayload = success
+      ? mergeInPlayerData({
+          payload,
+          inPlayerData: data,
+        })
+      : payload;
+
     callback &&
       callback({
         success,
         error,
-        payload: payloadWithCombinedInPlayerData({
-          payload,
-          inPlayerData: data,
-        }),
+        payload: newPayload,
       });
   };
 
@@ -67,11 +63,13 @@ const InPlayer = (props) => {
       success
         ? setIsUserAuthenticated(true)
         : callback && callback({ success, error: null, payload: payload });
+    } else {
+      callback && callback({ success: success, error: null, payload: payload });
     }
   };
 
   const renderPlayerHook = () => {
-    return ignoreAuthenticationFlow(payload) || isUserAuthenticated ? (
+    return isUserAuthenticated ? (
       <AssetFlow assetFlowCallback={assetFlowCallback} {...props} />
     ) : (
       <AccountFlow
