@@ -1,43 +1,34 @@
 import R from "ramda";
-import { parseJsonIfNeeded } from "@applicaster/zapp-react-native-utils/functionUtils";
+import { getInPlayerContent, getInPlayerAssetType } from "../InPlayerResponse";
+import { getSrcForJWPlayer } from "./JWPlayerAsset";
+import { getSrcForHTML } from "./HTMLAsset";
 
-export const mapOVPProviders = (inPlayerData) => {
-  console.log("mapOVPProviders", { inPlayerData });
-  if (!inPlayerData) {
+const SUPPORTED_ASSET_TYPES = {
+  JW_ASSET: "jw_asset",
+  HTML: "html",
+};
+
+export const getSrcFromProvider = (inPlayerItemAccess) => {
+  if (!inPlayerItemAccess) {
     return {};
   }
-  const inPlayerContent = getInPlayerContent(inPlayerData);
-  if (inPlayerContent) {
-    return isJWPlayerAsset(inPlayerData) && JWPlayerContent(inPlayerContent);
-  }
-  return {};
-};
+  const inPlayerContent = getInPlayerContent(inPlayerItemAccess);
+  const inPlayerAssetType = getInPlayerAssetType(inPlayerItemAccess);
+  console.log("mapOVPProviders", {
+    inPlayerItemAccess,
+    inPlayerContent,
+    inPlayerAssetType,
+  });
 
-export const isJWPlayerAsset = (inPlayerData) => {
-  if (inPlayerData) {
-    const itemType = R.path(["item", "item_type"])(inPlayerData);
-    if (itemType) {
-      const { name } = itemType;
-      if (name === "jw_asset") {
-        return true;
-      }
+  if (inPlayerContent) {
+    switch (inPlayerAssetType) {
+      case SUPPORTED_ASSET_TYPES.JW_ASSET:
+        return getSrcForJWPlayer({ inPlayerItemAccess, inPlayerContent });
+      case SUPPORTED_ASSET_TYPES.HTML:
+        return getSrcForHTML({ inPlayerItemAccess, inPlayerContent });
+      default:
+        break;
     }
   }
-  return false;
-};
-
-export const JWPlayerContent = (inPlayerContent) => {
-  console.log({ inPlayerContent });
-  const { video_id, player_id } = inPlayerContent;
-  return {
-    jwplayer_content_id: video_id || null,
-    jwplayer_player_id: player_id || null,
-  };
-};
-
-export const getInPlayerContent = (inPlayerData) => {
-  return R.compose(
-    parseJsonIfNeeded,
-    R.path(["item", "content"])
-  )(inPlayerData);
+  return null;
 };

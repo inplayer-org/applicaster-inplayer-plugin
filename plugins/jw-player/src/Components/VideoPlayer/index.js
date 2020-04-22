@@ -95,7 +95,7 @@ const VideoPlayer = (props) => {
       image,
       desc: summary,
       time: 0,
-      file: videoStreamFromPlayableItem(playableItem),
+      file: uri,
       autostart: true,
       controls: customControls,
       repeat: false,
@@ -108,33 +108,8 @@ const VideoPlayer = (props) => {
 
   const advertismentMediaId = (playableItem) => {
     console.log("advertismentMediaId", { playableItem });
-    const {
-      extensions: { jwplayer_content_id },
-      id: entryId,
-    } = playableItem;
-    return jwplayer_content_id || entryId || "-1";
-  };
-
-  const videoStreamFromPlayableItem = (playableItem) => {
-    console.log("videoStreamFromPlayableItem", { playableItem });
-    const {
-      extensions: { jwplayer_content_id },
-    } = playableItem;
-
-    const url = R.isEmpty(uri) ? null : uri;
-
-    console.log({
-      url,
-      jwplayer_content_id,
-      playableItem,
-    });
-
-    if (jwplayer_content_id) {
-      return `https://content.jwplatform.com/videos/${jwplayer_content_id}`;
-    } else if (url) {
-      return url;
-    }
-    return null;
+    const { id: entryId } = playableItem;
+    return entryId || "-1";
   };
 
   const onPlay = (e) => {

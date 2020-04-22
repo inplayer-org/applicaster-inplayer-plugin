@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
-import {
-  isVideoEntry,
-  inPlayerAssetId,
-  mergeInPlayerData,
-} from "../Utils/PayloadUtils";
+import { getSrcFromProvider } from "../Utils/OVPProvidersMapper";
+import { getInPlayerAssetType } from "../Utils/InPlayerResponse";
+
+import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
 
 const InPlayer = (props) => {
-  const { payload } = props;
-
   const HookTypeData = {
     UNDEFINED: "Undefined",
     PLAYER_HOOK: "PlayerHook",
@@ -22,7 +19,7 @@ const InPlayer = (props) => {
 
   useEffect(() => {
     const { payload, callback } = props;
-
+    console.disableYellowBox = true;
     if (isVideoEntry(payload)) {
       if (inPlayerAssetId(payload)) {
         setHookType(HookTypeData.PLAYER_HOOK);
@@ -36,21 +33,28 @@ const InPlayer = (props) => {
 
   const assetFlowCallback = ({ success, data, error }) => {
     const { callback, payload } = props;
+    const src = getSrcFromProvider(data);
+
     if (error) {
+      showAlert("(Demo Only) Error!", error.message);
+    } else if (!src) {
+      success = false;
+      error = {
+        message: `Can not create URL for asset type: ${getInPlayerAssetType(
+          data
+        )}`,
+      };
       showAlert("(Demo Only) Error!", error);
     }
-    const newPayload = success
-      ? mergeInPlayerData({
-          payload,
-          inPlayerData: data,
-        })
-      : payload;
 
     callback &&
       callback({
         success,
         error,
-        payload: newPayload,
+        payload: {
+          ...payload,
+          content: { src },
+        },
       });
   };
 

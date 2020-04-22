@@ -68,7 +68,7 @@ const AssetFlow = (props) => {
           throw error;
         }
       } else {
-        throw ("Error", "purchase_id not exist");
+        throw { Error: { message: "Purchase_id not exist" } };
       }
     } catch (error) {
       return { error };
@@ -109,10 +109,11 @@ const AssetFlow = (props) => {
       R.head
     )(products);
     if (productIdentifier !== purchaseId) {
-      throw (
-        ("Error",
-        `Can not retrive products with purchase product Identifier ${purchaseId}`)
-      );
+      throw {
+        Error: {
+          message: `Can not retrive products with purchase product Identifier ${purchaseId}`,
+        },
+      };
     }
     return productIdentifier;
   };
