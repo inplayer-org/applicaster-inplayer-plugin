@@ -1,55 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   allowedOrientationsForScreen,
   releaseOrientationsForScreen,
   ORIENTATIONS,
 } from "@applicaster/zapp-react-native-utils/appUtils/orientationHelper";
-import {
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  Dimensions,
-  Platform,
-  TouchableOpacity,
-} from "react-native";
+import { View, Dimensions, Platform } from "react-native";
 
 import R from "ramda";
 import JWPlayer from "react-native-jw-media-player-applicaster";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 
 const { width, height } = Dimensions.get("window");
-
-const styles = StyleSheet.create({
-  container: {
-    width,
-    height,
-  },
-  subContainer: {
-    flex: 1,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 40,
-    backgroundColor: "black",
-    alignItems: "center",
-  },
-
-  playerContainer: {
-    height: 300,
-    width: width - 40,
-    backgroundColor: "white",
-  },
-  warningText: {
-    color: "red",
-    fontWeight: "700",
-    position: "absolute",
-    alignSelf: "center",
-    top: 20,
-  },
-  player: {
-    flex: 1,
-  },
-});
 
 // Player mediaId: "X8hnQSj3"
 // Entry  videoId: "3IAGTDeS"
@@ -147,7 +108,7 @@ const VideoPlayer = (props) => {
   console.log("Props", { props: props, width, height });
   const { onEnd, onFullscreenPlayerDidDismiss } = props;
   return (
-    <View style={{ flex: 1, backgroundColor: "red" }}>
+    <View style={{ flex: 1 }}>
       <JWPlayer
         style={{ flex: 1 }}
         playlistItem={playListItem()}

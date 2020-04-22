@@ -10,7 +10,7 @@ export const getInPlayerContent = (inPlayerItemAccess) => {
 };
 
 export const getInPlayerAssetType = (inPlayerItemAccess) => {
-  return R.path(["item", "item_type", "content_type"])(inPlayerItemAccess);
+  return R.path(["item", "item_type", "name"])(inPlayerItemAccess);
 };
 
 export const findInPlayerMetadata = ({ inPlayerItemAccess, value }) => {

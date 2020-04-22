@@ -1,11 +1,10 @@
-import R from "ramda";
-
-export const getSrcForJWPlayer = ({ inPlayerItemAccess, content }) => {
-  return content ? JWPlayerContent(content) : null;
+export const getSrcForJWPlayer = ({ inPlayerItemAccess, inPlayerContent }) => {
+  console.log({ inPlayerContent });
+  return inPlayerContent ? JWPlayerContent(inPlayerContent) : null;
 };
-const JWPlayerContent = (content) => {
-  console.log({ content });
-  const { video_id = null, stream_url = null } = content;
+const JWPlayerContent = (inPlayerContent) => {
+  console.log({ inPlayerContent });
+  const { video_id = null, stream_url = null } = inPlayerContent;
   return stream_url || JWPlayerContentFromMediaID(video_id);
 };
 

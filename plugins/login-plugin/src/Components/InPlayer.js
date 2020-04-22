@@ -19,7 +19,6 @@ const InPlayer = (props) => {
 
   useEffect(() => {
     const { payload, callback } = props;
-    console.disableYellowBox = true;
     if (isVideoEntry(payload)) {
       if (inPlayerAssetId(payload)) {
         setHookType(HookTypeData.PLAYER_HOOK);
@@ -34,7 +33,7 @@ const InPlayer = (props) => {
   const assetFlowCallback = ({ success, data, error }) => {
     const { callback, payload } = props;
     const src = getSrcFromProvider(data);
-
+    console.log({ src });
     if (error) {
       showAlert("(Demo Only) Error!", error.message);
     } else if (!src) {

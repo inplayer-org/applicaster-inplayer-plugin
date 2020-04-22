@@ -5,7 +5,7 @@ import { getSrcForHTML } from "./HTMLAsset";
 
 const SUPPORTED_ASSET_TYPES = {
   JW_ASSET: "jw_asset",
-  HTML: "html",
+  HTML: "html_asset",
 };
 
 export const getSrcFromProvider = (inPlayerItemAccess) => {
