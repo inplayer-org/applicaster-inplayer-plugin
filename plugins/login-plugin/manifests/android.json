@@ -57,11 +57,11 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.0.30",
-  "manifest_version": "0.0.30",
+  "dependency_version": "0.0.31",
+  "manifest_version": "0.0.31",
   "project_dependencies": [
     {
-      "InPlayerLogin": "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android"
+      "InPlayerLogin": "./node_modules/@applicaster/quick-brick-inplayer/android"
     }
   ]
 }
