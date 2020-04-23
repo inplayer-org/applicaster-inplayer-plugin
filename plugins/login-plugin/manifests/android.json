@@ -24,14 +24,6 @@
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "preload": true,
-  "extra_dependencies": [
-    {
-      "InPlayerLogin": ":path => './quick_brick/node_modules/@applicaster/quick-brick-inplayer/InPlayerLogin.podspec'"
-    },
-    {
-      "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'"
-    }
-  ],
   "npm_dependencies": [
     "react-native-dropdownalert@4.2.1",
     "@applicaster/applicaster-iap@0.1.4"
@@ -57,11 +49,12 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.0.31",
-  "manifest_version": "0.0.31",
+  "dependency_version": "0.0.32",
+  "manifest_version": "0.0.32",
   "project_dependencies": [
     {
       "InPlayerLogin": "./node_modules/@applicaster/quick-brick-inplayer/android"
     }
-  ]
+  ],
+  "extra_dependencies": []
 }
