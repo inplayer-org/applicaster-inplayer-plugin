@@ -77,8 +77,7 @@ const project_dependencies = {
   ios: [],
   android: [
     {
-      InPlayerLogin:
-        "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android",
+      InPlayerLogin: "./node_modules/@applicaster/quick-brick-inplayer/android",
     },
   ],
 };
