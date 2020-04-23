@@ -24,7 +24,8 @@
   },
   "applicaster": {
     "supportedPlatforms": [
-      "ios"
+      "ios",
+      "android"
     ],
     "zappOwnerAccountId": "5e12fac7666333000ec0f8ab"
   }

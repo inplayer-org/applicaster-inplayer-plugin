@@ -54,9 +54,32 @@ function createManifest({ version, platform }) {
     platform,
     dependency_version: version,
     manifest_version: version,
+    api: api[platform],
+    project_dependencies: project_dependencies[platform],
   };
 
   return manifest;
 }
+
+const api = {
+  ios: {},
+  android: {
+    require_startup_execution: false,
+    class_name: "com.applicaster.reactnative.plugins.APReactNativeAdapter",
+    react_packages: [
+      "com.applicaster.quickbrickinplayer.reactnative.InPlayerPackage",
+    ],
+  },
+};
+
+const project_dependencies = {
+  ios: [],
+  android: [
+    {
+      generic_local_notifications:
+        "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android",
+    },
+  ],
+};
 
 module.exports = createManifest;
