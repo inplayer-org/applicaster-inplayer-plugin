@@ -16,16 +16,6 @@ const baseManifest = {
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
   preload: true,
-  extra_dependencies: [
-    {
-      InPlayerLogin:
-        ":path => './quick_brick/node_modules/@applicaster/quick-brick-inplayer/InPlayerLogin.podspec'",
-    },
-    {
-      ApplicasterIAP:
-        ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
-    },
-  ],
   npm_dependencies: [
     "react-native-dropdownalert@4.2.1",
     "@applicaster/applicaster-iap@0.1.4",
@@ -57,6 +47,7 @@ function createManifest({ version, platform }) {
     api: api[platform],
     project_dependencies: project_dependencies[platform],
     min_zapp_sdk: min_zapp_sdk[platform],
+    extra_dependencies: extra_dependencies[platform],
   };
 
   return manifest;
@@ -80,6 +71,20 @@ const project_dependencies = {
       InPlayerLogin: "./node_modules/@applicaster/quick-brick-inplayer/android",
     },
   ],
+};
+
+const extra_dependencies = {
+  ios: [
+    {
+      InPlayerLogin:
+        ":path => './quick_brick/node_modules/@applicaster/quick-brick-inplayer/InPlayerLogin.podspec'",
+    },
+    {
+      ApplicasterIAP:
+        ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
+    },
+  ],
+  android: [],
 };
 const min_zapp_sdk = {
   ios: "20.2.0-Dev",
