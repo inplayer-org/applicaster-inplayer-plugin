@@ -76,7 +76,7 @@ const project_dependencies = {
   ios: [],
   android: [
     {
-      generic_local_notifications:
+      InPlayerLogin:
         "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android",
     },
   ],
