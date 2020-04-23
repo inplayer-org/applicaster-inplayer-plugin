@@ -1,5 +1,11 @@
 {
-  "api": {},
+  "api": {
+    "require_startup_execution": false,
+    "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
+    "react_packages": [
+      "com.applicaster.quickbrickinplayer.reactnative.InPlayerPackage"
+    ]
+  },
   "dependency_repository_url": [],
   "dependency_name": "@applicaster/quick-brick-inplayer",
   "author_name": "Applicaster",
@@ -51,6 +57,11 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.0.24",
-  "manifest_version": "0.0.24"
+  "dependency_version": "0.0.29",
+  "manifest_version": "0.0.29",
+  "project_dependencies": [
+    {
+      "InPlayerLogin": "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android"
+    }
+  ]
 }
