@@ -56,6 +56,7 @@ function createManifest({ version, platform }) {
     manifest_version: version,
     api: api[platform],
     project_dependencies: project_dependencies[platform],
+    min_zapp_sdk: min_zapp_sdk[platform],
   };
 
   return manifest;
@@ -80,6 +81,10 @@ const project_dependencies = {
         "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android",
     },
   ],
+};
+const min_zapp_sdk = {
+  ios: "20.2.0-Dev",
+  android: "20.0.0",
 };
 
 module.exports = createManifest;
