@@ -20,7 +20,6 @@
   "whitelisted_account_ids": [
     "5c9ce7917b225c000f02dfbc"
   ],
-  "min_zapp_sdk": "20.0.0",
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "preload": true,
@@ -49,12 +48,13 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.0.32",
-  "manifest_version": "0.0.32",
+  "dependency_version": "0.0.34",
+  "manifest_version": "0.0.34",
   "project_dependencies": [
     {
-      "InPlayerLogin": "./node_modules/@applicaster/quick-brick-inplayer/android"
+      "InPlayerLogin": "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android"
     }
   ],
+  "min_zapp_sdk": "20.0.0",
   "extra_dependencies": []
 }

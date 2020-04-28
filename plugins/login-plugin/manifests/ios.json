@@ -14,7 +14,6 @@
   "whitelisted_account_ids": [
     "5c9ce7917b225c000f02dfbc"
   ],
-  "min_zapp_sdk": "20.2.0-Dev",
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "preload": true,
@@ -43,9 +42,10 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.0.32",
-  "manifest_version": "0.0.32",
+  "dependency_version": "0.0.34",
+  "manifest_version": "0.0.34",
   "project_dependencies": [],
+  "min_zapp_sdk": "20.2.0-Dev",
   "extra_dependencies": [
     {
       "InPlayerLogin": ":path => './quick_brick/node_modules/@applicaster/quick-brick-inplayer/InPlayerLogin.podspec'"
