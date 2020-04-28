@@ -12,7 +12,6 @@ const baseManifest = {
   identifier: "quick-brick-inplayer-logout",
   ui_builder_support: true,
   whitelisted_account_ids: ["5c9ce7917b225c000f02dfbc"],
-  min_zapp_sdk: "20.2.0-Dev",
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
   preload: true,
@@ -40,9 +39,14 @@ function createManifest({ version, platform }) {
     platform,
     dependency_version: version,
     manifest_version: version,
+    min_zapp_sdk: min_zapp_sdk[platform],
   };
 
   return manifest;
 }
 
+const min_zapp_sdk = {
+  ios: "20.2.0-Dev",
+  android: "20.0.0",
+};
 module.exports = createManifest;

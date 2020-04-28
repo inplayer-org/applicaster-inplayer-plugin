@@ -12,7 +12,6 @@ const baseManifest = {
   identifier: "quick-brick-inplayer",
   ui_builder_support: true,
   whitelisted_account_ids: ["5c9ce7917b225c000f02dfbc"],
-  min_zapp_sdk: "20.2.0-Dev",
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
   preload: true,
