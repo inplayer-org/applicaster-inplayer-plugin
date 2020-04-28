@@ -80,3 +80,5 @@ development-app/**/*
 # IPK Builds
 *.ipk
 
+plugins/**/android/build
+plugins/**/android/*.iml
