@@ -38,6 +38,7 @@ class InPlayerUserExt {
             map.putString(InPlayerAccountKeys.Uuid.shorthand, user.uuid)
             map.putDouble(InPlayerAccountKeys.UpdatedAt.shorthand, user.updatedAt.toDouble())
             map.putString(InPlayerAccountKeys.Referrer.shorthand, user.referrer)
+            map.putString(InPlayerAccountKeys.Username.shorthand, user.username)
 
             map.putMap(InPlayerAccountKeys.Metadata.shorthand, writableMapOf(user.metadata))
             map.putArray(InPlayerAccountKeys.Roles.shorthand, writableArrayOf(user.roles))

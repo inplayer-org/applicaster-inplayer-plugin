@@ -4,7 +4,7 @@ import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableArray
 import com.facebook.react.bridge.WritableMap
 
-fun writableMapOf(values: HashMap<String, *>): WritableMap {
+fun writableMapOf(values: Map<String, *>): WritableMap {
     val map = Arguments.createMap()
     for ((key, value) in values) {
         when (value) {
@@ -14,7 +14,7 @@ fun writableMapOf(values: HashMap<String, *>): WritableMap {
             is String -> map.putString(key, value)
             is WritableMap -> map.putMap(key, value)
             is WritableArray -> map.putArray(key, value)
-            else -> throw IllegalArgumentException("Unsupported value type ${value::class.java.name} for key [$key]")
+            else -> throw IllegalArgumentException("Unsupported value for key [$key]")
         }
     }
     return map

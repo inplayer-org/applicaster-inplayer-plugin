@@ -10,7 +10,8 @@ import com.facebook.react.uimanager.ViewManager
 class InPlayerPackage: ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext): MutableList<NativeModule> {
         return mutableListOf(
-                InPlayerAccountBridge(reactContext)
+                InPlayerAccountBridge(reactContext),
+                InPlayerAssetBridge(reactContext)
         )
     }
 
