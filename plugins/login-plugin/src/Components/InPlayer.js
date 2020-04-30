@@ -2,17 +2,14 @@ import React, { useState, useEffect } from "react";
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
 import { AccountModule } from "../NativeModules/AccountModule";
+import R from "ramda";
 
 import { getSrcFromProvider } from "../Utils/OVPProvidersMapper";
 import { getInPlayerAssetType } from "../Utils/InPlayerResponse";
 
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
-// require("localstorage-polyfill");
-// // or
-// import "localstorage-polyfill";
 
-// import "../Utils/LocalStoragePolyfill";
 const InPlayer = (props) => {
   const HookTypeData = {
     UNDEFINED: "Undefined",
@@ -22,10 +19,15 @@ const InPlayer = (props) => {
 
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
-
+  const screenStyles = R.compose(
+    R.prop("styles"),
+    R.find(R.propEq("type", "quick-brick-inplayer")),
+    R.values,
+    R.prop("rivers")
+  )(props);
   useEffect(() => {
     // global.localStorage;
-
+    console.log("InPlayer", { props });
     console.disableYellowBox = true;
 
     const { payload, callback } = props;
@@ -88,6 +90,7 @@ const InPlayer = (props) => {
       <AccountFlow
         accountFlowCallback={accountFlowCallback}
         backButton={hookType === HookTypeData.PLAYER_HOOK}
+        screenStyles={screenStyles}
         {...props}
       />
     );
@@ -98,6 +101,7 @@ const InPlayer = (props) => {
       <AccountFlow
         accountFlowCallback={accountFlowCallback}
         backButton={hookType === HookTypeData.PLAYER_HOOK}
+        screenStyles={screenStyles}
         {...props}
       />
     );
