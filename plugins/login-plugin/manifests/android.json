@@ -124,7 +124,7 @@
       },
       {
         "key": "action_button_background_color",
-        "type": "ios_font_selector",
+        "type": "color_picker",
         "label": "iOS action button background color"
       },
       {
