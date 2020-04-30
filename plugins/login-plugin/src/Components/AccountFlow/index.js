@@ -31,6 +31,11 @@ const AccountFlow = (props) => {
 
     AccountModule.isAuthenticated(configuration)
       .then((isLogedIn) => {
+        console.log("isAuthenticated Completion", {
+          allKeys: { ...localStorage },
+          isLogedIn,
+          inplayer_token: localStorage.getItem("inplayer_token"),
+        });
         setLoading(false);
         console.log({ isLogedIn });
         isLogedIn == true ? onSuccess() : setScreen(ScreensData.LOGIN);
@@ -63,7 +68,8 @@ const AccountFlow = (props) => {
     const { configuration } = props;
     setLoading(true);
     AccountModule.authenticate({ ...payload, ...configuration })
-      .then(() => {
+      .then((data) => {
+        console.log("Completed", { data });
         onSuccess();
       })
       .catch((e) => {
@@ -84,6 +90,7 @@ const AccountFlow = (props) => {
     setLoading(true);
     AccountModule.signUp({ ...payload, ...configuration })
       .then((data) => {
+        console.log("Creation completed", { data });
         onSuccess();
       })
       .catch((e) => {

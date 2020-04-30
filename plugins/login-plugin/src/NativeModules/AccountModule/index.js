@@ -1,24 +1,38 @@
-import { NativeModules } from "react-native";
-
-// eslint-disable-next-line prefer-promise-reject-errors
-const nullPromise = () => Promise.reject("InPlayer account bridge is null");
-const defaultAccount = {
-  signUp: nullPromise,
-  authenticate: nullPromise,
-  isAuthenticated: nullPromise,
-  signOut: nullPromise,
-};
-
-const { InPlayerAccountBridge = defaultAccount } = NativeModules;
+import InPlayer from "@inplayer-org/inplayer.js";
+import {
+  localStoragePolyfillInitialize,
+  localStoragePolyfillSync,
+} from "../../Utils/LocalStoragePolyfill";
 
 export const AccountModule = {
+  setConfigEnvironment() {
+    InPlayer.setConfig("develop");
+  },
   /**
    * Sign Up InPlayer user's account
    * @param {Dictionary} payload Dictionary with user data
    */
   async signUp(payload) {
+    const {
+      in_player_client_id,
+      in_player_referrer,
+      password,
+      username,
+      fullName,
+    } = payload;
     try {
-      return InPlayerAccountBridge.signUp(payload);
+      const data = await InPlayer.Account.signUp({
+        fullName: fullName,
+        email: username,
+        password: password,
+        passwordConfirmation: password,
+        clientId: in_player_client_id,
+        type: "consumer",
+        referrer: in_player_referrer,
+        metadata: ["Dummy"],
+      });
+      await localStoragePolyfillSync();
+      return data;
     } catch (e) {
       throw e;
     }
@@ -29,8 +43,16 @@ export const AccountModule = {
    * @param {Dictionary} payload Dictionary with user data
    */
   async authenticate(payload) {
+    const { in_player_client_id, password, username } = payload;
+
     try {
-      return InPlayerAccountBridge.authenticate(payload);
+      const data = await InPlayer.Account.authenticate({
+        email: username,
+        password: password,
+        clientId: in_player_client_id,
+      });
+      await localStoragePolyfillSync();
+      return data;
     } catch (e) {
       throw e;
     }
@@ -40,8 +62,11 @@ export const AccountModule = {
    * Check if user currently authenticated
    */
   async isAuthenticated(payload) {
+    console.log("isAuthenticated", { payload });
     try {
-      return InPlayerAccountBridge.isAuthenticated(payload);
+      await localStoragePolyfillInitialize();
+
+      return await InPlayer.Account.isAuthenticated();
     } catch (e) {
       throw e;
     }
@@ -51,8 +76,16 @@ export const AccountModule = {
    * Sign our user from InPlayer account
    */
   async signOut(payload) {
+    console.log("signOut");
+    console.log("signOut", {
+      inplayer_token: localStorage.getItem("inplayer_token"),
+    });
+
     try {
-      return InPlayerAccountBridge.signOut(payload);
+      const data = await InPlayer.Account.signOut();
+      await localStoragePolyfillSync();
+
+      return data;
     } catch (e) {
       throw e;
     }

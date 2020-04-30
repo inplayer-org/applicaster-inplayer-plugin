@@ -14,6 +14,7 @@ const InPlayerLogout = (props) => {
   useEffect(() => {
     navigator.hideNavBar();
     const { configuration } = props;
+    console.log("Component Ready!!");
     AccountModule.signOut(configuration)
       .then((isSignedOut) => {
         setLoading(false);
