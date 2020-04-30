@@ -26,18 +26,14 @@ const AccountFlow = (props) => {
 
   useEffect(() => {
     const { configuration } = props;
-    // Check is Autheticated
-    console.log("Account Flow", { configuration });
 
     AccountModule.isAuthenticated(configuration)
       .then((isLogedIn) => {
         console.log("isAuthenticated Completion", {
-          allKeys: { ...localStorage },
           isLogedIn,
           inplayer_token: localStorage.getItem("inplayer_token"),
         });
         setLoading(false);
-        console.log({ isLogedIn });
         isLogedIn == true ? onSuccess() : setScreen(ScreensData.LOGIN);
       })
       .catch((err) => {
@@ -69,7 +65,10 @@ const AccountFlow = (props) => {
     setLoading(true);
     AccountModule.authenticate({ ...payload, ...configuration })
       .then((data) => {
-        console.log("Completed", { data });
+        console.log("authenticate Completed", {
+          data,
+          inplayer_token: localStorage.getItem("inplayer_token"),
+        });
         onSuccess();
       })
       .catch((e) => {

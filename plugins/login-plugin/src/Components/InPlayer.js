@@ -25,7 +25,8 @@ const InPlayer = (props) => {
 
   useEffect(() => {
     // global.localStorage;
-    AccountModule.setConfigEnvironment();
+
+    console.disableYellowBox = true;
 
     const { payload, callback } = props;
     if (isVideoEntry(payload)) {

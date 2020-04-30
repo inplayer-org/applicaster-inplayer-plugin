@@ -8,7 +8,7 @@ export const localStoragePolyfillSync = async () => {
     await LocalStorageNative.setItem(key, value, localStorageNameSpace);
   });
   const allValue = await LocalStorageNative.getAllItems(localStorageNameSpace);
-  console.log("localStoragePolyfillSync1", { allValue, valuesMap });
+  console.log("localStoragePolyfillSync1", { valuesMap });
 };
 
 export const localStoragePolyfillInitialize = async () => {
@@ -21,10 +21,14 @@ export const localStoragePolyfillInitialize = async () => {
     initialized = true;
 
     for (let [key, value] of Object.entries(allValue)) {
-      localStorage.setItem(key, value);
+      var newValue = value.substring(1, value.length - 1);
+      newValue = newValue.replace(/\\/g, "");
+      console.log({ value, key, value2: newValue });
+
+      localStorage.setItem(key, newValue);
     }
     console.log("localStoragePolyfillInitialize1: Initialized", {
-      getAll: valuesMap,
+      valuesMap,
     });
   }
 };

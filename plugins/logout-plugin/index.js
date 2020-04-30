@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import R, { prop } from "ramda";
-import { AccountModule } from "./src/NativeModules/AccountModule";
+
+// import { AccountModule } from "@applicaster/quick-brick-inplayer-logout/src/NativeModules/AccountModule";
+import { AccountModule } from "../login-plugin/src/NativeModules/AccountModule";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { connectToStore } from "@applicaster/zapp-react-native-redux";
 import { fixColorHexCode } from "@applicaster/zapp-react-native-utils/stylesUtils";

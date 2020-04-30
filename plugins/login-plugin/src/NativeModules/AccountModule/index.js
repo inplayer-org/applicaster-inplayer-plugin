@@ -62,10 +62,9 @@ export const AccountModule = {
    * Check if user currently authenticated
    */
   async isAuthenticated(payload) {
-    console.log("isAuthenticated", { payload });
     try {
+      AccountModule.setConfigEnvironment();
       await localStoragePolyfillInitialize();
-
       return await InPlayer.Account.isAuthenticated();
     } catch (e) {
       throw e;
@@ -76,11 +75,7 @@ export const AccountModule = {
    * Sign our user from InPlayer account
    */
   async signOut(payload) {
-    console.log("signOut");
-    console.log("signOut", {
-      inplayer_token: localStorage.getItem("inplayer_token"),
-    });
-
+    console.log("SIGNING_OUT");
     try {
       const data = await InPlayer.Account.signOut();
       await localStoragePolyfillSync();
