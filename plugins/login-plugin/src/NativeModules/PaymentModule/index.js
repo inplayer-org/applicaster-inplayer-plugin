@@ -1,12 +1,5 @@
-import { NativeModules } from "react-native";
-
-// eslint-disable-next-line prefer-promise-reject-errors
-const nullPromise = () => Promise.reject("InPlayer payment bridge is null");
-const defaultPayment = {
-  checkAccessForAsset: nullPromise,
-};
-
-const { InPlayerPaymentBridge = defaultPayment } = NativeModules;
+import InPlayer from "@inplayer-org/inplayer.js";
+import { localStoragePolyfillSync } from "../../Utils/LocalStoragePolyfill";
 
 export const PaymentModule = {
   /**

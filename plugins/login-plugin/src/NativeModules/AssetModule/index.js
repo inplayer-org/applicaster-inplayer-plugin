@@ -1,12 +1,5 @@
-import { NativeModules } from "react-native";
-
-// eslint-disable-next-line prefer-promise-reject-errors
-const nullPromise = () => Promise.reject("InPlayer asset bridge is null");
-const defaultAsset = {
-  checkAccessForAsset: nullPromise,
-};
-
-const { InPlayerAssetBridge = defaultAsset } = NativeModules;
+import InPlayer from "@inplayer-org/inplayer.js";
+import { localStoragePolyfillSync } from "../../Utils/LocalStoragePolyfill";
 
 export const AssetModule = {
   /**
@@ -14,9 +7,28 @@ export const AssetModule = {
    * @param {Dictionary} payload Dictionary with user data
    */
   async checkAccessForAsset(payload) {
+    const { id } = payload;
+    console.log({ id });
     try {
-      return InPlayerAssetBridge.checkAccessForAsset(payload);
+      const data = await InPlayer.Asset.checkAccessForAsset(id);
+      await localStoragePolyfillSync();
+      // const payloadData = AssetModule.getAssetAccessFees(id);
+      // await localStoragePolyfillSync();
+      // console.log({ payloadData });
+      return data;
     } catch (e) {
+      console.log("Error", { e });
+      throw e;
+    }
+  },
+  async getAssetAccessFees(id) {
+    console.log({ id });
+    try {
+      const data = await InPlayer.Asset.getAssetAccessFees(id);
+      await localStoragePolyfillSync();
+      return data;
+    } catch (e) {
+      console.log("Error", { e });
       throw e;
     }
   },

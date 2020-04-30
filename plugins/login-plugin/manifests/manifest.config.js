@@ -19,6 +19,155 @@ const baseManifest = {
     "react-native-dropdownalert@4.2.1",
     "@applicaster/applicaster-iap@0.1.4",
   ],
+  styles: {
+    fields: [
+      {
+        key: "title_font_ios",
+        type: "ios_font_selector",
+        label: "iOS title font",
+      },
+      {
+        key: "title_font_android",
+        type: "android_font_selector",
+        label: "Android title font",
+      },
+      {
+        key: "title_font_size",
+        type: "number_input",
+        label: "Title font size",
+      },
+      {
+        key: "title_font_color",
+        type: "color_picker",
+        label: "Title font color",
+      },
+      {
+        key: "title_font_text",
+        type: "text_input",
+        label: "Text title",
+      },
+      {
+        key: "fields_font_ios",
+        type: "ios_font_selector",
+        label: "iOS title font",
+      },
+      {
+        key: "fields_font_android",
+        type: "android_font_selector",
+        label: "Android title font",
+      },
+      {
+        key: "fields_font_size",
+        type: "number_input",
+        label: "Title font size",
+      },
+      {
+        key: "fields_font_color",
+        type: "color_picker",
+        label: "Title font color",
+      },
+      {
+        key: "fields_email_text",
+        type: "text_input",
+        label: "Email field placeholder text",
+      },
+      {
+        key: "fields_password_text",
+        type: "text_input",
+        label: "Password field placeholder text",
+      },
+      {
+        key: "fields_password_confirmation_text",
+        type: "text_input",
+        label: "Password field confirmation placeholder text",
+      },
+      {
+        key: "fields_name_text",
+        type: "text_input",
+        label: "Name field placeholder text",
+      },
+      {
+        key: "forgot_password_font_ios",
+        type: "ios_font_selector",
+        label: "iOS forgot password font",
+      },
+      {
+        key: "forgot_password_font_android",
+        type: "android_font_selector",
+        label: "Android forgot password font",
+      },
+      {
+        key: "forgot_password_font_size",
+        type: "number_input",
+        label: "Forgot password font size",
+      },
+      {
+        key: "forgot_password_font_color",
+        type: "color_picker",
+        label: "Forgot password font color",
+      },
+      {
+        key: "forgot_password_text",
+        type: "text_input",
+        label: "Forgot password title",
+      },
+      {
+        key: "action_button_font_ios",
+        type: "ios_font_selector",
+        label: "iOS action button font",
+      },
+      {
+        key: "action_button_font_android",
+        type: "android_font_selector",
+        label: "Android action button font",
+      },
+      {
+        key: "action_button_font_size",
+        type: "number_input",
+        label: "Action button font size",
+      },
+      {
+        key: "action_button_font_color",
+        type: "color_picker",
+        label: "Action button font Color",
+      },
+      {
+        key: "action_button_login_text",
+        type: "text_input",
+        label: "Action button login title",
+      },
+      {
+        key: "action_button_signin_text",
+        type: "text_input",
+        label: "Action button sign in title",
+      },
+      {
+        key: "create_account_link_font_ios",
+        type: "ios_font_selector",
+        label: "iOS Create account link font",
+      },
+      {
+        key: "create_account_link_font_android",
+        type: "android_font_selector",
+        label: "Android Create account link font",
+      },
+      {
+        key: "create_account_link_font_size",
+        type: "number_input",
+        label: "Create account link font size",
+      },
+      {
+        key: "create_account_link_font_color",
+        type: "color_picker",
+        label: "Create account link font color",
+      },
+      {
+        key: "create_account_link_text",
+        type: "text_input",
+        label: "Create account link title",
+      },
+    ],
+  },
   custom_configuration_fields: [
     {
       type: "text",

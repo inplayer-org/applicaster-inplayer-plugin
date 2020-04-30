@@ -4,6 +4,7 @@ const localStorageNameSpace = "inPlayerLocalStoragePolyfill";
 import { localStorage as LocalStorageNative } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 
 export const localStoragePolyfillSync = async () => {
+  console.log("localStoragePolyfillSync");
   valuesMap.forEach(async (value, key) => {
     await LocalStorageNative.setItem(key, value, localStorageNameSpace);
   });
@@ -14,22 +15,25 @@ export const localStoragePolyfillSync = async () => {
 export const localStoragePolyfillInitialize = async () => {
   if (!initialized) {
     global.localStorage;
+    console.log("localStoragePolyfillInitialize");
     const allValue = await LocalStorageNative.getAllItems(
       localStorageNameSpace
     );
 
     initialized = true;
+    console.log("localStoragePolyfillInitialize2");
+    if (allValue) {
+      for (let [key, value] of Object.entries(allValue)) {
+        var newValue = value.substring(1, value.length - 1);
+        newValue = newValue.replace(/\\/g, "");
+        console.log({ value, key, value2: newValue });
 
-    for (let [key, value] of Object.entries(allValue)) {
-      var newValue = value.substring(1, value.length - 1);
-      newValue = newValue.replace(/\\/g, "");
-      console.log({ value, key, value2: newValue });
-
-      localStorage.setItem(key, newValue);
+        localStorage.setItem(key, newValue);
+      }
+      console.log("localStoragePolyfillInitialize1: Initialized", {
+        valuesMap,
+      });
     }
-    console.log("localStoragePolyfillInitialize1: Initialized", {
-      valuesMap,
-    });
   }
 };
 
