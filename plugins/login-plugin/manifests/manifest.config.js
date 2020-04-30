@@ -22,6 +22,11 @@ const baseManifest = {
   styles: {
     fields: [
       {
+        key: "background_color",
+        type: "color_picker",
+        label: "Background font color",
+      },
+      {
         key: "title_font_ios",
         type: "ios_font_selector",
         label: "iOS title font",
@@ -49,22 +54,22 @@ const baseManifest = {
       {
         key: "fields_font_ios",
         type: "ios_font_selector",
-        label: "iOS title font",
+        label: "iOS input fields title font",
       },
       {
         key: "fields_font_android",
         type: "android_font_selector",
-        label: "Android title font",
+        label: "Android input fields title font",
       },
       {
         key: "fields_font_size",
         type: "number_input",
-        label: "Title font size",
+        label: "Input fields title font size",
       },
       {
         key: "fields_font_color",
         type: "color_picker",
-        label: "Title font color",
+        label: "Input fields font color",
       },
       {
         key: "fields_email_text",
@@ -110,6 +115,11 @@ const baseManifest = {
         key: "forgot_password_text",
         type: "text_input",
         label: "Forgot password title",
+      },
+      {
+        key: "action_button_background_color",
+        type: "ios_font_selector",
+        label: "iOS action button background color",
       },
       {
         key: "action_button_font_ios",
