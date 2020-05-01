@@ -4,20 +4,22 @@
     "react_packages": ["com.appgoalz.rnjwplayer.RNJWPlayerPackage"],
     "proguard_rules": "-keep public class com.appgoalz.rnjwplayer.** {*;}"
   },
+  "dependency_repository_url": [],
+  "dependency_name": "@applicaster/quick-brick-jw-player",
   "author_name": "Applicaster",
   "author_email": "zapp@applicaster.com",
   "name": "JWPlayer QuickBrick",
   "description": "Quick Brick JW Player plugin",
-  "manifest_version": "0.0.14",
-  "platform": "android",
-  "dependency_name": "react-native-jw-media-player-applicaster",
-  "dependency_version": "0.0.2",
+  "type": "player",
+  "react_native": true,
   "identifier": "quick-brick-jw-player",
-  "npm_dependencies": ["react-native-jw-media-player-applicaster@0.0.2"],
-  "project_dependencies": [
-    {
-      "jw-media-player": "node_modules/react-native-jw-media-player-applicaster/android"
-    }
+  "ui_builder_support": true,
+  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
+  "deprecated_since_zapp_sdk": "",
+  "unsupported_since_zapp_sdk": "",
+  "npm_dependencies": [
+    "react-native-jw-media-player-applicaster@0.0.2",
+    "@applicaster/quick-brick-jw-player@0.0.14"
   ],
   "custom_configuration_fields": [
     {
@@ -27,11 +29,15 @@
       "default": ""
     }
   ],
-  "type": "player",
-  "min_zapp_sdk": "20.0.0",
-  "react_native": true,
-  "ui_builder_support": true,
   "targets": ["mobile"],
   "ui_frameworks": ["quickbrick"],
-  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"]
+  "platform": "android",
+  "manifest_version": "0.0.14",
+  "dependency_version": "0.0.14",
+  "min_zapp_sdk": "20.0.0",
+  "project_dependencies": [
+    {
+      "jw-media-player": "node_modules/react-native-jw-media-player-applicaster/android"
+    }
+  ]
 }

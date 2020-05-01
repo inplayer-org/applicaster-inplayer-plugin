@@ -10,14 +10,10 @@
   "react_native": true,
   "identifier": "quick-brick-jw-player",
   "ui_builder_support": true,
-  "whitelisted_account_ids": [
-    "5c9ce7917b225c000f02dfbc"
-  ],
+  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
-  "npm_dependencies": [
-    "react-native-jw-media-player-applicaster@0.0.2"
-  ],
+  "npm_dependencies": ["react-native-jw-media-player-applicaster@0.0.2"],
   "custom_configuration_fields": [
     {
       "type": "text",
@@ -26,12 +22,8 @@
       "default": ""
     }
   ],
-  "targets": [
-    "mobile"
-  ],
-  "ui_frameworks": [
-    "quickbrick"
-  ],
+  "targets": ["mobile"],
+  "ui_frameworks": ["quickbrick"],
   "platform": "ios",
   "dependency_version": "0.0.14",
   "manifest_version": "0.0.14",
