@@ -44,6 +44,17 @@ function createManifest({ version, platform }) {
 const min_zapp_sdk = {
   tvos: "12.2.0-Dev",
   ios: "20.2.0-Dev",
+  android: "20.0.0",
+};
+
+const project_dependencies = {
+  ios: [],
+  android: [
+    {
+      InPlayerLogin:
+        "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android",
+    },
+  ],
 };
 
 const extra_dependencies = {

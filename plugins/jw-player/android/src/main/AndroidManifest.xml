@@ -1,0 +1,22 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.applicaster.rn.loginplugin">
+
+    <application>
+        <meta-data
+            android:name="JW_LICENSE_KEY"
+            android:value="<API_KEY_FOUND_IN_JW_DASHBOARD>"
+        />
+        <receiver android:name="androidx.media.session.MediaButtonReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.appgoalz.rnjwplayer.MediaPlaybackService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

@@ -15,11 +15,12 @@
     "react-native": "0.59.10"
   },
   "dependencies": {
-    "react-native-jw-media-player-applicaster": "0.0.1"
+    "react-native-jw-media-player-applicaster": "0.0.2"
   },
   "applicaster": {
     "supportedPlatforms": [
-      "ios"
+      "ios",
+      "android"
     ],
     "zappOwnerAccountId": "5e12fac7666333000ec0f8ab"
   }
