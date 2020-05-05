@@ -27,7 +27,8 @@ function createManifest({ version, platform }) {
     dependency_repository_url: dependency_repository_url[platform],
     min_zapp_sdk: min_zapp_sdk[platform],
     extra_dependencies: extra_dependencies[platform],
-    custom_configuration_fields: custom_configuration_fields[platform]
+    project_dependencies: project_dependencies[platform],
+    custom_configuration_fields: custom_configuration_fields[platform],
   };
 
   return manifest;
@@ -59,10 +60,11 @@ const dependency_repository_url = {
 };
 const project_dependencies = {
   ios: [],
+  tvos: [],
   android: [
     {
-      InPlayerLogin:
-        "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android",
+      "jw-media-player":
+        "node_modules/react-native-jw-media-player-applicaster/android",
     },
   ],
 };
@@ -95,13 +97,13 @@ const custom_configuration_fields = {
   ],
   android: [
     {
-      "type": "text",
-      "key": "jw_player_android_key",
-      "tooltip_text": "JWPlayerKey android licence key",
-      "default": ""
-    }
-  ]
-},
+      type: "text",
+      key: "jw_player_android_key",
+      tooltip_text: "JWPlayerKey android licence key",
+      default: "",
+    },
+  ],
+};
 const extra_dependencies = {
   ios: [
     {
