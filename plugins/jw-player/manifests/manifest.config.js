@@ -1,8 +1,4 @@
-// TODO: update manifest values
-
 const baseManifest = {
-  api: {},
-  dependency_repository_url: [],
   dependency_name: "@applicaster/quick-brick-jw-player",
   author_name: "Applicaster",
   author_email: "zapp@applicaster.com",
@@ -15,15 +11,6 @@ const baseManifest = {
   whitelisted_account_ids: ["5c9ce7917b225c000f02dfbc"],
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
-  npm_dependencies: ["react-native-jw-media-player-applicaster@0.0.2"],
-  custom_configuration_fields: [
-    {
-      type: "text",
-      key: "plist.JWPlayerKey",
-      tooltip_text: "JWPlayerKey Key",
-      default: "",
-    },
-  ],
   targets: ["mobile"],
   ui_frameworks: ["quickbrick"],
 };
@@ -31,15 +18,29 @@ const baseManifest = {
 function createManifest({ version, platform }) {
   const manifest = {
     ...baseManifest,
+
     platform,
     dependency_version: version,
     manifest_version: version,
+    api: api[platform],
+    npm_dependencies: npm_dependencies[platform],
+    dependency_repository_url: dependency_repository_url[platform],
     min_zapp_sdk: min_zapp_sdk[platform],
     extra_dependencies: extra_dependencies[platform],
+    custom_configuration_fields: custom_configuration_fields[platform]
   };
 
   return manifest;
 }
+const api = {
+  ios: {},
+  tvos: {},
+  android: {
+    class_name: "com.appgoalz.rnjwplayer.RNJWPlayerPackage",
+    react_packages: ["com.appgoalz.rnjwplayer.RNJWPlayerPackage"],
+    proguard_rules: "-keep public class com.appgoalz.rnjwplayer.** {*;}",
+  },
+};
 
 const min_zapp_sdk = {
   tvos: "12.2.0-Dev",
@@ -47,6 +48,15 @@ const min_zapp_sdk = {
   android: "20.0.0",
 };
 
+const dependency_repository_url = {
+  ios: [],
+  tvos: [],
+  android: [
+    {
+      url: "https://mvn.jwplayer.com/content/repositories/releases/",
+    },
+  ],
+};
 const project_dependencies = {
   ios: [],
   android: [
@@ -57,6 +67,41 @@ const project_dependencies = {
   ],
 };
 
+const npm_dependencies = {
+  ios: ["react-native-jw-media-player-applicaster@0.0.2"],
+  tvos: ["react-native-jw-media-player-applicaster@0.0.2"],
+  android: [
+    "react-native-jw-media-player-applicaster@0.0.2",
+    "@applicaster/quick-brick-jw-player@0.0.14",
+  ],
+};
+
+const custom_configuration_fields = {
+  ios: [
+    {
+      type: "text",
+      key: "plist.JWPlayerKey",
+      tooltip_text: "JWPlayerKey tvos licence key",
+      default: "",
+    },
+  ],
+  tvos: [
+    {
+      type: "text",
+      key: "plist.JWPlayerKey",
+      tooltip_text: "JWPlayerKey ios licence key",
+      default: "",
+    },
+  ],
+  android: [
+    {
+      "type": "text",
+      "key": "jw_player_android_key",
+      "tooltip_text": "JWPlayerKey android licence key",
+      "default": ""
+    }
+  ]
+},
 const extra_dependencies = {
   ios: [
     {
