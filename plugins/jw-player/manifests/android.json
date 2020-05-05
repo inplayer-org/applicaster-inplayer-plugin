@@ -4,7 +4,11 @@
     "react_packages": ["com.appgoalz.rnjwplayer.RNJWPlayerPackage"],
     "proguard_rules": "-keep public class com.appgoalz.rnjwplayer.** {*;}"
   },
-  "dependency_repository_url": [],
+  "dependency_repository_url": [
+    {
+      "url": "https://mvn.jwplayer.com/content/repositories/releases/"
+    }
+  ],
   "dependency_name": "@applicaster/quick-brick-jw-player",
   "author_name": "Applicaster",
   "author_email": "zapp@applicaster.com",
