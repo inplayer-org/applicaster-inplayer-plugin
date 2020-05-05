@@ -1,6 +1,4 @@
 {
-  "api": {},
-  "dependency_repository_url": [],
   "dependency_name": "@applicaster/quick-brick-jw-player",
   "author_name": "Applicaster",
   "author_email": "zapp@applicaster.com",
@@ -10,23 +8,25 @@
   "react_native": true,
   "identifier": "quick-brick-jw-player",
   "ui_builder_support": true,
-  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
+  "whitelisted_account_ids": [
+    "5c9ce7917b225c000f02dfbc"
+  ],
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
-  "npm_dependencies": ["react-native-jw-media-player-applicaster@0.0.2"],
-  "custom_configuration_fields": [
-    {
-      "type": "text",
-      "key": "plist.JWPlayerKey",
-      "tooltip_text": "JWPlayerKey Key",
-      "default": ""
-    }
+  "targets": [
+    "mobile"
   ],
-  "targets": ["mobile"],
-  "ui_frameworks": ["quickbrick"],
+  "ui_frameworks": [
+    "quickbrick"
+  ],
   "platform": "ios",
-  "dependency_version": "0.0.14",
-  "manifest_version": "0.0.14",
+  "dependency_version": "0.0.17",
+  "manifest_version": "0.0.17",
+  "api": {},
+  "npm_dependencies": [
+    "react-native-jw-media-player-applicaster@0.0.2"
+  ],
+  "dependency_repository_url": [],
   "min_zapp_sdk": "20.2.0-Dev",
   "extra_dependencies": [
     {
@@ -34,6 +34,15 @@
     },
     {
       "react-native-jw-media-player-applicaster": ":path => 'node_modules/react-native-jw-media-player-applicaster/ios/react-native-jw-media-player-applicaster.podspec'"
+    }
+  ],
+  "project_dependencies": [],
+  "custom_configuration_fields": [
+    {
+      "type": "text",
+      "key": "plist.JWPlayerKey",
+      "tooltip_text": "JWPlayerKey tvos licence key",
+      "default": ""
     }
   ]
 }
