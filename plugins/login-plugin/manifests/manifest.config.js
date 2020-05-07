@@ -1,5 +1,4 @@
 const baseManifest = {
-  api: {},
   dependency_repository_url: [],
   dependency_name: "@applicaster/quick-brick-inplayer",
   author_name: "Applicaster",
@@ -214,31 +213,16 @@ function createManifest({ version, platform }) {
 
 const api = {
   ios: {},
-  android: {
-    require_startup_execution: false,
-    class_name: "com.applicaster.reactnative.plugins.APReactNativeAdapter",
-    react_packages: [
-      "com.applicaster.quickbrickinplayer.reactnative.InPlayerPackage",
-    ],
-  },
+  android: {},
 };
 
 const project_dependencies = {
   ios: [],
-  android: [
-    {
-      InPlayerLogin:
-        "./quick_brick/node_modules/@applicaster/quick-brick-inplayer/android",
-    },
-  ],
+  android: [],
 };
 
 const extra_dependencies = {
   ios: [
-    {
-      InPlayerLogin:
-        ":path => './quick_brick/node_modules/@applicaster/quick-brick-inplayer/InPlayerLogin.podspec'",
-    },
     {
       ApplicasterIAP:
         ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",

@@ -8,32 +8,32 @@ export const localStoragePolyfillSync = async () => {
   valuesMap.forEach(async (value, key) => {
     await LocalStorageNative.setItem(key, value, localStorageNameSpace);
   });
-  const allValue = await LocalStorageNative.getAllItems(localStorageNameSpace);
+  // const allValue = await LocalStorageNative.getAllItems(localStorageNameSpace);
   console.log("localStoragePolyfillSync1", { valuesMap });
 };
 
 export const localStoragePolyfillInitialize = async () => {
   if (!initialized) {
     global.localStorage;
-    console.log("localStoragePolyfillInitialize");
-    const allValue = await LocalStorageNative.getAllItems(
-      localStorageNameSpace
-    );
+    // console.log("localStoragePolyfillInitialize");
+    // const allValue = await LocalStorageNative.getAllItems(
+    //   localStorageNameSpace
+    // );
 
-    initialized = true;
-    console.log("localStoragePolyfillInitialize2");
-    if (allValue) {
-      for (let [key, value] of Object.entries(allValue)) {
-        var newValue = value.substring(1, value.length - 1);
-        newValue = newValue.replace(/\\/g, "");
-        console.log({ value, key, value2: newValue });
+    // initialized = true;
+    // console.log("localStoragePolyfillInitialize2");
+    // if (allValue) {
+    //   for (let [key, value] of Object.entries(allValue)) {
+    //     var newValue = value.substring(1, value.length - 1);
+    //     newValue = newValue.replace(/\\/g, "");
+    //     console.log({ value, key, value2: newValue });
 
-        localStorage.setItem(key, newValue);
-      }
-      console.log("localStoragePolyfillInitialize1: Initialized", {
-        valuesMap,
-      });
-    }
+    //     localStorage.setItem(key, newValue);
+    //   }
+    //   console.log("localStoragePolyfillInitialize1: Initialized", {
+    //     valuesMap,
+    //   });
+    // }
   }
 };
 
