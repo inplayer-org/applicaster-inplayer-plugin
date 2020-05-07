@@ -1,0 +1,51 @@
+defaults: &defaults
+  working_directory: ~/applicaster-inplayer-plugin
+  docker:
+    - image: applicaster/quick-brick:0.4.0
+
+version: 2.1
+
+jobs:
+  deploy_plugins:
+    <<: *defaults
+    steps:
+      - restore_cache:
+          keys:
+            - v1-InPlayer-{{ .Environment.CIRCLE_SHA1 }}
+
+      - checkout
+
+      - save_cache:
+          key: v1-InPlayer-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - .git
+
+      - run:
+          name: NPM Login
+          command: npx npm-shell-login
+
+      - restore_cache:
+          keys:
+            - v1-npm-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Install npm dependencies
+          command: yarn
+
+      - save_cache:
+          key: v1-npm-{{  checksum "yarn.lock" }}
+          paths:
+            - .yarn
+            - node_modules
+
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Publishing plugins
+          command: node ./scripts/publish_plugins.js
+
+workflows:
+  build:
+    jobs:
+      - deploy_plugins
