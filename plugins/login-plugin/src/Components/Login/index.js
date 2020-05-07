@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
 });
 
 export const Login = (props) => {
-  // console.log({ props });
   const { initialEmail } = props;
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);

@@ -1,9 +1,7 @@
 export const getSrcForJWPlayer = ({ inPlayerItemAccess, inPlayerContent }) => {
-  console.log({ inPlayerContent });
   return inPlayerContent ? JWPlayerContent(inPlayerContent) : null;
 };
 const JWPlayerContent = (inPlayerContent) => {
-  console.log({ inPlayerContent });
   const { video_id = null, stream_url = null } = inPlayerContent;
   return stream_url || JWPlayerContentFromMediaID(video_id);
 };

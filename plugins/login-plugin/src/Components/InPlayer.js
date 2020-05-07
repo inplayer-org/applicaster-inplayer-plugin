@@ -5,7 +5,6 @@ import R from "ramda";
 
 import { initFromNativeLocalStorage } from "../LocalStorageHack";
 
-import { getSrcFromProvider } from "../Utils/OVPProvidersMapper";
 import { getInPlayerAssetType } from "../Utils/InPlayerResponse";
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
@@ -33,8 +32,8 @@ const InPlayer = (props) => {
   const { callback, payload } = props;
 
   useEffect(() => {
-    initFromNativeLocalStorage()
-  })
+    initFromNativeLocalStorage();
+  });
 
   useEffect(() => {
     if (isVideoEntry(payload)) {
@@ -49,17 +48,15 @@ const InPlayer = (props) => {
   }, []);
 
   const assetFlowCallback = ({ success, data, error }) => {
-    const src = getSrcFromProvider(data);
-    console.log("Got video URL for provider: " + JSON.stringify({ src }));
-    if (error) {
-      showAlert("(Demo Only) Error!", error.message);
-    } else if (!src) {
-      success = false;
-      error = {
-        message: `Can not create URL for asset type: ${getInPlayerAssetType(
-          data
-        )}`,
-      };
+    const { src } = data;
+    if (!success) {
+      const error = error
+        ? error
+        : {
+            message: `Can not create URL for asset type: ${getInPlayerAssetType(
+              data
+            )}`,
+          };
       showAlert("(Demo Only) Error!", error);
     }
 
@@ -75,7 +72,7 @@ const InPlayer = (props) => {
   };
 
   const accountFlowCallback = ({ success }) => {
-    console.debug("accountFlowCallback", success, hookType)
+    console.debug("accountFlowCallback", success, hookType);
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
       callback && callback({ success, error: null, payload: payload });

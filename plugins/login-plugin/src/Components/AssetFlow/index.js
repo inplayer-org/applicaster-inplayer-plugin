@@ -7,27 +7,26 @@ import { container } from "../Styles";
 import { checkAccessOrPurchaseWorkflow } from "../../Services/inPlayerService";
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
 
-
-
-
 const styles = StyleSheet.create({
   container,
 });
 
 const AssetFlow = (props) => {
-  const [loading, setLoading] = useState(true);
-  const assetId = inPlayerAssetId(props.payload)
-
+  const assetId = inPlayerAssetId(props.payload);
   useEffect(() => {
-    const { configuration, payload } = props;
+    const { configuration, payload, assetFlowCallback } = props;
 
     checkAccessOrPurchaseWorkflow({ assetId: assetId })
-      .finally(() => setLoading(false))
+      .then((result) => ({ data: result }))
+      .catch((error) => ({ error }))
+      .finally(({ error, data }) => {
+        assetFlowCallback({ success: !error || !data.src, data, error });
+      });
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      {loading && <LoadingScreen />}
+      <LoadingScreen />
     </SafeAreaView>
   );
 };

@@ -8,7 +8,8 @@ const SUPPORTED_ASSET_TYPES = {
   HTML: "html_asset",
 };
 
-export const getSrcFromProvider = (inPlayerItemAccess) => {
+export const getSrcFromAsset = (inPlayerItemAccess) => {
+  console.log("getSrcFromAsset");
   if (!inPlayerItemAccess) {
     return {};
   }
