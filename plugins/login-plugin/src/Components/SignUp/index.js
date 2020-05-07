@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
 const SignUp = (props) => {
   const [fullName, setFullName] = useState(null);
-  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
   const [passwordConfirmation, setPasswordConfirmation] = useState(null);
   const [password, setPassword] = useState(null);
 
@@ -56,7 +56,7 @@ const SignUp = (props) => {
         message: "Name can not be empty",
       });
       return;
-    } else if (validateEmail(username) == false) {
+    } else if (validateEmail(email) == false) {
       onSignUpError({ title, message: "Email is not valid" });
       return;
     } else if (validatePassword(password) == false) {
@@ -72,7 +72,7 @@ const SignUp = (props) => {
       });
       return;
     }
-    createAccount({ fullName, username, password });
+    createAccount({ fullName, email, password });
   };
 
   return (
@@ -97,8 +97,8 @@ const SignUp = (props) => {
         placeholder="E-mail"
         placeholderTextColor={"white"}
         style={styles.input}
-        value={username}
-        onChangeText={setUsername}
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         autoCapitalize="none"

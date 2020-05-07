@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import R, { prop } from "ramda";
 
-// import { AccountModule } from "@applicaster/quick-brick-inplayer-logout/src/NativeModules/AccountModule";
-import { AccountModule } from "../login-plugin/src/NativeModules/AccountModule";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { connectToStore } from "@applicaster/zapp-react-native-redux";
 import { fixColorHexCode } from "@applicaster/zapp-react-native-utils/stylesUtils";
 
 import { Text, SafeAreaView, Platform, ActivityIndicator } from "react-native";
+
+const signOut = async () => {
+  const data = await InPlayer.Account.signOut();
+  await localStoragePolyfillSync();
+}
 
 const InPlayerLogout = (props) => {
   const [loading, setLoading] = useState(true);
@@ -17,16 +20,11 @@ const InPlayerLogout = (props) => {
     navigator.hideNavBar();
     // foo = 1
     const { configuration } = props;
-    // console.log("Component Ready!!");
-    AccountModule.signOut(configuration)
-      .then((isSignedOut) => {
-        setLoading(false);
-        navigator.goHome();
-      })
-      .catch((err) => {
-        navigator.goBack();
-        throw err;
-      });
+
+    signOut()
+      .then(() => { navigator.goHome() })
+      .catch(() => { navigator.goBack() })
+      .finally(() => { setLoading(false) })
   }, []);
 
   const bgColor = Platform.select({

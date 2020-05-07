@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import R from "ramda";
 import { Keyboard } from "react-native";
+// https://github.com/testshallpass/react-native-dropdownalert#usage
+import DropdownAlert from "react-native-dropdownalert";
+
 import { Login } from "../Login";
 import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";
-import { AccountModule } from "../../NativeModules/AccountModule";
-// https://github.com/testshallpass/react-native-dropdownalert#usage
-import DropdownAlert from "react-native-dropdownalert";
+import * as InPlayerService from "../../Services/inPlayerService";
+import { inspect } from "../../Utils";
 
 const styles = StyleSheet.create({
   container,
@@ -21,98 +23,76 @@ const AccountFlow = (props) => {
     FORGOT_PASSWORD: "ForgotPassword",
   };
 
+  const { accountFlowCallback } = props;
+
   const [loading, setLoading] = useState(true);
   const [screen, setScreen] = useState(ScreensData.EMPTY);
+  const [lastEmailUsed, setLastEmailUsed] = useState(null);
 
   useEffect(() => {
     const { configuration } = props;
-
-    AccountModule.isAuthenticated(configuration)
-      .then((isLogedIn) => {
-        console.log("isAuthenticated Completion", {
-          isLogedIn,
-          inplayer_token: localStorage.getItem("inplayer_token"),
-        });
-        setLoading(false);
-        isLogedIn == true ? onSuccess() : setScreen(ScreensData.LOGIN);
+    let stillMounted = true
+    InPlayerService.setConfig("develop");
+    InPlayerService.isAuthenticated()
+      .then(async (isAuthenticated) => {
+        console.debug("InPlayerService.isAuthenticated", isAuthenticated)
+        if (stillMounted) {
+          if (isAuthenticated) {
+            accountFlowCallback({ success: true });
+          } else {
+            setLastEmailUsed(await InPlayerService.getLastEmailUsed())
+            setScreen(ScreensData.LOGIN)
+          }
+        }
       })
-      .catch((err) => {
-        console.log({ err });
-      });
+      .finally(() => { if (stillMounted) setLoading(false) })
+      return () => { stillMounted = false }
   }, []);
 
-  const onSuccess = () => {
-    const { accountFlowCallback } = props;
-    setLoading(false);
-    accountFlowCallback({ success: true });
-  };
+  const showAlertToUser = ({ title, message }) => { this.dropDownAlertRef.alertWithType("warn", title, message) }
 
-  const onFail = (error, errorMessage) => {
-    const { accountFlowCallback } = props;
-    const { code = -1, message = "Unknown Error" } = error;
-    setLoading(false);
-    accountFlowCallback({ success: false });
-    this.dropDownAlertRef.alertWithType(
-      "error",
-      errorMessage,
-      `Code:${code}, ${message}`
-    );
-  };
+  const maybeShowAlertToUser = (title) => async (error) => {
+    const { response } = error;
+    if (response && response.status >= 400 && response.status < 500) {
+      const json = await error.response.json();
+      showAlertToUser({title, message: json.message})
+    } else {
+      throw error
+    }
+  }
 
-  const login = (payload) => {
+  const login = ({ email, password } = params) => {
     Keyboard.dismiss();
-    const { configuration } = props;
+    const { configuration: { in_player_client_id, in_player_referrer } } = props;
     setLoading(true);
-    AccountModule.authenticate({ ...payload, ...configuration })
-      .then((data) => {
-        console.log("authenticate Completed", {
-          data,
-          inplayer_token: localStorage.getItem("inplayer_token"),
-        });
-        onSuccess();
-      })
-      .catch((e) => {
-        onFail(e, "Error: Authentication Failed");
-      });
-  };
-  const signUp = () => {
-    setScreen(ScreensData.SIGN_UP);
+    InPlayerService.login({ email, password, clientId: in_player_client_id, referrer: in_player_referrer })
+      .then(() => { accountFlowCallback({ success: true }) })
+      .catch(maybeShowAlertToUser("Login failed"))
+      .catch((error) => { console.error(error) })
+      .finally(() => { setLoading(false) })
   };
 
-  const onSiginUpBack = () => {
-    setScreen(ScreensData.LOGIN);
-  };
-
-  createAccount = (payload) => {
+  const createAccount = ({ fullName, email, password } = params) => {
     Keyboard.dismiss();
-    const { configuration } = props;
+    const { configuration: { in_player_client_id, in_player_referrer } } = props;
     setLoading(true);
-    AccountModule.signUp({ ...payload, ...configuration })
-      .then((data) => {
-        console.log("Creation completed", { data });
-        onSuccess();
-      })
-      .catch((e) => {
-        onFail(e, "Error: Error: Sign Up Failed");
-      });
+    InPlayerService.signUp({ fullName, email, password, clientId: in_player_client_id, referrer: in_player_referrer })
+      .catch(maybeShowAlertToUser("Sign-up failed"))
+      .catch((error) => { console.error(error) })
+      .finally(() => { setLoading(false) })
   };
 
-  onLoginError = ({ title, message }) => {
-    this.dropDownAlertRef.alertWithType("warn", title, message);
-  };
 
-  onSignUpError = ({ title, message }) => {
-    this.dropDownAlertRef.alertWithType("warn", title, message);
-  };
 
   const renderAuthenteficationScreen = () => {
     switch (screen) {
       case ScreensData.LOGIN:
         return (
           <Login
+            initialEmail={lastEmailUsed}
             login={login}
-            signUp={signUp}
-            onLoginError={onLoginError}
+            signUp={ () => { setScreen(ScreensData.SIGN_UP) } }
+            onLoginError={showAlertToUser}
             {...props}
           />
         );
@@ -121,8 +101,8 @@ const AccountFlow = (props) => {
         return (
           <SignUp
             createAccount={createAccount}
-            onSiginUpBack={onSiginUpBack}
-            onSignUpError={onSignUpError}
+            onSiginUpBack={() => { setScreen(ScreensData.LOGIN) }}
+            onSignUpError={showAlertToUser}
             {...props}
           />
         );

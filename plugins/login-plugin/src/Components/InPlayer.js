@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from "react";
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
-import { AccountModule } from "../NativeModules/AccountModule";
 import R from "ramda";
+
+import { initFromNativeLocalStorage } from "../LocalStorageHack";
 
 import { getSrcFromProvider } from "../Utils/OVPProvidersMapper";
 import { getInPlayerAssetType } from "../Utils/InPlayerResponse";
-
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
+
+const getScreenStyles = R.compose(
+  R.prop("styles"),
+  R.find(R.propEq("type", "quick-brick-inplayer")),
+  R.values,
+  R.prop("rivers")
+);
+
+console.disableYellowBox = true;
 
 const InPlayer = (props) => {
   const HookTypeData = {
@@ -19,18 +28,15 @@ const InPlayer = (props) => {
 
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
-  const screenStyles = R.compose(
-    R.prop("styles"),
-    R.find(R.propEq("type", "quick-brick-inplayer")),
-    R.values,
-    R.prop("rivers")
-  )(props);
-  useEffect(() => {
-    // global.localStorage;
-    console.log("InPlayer", { props });
-    console.disableYellowBox = true;
+  const screenStyles = getScreenStyles(props);
 
-    const { payload, callback } = props;
+  const { callback, payload } = props;
+
+  useEffect(() => {
+    initFromNativeLocalStorage()
+  })
+
+  useEffect(() => {
     if (isVideoEntry(payload)) {
       if (inPlayerAssetId(payload)) {
         setHookType(HookTypeData.PLAYER_HOOK);
@@ -43,9 +49,8 @@ const InPlayer = (props) => {
   }, []);
 
   const assetFlowCallback = ({ success, data, error }) => {
-    const { callback, payload } = props;
     const src = getSrcFromProvider(data);
-    console.log({ src });
+    console.log("Got video URL for provider: " + JSON.stringify({ src }));
     if (error) {
       showAlert("(Demo Only) Error!", error.message);
     } else if (!src) {
@@ -70,7 +75,7 @@ const InPlayer = (props) => {
   };
 
   const accountFlowCallback = ({ success }) => {
-    const { callback, payload } = props;
+    console.debug("accountFlowCallback", success, hookType)
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
       callback && callback({ success, error: null, payload: payload });

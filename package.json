@@ -33,7 +33,6 @@
     "ramda": "^0.27.0",
     "react": "16.8.3",
     "react-native": "0.59.10",
-    "react-native-dropdownalert": "^4.2.1",
-    "@inplayer-org/inplayer.js": "^2.13.3"
+    "react-native-dropdownalert": "^4.2.1"
   }
 }

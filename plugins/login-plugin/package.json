@@ -11,11 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "@applicaster/applicaster-iap": "0.1.4",
+    "@inplayer-org/inplayer.js": "2.13.3",
+    "@react-native-community/async-storage": "^1.9.0",
     "axios": "^0.19.1",
     "moment": "^2.24.0",
     "ramda": "^0.26.1",
-    "react-native-dropdownalert": "^4.2.1",
-    "@inplayer-org/inplayer.js": "^2.13.3"
+    "react-native-dropdownalert": "^4.2.1"
   },
   "peerDependencies": {
     "@applicaster/zapp-react-native-redux": "^2.3.1",

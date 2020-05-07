@@ -18,6 +18,7 @@ const baseManifest = {
   npm_dependencies: [
     "react-native-dropdownalert@4.2.1",
     "@applicaster/applicaster-iap@0.1.4",
+    "@react-native-community/async-storage@1.9.0"
   ],
   styles: {
     fields: [
@@ -242,6 +243,11 @@ const extra_dependencies = {
       ApplicasterIAP:
         ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
     },
+    {
+      RNCAsyncStorage:
+        ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'",
+    }
+
   ],
   android: [],
 };

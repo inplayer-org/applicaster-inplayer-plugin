@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { validateEmail, validatePassword } from "../../Utils/Account";
 import { container, title, input, button, buttonText } from "../Styles";
 import {
@@ -51,29 +51,26 @@ const styles = StyleSheet.create({
 });
 
 export const Login = (props) => {
-  console.log({ props });
-  const [username, setUsername] = useState(null);
+  // console.log({ props });
+  const { initialEmail } = props;
+  const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+
+  useEffect(() => { setEmail(initialEmail) }, [initialEmail])
 
   const login = () => {
     const { login, onLoginError } = props;
 
     const title = "Login form issue";
 
-    if (validateEmail(username) == false) {
+    if (validateEmail(email) == false) {
       onLoginError({
         title,
         message: "Email is not valid",
       });
       return;
-    } else if (validatePassword(password) == false) {
-      onLoginError({
-        title,
-        message: "Password must be at least 8 characters",
-      });
-      return;
     }
-    login({ username, password });
+    login({ email, password });
   };
 
   const onBackButton = () => {
@@ -96,8 +93,8 @@ export const Login = (props) => {
         placeholder="E-mail"
         placeholderTextColor={"white"}
         style={styles.input}
-        value={username}
-        onChangeText={setUsername}
+        value={email || initialEmail}
+        onChangeText={setEmail}
       />
       <TextInput
         autoCapitalize="none"
@@ -109,7 +106,7 @@ export const Login = (props) => {
         secureTextEntry
       />
       <Text style={styles.remindPassword}>
-        Forgotten your Username or Password?
+        Forgot your password?
       </Text>
       <TouchableOpacity onPress={login}>
         <View style={styles.button}>
