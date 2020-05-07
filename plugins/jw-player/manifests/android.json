@@ -1,0 +1,55 @@
+{
+  "dependency_name": "@applicaster/quick-brick-jw-player",
+  "author_name": "Applicaster",
+  "author_email": "zapp@applicaster.com",
+  "name": "JWPlayer QuickBrick",
+  "description": "Quick Brick JW Player plugin",
+  "type": "player",
+  "react_native": true,
+  "identifier": "quick-brick-jw-player",
+  "ui_builder_support": true,
+  "whitelisted_account_ids": [
+    "5c9ce7917b225c000f02dfbc"
+  ],
+  "deprecated_since_zapp_sdk": "",
+  "unsupported_since_zapp_sdk": "",
+  "targets": [
+    "mobile"
+  ],
+  "ui_frameworks": [
+    "quickbrick"
+  ],
+  "platform": "android",
+  "dependency_version": "0.0.21",
+  "manifest_version": "0.0.21",
+  "api": {
+    "class_name": "com.appgoalz.rnjwplayer.RNJWPlayerPackage",
+    "react_packages": [
+      "com.appgoalz.rnjwplayer.RNJWPlayerPackage"
+    ],
+    "proguard_rules": "-keep public class com.appgoalz.rnjwplayer.** {*;}"
+  },
+  "npm_dependencies": [
+    "react-native-jw-media-player-applicaster@0.0.5",
+    "@applicaster/quick-brick-jw-player@0.0.14"
+  ],
+  "dependency_repository_url": [
+    {
+      "url": "https://mvn.jwplayer.com/content/repositories/releases/"
+    }
+  ],
+  "min_zapp_sdk": "20.0.0",
+  "project_dependencies": [
+    {
+      "jw-media-player": "node_modules/react-native-jw-media-player-applicaster/android"
+    }
+  ],
+  "custom_configuration_fields": [
+    {
+      "type": "text",
+      "key": "jw_player_android_key",
+      "tooltip_text": "JWPlayerKey android licence key",
+      "default": ""
+    }
+  ]
+}

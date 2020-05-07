@@ -1,0 +1,28 @@
+{
+  "name": "@applicaster/quick-brick-inplayer-logout",
+  "version": "0.0.6",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ramda": "^0.26.1"
+  },
+  "peerDependencies": {
+    "@applicaster/zapp-react-native-redux": "^2.3.1",
+    "@applicaster/zapp-react-native-utils": "^2.3.1",
+    "react": "16.8.3",
+    "react-native": "0.59.10"
+  },
+  "applicaster": {
+    "supportedPlatforms": [
+      "ios",
+      "android"
+    ],
+    "zappOwnerAccountId": "5e12fac7666333000ec0f8ab"
+  }
+}
