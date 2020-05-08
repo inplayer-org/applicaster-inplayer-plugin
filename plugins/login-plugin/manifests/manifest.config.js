@@ -17,7 +17,7 @@ const baseManifest = {
   npm_dependencies: [
     "react-native-dropdownalert@4.2.1",
     "@applicaster/applicaster-iap@0.1.4",
-    "@react-native-community/async-storage@1.9.0"
+    "@react-native-community/async-storage@1.9.0",
   ],
   styles: {
     fields: [
@@ -213,12 +213,22 @@ function createManifest({ version, platform }) {
 
 const api = {
   ios: {},
-  android: {},
+  android: {
+    class_name: "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
+    react_packages: [
+      "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
+    ],
+    proguard_rules:
+      "-keep public class com.reactnativecommunity.asyncstorage.** {*;}",
+  },
 };
 
 const project_dependencies = {
   ios: [],
-  android: [],
+  android: {
+    "async-storage-package":
+      "node_modules/@react-native-community/async-storage/android",
+  },
 };
 
 const extra_dependencies = {
@@ -230,8 +240,7 @@ const extra_dependencies = {
     {
       RNCAsyncStorage:
         ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'",
-    }
-
+    },
   ],
   android: [],
 };
