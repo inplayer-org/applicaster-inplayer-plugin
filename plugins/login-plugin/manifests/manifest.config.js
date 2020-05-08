@@ -225,10 +225,12 @@ const api = {
 
 const project_dependencies = {
   ios: [],
-  android: {
-    "async-storage-package":
-      "node_modules/@react-native-community/async-storage/android",
-  },
+  android: [
+    {
+      "async-storage-package":
+        "node_modules/@react-native-community/async-storage/android",
+    },
+  ],
 };
 
 const extra_dependencies = {
