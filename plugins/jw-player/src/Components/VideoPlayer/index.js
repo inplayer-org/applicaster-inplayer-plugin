@@ -20,7 +20,8 @@ export default class VideoPlayer extends React.Component {
 
   onError = ({ nativeEvent }) => {
     const { onError } = this.props;
-    onError({ type: "error", target: { error: nativeEvent?.message } });
+    onError &&
+      onError({ type: "error", target: { error: nativeEvent?.message } });
   };
 
   onBuffer = () => {
