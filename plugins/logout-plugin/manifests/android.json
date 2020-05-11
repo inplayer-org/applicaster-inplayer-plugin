@@ -16,6 +16,10 @@
   ],
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
+  "npm_dependencies": [
+    "@applicaster/quick-brick-inplayer",
+    "@react-native-community/async-storage@1.9.0"
+  ],
   "preload": true,
   "custom_configuration_fields": [
     {
@@ -38,7 +42,7 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.0.6",
-  "manifest_version": "0.0.6",
+  "dependency_version": "0.0.7",
+  "manifest_version": "0.0.7",
   "min_zapp_sdk": "20.0.0"
 }
