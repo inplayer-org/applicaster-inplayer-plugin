@@ -14,6 +14,10 @@ const baseManifest = {
   whitelisted_account_ids: ["5c9ce7917b225c000f02dfbc"],
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
+  npm_dependencies: [
+    "@applicaster/quick-brick-inplayer",
+    "@react-native-community/async-storage@1.9.0",
+  ],
   preload: true,
   custom_configuration_fields: [
     {
