@@ -31,58 +31,90 @@ const AccountFlow = (props) => {
 
   useEffect(() => {
     const { configuration } = props;
-    let stillMounted = true
+    let stillMounted = true;
     InPlayerService.setConfig("develop");
     InPlayerService.isAuthenticated()
       .then(async (isAuthenticated) => {
-        console.debug("InPlayerService.isAuthenticated", isAuthenticated)
+        console.debug("InPlayerService.isAuthenticated", isAuthenticated);
         if (stillMounted) {
           if (isAuthenticated) {
             accountFlowCallback({ success: true });
           } else {
-            setLastEmailUsed(await InPlayerService.getLastEmailUsed())
-            setScreen(ScreensData.LOGIN)
+            setLastEmailUsed(await InPlayerService.getLastEmailUsed());
+            setScreen(ScreensData.LOGIN);
           }
         }
       })
-      .finally(() => { if (stillMounted) setLoading(false) })
-      return () => { stillMounted = false }
+      .finally(() => {
+        if (stillMounted) setLoading(false);
+      });
+    return () => {
+      stillMounted = false;
+    };
   }, []);
 
-  const showAlertToUser = ({ title, message }) => { this.dropDownAlertRef.alertWithType("warn", title, message) }
+  const showAlertToUser = ({ title, message }) => {
+    this.dropDownAlertRef.alertWithType("warn", title, message);
+  };
 
   const maybeShowAlertToUser = (title) => async (error) => {
     const { response } = error;
     if (response && response.status >= 400 && response.status < 500) {
       const json = await error.response.json();
-      showAlertToUser({title, message: json.message})
+      showAlertToUser({ title, message: json.message });
     } else {
-      throw error
+      throw error;
     }
-  }
+  };
 
   const login = ({ email, password } = params) => {
     Keyboard.dismiss();
-    const { configuration: { in_player_client_id, in_player_referrer } } = props;
+    const {
+      configuration: { in_player_client_id, in_player_referrer },
+    } = props;
     setLoading(true);
-    InPlayerService.login({ email, password, clientId: in_player_client_id, referrer: in_player_referrer })
-      .then(() => { accountFlowCallback({ success: true }) })
+    InPlayerService.login({
+      email,
+      password,
+      clientId: in_player_client_id,
+      referrer: in_player_referrer,
+    })
+      .then(() => {
+        accountFlowCallback({ success: true });
+      })
       .catch(maybeShowAlertToUser("Login failed"))
-      .catch((error) => { console.error(error) })
-      .finally(() => { setLoading(false) })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const createAccount = ({ fullName, email, password } = params) => {
     Keyboard.dismiss();
-    const { configuration: { in_player_client_id, in_player_referrer } } = props;
+    const {
+      configuration: { in_player_client_id, in_player_referrer },
+    } = props;
     setLoading(true);
-    InPlayerService.signUp({ fullName, email, password, clientId: in_player_client_id, referrer: in_player_referrer })
+    InPlayerService.signUp({
+      fullName,
+      email,
+      password,
+      clientId: in_player_client_id,
+      referrer: in_player_referrer,
+    })
+      .then(() => {
+        accountFlowCallback({ success: true });
+      })
       .catch(maybeShowAlertToUser("Sign-up failed"))
-      .catch((error) => { console.error(error) })
-      .finally(() => { setLoading(false) })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
-
-
 
   const renderAuthenteficationScreen = () => {
     switch (screen) {
@@ -91,7 +123,9 @@ const AccountFlow = (props) => {
           <Login
             initialEmail={lastEmailUsed}
             login={login}
-            signUp={ () => { setScreen(ScreensData.SIGN_UP) } }
+            signUp={() => {
+              setScreen(ScreensData.SIGN_UP);
+            }}
             onLoginError={showAlertToUser}
             {...props}
           />
@@ -101,7 +135,9 @@ const AccountFlow = (props) => {
         return (
           <SignUp
             createAccount={createAccount}
-            onSiginUpBack={() => { setScreen(ScreensData.LOGIN) }}
+            onSiginUpBack={() => {
+              setScreen(ScreensData.LOGIN);
+            }}
             onSignUpError={showAlertToUser}
             {...props}
           />

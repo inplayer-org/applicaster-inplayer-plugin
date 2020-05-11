@@ -7,5 +7,7 @@ const JWPlayerContent = (inPlayerContent) => {
 };
 
 const JWPlayerContentFromMediaID = (mediaId) => {
-  return mediaId ? `https://content.jwplatform.com/videos/${mediaId}` : null;
+  return mediaId
+    ? `https://content.jwplatform.com/videos/${mediaId}.m3u8`
+    : null;
 };

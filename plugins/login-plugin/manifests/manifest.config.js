@@ -227,7 +227,7 @@ const project_dependencies = {
   ios: [],
   android: [
     {
-      "async-storage-package":
+      "@react-native-community_async-storage":
         "node_modules/@react-native-community/async-storage/android",
     },
   ],
