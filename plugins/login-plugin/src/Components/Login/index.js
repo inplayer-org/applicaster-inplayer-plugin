@@ -55,7 +55,9 @@ export const Login = (props) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  useEffect(() => { setEmail(initialEmail) }, [initialEmail])
+  useEffect(() => {
+    setEmail(initialEmail);
+  }, [initialEmail]);
 
   const login = () => {
     const { login, onLoginError } = props;
@@ -92,7 +94,7 @@ export const Login = (props) => {
         placeholder="E-mail"
         placeholderTextColor={"white"}
         style={styles.input}
-        value={email || initialEmail}
+        value={email}
         onChangeText={setEmail}
       />
       <TextInput
@@ -104,9 +106,7 @@ export const Login = (props) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Text style={styles.remindPassword}>
-        Forgot your password?
-      </Text>
+      <Text style={styles.remindPassword}>Forgot your password?</Text>
       <TouchableOpacity onPress={login}>
         <View style={styles.button}>
           <Text style={styles.buttonText}>LOG IN</Text>
