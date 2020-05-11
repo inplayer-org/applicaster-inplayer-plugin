@@ -19,20 +19,7 @@ const baseManifest = {
     "@react-native-community/async-storage@1.9.0",
   ],
   preload: true,
-  custom_configuration_fields: [
-    {
-      type: "text",
-      key: "in_player_client_id",
-      tooltip_text: "In Player Client ID",
-      default: "",
-    },
-    {
-      type: "text",
-      key: "in_player_referrer",
-      tooltip_text: "In Player Referrer URL",
-      default: "",
-    },
-  ],
+  custom_configuration_fields: [],
   targets: ["mobile"],
   ui_frameworks: ["quickbrick"],
 };
