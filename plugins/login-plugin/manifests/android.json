@@ -201,8 +201,8 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.1.3",
-  "manifest_version": "0.1.3",
+  "dependency_version": "0.1.4",
+  "manifest_version": "0.1.4",
   "api": {
     "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     "react_packages": [
@@ -212,7 +212,7 @@
   },
   "project_dependencies": [
     {
-      "async-storage-package": "node_modules/@react-native-community/async-storage/android"
+      "@react-native-community_async-storage": "node_modules/@react-native-community/async-storage/android"
     }
   ],
   "min_zapp_sdk": "20.0.0",
