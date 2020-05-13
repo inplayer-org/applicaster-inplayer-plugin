@@ -8,6 +8,7 @@ import { initFromNativeLocalStorage } from "../LocalStorageHack";
 import { getInPlayerAssetType } from "../Utils/InPlayerResponse";
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
+import { getAllPackages, setConfig } from "../Services/inPlayerService";
 
 const getScreenStyles = R.compose(
   R.prop("styles"),
@@ -33,9 +34,8 @@ const InPlayer = (props) => {
 
   useEffect(() => {
     initFromNativeLocalStorage();
-  });
+    setConfig("develop");
 
-  useEffect(() => {
     if (isVideoEntry(payload)) {
       if (inPlayerAssetId(payload)) {
         setHookType(HookTypeData.PLAYER_HOOK);
@@ -48,8 +48,8 @@ const InPlayer = (props) => {
   }, []);
 
   const assetFlowCallback = ({ success, data, error }) => {
-    const { src } = data;
-    if (!success) {
+    const src = data?.src;
+    if (!success && (error || src)) {
       const error = error
         ? error
         : {

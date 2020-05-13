@@ -1,4 +1,6 @@
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
+import R from "ramda";
+
 import InPlayer from "@inplayer-org/inplayer.js";
 
 import { getSrcFromAsset } from "../Utils/OVPProvidersMapper";
@@ -8,9 +10,12 @@ import { withTimeout, DEFAULT_NETWORK_TIMEOUT, inspect } from "../Utils";
 import {
   inPlayerAssetId,
   retrievePurchaseProductId,
+  assetPaymentRequired,
 } from "../Utils/PayloadUtils";
 
 const IN_PLAYER_LAST_EMAIL_USED_KEY = "com.inplayer.lastEmailUsed";
+var isAllPackagesLoading = false;
+var allPackagesData = [];
 
 export async function setConfig() {
   console.log('InPlayer.setConfig("develop")');
@@ -26,11 +31,95 @@ export async function checkAccessForAsset2(assetId) {
   return assetData;
 }
 
-export async function checkAccessOrPurchaseWorkflow({ assetId: assetId }) {
-  const workflowPromise = checkAccessForAsset2(assetId)
-    .then((asset) => ({ asset, src: getSrcFromAsset(asset) }))
-    .then(inspect("checkAccessOrPurchaseWorkflow:"));
-  return workflowPromise;
+export function checkAccessForAsset({ assetId }) {
+  return checkAccessForAsset2(assetId)
+    .then((asset) => ({ data: { asset, src: getSrcFromAsset(asset) } }))
+    .catch((error) => {
+      if (assetPaymentRequired(error)) {
+        return { requesetedToPurchase: assetPaymentRequired(error) };
+      }
+      throw error;
+    });
+}
+
+export function retrievePurchasableItems({ assetId }) {
+  console.log({ assetId });
+  return getAccessFees(assetId)
+    .then(findPackageByAssetFees)
+    .then((packageData) => {
+      return packageData.purchase_data;
+    });
+}
+
+// export function checkAccessOrPurchaseWorkflow({ assetId }) {
+//   console.log({ assetId });
+//   return checkAccessForAsset2(assetId)
+//     .then((asset) => ({ asset, src: getSrcFromAsset(asset) }))
+//     .then(inspect("checkAccessOrPurchaseWorkflow:"))
+//     .catch((error) => {
+//       if (assetPaymentRequired(error)) {
+//         return;
+//       } else {
+//         throw console.error();
+//       }
+//     })
+//     .then(() => getAccessFees(assetId))
+//     .then(findPackageByAssetFees)
+//     .then((packageData) => {
+//       return packageData.purchase_data;
+//     });
+// }
+
+export function findPackageByAssetFees(feesToSearch) {
+  return allPackagesData.find((packageData) => {
+    return R.equals(packageData.access_fees, feesToSearch);
+  });
+}
+
+export function getAccessFees(assetId) {
+  return InPlayer.Asset.getAssetAccessFees(assetId)
+    .then((data) => {
+      console.log("getAccessFees", { data });
+      return data;
+    })
+    .catch((error) => {
+      console.log({ error });
+
+      return console.error();
+    });
+}
+
+export function getAllPackages(clientId) {
+  const getAllPackagesPromise = InPlayer.Asset.getPackage(clientId)
+    .then((packagesList) => {
+      return packagesList.collection;
+    })
+    .then(loadAllPackages)
+    .then(retrieveMappedAccessFees);
+
+  return withTimeout(
+    getAllPackagesPromise,
+    DEFAULT_NETWORK_TIMEOUT,
+    "getAllPackagesPromise"
+  );
+}
+
+export function loadAllPackages(collection) {
+  const promises = collection.map((item) => {
+    return InPlayer.Asset.getPackage(item.id);
+  });
+
+  return Promise.all(promises);
+}
+
+export function retrieveMappedAccessFees(packages) {
+  return packages.map((packageData) => {
+    const { access_fees, id } = packageData;
+    const purchaseData = access_fees.map((fee) => {
+      return { ...fee, purchase_id: `${id}_${fee.id}` };
+    });
+    return { ...packageData, purchase_data: purchaseData };
+  });
 }
 
 export async function isAuthenticated() {
