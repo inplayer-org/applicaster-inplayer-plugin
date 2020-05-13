@@ -35,6 +35,10 @@ export function checkAccessForAsset({ assetId }) {
   return checkAccessForAsset2(assetId)
     .then((asset) => ({ data: { asset, src: getSrcFromAsset(asset) } }))
     .catch((error) => {
+      console.log("checkAccessForAsset2", {
+        error,
+        assetPaymentRequired: assetPaymentRequired(error),
+      });
       if (assetPaymentRequired(error)) {
         return { requesetedToPurchase: assetPaymentRequired(error) };
       }
@@ -42,13 +46,22 @@ export function checkAccessForAsset({ assetId }) {
     });
 }
 
-export function retrievePurchasableItems({ assetId }) {
-  console.log({ assetId });
-  return getAccessFees(assetId)
-    .then(findPackageByAssetFees)
-    .then((packageData) => {
-      return packageData.purchase_data;
-    });
+export function retrievePurchasableItems({ feesToSearch, allPackagesData }) {
+  console.log("retrievePurchasableItems", { findPackageByAssetFees });
+  const searchedPackage = findPackageByAssetFees({
+    feesToSearch,
+    allPackagesData,
+  });
+  console.log("searchedPackage", { searchedPackage });
+  return searchedPackage?.purchase_data;
+}
+
+export function findPackageByAssetFees({ feesToSearch, allPackagesData }) {
+  console.log("findPackageByAssetFees", { feesToSearch, allPackagesData });
+
+  return allPackagesData.find((packageData) => {
+    return R.equals(packageData.access_fees, feesToSearch);
+  });
 }
 
 // export function checkAccessOrPurchaseWorkflow({ assetId }) {
@@ -70,38 +83,22 @@ export function retrievePurchasableItems({ assetId }) {
 //     });
 // }
 
-export function findPackageByAssetFees(feesToSearch) {
-  return allPackagesData.find((packageData) => {
-    return R.equals(packageData.access_fees, feesToSearch);
-  });
-}
-
 export function getAccessFees(assetId) {
-  return InPlayer.Asset.getAssetAccessFees(assetId)
-    .then((data) => {
-      console.log("getAccessFees", { data });
-      return data;
-    })
-    .catch((error) => {
-      console.log({ error });
-
-      return console.error();
-    });
+  return InPlayer.Asset.getAssetAccessFees(assetId);
 }
 
 export function getAllPackages(clientId) {
-  const getAllPackagesPromise = InPlayer.Asset.getPackage(clientId)
+  console.log("getAllPackages", clientId);
+  return InPlayer.Asset.getPackage(clientId)
     .then((packagesList) => {
+      console.log("packagesList", { packagesList });
       return packagesList.collection;
     })
     .then(loadAllPackages)
-    .then(retrieveMappedAccessFees);
-
-  return withTimeout(
-    getAllPackagesPromise,
-    DEFAULT_NETWORK_TIMEOUT,
-    "getAllPackagesPromise"
-  );
+    .then(retrieveMappedAccessFees)
+    .catch((error) => {
+      console.log({ error });
+    });
 }
 
 export function loadAllPackages(collection) {

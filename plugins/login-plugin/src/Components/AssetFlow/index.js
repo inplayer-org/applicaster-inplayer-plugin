@@ -5,9 +5,10 @@ import ActionSheet from "react-native-actionsheet";
 import LoadingScreen from "../LoadingScreen";
 import { container } from "../Styles";
 import {
-  checkAccessOrPurchaseWorkflow,
   retrievePurchasableItems,
   checkAccessForAsset,
+  getAccessFees,
+  getAllPackages,
 } from "../../Services/inPlayerService";
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
 
@@ -15,8 +16,18 @@ const styles = StyleSheet.create({
   container,
 });
 
+const unknownError = {
+  message: "Unknown Error",
+};
+
 const AssetFlow = (props) => {
   const [allPackagesData, setAllPackagesData] = useState({
+    data: null,
+    loading: true,
+    error: null,
+  });
+
+  const [assetAccessFees, setAssetAccessFees] = useState({
     data: null,
     loading: true,
     error: null,
@@ -27,42 +38,147 @@ const AssetFlow = (props) => {
     purchasing: true,
   });
 
-  const [subscriptionData, setSubscriptionData] = useState({
+  const [purchasesData, setPurchasesData] = useState({
     purchaseDataSource: [],
     actionSheetDataSource: [],
   });
 
   const assetId = inPlayerAssetId(props.payload);
   useEffect(() => {
-    const { configuration, payload, assetFlowCallback } = props;
+    loadAsset();
     prepareAllPackagesData();
-    loadAsset()
+    loadAccessFees();
   }, []);
 
   useEffect(() => {
-    if (subscriptionData.actionSheetDataSource.length > 0) {
+    if (purchasesData.actionSheetDataSource.length > 0) {
       this.ActionSheet.show();
     }
-  }, [subscriptionData]);
+  }, [purchasesData]);
 
+  useEffect(() => {
+    console.log("Importand states", {
+      allPackagesData,
+      assetAccessFees,
+      userRequest,
+    });
+    if (userRequest.purchasing === true) {
+      if (allPackagesData.data && assetAccessFees.data) {
+        searchPurchaseData();
+      } else if (allPackagesData.loading || assetAccessFees.loading) {
+        console.debug("Continue Flow waiting until all items finish load");
+      } else {
+        const { assetFlowCallback, payload } = props;
+
+        assetFlowCallback &&
+          assetFlowCallback({
+            success: false,
+            error: unknownError,
+            payload: payload,
+          });
+      }
+    }
+  }, [allPackagesData, assetAccessFees, userRequest]);
+
+  const searchPurchaseData = () => {
+    console.log("searchPurchaseData");
+    const dataToPurchase = retrievePurchasableItems({
+      feesToSearch: assetAccessFees.data,
+      allPackagesData: allPackagesData.data,
+    });
+    const actionSheetDS = prepareActionSheetDataSource(dataToPurchase);
+    if (dataToPurchase && actionSheetDS) {
+      setPurchasesData({
+        purchaseDataSource: dataToPurchase,
+        actionSheetDataSource: actionSheetDS,
+      });
+    } else {
+      const { payload, assetFlowCallback } = props;
+
+      assetFlowCallback &&
+        assetFlowCallback({
+          success: false,
+          error,
+          payload: payload,
+        });
+    }
+  };
+
+  const loadAccessFees = () => {
+    getAccessFees(assetId)
+      .then((data) => {
+        setAssetAccessFees({
+          data: data,
+          loading: false,
+          error: null,
+        });
+      })
+      .catch((error) => {
+        setAssetAccessFees({
+          data: null,
+          loading: false,
+          error: error,
+        });
+      });
+  };
 
   const loadAsset = () => {
     //combinePayload
+    const { configuration, payload, assetFlowCallback } = props;
     checkAccessForAsset({ assetId: assetId })
-      .then(({ data, requesetedToPurchase }) => ({
-        data: data,
-        requesetedToPurchase: requesetedToPurchase,
-      }))
-      .catch((error) => ({ error }))
-      .finally(({ error, data, requesetedToPurchase }) => {
-        console.log("Finally!", { error, data, requesetedToPurchase });
-        if (requesetedToPurchase === false) {
-          assetFlowCallback({ success: !error || !data.src, data, error });
+      .then(({ data, requesetedToPurchase }) => {
+        var success = true;
+        var error = null;
+        var newPayload = payload;
+        const src = data?.src;
+
+        if (requesetedToPurchase) {
+          setUserRequest({
+            loading: true,
+            purchasing: true,
+          });
+        } else if (data && src) {
+          newPayload = src && {
+            ...payload,
+            content: { src },
+          };
+          assetFlowCallback &&
+            assetFlowCallback({
+              success,
+              error,
+              payload: newPayload,
+            });
         } else {
-          getPurchasableItems();
+          success = false;
+          error = unknownError;
+          assetFlowCallback &&
+            assetFlowCallback({
+              success,
+              error,
+              payload: newPayload,
+            });
         }
+        console.log("checkAccessForAsset", {
+          success,
+          error,
+          payload: newPayload,
+        });
+      })
+      .catch((error) => {
+        console.log("checkAccessForAsset:Error", {
+          success,
+          error,
+          payload: newPayload,
+        });
+        assetFlowCallback &&
+          assetFlowCallback({
+            success: false,
+            error,
+            payload: payload,
+          });
       });
   };
+
   const prepareAllPackagesData = () => {
     const {
       configuration: { in_player_client_id },
@@ -75,7 +191,7 @@ const AssetFlow = (props) => {
           error: null,
         });
       })
-      .throw((error) => {
+      .catch((error) => {
         setAllPackagesData({
           data: null,
           loading: false,
@@ -84,25 +200,13 @@ const AssetFlow = (props) => {
       });
   };
 
-  const getPurchasableItems = () => {
-    retrievePurchasableItems({ assetId: assetId })
-      .then(prepareActionSheetDataSource)
-      .then((data) => {
-        console.log({ data });
-        // this.ActionSheet.show();
-        setSubscriptionData(data);
-      });
-  };
   const prepareActionSheetDataSource = (data) => {
     console.log("prepareActionSheetDataSource", { data });
     var actionSheetDataSource = data.map((item) => {
       return `${item.description}: ${item.amount} ${item.currency}`;
     });
     actionSheetDataSource.push("Cancel");
-    return {
-      purchaseDataSource: data,
-      actionSheetDataSource,
-    };
+    return actionSheetDataSource;
   };
 
   const onPressActionSheet = (index) => {
@@ -117,7 +221,7 @@ const AssetFlow = (props) => {
   // }, [userRequest]);
 
   const { loading, purchasing } = userRequest;
-  const { purchaseDataSource, actionSheetDataSource } = subscriptionData;
+  const { purchaseDataSource, actionSheetDataSource } = purchasesData;
 
   console.log({
     loading,

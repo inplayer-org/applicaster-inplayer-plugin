@@ -47,27 +47,15 @@ const InPlayer = (props) => {
     }
   }, []);
 
-  const assetFlowCallback = ({ success, data, error }) => {
-    const src = data?.src;
-    if (!success && (error || src)) {
-      const error = error
-        ? error
-        : {
-            message: `Can not create URL for asset type: ${getInPlayerAssetType(
-              data
-            )}`,
-          };
-      showAlert("(Demo Only) Error!", error);
+  const assetFlowCallback = ({ success, payload, error }) => {
+    if (error) {
+      showAlert("General Error!", error);
     }
-
     callback &&
       callback({
         success,
         error,
-        payload: {
-          ...payload,
-          content: { src },
-        },
+        payload,
       });
   };
 
