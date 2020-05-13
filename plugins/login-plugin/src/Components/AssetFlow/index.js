@@ -11,14 +11,16 @@ import {
   getAllPackages,
 } from "../../Services/inPlayerService";
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
+import {
+  invokeCallBack,
+  prepareActionSheetDataSource,
+  cancelButtonIndex,
+  unknownError,
+} from "./Helper";
 
 const styles = StyleSheet.create({
   container,
 });
-
-const unknownError = {
-  message: "Unknown Error",
-};
 
 const AssetFlow = (props) => {
   const [allPackagesData, setAllPackagesData] = useState({
@@ -47,7 +49,7 @@ const AssetFlow = (props) => {
   useEffect(() => {
     loadAsset();
     prepareAllPackagesData();
-    loadAccessFees();
+    loadAssetAccessFees();
   }, []);
 
   useEffect(() => {
@@ -57,7 +59,7 @@ const AssetFlow = (props) => {
   }, [purchasesData]);
 
   useEffect(() => {
-    console.log("Importand states", {
+    console.log("General States", {
       allPackagesData,
       assetAccessFees,
       userRequest,
@@ -68,20 +70,12 @@ const AssetFlow = (props) => {
       } else if (allPackagesData.loading || assetAccessFees.loading) {
         console.debug("Continue Flow waiting until all items finish load");
       } else {
-        const { assetFlowCallback, payload } = props;
-
-        assetFlowCallback &&
-          assetFlowCallback({
-            success: false,
-            error: unknownError,
-            payload: payload,
-          });
+        invokeCallBack(props, { success: false, error: unknownError });
       }
     }
   }, [allPackagesData, assetAccessFees, userRequest]);
 
   const searchPurchaseData = () => {
-    console.log("searchPurchaseData");
     const dataToPurchase = retrievePurchasableItems({
       feesToSearch: assetAccessFees.data,
       allPackagesData: allPackagesData.data,
@@ -93,18 +87,11 @@ const AssetFlow = (props) => {
         actionSheetDataSource: actionSheetDS,
       });
     } else {
-      const { payload, assetFlowCallback } = props;
-
-      assetFlowCallback &&
-        assetFlowCallback({
-          success: false,
-          error,
-          payload: payload,
-        });
+      invokeCallBack(props, { success: false, error });
     }
   };
 
-  const loadAccessFees = () => {
+  const loadAssetAccessFees = () => {
     getAccessFees(assetId)
       .then((data) => {
         setAssetAccessFees({
@@ -123,13 +110,9 @@ const AssetFlow = (props) => {
   };
 
   const loadAsset = () => {
-    //combinePayload
-    const { configuration, payload, assetFlowCallback } = props;
+    const { payload } = props;
     checkAccessForAsset({ assetId: assetId })
       .then(({ data, requesetedToPurchase }) => {
-        var success = true;
-        var error = null;
-        var newPayload = payload;
         const src = data?.src;
 
         if (requesetedToPurchase) {
@@ -142,40 +125,13 @@ const AssetFlow = (props) => {
             ...payload,
             content: { src },
           };
-          assetFlowCallback &&
-            assetFlowCallback({
-              success,
-              error,
-              payload: newPayload,
-            });
+          invokeCallBack(props, { newPayload });
         } else {
-          success = false;
-          error = unknownError;
-          assetFlowCallback &&
-            assetFlowCallback({
-              success,
-              error,
-              payload: newPayload,
-            });
+          invokeCallBack(props, { success: false, error: unknownError });
         }
-        console.log("checkAccessForAsset", {
-          success,
-          error,
-          payload: newPayload,
-        });
       })
       .catch((error) => {
-        console.log("checkAccessForAsset:Error", {
-          success,
-          error,
-          payload: newPayload,
-        });
-        assetFlowCallback &&
-          assetFlowCallback({
-            success: false,
-            error,
-            payload: payload,
-          });
+        invokeCallBack(props, { success: false, error });
       });
   };
 
@@ -200,35 +156,15 @@ const AssetFlow = (props) => {
       });
   };
 
-  const prepareActionSheetDataSource = (data) => {
-    console.log("prepareActionSheetDataSource", { data });
-    var actionSheetDataSource = data.map((item) => {
-      return `${item.description}: ${item.amount} ${item.currency}`;
-    });
-    actionSheetDataSource.push("Cancel");
-    return actionSheetDataSource;
-  };
-
   const onPressActionSheet = (index) => {
-    const { assetFlowCallback } = props;
     if (index === 2) {
-      assetFlowCallback({ success: false, data: null, error: null });
+      invokeCallBack(props, { success: false });
     }
   };
-  // useEffect(() => {
-  //   if (userRequest.purchasing === true) {
-  //   }
-  // }, [userRequest]);
 
   const { loading, purchasing } = userRequest;
   const { purchaseDataSource, actionSheetDataSource } = purchasesData;
 
-  console.log({
-    loading,
-    purchasing,
-    purchaseDataSource,
-    actionSheetDataSource,
-  });
   return (
     <SafeAreaView style={styles.container}>
       {loading && <LoadingScreen />}
@@ -237,7 +173,7 @@ const AssetFlow = (props) => {
           ref={(o) => (this.ActionSheet = o)}
           title={"Please select subscription do you like to purchase ?"}
           options={actionSheetDataSource}
-          cancelButtonIndex={2}
+          cancelButtonIndex={cancelButtonIndex()}
           onPress={onPressActionSheet}
         />
       )}

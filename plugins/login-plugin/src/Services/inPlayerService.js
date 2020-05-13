@@ -35,10 +35,6 @@ export function checkAccessForAsset({ assetId }) {
   return checkAccessForAsset2(assetId)
     .then((asset) => ({ data: { asset, src: getSrcFromAsset(asset) } }))
     .catch((error) => {
-      console.log("checkAccessForAsset2", {
-        error,
-        assetPaymentRequired: assetPaymentRequired(error),
-      });
       if (assetPaymentRequired(error)) {
         return { requesetedToPurchase: assetPaymentRequired(error) };
       }
@@ -47,51 +43,26 @@ export function checkAccessForAsset({ assetId }) {
 }
 
 export function retrievePurchasableItems({ feesToSearch, allPackagesData }) {
-  console.log("retrievePurchasableItems", { findPackageByAssetFees });
   const searchedPackage = findPackageByAssetFees({
     feesToSearch,
     allPackagesData,
   });
-  console.log("searchedPackage", { searchedPackage });
   return searchedPackage?.purchase_data;
 }
 
 export function findPackageByAssetFees({ feesToSearch, allPackagesData }) {
-  console.log("findPackageByAssetFees", { feesToSearch, allPackagesData });
-
   return allPackagesData.find((packageData) => {
     return R.equals(packageData.access_fees, feesToSearch);
   });
 }
-
-// export function checkAccessOrPurchaseWorkflow({ assetId }) {
-//   console.log({ assetId });
-//   return checkAccessForAsset2(assetId)
-//     .then((asset) => ({ asset, src: getSrcFromAsset(asset) }))
-//     .then(inspect("checkAccessOrPurchaseWorkflow:"))
-//     .catch((error) => {
-//       if (assetPaymentRequired(error)) {
-//         return;
-//       } else {
-//         throw console.error();
-//       }
-//     })
-//     .then(() => getAccessFees(assetId))
-//     .then(findPackageByAssetFees)
-//     .then((packageData) => {
-//       return packageData.purchase_data;
-//     });
-// }
 
 export function getAccessFees(assetId) {
   return InPlayer.Asset.getAssetAccessFees(assetId);
 }
 
 export function getAllPackages(clientId) {
-  console.log("getAllPackages", clientId);
   return InPlayer.Asset.getPackage(clientId)
     .then((packagesList) => {
-      console.log("packagesList", { packagesList });
       return packagesList.collection;
     })
     .then(loadAllPackages)

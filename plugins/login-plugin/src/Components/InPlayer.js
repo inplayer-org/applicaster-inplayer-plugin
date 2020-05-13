@@ -48,6 +48,7 @@ const InPlayer = (props) => {
   }, []);
 
   const assetFlowCallback = ({ success, payload, error }) => {
+    console.log("Asset Flow CallBack", { success, payload, error });
     if (error) {
       showAlert("General Error!", error);
     }
@@ -60,7 +61,6 @@ const InPlayer = (props) => {
   };
 
   const accountFlowCallback = ({ success }) => {
-    console.debug("accountFlowCallback", success, hookType);
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
       callback && callback({ success, error: null, payload: payload });
