@@ -19,7 +19,8 @@
   "npm_dependencies": [
     "react-native-dropdownalert@4.2.1",
     "@applicaster/applicaster-iap@0.1.4",
-    "@react-native-community/async-storage@1.9.0"
+    "@react-native-community/async-storage@1.9.0",
+    "react-native-actionsheet@v2.4.0"
   ],
   "styles": {
     "fields": [
@@ -201,8 +202,8 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.1.4",
-  "manifest_version": "0.1.4",
+  "dependency_version": "0.1.5",
+  "manifest_version": "0.1.5",
   "api": {
     "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     "react_packages": [
