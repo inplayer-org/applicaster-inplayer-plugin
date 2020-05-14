@@ -8,6 +8,7 @@ import { initFromNativeLocalStorage } from "../LocalStorageHack";
 import { getInPlayerAssetType } from "../Utils/InPlayerResponse";
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
+import { getAllPackages, setConfig } from "../Services/inPlayerService";
 
 const getScreenStyles = R.compose(
   R.prop("styles"),
@@ -33,9 +34,8 @@ const InPlayer = (props) => {
 
   useEffect(() => {
     initFromNativeLocalStorage();
-  });
+    setConfig("develop");
 
-  useEffect(() => {
     if (isVideoEntry(payload)) {
       if (inPlayerAssetId(payload)) {
         setHookType(HookTypeData.PLAYER_HOOK);
@@ -47,32 +47,20 @@ const InPlayer = (props) => {
     }
   }, []);
 
-  const assetFlowCallback = ({ success, data, error }) => {
-    const { src } = data;
-    if (!success) {
-      const error = error
-        ? error
-        : {
-            message: `Can not create URL for asset type: ${getInPlayerAssetType(
-              data
-            )}`,
-          };
-      showAlert("(Demo Only) Error!", error);
+  const assetFlowCallback = ({ success, payload, error }) => {
+    console.log("Asset Flow CallBack", { success, payload, error });
+    if (error) {
+      showAlert("General Error!", error?.message);
     }
-
     callback &&
       callback({
         success,
         error,
-        payload: {
-          ...payload,
-          content: { src },
-        },
+        payload,
       });
   };
 
   const accountFlowCallback = ({ success }) => {
-    console.debug("accountFlowCallback", success, hookType);
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
       callback && callback({ success, error: null, payload: payload });

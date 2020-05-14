@@ -1,5 +1,4 @@
 import R from "ramda";
-import { getSrcFromProvider } from "../OVPProvidersMapper";
 
 export const inPlayerAssetId = (payload) => {
   const assetId = R.path(["extensions", "inplayer_asset_id"])(payload);
@@ -20,3 +19,8 @@ export const isVideoEntry = (payload) => {
 export const retrievePurchaseProductId = ({ payload }) => {
   return R.compose(R.path(["extensions", "purchase_id"]))(payload);
 };
+
+export const assetPaymentRequired = R.compose(
+  R.equals(402),
+  R.path(["response", "status"])
+);
