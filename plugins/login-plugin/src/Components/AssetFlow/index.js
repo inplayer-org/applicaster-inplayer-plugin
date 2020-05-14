@@ -10,6 +10,8 @@ import {
   getAccessFees,
   getAllPackages,
 } from "../../Services/inPlayerService";
+
+import { purchaseAnItem } from "../../Services/iAPService";
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
 import {
   invokeCallBack,
@@ -37,7 +39,7 @@ const AssetFlow = (props) => {
 
   const [userRequest, setUserRequest] = useState({
     loading: true,
-    purchasing: true,
+    purchasing: false,
   });
 
   const [purchasesData, setPurchasesData] = useState({
@@ -47,12 +49,14 @@ const AssetFlow = (props) => {
 
   const assetId = inPlayerAssetId(props.payload);
   useEffect(() => {
-    loadAsset();
+    loadAsset({ startPurchaseFlow: true });
     prepareAllPackagesData();
     loadAssetAccessFees();
+    console.log("Init Effect");
   }, []);
 
   useEffect(() => {
+    console.log("purchasesData", { purchasesData });
     if (purchasesData.actionSheetDataSource.length > 0) {
       this.ActionSheet.show();
     }
@@ -92,6 +96,7 @@ const AssetFlow = (props) => {
   };
 
   const loadAssetAccessFees = () => {
+    console.log("loadAssetAccessFees");
     getAccessFees(assetId)
       .then((data) => {
         setAssetAccessFees({
@@ -109,18 +114,15 @@ const AssetFlow = (props) => {
       });
   };
 
-  const loadAsset = () => {
+  const loadAsset = ({ startPurchaseFlow = false }) => {
+    const retryInCaseFail = startPurchaseFlow == false;
+    console.log("loadAsset", { startPurchaseFlow, retryInCaseFail });
     const { payload } = props;
-    checkAccessForAsset({ assetId: assetId })
-      .then(({ data, requesetedToPurchase }) => {
+    checkAccessForAsset({ assetId: assetId, retryInCaseFail: retryInCaseFail })
+      .then((data) => {
         const src = data?.src;
 
-        if (requesetedToPurchase) {
-          setUserRequest({
-            loading: true,
-            purchasing: true,
-          });
-        } else if (data && src) {
+        if (data && src) {
           newPayload = src && {
             ...payload,
             content: { src },
@@ -131,11 +133,23 @@ const AssetFlow = (props) => {
         }
       })
       .catch((error) => {
-        invokeCallBack(props, { success: false, error });
+        console.log("userRequest");
+        if (error?.requestedToPurchase && startPurchaseFlow) {
+          setUserRequest({
+            loading: true,
+            purchasing: true,
+          });
+        } else {
+          invokeCallBack(props, {
+            success: false,
+            error: { ...error, message: error?.response?.status },
+          });
+        }
       });
   };
 
   const prepareAllPackagesData = () => {
+    console.log("prepareAllPackagesData");
     const {
       configuration: { in_player_client_id },
     } = props;
@@ -156,9 +170,32 @@ const AssetFlow = (props) => {
       });
   };
 
+  const buyItem = (itemToPurchase) => {
+    const { purchase_id, id, package_id } = itemToPurchase;
+
+    if (itemToPurchase?.purchase_id) {
+      purchaseAnItem({
+        purchaseID: purchase_id,
+        item_id: package_id,
+        access_fee_id: id,
+      })
+        .then(() => loadAsset({ startPurchaseFlow: false }))
+        .catch((error) => {
+          console.log("Buy Item Error", { error });
+          invokeCallBack(props, { success: false, error: error });
+        });
+    } else {
+      //TODO: Add proper error handler
+      invokeCallBack(props, { success: false, error: unknownError });
+    }
+  };
+
   const onPressActionSheet = (index) => {
     if (index === 2) {
       invokeCallBack(props, { success: false });
+    } else {
+      const itemToPurchase = purchaseDataSource[index];
+      buyItem(itemToPurchase);
     }
   };
 
@@ -173,7 +210,7 @@ const AssetFlow = (props) => {
           ref={(o) => (this.ActionSheet = o)}
           title={"Please select subscription do you like to purchase ?"}
           options={actionSheetDataSource}
-          cancelButtonIndex={cancelButtonIndex()}
+          cancelButtonIndex={cancelButtonIndex(actionSheetDataSource)}
           onPress={onPressActionSheet}
         />
       )}
