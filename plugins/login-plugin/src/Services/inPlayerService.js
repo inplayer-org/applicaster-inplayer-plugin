@@ -14,7 +14,7 @@ import {
 import { getSrcFromAsset } from "../Utils/OVPProvidersMapper";
 import { initFromNativeLocalStorage, localStorage } from "../LocalStorageHack";
 import {
-  withRetry,
+  // withRetry,
   withTimeout,
   DEFAULT_NETWORK_TIMEOUT,
   inspect,
