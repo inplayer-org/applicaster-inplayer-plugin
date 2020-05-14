@@ -19,6 +19,7 @@
     "react-native-dropdownalert": "^4.2.1"
   },
   "peerDependencies": {
+    "react-native-actionsheet": "^v2.4.0",
     "@applicaster/zapp-react-native-redux": "^2.3.1",
     "@applicaster/zapp-react-native-utils": "^2.3.1",
     "react": "16.8.3",

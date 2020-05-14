@@ -18,6 +18,7 @@ const baseManifest = {
     "react-native-dropdownalert@4.2.1",
     "@applicaster/applicaster-iap@0.1.4",
     "@react-native-community/async-storage@1.9.0",
+    "react-native-actionsheet@v2.4.0",
   ],
   styles: {
     fields: [
