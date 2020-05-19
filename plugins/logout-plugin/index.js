@@ -4,7 +4,6 @@ import { Text, View, ActivityIndicator } from "react-native";
 import R from "ramda";
 
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
-import { connectToStore } from "@applicaster/zapp-react-native-redux";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import { signOut } from "@applicaster/quick-brick-inplayer/src/Services/inPlayerService";
 import { getStyles } from "./Customization";
@@ -23,7 +22,6 @@ const InPlayerLogout = (props) => {
     configuration: { completion_action = "go_back" },
   } = props;
   const screenStyles = getStyles(getScreenStyles(props));
-  console.log({ props, screenStyles });
 
   var infoText = screenStyles?.title_succeed_text;
 
@@ -84,4 +82,4 @@ const InPlayerLogout = (props) => {
   );
 };
 
-export default connectToStore(R.pick(["styles"]))(InPlayerLogout);
+export default InPlayerLogout;
