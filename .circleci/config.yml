@@ -48,4 +48,8 @@ jobs:
 workflows:
   build:
     jobs:
-      - deploy_plugins
+      - deploy_plugins:
+          filters:
+            branches:
+              only:
+                - master
