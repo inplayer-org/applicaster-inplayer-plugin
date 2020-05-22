@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import R from "ramda";
 import ActionSheet from "react-native-actionsheet";
 import LoadingScreen from "../LoadingScreen";
 import { container } from "../Styles";
@@ -17,7 +16,6 @@ import {
   invokeCallBack,
   prepareActionSheetDataSource,
   cancelButtonIndex,
-  unknownError,
 } from "./Helper";
 
 const styles = StyleSheet.create({
@@ -25,6 +23,8 @@ const styles = StyleSheet.create({
 });
 
 const AssetFlow = (props) => {
+  const assetId = inPlayerAssetId(props.payload);
+
   const [actionSheetDataSource, setActionSheetDataSource] = useState([]);
   const [assetLoading, setAssetLoading] = useState(true);
 
@@ -34,7 +34,6 @@ const AssetFlow = (props) => {
     data: null,
   });
 
-  const assetId = inPlayerAssetId(props.payload);
   useEffect(() => {
     loadAsset({ startPurchaseFlow: true });
     preparePurchaseData();
@@ -99,7 +98,7 @@ const AssetFlow = (props) => {
         setActionSheetDataSource(actionSheetDS);
       } else {
         const error = new Error("Can not create action sheet data source");
-        invokeCallBack(props, { success: false, error: error });
+        invokeCallBack(props, { success: false, error });
       }
     } else if (packageData.loading == false && packageData.error) {
       invokeCallBack(props, { success: false, error: packageData.error });
@@ -120,7 +119,8 @@ const AssetFlow = (props) => {
           };
           invokeCallBack(props, { newPayload });
         } else {
-          invokeCallBack(props, { success: false, error: unknownError });
+          const error = new Error("Source for asset not exist");
+          invokeCallBack(props, { success: false, error });
         }
       })
       .catch((error) => {
@@ -152,12 +152,12 @@ const AssetFlow = (props) => {
         });
     } else {
       const error = new Error("Can not purchase, product identifier not exist");
-      invokeCallBack(props, { success: false, error: error });
+      invokeCallBack(props, { success: false, error });
     }
   };
 
   const onPressActionSheet = (index) => {
-    if (actionSheetDataSource.length - 1 === index) {
+    if (cancelButtonIndex(actionSheetDataSource) === index) {
       invokeCallBack(props, { success: false });
     } else {
       const itemToPurchase = packageData.data[index];

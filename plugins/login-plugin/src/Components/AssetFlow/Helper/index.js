@@ -11,15 +11,10 @@ export function invokeCallBack(
     });
 }
 
-export const unknownError = {
-  message: "Unknown Error",
-};
-
 export function prepareActionSheetDataSource(data) {
   var actionSheetDataSource = data.map((item) => {
     return `${item.localizedTitle}: ${item.priceLocale}`;
   });
-  // Add distruction button
   actionSheetDataSource.push("Cancel");
   return actionSheetDataSource;
 }
