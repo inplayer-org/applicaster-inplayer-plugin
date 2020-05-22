@@ -186,7 +186,6 @@ export async function validateExternalPayment({
   item_id,
   access_fee_id,
 }) {
-  console.log("validateExternalPayment", { receipt, item_id, access_fee_id });
   if (!InPlayer.Account.isAuthenticated()) {
     errorResponse(401, {
       code: 401,

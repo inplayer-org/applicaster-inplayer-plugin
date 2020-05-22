@@ -8,6 +8,10 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   if (purchaseID) {
     return ApplicasterIAPModule.purchase(purchaseID)
       .then((purchaseCompletion) => {
+        console.log({
+          purchaseCompletion,
+          receipt: purchaseCompletion?.receipt,
+        });
         return purchaseCompletion?.receipt;
       })
       .then((receipt) =>
@@ -24,8 +28,9 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
 export function retrieveProducts(purchasableItems) {
   if (purchasableItems) {
     console.log({ purchasableItems });
-    return ApplicasterIAPModule.products(purchasableItems)
-    .then(R.prop("products"));
+    return ApplicasterIAPModule.products(purchasableItems).then(
+      R.prop("products")
+    );
   } else {
     throw new Error(`PurchaseID: ${purchasableItems}  not exist`);
   }

@@ -17,7 +17,7 @@ export const unknownError = {
 
 export function prepareActionSheetDataSource(data) {
   var actionSheetDataSource = data.map((item) => {
-    return `${item.description}: ${item.amount} ${item.currency}`;
+    return `${item.localizedTitle}: ${item.priceLocale}`;
   });
   // Add distruction button
   actionSheetDataSource.push("Cancel");

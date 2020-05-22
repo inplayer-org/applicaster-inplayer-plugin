@@ -25,14 +25,13 @@ const styles = StyleSheet.create({
 });
 
 const AssetFlow = (props) => {
-  const [userRequest, setUserRequest] = useState({
-    loading: true,
-    purchasing: false,
-  });
+  const [actionSheetDataSource, setActionSheetDataSource] = useState([]);
+  const [assetLoading, setAssetLoading] = useState(true);
 
-  const [purchasesData, setPurchasesData] = useState({
-    purchaseDataSource: [],
-    actionSheetDataSource: [],
+  const [packageData, setPackageData] = useState({
+    loading: true,
+    error: null,
+    data: null,
   });
 
   const assetId = inPlayerAssetId(props.payload);
@@ -41,76 +40,69 @@ const AssetFlow = (props) => {
     preparePurchaseData();
   }, []);
 
+  useEffect(() => {
+    if ([packageData.loading == false]) {
+      invokePurchaseLogicIfNeeded();
+    }
+  }, [packageData.loading]);
+
+  useEffect(() => {
+    if (assetLoading == false) {
+      invokePurchaseLogicIfNeeded();
+    }
+  }, [assetLoading]);
+
+  useEffect(() => {
+    if (actionSheetDataSource.length > 0) {
+      this.ActionSheet.show();
+    }
+  }, [actionSheetDataSource]);
+
   const preparePurchaseData = async () => {
     const {
       configuration: { in_player_client_id },
     } = props;
-    const resultPurchaseData = await Promise.all([
-      getAccessFees(assetId),
-      getAllPackages(in_player_client_id),
-    ]);
+    try {
+      const resultPurchaseData = await Promise.all([
+        getAccessFees(assetId),
+        getAllPackages(in_player_client_id),
+      ]);
 
-    console.log("Promise Reuslt", { preparePurchaseData });
+      const purchasableItems = retrievePurchasableItems({
+        feesToSearch: resultPurchaseData[0],
+        allPackagesData: resultPurchaseData[1],
+      });
 
-    const purchasableItems = retrievePurchasableItems({
-      feesToSearch: resultPurchaseData[0],
-      allPackagesData: resultPurchaseData[1],
-    });
-
-    console.log({ purchasableItems });
-    const purchasableItemsData = await retrieveProducts(purchasableItems);
-
-    console.log({ purchasableItemsData });
+      const purchasableItemsData = await retrieveProducts(purchasableItems);
+      setPackageData({
+        loading: false,
+        error: null,
+        data: purchasableItemsData,
+      });
+    } catch (error) {
+      setPackageData({
+        loading: false,
+        error,
+        data: null,
+      });
+    }
   };
 
-  useEffect(() => {
-    if (purchasesData.actionSheetDataSource.length > 0) {
-      this.ActionSheet.show();
-    }
-  }, [purchasesData]);
-
-  useEffect(() => {
-    console.log("General States", {
-      allPackagesData,
-      assetAccessFees,
-      userRequest,
-    });
-    if (userRequest.purchasing === true) {
-      if (allPackagesData.data && assetAccessFees.data) {
-        searchPurchaseData();
-      } else if (allPackagesData.loading || assetAccessFees.loading) {
-        console.debug("Continue Flow waiting until all items finish load");
+  const invokePurchaseLogicIfNeeded = () => {
+    if (
+      assetLoading == false &&
+      packageData.loading == false &&
+      packageData.data
+    ) {
+      const actionSheetDS = prepareActionSheetDataSource(packageData.data);
+      if (actionSheetDS) {
+        setActionSheetDataSource(actionSheetDS);
       } else {
-        invokeCallBack(props, { success: false, error: unknownError });
+        const error = new Error("Can not create action sheet data source");
+        invokeCallBack(props, { success: false, error: error });
       }
-    }
-  }, [allPackagesData, assetAccessFees, userRequest]);
-
-  const searchPurchaseData = async () => {
-    const dataToPurchase = retrievePurchasableItems({
-      feesToSearch: assetAccessFees.data,
-      allPackagesData: allPackagesData.data,
-    });
-    const purchasableItems = R.map(R.prop("purchase_id"))(dataToPurchase);
-
-    const actionSheetDS = prepareActionSheetDataSource(dataToPurchase);
-    console.log({
-      dataToPurchase,
-      purchasableItems,
-      actionSheetDS,
-      dataToPurchase,
-    });
-
-    const data = await retrieveProducts(purchasableItems);
-
-    console.log({ data });
-    if (dataToPurchase && actionSheetDS) {
-      setPurchasesData({
-        purchaseDataSource: dataToPurchase,
-        actionSheetDataSource: actionSheetDS,
-      });
-    } else {
-      invokeCallBack(props, { success: false, error });
+    } else if (packageData.loading == false && packageData.error) {
+      invokeCallBack(props, { success: false, error: packageData.error });
     }
   };
 
@@ -133,10 +125,7 @@ const AssetFlow = (props) => {
       })
       .catch((error) => {
         if (error?.requestedToPurchase && startPurchaseFlow) {
-          setUserRequest({
-            loading: true,
-            purchasing: true,
-          });
+          setAssetLoading(false);
         } else {
           invokeCallBack(props, {
             success: false,
@@ -147,48 +136,45 @@ const AssetFlow = (props) => {
   };
 
   const buyItem = (itemToPurchase) => {
-    const { purchase_id, id, package_id } = itemToPurchase;
+    const { productIdentifier } = itemToPurchase;
 
-    if (itemToPurchase?.purchase_id) {
+    if (productIdentifier) {
+      const purchaseData = productIdentifier.split("_");
+
       purchaseAnItem({
-        purchaseID: purchase_id,
-        item_id: package_id,
-        access_fee_id: id,
+        purchaseID: productIdentifier,
+        item_id: purchaseData[0],
+        access_fee_id: purchaseData[1],
       })
         .then(() => loadAsset({ startPurchaseFlow: false }))
         .catch((error) => {
           invokeCallBack(props, { success: false, error: error });
         });
     } else {
-      //TODO: Add proper error handler
-      invokeCallBack(props, { success: false, error: unknownError });
+      const error = new Error("Can not purchase, product identifier not exist");
+      invokeCallBack(props, { success: false, error: error });
     }
   };
 
   const onPressActionSheet = (index) => {
-    if (index === 2) {
+    if (actionSheetDataSource.length - 1 === index) {
       invokeCallBack(props, { success: false });
     } else {
-      const itemToPurchase = purchaseDataSource[index];
+      const itemToPurchase = packageData.data[index];
       buyItem(itemToPurchase);
     }
   };
 
-  const { loading, purchasing } = userRequest;
-  const { purchaseDataSource, actionSheetDataSource } = purchasesData;
-
   return (
     <SafeAreaView style={styles.container}>
-      {loading && <LoadingScreen />}
-      {purchasing && (
-        <ActionSheet
-          ref={(o) => (this.ActionSheet = o)}
-          title={"Please select subscription do you like to purchase ?"}
-          options={actionSheetDataSource}
-          cancelButtonIndex={cancelButtonIndex(actionSheetDataSource)}
-          onPress={onPressActionSheet}
-        />
-      )}
+      {<LoadingScreen />}
+      <ActionSheet
+        ref={(o) => (this.ActionSheet = o)}
+        title={"Please select subscription do you like to purchase ?"}
+        options={actionSheetDataSource}
+        cancelButtonIndex={cancelButtonIndex(actionSheetDataSource)}
+        onPress={onPressActionSheet}
+      />
     </SafeAreaView>
   );
 };
