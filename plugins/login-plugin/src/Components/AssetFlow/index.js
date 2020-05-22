@@ -25,18 +25,6 @@ const styles = StyleSheet.create({
 });
 
 const AssetFlow = (props) => {
-  const [allPackagesData, setAllPackagesData] = useState({
-    data: null,
-    loading: true,
-    error: null,
-  });
-
-  const [assetAccessFees, setAssetAccessFees] = useState({
-    data: null,
-    loading: true,
-    error: null,
-  });
-
   const [userRequest, setUserRequest] = useState({
     loading: true,
     purchasing: false,
@@ -50,9 +38,30 @@ const AssetFlow = (props) => {
   const assetId = inPlayerAssetId(props.payload);
   useEffect(() => {
     loadAsset({ startPurchaseFlow: true });
-    prepareAllPackagesData();
-    loadAssetAccessFees();
+    preparePurchaseData();
   }, []);
+
+  const preparePurchaseData = async () => {
+    const {
+      configuration: { in_player_client_id },
+    } = props;
+    const resultPurchaseData = await Promise.all([
+      getAccessFees(assetId),
+      getAllPackages(in_player_client_id),
+    ]);
+
+    console.log("Promise Reuslt", { preparePurchaseData });
+
+    const purchasableItems = retrievePurchasableItems({
+      feesToSearch: resultPurchaseData[0],
+      allPackagesData: resultPurchaseData[1],
+    });
+
+    console.log({ purchasableItems });
+    const purchasableItemsData = await retrieveProducts(purchasableItems);
+
+    console.log({ purchasableItemsData });
+  };
 
   useEffect(() => {
     if (purchasesData.actionSheetDataSource.length > 0) {
@@ -105,24 +114,6 @@ const AssetFlow = (props) => {
     }
   };
 
-  const loadAssetAccessFees = () => {
-    getAccessFees(assetId)
-      .then((data) => {
-        setAssetAccessFees({
-          data: data,
-          loading: false,
-          error: null,
-        });
-      })
-      .catch((error) => {
-        setAssetAccessFees({
-          data: null,
-          loading: false,
-          error: error,
-        });
-      });
-  };
-
   const loadAsset = ({ startPurchaseFlow = false }) => {
     const retryInCaseFail = startPurchaseFlow == false;
     const { payload } = props;
@@ -152,27 +143,6 @@ const AssetFlow = (props) => {
             error: { ...error, message: error?.response?.status },
           });
         }
-      });
-  };
-
-  const prepareAllPackagesData = () => {
-    const {
-      configuration: { in_player_client_id },
-    } = props;
-    getAllPackages(in_player_client_id)
-      .then((data) => {
-        setAllPackagesData({
-          data: data,
-          loading: false,
-          error: null,
-        });
-      })
-      .catch((error) => {
-        setAllPackagesData({
-          data: null,
-          loading: false,
-          error,
-        });
       });
   };
 
