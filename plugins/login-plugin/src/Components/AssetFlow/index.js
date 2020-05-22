@@ -11,7 +11,7 @@ import {
   getAllPackages,
 } from "../../Services/inPlayerService";
 
-import { purchaseAnItem } from "../../Services/iAPService";
+import { purchaseAnItem, retrieveProducts } from "../../Services/iAPService";
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
 import {
   invokeCallBack,
@@ -77,12 +77,24 @@ const AssetFlow = (props) => {
     }
   }, [allPackagesData, assetAccessFees, userRequest]);
 
-  const searchPurchaseData = () => {
+  const searchPurchaseData = async () => {
     const dataToPurchase = retrievePurchasableItems({
       feesToSearch: assetAccessFees.data,
       allPackagesData: allPackagesData.data,
     });
+    const purchasableItems = R.map(R.prop("purchase_id"))(dataToPurchase);
+
     const actionSheetDS = prepareActionSheetDataSource(dataToPurchase);
+    console.log({
+      dataToPurchase,
+      purchasableItems,
+      actionSheetDS,
+      dataToPurchase,
+    });
+
+    const data = await retrieveProducts(purchasableItems);
+
+    console.log({ data });
     if (dataToPurchase && actionSheetDS) {
       setPurchasesData({
         purchaseDataSource: dataToPurchase,

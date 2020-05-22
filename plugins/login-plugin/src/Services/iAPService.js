@@ -12,8 +12,7 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   console.log({ purchaseID, item_id, access_fee_id });
 
   if (purchaseID) {
-    return retrieveProducts({ purchaseID })
-      .then(ApplicasterIAPModule.purchase)
+    return ApplicasterIAPModule.purchase(purchaseID)
       .then((purchaseCompletion) => {
         return purchaseCompletion?.receipt;
       })
@@ -24,16 +23,19 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
         console.log("Verification Result", { result });
       });
   } else {
-    throw {
-      Error: {
-        message: `PurchaseID: ${purchaseID}  not exist`,
-      },
-    };
+    throw new Error(`PurchaseID: ${purchaseID}  not exist`);
   }
 }
 
-export function retrieveProducts({ purchaseID }) {
-  return ApplicasterIAPModule.products([purchaseID]).then(
-    productIdentifierFromProducts
-  );
+export function retrieveProducts(purchasableItems) {
+  if (purchasableItems) {
+    console.log({ purchasableItems });
+    return ApplicasterIAPModule.products(purchasableItems)
+      .then((products) => {
+        console.log({ products });
+      })
+      .then(productIdentifierFromProducts);
+  } else {
+    throw new Error(`PurchaseID: ${purchasableItems}  not exist`);
+  }
 }
