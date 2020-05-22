@@ -2,19 +2,16 @@ import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
 import { validateExternalPayment } from "./inPlayerService";
 import R from "ramda";
 
-const productIdentifierFromProducts = R.compose(
-  R.prop("productIdentifier"),
-  R.head,
-  R.prop("products")
-);
-
 export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   console.log({ purchaseID, item_id, access_fee_id });
 
   if (purchaseID) {
-    return retrieveProducts({ purchaseID })
-      .then(ApplicasterIAPModule.purchase)
+    return ApplicasterIAPModule.purchase(purchaseID)
       .then((purchaseCompletion) => {
+        console.log({
+          purchaseCompletion,
+          receipt: purchaseCompletion?.receipt,
+        });
         return purchaseCompletion?.receipt;
       })
       .then((receipt) =>
@@ -24,16 +21,17 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
         console.log("Verification Result", { result });
       });
   } else {
-    throw {
-      Error: {
-        message: `PurchaseID: ${purchaseID}  not exist`,
-      },
-    };
+    throw new Error(`PurchaseID: ${purchaseID}  not exist`);
   }
 }
 
-export function retrieveProducts({ purchaseID }) {
-  return ApplicasterIAPModule.products([purchaseID]).then(
-    productIdentifierFromProducts
-  );
+export function retrieveProducts(purchasableItems) {
+  if (purchasableItems) {
+    console.log({ purchasableItems });
+    return ApplicasterIAPModule.products(purchasableItems).then(
+      R.prop("products")
+    );
+  } else {
+    throw new Error(`PurchaseID: ${purchasableItems}  not exist`);
+  }
 }
