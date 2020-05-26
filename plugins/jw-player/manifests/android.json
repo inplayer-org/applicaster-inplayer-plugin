@@ -20,8 +20,8 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.0.23",
-  "manifest_version": "0.0.23",
+  "dependency_version": "0.0.24",
+  "manifest_version": "0.0.24",
   "api": {
     "class_name": "com.appgoalz.rnjwplayer.RNJWPlayerPackage",
     "react_packages": [
@@ -30,7 +30,7 @@
     "proguard_rules": "-keep public class com.appgoalz.rnjwplayer.** {*;}"
   },
   "npm_dependencies": [
-    "react-native-jw-media-player-applicaster@0.0.5",
+    "react-native-jw-media-player-applicaster@0.0.6",
     "@applicaster/quick-brick-jw-player@0.0.14"
   ],
   "dependency_repository_url": [

@@ -20,11 +20,11 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.0.23",
-  "manifest_version": "0.0.23",
+  "dependency_version": "0.0.24",
+  "manifest_version": "0.0.24",
   "api": {},
   "npm_dependencies": [
-    "react-native-jw-media-player-applicaster@0.0.5"
+    "react-native-jw-media-player-applicaster@0.0.6"
   ],
   "dependency_repository_url": [],
   "min_zapp_sdk": "20.2.0-Dev",
