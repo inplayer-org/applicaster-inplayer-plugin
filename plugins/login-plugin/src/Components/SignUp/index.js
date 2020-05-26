@@ -47,11 +47,7 @@ const SignUp = (props) => {
   return (
     <View style={{ ...container, width: screenWidth }}>
       <BackButton screenStyles={screenStyles} onPress={props?.onSiginUpBack} />
-      <KeyboardAwareScrollView
-        extraScrollHeight={50}
-        enableOnAndroid={true}
-        scrollEnabled={false}
-      >
+      <KeyboardAwareScrollView extraScrollHeight={50} scrollEnabled={false}>
         <TitleLabel
           screenStyles={screenStyles}
           title={screenStyles?.title_font_text}
