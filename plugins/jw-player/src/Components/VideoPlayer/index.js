@@ -2,7 +2,28 @@ import * as React from "react";
 import { View, Platform, Dimensions } from "react-native";
 import JWPlayer from "react-native-jw-media-player-applicaster";
 import { jwLicenceKey, playListItem } from "../../Utils";
+import { JWPlayerAndroidLicenceModule } from "../../NativeModule/index";
+
 export default class VideoPlayer extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { licenceKeyProvided: false };
+  }
+
+  componentDidUpdate(newProps) {
+    console.log({ newProps, foo: this });
+  }
+  componentDidMount() {
+    const { pluginConfiguration } = this.props;
+    console.log({ pluginConfiguration });
+
+    const licenceKey = jwLicenceKey(pluginConfiguration);
+    JWPlayerAndroidLicenceModule.setLicenseKey(licenceKey).then(() => {
+      this.setState({ licenceKeyProvided: true });
+    });
+  }
+
   onPlay = () => {
     const { onPlay } = this.props;
     onPlay({ type: "play" });
@@ -41,7 +62,9 @@ export default class VideoPlayer extends React.Component {
 
   render() {
     const { width, height } = Dimensions.get("window");
-    const { pluginConfiguration, onEnded, autoplay } = this.props;
+    const { onEnded, autoplay } = this.props;
+    const { licenceKeyProvided } = this.state;
+
     return (
       <View
         style={{
@@ -49,24 +72,25 @@ export default class VideoPlayer extends React.Component {
           paddingBottom: Platform.OS === "android" ? 23 : 0,
         }}
       >
-        <JWPlayer
-          ref={this.assignPlayerRef}
-          licenceKey={jwLicenceKey(pluginConfiguration)}
-          style={{ flex: 1 }}
-          playlistItem={playListItem(this.props)}
-          onPlay={this.onPlay}
-          onPause={this.onPause}
-          onPlayerReady={this.onPlayerReady}
-          onSetupPlayerError={this.onError}
-          onPlayerError={this.onError}
-          onBuffer={this.onBuffer}
-          onTime={this.onTime}
-          onComplete={onEnded}
-          nativeFullScreen={false}
-          fullScreenOnLandscape={false}
-          landscapeOnFullScreen={false}
-          autostart={autoplay}
-        />
+        {licenceKeyProvided && (
+          <JWPlayer
+            ref={this.assignPlayerRef}
+            style={{ flex: 1 }}
+            playlistItem={playListItem(this.props)}
+            onPlay={this.onPlay}
+            onPause={this.onPause}
+            onPlayerReady={this.onPlayerReady}
+            onSetupPlayerError={this.onError}
+            onPlayerError={this.onError}
+            onBuffer={this.onBuffer}
+            onTime={this.onTime}
+            onComplete={onEnded}
+            nativeFullScreen={false}
+            fullScreenOnLandscape={false}
+            landscapeOnFullScreen={false}
+            autostart={autoplay}
+          />
+        )}
       </View>
     );
   }

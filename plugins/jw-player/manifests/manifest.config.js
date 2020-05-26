@@ -70,10 +70,10 @@ const project_dependencies = {
 };
 
 const npm_dependencies = {
-  ios: ["react-native-jw-media-player-applicaster@0.0.5"],
-  tvos: ["react-native-jw-media-player-applicaster@0.0.5"],
+  ios: ["react-native-jw-media-player-applicaster@0.0.6"],
+  tvos: ["react-native-jw-media-player-applicaster@0.0.6"],
   android: [
-    "react-native-jw-media-player-applicaster@0.0.5",
+    "react-native-jw-media-player-applicaster@0.0.6",
     "@applicaster/quick-brick-jw-player@0.0.14",
   ],
 };

@@ -25,10 +25,10 @@
     metro-react-native-babel-preset "0.48.1"
     react-hot-loader "^4.12.5"
 
-"@applicaster/horizontal-list-qb@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/horizontal-list-qb/-/horizontal-list-qb-0.2.0.tgz#7aabae25ebddcdbecedcd78875ec0f45294c3610"
-  integrity sha512-3EsqTJHjRDSxypO6PMfD+BRzHwicHsP3lmNbrLIHqQ/Q3wCQ+BEExWag3k9Xy7sgNlXxbQ0eDfjKCJN7Ulpu4A==
+"@applicaster/horizontal-list-qb@0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@applicaster/horizontal-list-qb/-/horizontal-list-qb-0.2.6.tgz#fa0b5d8f28e7e034844590d3dc9b619a5c7c5570"
+  integrity sha512-6nwnzpRneLpfTYTOpLgpp3ewQ/hGFDj6ts6jzd933wxAMdzt5bFlXsN2rxTKNawaLN4HlceDvCbANKvcx2jSNA==
   dependencies:
     ramda "^0.26.1"
     react "16.8.3"
@@ -83,14 +83,28 @@
   resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-default-cell-renderer/-/quick-brick-default-cell-renderer-1.0.0.tgz#f93f65e623ebd0b2779aa072874e3d9648597a19"
   integrity sha512-xGjzRo/ZhvhcM9akfzxnCyTNqcG0LglyUTLXN6WN/JzkiOzErgYxfFquJNGG+ioqTmCrz4Y8r1+5vXFAMEDSkw==
 
-"@applicaster/quick-brick-grid@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-grid/-/quick-brick-grid-1.2.1.tgz#e9585976ab5b75aa9eebfd676c81d5ed27646e5f"
-  integrity sha512-TVUxW6jrE35LNwlnTyypZ8iC7xAK/r9vDd5KAxxWQXKa8P5AhExEiXdcPziFplBhkCYXcU5l6pdkUUOajGx9DQ==
+"@applicaster/quick-brick-grid@1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-grid/-/quick-brick-grid-1.2.6.tgz#48218935d242e00213e6e3a7a3cd8a937b5afddd"
+  integrity sha512-Znhu7xU4zo5Yd636zqMCt3AI+O90TKmxQe1EmOFNlTE9Dh9a2rjZw22mHo2fZkzfZv5udlP6KNDrZo6crMpQ5w==
   dependencies:
     ramda "^0.26.1"
     react "16.8.3"
     react-native "0.59.10"
+
+"@applicaster/quick-brick-group-info@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-group-info/-/quick-brick-group-info-0.0.6.tgz#bc6c94beee6348bad3af2ef2ab21b562a673a1ea"
+  integrity sha512-/BQoOOCq+jSGXRDR1RP6IT3c/jKG31B5KB7MdQUd6ln9bcL5APKk17Snigik9mSs4TKlxeV4R/Kny1ewlpCJSQ==
+  dependencies:
+    ramda "^0.26.1"
+
+"@applicaster/quick-brick-group@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-group/-/quick-brick-group-0.1.1.tgz#169869233151f6f4e66323293330f5e67fcaaf23"
+  integrity sha512-6CDZSbl/oJuodVsNBbh8KAP4qiglkMGi64Yic3P6pX7IJoiAxklHnAoBepCU40tz0RHx2ZYPULGGdTf/KXgQiw==
+  dependencies:
+    ramda "^0.26.1"
 
 "@applicaster/quick-brick-hero@0.2.3":
   version "0.2.3"
@@ -108,10 +122,10 @@
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-inplayer@0.1.29":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.1.29.tgz#705393ee86cb6f89b475535c3366d5ba40c11c22"
-  integrity sha512-owCd5oyDXgKrA2ClBn6X5nqmGBxh9YWgrBNmPTVzRdSzeSC1Krf9vQdvKMlnD+Gqp/IhZ3i4PzwuhXK1txLN0Q==
+"@applicaster/quick-brick-inplayer@0.1.37":
+  version "0.1.37"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.1.37.tgz#132a1d7ab6a6e75a6a97054ce9fbcd6176a73306"
+  integrity sha512-0NE6oGwFTpOax6XNDD9i4b+9gBJ9H5/I0vgAt8TlCLl+3ktYczyGNYzXP15n4EjsxCTnT2udBygAEPaf+XM6bA==
   dependencies:
     "@applicaster/applicaster-iap" "0.2.0"
     "@inplayer-org/inplayer.js" "2.13.3"
@@ -123,29 +137,36 @@
     react-native-dropdownalert "^4.2.1"
     react-native-keyboard-aware-scroll-view "0.9.1"
 
-"@applicaster/quick-brick-list@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-list/-/quick-brick-list-1.2.2.tgz#5496056e7d9abb047eacd96d8a9d74246e9bca8a"
-  integrity sha512-uXHEEoNvJRXD4wc8rZuAxCxi12fMiW7fjDfzRWoWO9q7bDipQCsabImyB12lRNi5i19mk3JZYttUmxJCgUnkzA==
+"@applicaster/quick-brick-jw-player@0.0.23":
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-jw-player/-/quick-brick-jw-player-0.0.23.tgz#ce175a19718ad3844fca83538ace25fbb3e807a1"
+  integrity sha512-g04Of1TNQfejWdxe+ZuB80vvvARjjdpE0/LnfwhS8LAwyB3OthZ6MrSqInk+w0fGfYY3f2j+A5oMMq7imMOkkQ==
+  dependencies:
+    react-native-jw-media-player-applicaster "0.0.5"
+
+"@applicaster/quick-brick-list@1.2.7":
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-list/-/quick-brick-list-1.2.7.tgz#c39eac37c5786bad2f7543ce4e99bed6dc24e5a3"
+  integrity sha512-BS/VUNhS+pqRMwRDeRHmrb6oAwmub1ZJxghBfkMlKd1Kyxgm/Khx5GHeiVsolsxr69AFmAGxrs77MdhZa5ErXg==
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-mobile-side-menu@1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-side-menu/-/quick-brick-mobile-side-menu-1.1.13.tgz#23916f3a73c0ec1a18b525941f380d25743ef6b6"
-  integrity sha512-ftCoeJaPoIpGqTh5V6OHxxSbJztaTR5V+XOeTFJg+4wJFhsEk59LSjkpTkZu+2Y6gMOIxjyzdeGKL9Ky6MhHGw==
+"@applicaster/quick-brick-mobile-side-menu@1.1.15":
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-side-menu/-/quick-brick-mobile-side-menu-1.1.15.tgz#0e588b2dfa66c4b6c79c63e9f3d81eacbb5cc8b4"
+  integrity sha512-fED2kdICDr8inWEQe4DfLeESFY71H74Zh7ah3qbU425ivMRFW8PQX7pRkZorx15hVUqWZDlM4UwfzFRPQmD/fg==
 
-"@applicaster/quick-brick-mobile-toolbar@5.3.2":
-  version "5.3.2"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-toolbar/-/quick-brick-mobile-toolbar-5.3.2.tgz#3d0a5dc36c003e0b8da78fb0107afdd0a2ad2967"
-  integrity sha512-Ae8rjl+fIwyeqNqWEP2xOrkbIoBrbZtAQCuUxgCp3+tJPSvbqxsnf7WQC/PdMqiLt7DwzpiGgcvL9+AKeyrfhA==
+"@applicaster/quick-brick-mobile-toolbar@5.4.4":
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-toolbar/-/quick-brick-mobile-toolbar-5.4.4.tgz#6c6abac7d0aaca2adabdb04de82d40d4907f73ed"
+  integrity sha512-04LPD73k5BLip0u23q4eMCOxP3eXFeRk64JxTx02Ju2aTPyJDs5ibCCWvlgP6r4ioTSCOvfTmMhdFtnY7MQGzQ==
   dependencies:
     ramda "^0.27.0"
 
-"@applicaster/quick-brick-tabs@0.2.10":
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-tabs/-/quick-brick-tabs-0.2.10.tgz#d441ec1039f1f3a5052b54beaec0bfffc8cfb334"
-  integrity sha512-UBRFTf0eBIKmZlZvnGUJOO9Kq7LNNO3sVi4m//QlbfnI9KZleEQJDLKAqtwx3gE/yt9BSTmFOgympbHDFyffcw==
+"@applicaster/quick-brick-tabs@0.2.15":
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-tabs/-/quick-brick-tabs-0.2.15.tgz#2440ebbba828afb1f4824e39407e598d64e461e0"
+  integrity sha512-lG3U9gRGny3EgsLd/L57P/5ihOHHiWpW38j4oMfL25hk+FmGFz6zY6Z/UgK6MOxR/Drvay7NCl9Buej2pUNGiw==
   dependencies:
     ramda "^0.26.1"
     react "16.8.3"
@@ -175,16 +196,6 @@
     moment "^2.19.3"
     query-string "5.0.0"
     ramda "0.23.0"
-
-"@applicaster/zapp-pipes-provider-dirtvision@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-pipes-provider-dirtvision/-/zapp-pipes-provider-dirtvision-1.0.4.tgz#bf5dfd67647763adaf73681172383c884a769ecd"
-  integrity sha512-Lw13yw50iFAkvuof7jG1joTN8QqtKQF6Qz4Y+YJbC57AduDg3rfNj/3/B31tmDkoTflMJS/hY8PHfsXI6OZDyA==
-  dependencies:
-    axios "^0.16.2"
-    moment "^2.22.1"
-    query-string "^6.8.3"
-    xml2js-parser "^1.1.1"
 
 "@applicaster/zapp-pipes-provider-general@1.1.1", "@applicaster/zapp-pipes-provider-general@^1.1.1":
   version "1.1.1"
@@ -307,26 +318,26 @@
     "@applicaster/zapp-react-native-utils" "3.0.1"
     uuid "^3.3.2"
 
-"@applicaster/zapp-react-native-cell-1-mobile@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-1-mobile/-/zapp-react-native-cell-1-mobile-0.3.1.tgz#af483acfedeef6039f032aa0c6f8ea11d8813f32"
-  integrity sha512-/E751a47YN/dGLcsgvvxo4PEGfz4EHnqghSpM9aXEKu9AWQBCSpCtI5YANi73cx7CiyTAcmdpTx+jKRx6DAUTA==
+"@applicaster/zapp-react-native-cell-1-mobile@0.4.15":
+  version "0.4.15"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-1-mobile/-/zapp-react-native-cell-1-mobile-0.4.15.tgz#5996a13c9206f2a2f1a87376f3bb4af414a0824d"
+  integrity sha512-va9sSoPZbJ+yIIRsO8aTLaN9cnjDe3pjQRPV58NkzhZ8tYcBfh87k44Hj4vWzAgA8Ibmv+5EyXWrCvhFMI/YUw==
   dependencies:
     react "16.8.3"
     react-native "0.59.10"
 
-"@applicaster/zapp-react-native-cell-2-mobile@0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-2-mobile/-/zapp-react-native-cell-2-mobile-0.5.1.tgz#73770ca0c0671c72160af76b0531cd2d44602ff2"
-  integrity sha512-hAjeWUR6U2ajDmy524yxUcCIC4XyYShcU18R2+VAkn90FzU86NxGybqDw/haALQy18maCPKCRKA8r7LuRncqnQ==
+"@applicaster/zapp-react-native-cell-2-mobile@0.6.17":
+  version "0.6.17"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-2-mobile/-/zapp-react-native-cell-2-mobile-0.6.17.tgz#694dadae0a4130992edd8699e98181ef1044a3bd"
+  integrity sha512-yL+gfogD/w10wU5gaLiyYIaZ3+6rQ33TcNoOtUFLEdaDNMMLXOLjGJzaDbtY17Fz9yt5Sp5uJYLIfK6NMTk8pA==
   dependencies:
     react "16.8.3"
     react-native "0.59.10"
 
-"@applicaster/zapp-react-native-cell-3-mobile@0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-3-mobile/-/zapp-react-native-cell-3-mobile-0.5.3.tgz#e3eef358278f37150a3c128a73e580a5e1f04a92"
-  integrity sha512-jJ9ySS/IV8QFl33reZKfojItx/p3VmoFqUgiJOPAU74tB41vpmH9tHalRpm223IlQ2/GuOMXqof3ArcQfMQigw==
+"@applicaster/zapp-react-native-cell-3-mobile@0.5.16":
+  version "0.5.16"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-3-mobile/-/zapp-react-native-cell-3-mobile-0.5.16.tgz#e382a7154ab99a68745e9a4ab6243d7b2e2778db"
+  integrity sha512-BPqFTW8Ky5gPGS7DwyT0rADnXk4Wad5vtvaZdnaxQPo2EW6PrM6wZG89cp2cumH4ZuorrHURgQ7OVVjjj8etDg==
 
 "@applicaster/zapp-react-native-cell-info-mobile@0.2.1":
   version "0.2.1"
@@ -343,13 +354,6 @@
     "@applicaster/zapp-react-native-app" "3.0.1"
     "@applicaster/zapp-react-native-bridge" "3.0.1"
     "@applicaster/zapp-react-native-ui-components" "3.0.1"
-
-"@applicaster/zapp-react-native-default-player@2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-default-player/-/zapp-react-native-default-player-2.0.7.tgz#48cd51f6ba65e5b5250319156bbd5b264019e4b9"
-  integrity sha512-PjV5LCnTVqe9CvkREQDl9akrxdUdJDsY0QRqs/PHb8Wa5F3dN8BDigFPexErs8yxTfxACwBdOLe1RgZZanhA4w==
-  dependencies:
-    keymirror "^0.1.1"
 
 "@applicaster/zapp-react-native-redux@3.0.1":
   version "3.0.1"
@@ -3986,11 +3990,6 @@ keycode@^2.2.0:
   resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
   integrity sha1-PQr1bce4uOXLqNCpfxByBO7CKwQ=
 
-keymirror@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
-  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
-
 kind-of@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-1.1.0.tgz#140a3d2d41a36d2efcfa9377b62c24f8495a5c44"
@@ -4669,7 +4668,7 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.5"
 
-moment@^2.19.3, moment@^2.22.0, moment@^2.22.1, moment@^2.24.0:
+moment@^2.19.3, moment@^2.22.0, moment@^2.24.0:
   version "2.25.3"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.25.3.tgz#252ff41319cf41e47761a1a88cab30edfe9808c0"
   integrity sha512-PuYv0PHxZvzc15Sp8ybUCoQ+xpyPWvjOuK72a5ovzp2LI32rJXOiIfyoFoYvG3s6EwwrdkMyWuRiEHSZRLJNdg==
@@ -5349,7 +5348,7 @@ query-string@5.0.0:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-query-string@^6.0.0, query-string@^6.1.0, query-string@^6.8.3:
+query-string@^6.0.0, query-string@^6.1.0:
   version "6.12.1"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.12.1.tgz#2ae4d272db4fba267141665374e49a1de09e8a7c"
   integrity sha512-OHj+zzfRMyj3rmo/6G8a5Ifvw3AleL/EbcHMD27YA31Q+cO5lfmQxECkImuNVjcskLcvBRVHNAB3w6udMs1eAA==
@@ -5473,6 +5472,11 @@ react-native-iphone-x-helper@^1.0.3:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+
+react-native-jw-media-player-applicaster@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-jw-media-player-applicaster/-/react-native-jw-media-player-applicaster-0.0.5.tgz#6311890c5f36b6486dfb434843bcee30e8ef69e2"
+  integrity sha512-MwlEVxgVmVbiyOSiuM+tYPYE8RBW8+ArawwHR11Pwwr0dDGjL9uiTbd+GRm7OmF9/QpWiyKTEbbMS6GjbCL+bA==
 
 react-native-keyboard-aware-scroll-view@0.9.1:
   version "0.9.1"
@@ -6013,7 +6017,7 @@ sax@1.2.1:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.1.tgz#7b8e656190b228e81a66aea748480d828cd2d37a"
   integrity sha1-e45lYZCyKOgaZq6nSEgNgozS03o=
 
-sax@>=0.6.0, sax@^1.2.1:
+sax@>=0.6.0:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
@@ -6987,13 +6991,6 @@ xcode@^2.0.0:
   dependencies:
     simple-plist "^1.0.0"
     uuid "^3.3.2"
-
-xml2js-parser@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/xml2js-parser/-/xml2js-parser-1.1.1.tgz#90dc39f9d84d036ae10f41e6e766a91550444d44"
-  integrity sha1-kNw5+dhNA2rhD0Hm52apFVBETUQ=
-  dependencies:
-    sax "^1.2.1"
 
 xml2js@0.4.17:
   version "0.4.17"
