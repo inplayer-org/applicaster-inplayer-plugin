@@ -33,10 +33,14 @@ const AssetFlow = (props) => {
     error: null,
     data: null,
   });
+  var stillMounted = true;
 
   useEffect(() => {
     loadAsset({ startPurchaseFlow: true });
     preparePurchaseData();
+    return () => {
+      stillMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -73,17 +77,19 @@ const AssetFlow = (props) => {
       });
 
       const purchasableItemsData = await retrieveProducts(purchasableItems);
-      setPackageData({
-        loading: false,
-        error: null,
-        data: purchasableItemsData,
-      });
+      stillMounted &&
+        setPackageData({
+          loading: false,
+          error: null,
+          data: purchasableItemsData,
+        });
     } catch (error) {
-      setPackageData({
-        loading: false,
-        error,
-        data: null,
-      });
+      stillMounted &&
+        setPackageData({
+          loading: false,
+          error,
+          data: null,
+        });
     }
   };
 
@@ -95,7 +101,7 @@ const AssetFlow = (props) => {
     ) {
       const actionSheetDS = prepareActionSheetDataSource(packageData.data);
       if (actionSheetDS) {
-        setActionSheetDataSource(actionSheetDS);
+        stillMounted && setActionSheetDataSource(actionSheetDS);
       } else {
         const error = new Error("Can not create action sheet data source");
         invokeCallBack(props, { success: false, error });
@@ -125,7 +131,7 @@ const AssetFlow = (props) => {
       })
       .catch((error) => {
         if (error?.requestedToPurchase && startPurchaseFlow) {
-          setAssetLoading(false);
+          stillMounted && setAssetLoading(false);
         } else {
           invokeCallBack(props, {
             success: false,
