@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { View, TextInput, findNodeHandle } from "react-native";
+import { View, TextInput, findNodeHandle, Keyboard } from "react-native";
 import { inputFieldStyle } from "../../Utils/Customization";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -129,8 +129,11 @@ const SignUp = (props) => {
           ref={(input) => {
             this.passwordConfirmationTextInput = input;
           }}
+          onSubmitEditing={() => {
+            Keyboard.dismiss();
+          }}
           returnKeyType={platformSelect({
-            ios: null,
+            ios: "done",
             android: "none",
           })}
           blurOnSubmit={false}

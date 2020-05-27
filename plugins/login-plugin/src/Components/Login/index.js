@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   findNodeHandle,
+  Keyboard,
 } from "react-native";
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -36,6 +37,7 @@ const forgotPasswordStyle = (screenStyles) => {
     }),
     fontSize: screenStyles?.forgot_password_font_size,
     color: screenStyles?.forgot_password_font_color,
+    alignSelf: "center",
     marginBottom: 30,
   };
 };
@@ -145,6 +147,7 @@ export const Login = (props) => {
           value={email}
           onChangeText={stillMounted && setEmail}
         />
+
         <TextInput
           ref={(input) => {
             this.passwordTextInput = input;
@@ -152,8 +155,11 @@ export const Login = (props) => {
           onFocus={(event) => {
             scrollToInput(findNodeHandle(event.target));
           }}
+          onSubmitEditing={() => {
+            Keyboard.dismiss();
+          }}
           returnKeyType={platformSelect({
-            ios: null,
+            ios: "done",
             android: "none",
           })}
           blurOnSubmit={false}
