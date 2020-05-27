@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/applicaster/InPlayerPlugins#readme",
   "dependencies": {
-    "@applicaster/zapplicaster-cli": "3.0.1",
+    "@applicaster/zapplicaster-cli": "2.3.2-rc.8",
     "ramda": "^0.27.0",
     "react": "16.8.3",
     "react-native": "0.59.10",
