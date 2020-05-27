@@ -60,8 +60,16 @@ export const Login = (props) => {
   const textInputStyle = inputFieldStyle(screenStyles);
   const { width: screenWidth } = useDimensions("window");
 
+  let stillMounted = true;
+
   useEffect(() => {
-    setEmail(initialEmail);
+    return () => {
+      stillMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    stillMounted && setEmail(initialEmail);
   }, [initialEmail]);
 
   const onPressLoginButton = () => {
@@ -135,7 +143,7 @@ export const Login = (props) => {
           }
           style={textInputStyle}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={stillMounted && setEmail}
         />
         <TextInput
           ref={(input) => {
@@ -156,7 +164,7 @@ export const Login = (props) => {
           }
           style={textInputStyle}
           value={password}
-          onChangeText={setPassword}
+          onChangeText={stillMounted && setPassword}
           secureTextEntry
         />
         <Text style={forgotPasswordStyle(screenStyles)}>

@@ -10,7 +10,6 @@ import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";
 import * as InPlayerService from "../../Services/inPlayerService";
-import { inspect } from "../../Utils";
 
 const containerStyle = (screenStyles) => {
   return {
@@ -26,6 +25,7 @@ const AccountFlow = (props) => {
     SIGN_UP: "SignUp",
     FORGOT_PASSWORD: "ForgotPassword",
   };
+  let stillMounted = true;
 
   const { accountFlowCallback } = props;
 
@@ -34,7 +34,6 @@ const AccountFlow = (props) => {
   const [lastEmailUsed, setLastEmailUsed] = useState(null);
 
   useEffect(() => {
-    let stillMounted = true;
     InPlayerService.isAuthenticated()
       .then(async (isAuthenticated) => {
         console.debug("InPlayerService.isAuthenticated", isAuthenticated);
@@ -48,7 +47,7 @@ const AccountFlow = (props) => {
         }
       })
       .finally(() => {
-        if (stillMounted) setLoading(false);
+        stillMounted && setLoading(false);
       });
     return () => {
       stillMounted = false;
@@ -64,6 +63,7 @@ const AccountFlow = (props) => {
     if (response && response.status >= 400 && response.status < 500) {
       const json = await error.response.json();
       showAlertToUser({ title, message: json.message });
+      stillMounted && setLoading(false);
     } else {
       throw error;
     }
@@ -74,8 +74,7 @@ const AccountFlow = (props) => {
     const {
       configuration: { in_player_client_id, in_player_referrer },
     } = props;
-    console.log({ props: props });
-    setLoading(true);
+    stillMounted && setLoading(true);
     InPlayerService.login({
       email,
       password,
@@ -87,10 +86,8 @@ const AccountFlow = (props) => {
       })
       .catch(maybeShowAlertToUser("Login failed"))
       .catch((error) => {
+        stillMounted && setLoading(false);
         console.error(error);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
 
@@ -99,7 +96,7 @@ const AccountFlow = (props) => {
     const {
       configuration: { in_player_client_id, in_player_referrer },
     } = props;
-    setLoading(true);
+    stillMounted && setLoading(true);
     InPlayerService.signUp({
       fullName,
       email,
@@ -112,10 +109,8 @@ const AccountFlow = (props) => {
       })
       .catch(maybeShowAlertToUser("Sign-up failed"))
       .catch((error) => {
+        stillMounted && setLoading(false);
         console.error(error);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
 
@@ -127,7 +122,7 @@ const AccountFlow = (props) => {
             initialEmail={lastEmailUsed}
             login={login}
             signUp={() => {
-              setScreen(ScreensData.SIGN_UP);
+              stillMounted && setScreen(ScreensData.SIGN_UP);
             }}
             onLoginError={showAlertToUser}
             {...props}
@@ -139,7 +134,7 @@ const AccountFlow = (props) => {
           <SignUp
             createAccount={createAccount}
             onSiginUpBack={() => {
-              setScreen(ScreensData.LOGIN);
+              stillMounted && setScreen(ScreensData.LOGIN);
             }}
             onSignUpError={showAlertToUser}
             {...props}

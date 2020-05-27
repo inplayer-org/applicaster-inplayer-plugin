@@ -32,7 +32,7 @@ const SignUp = (props) => {
 
   const validateData = () => {
     const title = "Sign Up form issue";
-    var message = null;
+    let message = null;
     if (!fullName || fullName.length == 0) {
       message = "Name can not be empty";
     } else if (validateEmail(email) == false) {

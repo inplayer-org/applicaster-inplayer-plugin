@@ -31,6 +31,8 @@ const InPlayer = (props) => {
   const { callback, payload } = props;
   const screenStyles = getStyles(getScreenStyles(props));
 
+  let stillMounted = true;
+
   useEffect(() => {
     const {
       configuration: { in_player_environment },
@@ -41,13 +43,16 @@ const InPlayer = (props) => {
 
     if (isVideoEntry(payload)) {
       if (inPlayerAssetId(payload)) {
-        setHookType(HookTypeData.PLAYER_HOOK);
+        stillMounted && setHookType(HookTypeData.PLAYER_HOOK);
       } else {
         callback && callback({ success: true, error: null, payload });
       }
     } else {
-      setHookType(HookTypeData.SCREEN_HOOK);
+      stillMounted && setHookType(HookTypeData.SCREEN_HOOK);
     }
+    return () => {
+      stillMounted = false;
+    };
   }, []);
 
   const assetFlowCallback = ({ success, payload, error }) => {
@@ -69,7 +74,7 @@ const InPlayer = (props) => {
       callback && callback({ success, error: null, payload: payload });
     } else if (hookType === HookTypeData.PLAYER_HOOK) {
       success
-        ? setIsUserAuthenticated(true)
+        ? stillMounted && setIsUserAuthenticated(true)
         : callback && callback({ success, error: null, payload: payload });
     } else {
       callback && callback({ success: success, error: null, payload: payload });
