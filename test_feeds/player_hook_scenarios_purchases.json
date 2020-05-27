@@ -7,6 +7,31 @@
       "type": {
         "value": "video"
       },
+      "id": "asset-73075",
+      "title": "Generic HTML Purchasable Consumable  asset_id: 73075",
+      "published": "1970-01-19T07:14:18+00:00",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": [
+            {
+              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover3.jpg",
+              "key": "image_base"
+            }
+          ]
+        }
+      ],
+      "content": {
+        "src": ""
+      },
+      "extensions": {
+        "inplayer_asset_id": "73075"
+      }
+    },
+    {
+      "type": {
+        "value": "video"
+      },
       "id": "asset-72343",
       "title": "Generic HTML Purchasable asset_id: 72343",
       "published": "1970-01-19T07:14:18+00:00",
@@ -25,9 +50,7 @@
         "src": ""
       },
       "extensions": {
-        "inplayer_requires_authentication": true,
-        "inplayer_asset_id": "72343",
-        "purchase_id": "72348_17074"
+        "inplayer_asset_id": "72343"
       }
     },
     {
@@ -52,7 +75,6 @@
         "src": ""
       },
       "extensions": {
-        "inplayer_requires_authentication": true,
         "inplayer_asset_id": "72344"
       }
     },
@@ -78,9 +100,7 @@
         "src": ""
       },
       "extensions": {
-        "inplayer_requires_authentication": true,
-        "inplayer_asset_id": "72275",
-        "purchase_id": "72348_17074"
+        "inplayer_requires_authentication": true
       }
     },
     {
@@ -105,7 +125,6 @@
         "src": ""
       },
       "extensions": {
-        "requires_authentication": true,
         "ds_product_ids": ["72275"],
         "purchase_id": "72348_17074"
       }
@@ -155,7 +174,6 @@
         "src": ""
       },
       "extensions": {
-        "inplayer_requires_authentication": true,
         "inplayer_asset_id": "1234"
       }
     }
