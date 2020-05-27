@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
-import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
-import { inputFieldStyle } from "../../Utils/Customization";
-import { validateEmail } from "../../Utils/Account";
-import { container } from "../Styles";
-import ActionButton from "../UIComponents/ActionButton";
-import TitleLabel from "../UIComponents/TitleLabel";
-import BackButton from "../UIComponents/BackButton";
-
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
+  findNodeHandle,
 } from "react-native";
+
+import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
+import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { inputFieldStyle } from "../../Utils/Customization";
+import { validateEmail } from "../../Utils/Account";
+import { container } from "../Styles";
+import ActionButton from "../UIComponents/ActionButton";
+import TitleLabel from "../UIComponents/TitleLabel";
+import BackButton from "../UIComponents/BackButton";
 
 const styles = StyleSheet.create({
   newUserButton: {
@@ -95,6 +96,10 @@ export const Login = (props) => {
     );
   };
 
+  const scrollToInput = (reactNode) => {
+    this.scroll.props.scrollToFocusedInput(reactNode, 150, 0);
+  };
+
   return (
     <View style={{ ...container, width: screenWidth }}>
       <BackButton
@@ -102,48 +107,68 @@ export const Login = (props) => {
         screenStyles={screenStyles}
         onPress={onBackButton}
       />
-      <TitleLabel
-        screenStyles={screenStyles}
-        title={screenStyles?.title_font_text}
-      />
-      <TextInput
-        onSubmitEditing={() => {
-          this.passwordTextInput.focus();
+      <KeyboardAwareScrollView
+        innerRef={(ref) => {
+          this.scroll = ref;
         }}
-        blurOnSubmit={false}
-        autoCapitalize="none"
-        placeholder={screenStyles?.fields_email_text || "E-mail"}
-        placeholderTextColor={
-          screenStyles?.fields_placeholder_font_color || "white"
-        }
-        style={textInputStyle}
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        ref={(input) => {
-          this.passwordTextInput = input;
-        }}
-        blurOnSubmit={false}
-        autoCapitalize="none"
-        placeholder={screenStyles?.fields_password_text || "Password"}
-        placeholderTextColor={
-          screenStyles?.fields_placeholder_font_color || "white"
-        }
-        style={textInputStyle}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Text style={forgotPasswordStyle(screenStyles)}>
-        {screenStyles?.forgot_password_text || "Forgot your password?"}
-      </Text>
-      <ActionButton
-        screenStyles={screenStyles}
-        title={screenStyles?.action_button_login_text || "LOG IN"}
-        onPress={onPressLoginButton}
-      />
-      {renderCreateAccountButton()}
+        extraScrollHeight={65}
+        scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
+        enableOnAndroid={true}
+      >
+        <TitleLabel
+          screenStyles={screenStyles}
+          title={screenStyles?.title_font_text}
+        />
+        <TextInput
+          onSubmitEditing={() => {
+            this.passwordTextInput.focus();
+          }}
+          onFocus={(event) => {
+            scrollToInput(findNodeHandle(event.target));
+          }}
+          blurOnSubmit={false}
+          autoCapitalize="none"
+          placeholder={screenStyles?.fields_email_text || "E-mail"}
+          placeholderTextColor={
+            screenStyles?.fields_placeholder_font_color || "white"
+          }
+          style={textInputStyle}
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          ref={(input) => {
+            this.passwordTextInput = input;
+          }}
+          onFocus={(event) => {
+            scrollToInput(findNodeHandle(event.target));
+          }}
+          returnKeyType={platformSelect({
+            ios: null,
+            android: "none",
+          })}
+          blurOnSubmit={false}
+          autoCapitalize="none"
+          placeholder={screenStyles?.fields_password_text || "Password"}
+          placeholderTextColor={
+            screenStyles?.fields_placeholder_font_color || "white"
+          }
+          style={textInputStyle}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <Text style={forgotPasswordStyle(screenStyles)}>
+          {screenStyles?.forgot_password_text || "Forgot your password?"}
+        </Text>
+        <ActionButton
+          screenStyles={screenStyles}
+          title={screenStyles?.action_button_login_text || "LOG IN"}
+          onPress={onPressLoginButton}
+        />
+        {renderCreateAccountButton()}
+      </KeyboardAwareScrollView>
     </View>
   );
 };

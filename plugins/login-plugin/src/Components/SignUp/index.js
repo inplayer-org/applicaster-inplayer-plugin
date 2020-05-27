@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
-import { View, TextInput } from "react-native";
+import { View, TextInput, findNodeHandle } from "react-native";
 import { inputFieldStyle } from "../../Utils/Customization";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
+import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
 import { container } from "../Styles";
 import { validateEmail, validatePassword } from "../../Utils/Account";
@@ -31,7 +32,7 @@ const SignUp = (props) => {
 
   const validateData = () => {
     const title = "Sign Up form issue";
-    const message = null;
+    var message = null;
     if (!fullName || fullName.length == 0) {
       message = "Name can not be empty";
     } else if (validateEmail(email) == false) {
@@ -44,10 +45,22 @@ const SignUp = (props) => {
     return message ? { title, message } : null;
   };
 
+  const scrollToInput = (reactNode) => {
+    this.scroll.props.scrollToFocusedInput(reactNode, 150, 0);
+  };
+
   return (
     <View style={{ ...container, width: screenWidth }}>
       <BackButton screenStyles={screenStyles} onPress={props?.onSiginUpBack} />
-      <KeyboardAwareScrollView extraScrollHeight={50} scrollEnabled={false}>
+      <KeyboardAwareScrollView
+        innerRef={(ref) => {
+          this.scroll = ref;
+        }}
+        extraScrollHeight={65}
+        scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
+        enableOnAndroid={true}
+      >
         <TitleLabel
           screenStyles={screenStyles}
           title={screenStyles?.title_font_text}
@@ -55,6 +68,10 @@ const SignUp = (props) => {
         <TextInput
           onSubmitEditing={() => {
             this.emailTextInput.focus();
+            scrollToInput(findNodeHandle(this.emailTextInput));
+          }}
+          onFocus={(event) => {
+            scrollToInput(findNodeHandle(event.target));
           }}
           blurOnSubmit={false}
           autoCapitalize="words"
@@ -69,6 +86,9 @@ const SignUp = (props) => {
         <TextInput
           ref={(input) => {
             this.emailTextInput = input;
+          }}
+          onFocus={(event) => {
+            scrollToInput(findNodeHandle(event.target));
           }}
           onSubmitEditing={() => {
             this.passwordTextInput.focus();
@@ -87,8 +107,12 @@ const SignUp = (props) => {
           ref={(input) => {
             this.passwordTextInput = input;
           }}
+          onFocus={(event) => {
+            scrollToInput(findNodeHandle(event.target));
+          }}
           onSubmitEditing={() => {
             this.passwordConfirmationTextInput.focus();
+            scrollToInput(findNodeHandle(this.passwordConfirmationTextInput));
           }}
           blurOnSubmit={false}
           autoCapitalize="none"
@@ -105,6 +129,10 @@ const SignUp = (props) => {
           ref={(input) => {
             this.passwordConfirmationTextInput = input;
           }}
+          returnKeyType={platformSelect({
+            ios: null,
+            android: "none",
+          })}
           blurOnSubmit={false}
           autoCapitalize="none"
           placeholder={
@@ -114,12 +142,14 @@ const SignUp = (props) => {
           placeholderTextColor={
             screenStyles?.fields_placeholder_font_color || "white"
           }
+          onFocus={(event) => {
+            scrollToInput(findNodeHandle(event.target));
+          }}
           style={textInputStyle}
           value={passwordConfirmation}
           onChangeText={setPasswordConfirmation}
           secureTextEntry
         />
-
         <ActionButton
           screenStyles={screenStyles}
           title={screenStyles?.action_button_signup_text || "SIGN UP"}
