@@ -8,6 +8,8 @@ import {
   checkAccessForAsset,
   getAccessFees,
   getAllPackages,
+  unsubscribeNotifications,
+  subscribeNotifications,
 } from "../../Services/inPlayerService";
 
 import { purchaseAnItem, retrieveProducts } from "../../Services/iAPService";
@@ -26,15 +28,37 @@ const AssetFlow = (props) => {
   const assetId = inPlayerAssetId(props.payload);
 
   const [actionSheetDataSource, setActionSheetDataSource] = useState([]);
+  const [
+    purchasesingProductIdentifier,
+    setPurchasesingProductIdentifier,
+  ] = useState(null);
   const [assetLoading, setAssetLoading] = useState(true);
-
   const [packageData, setPackageData] = useState({
     loading: true,
     error: null,
     data: null,
   });
-  var stillMounted = true;
+  let stillMounted = true;
 
+  let notificationObservers = {
+    onMessage: function (message) {
+      console.log("subscribeNotifications onMessage", { message });
+      if (message?.type === "access.granted") {
+        loadAsset({ startPurchaseFlow: false }).catch((error) => {
+          completeAssetFlow({ success: false, error: error });
+        });
+      } else {
+        new Error("Can not grant access to purchased items");
+        completeAssetFlow({ success: false, error: error });
+      }
+    },
+    onOpen: function (e) {
+      console.log("subscribeNotifications onOpen", { e });
+    },
+    onClose: function (e) {
+      console.log("subscribeNotifications onClose", { e });
+    },
+  };
   useEffect(() => {
     loadAsset({ startPurchaseFlow: true });
     preparePurchaseData();
@@ -61,6 +85,20 @@ const AssetFlow = (props) => {
     }
   }, [actionSheetDataSource]);
 
+  useEffect(() => {
+    if (purchasesingProductIdentifier) {
+      const purchaseData = productIdentifier.split("_");
+
+      purchaseAnItem({
+        purchaseID: productIdentifier,
+        item_id: purchaseData[0],
+        access_fee_id: purchaseData[1],
+      }).catch((error) => {
+        completeAssetFlow({ success: false, error: error });
+      });
+    }
+  }, [purchasesingProductIdentifier]);
+
   const preparePurchaseData = async () => {
     const {
       configuration: { in_player_client_id },
@@ -69,6 +107,10 @@ const AssetFlow = (props) => {
       const resultPurchaseData = await Promise.all([
         getAccessFees(assetId),
         getAllPackages(in_player_client_id),
+        subscribeNotifications({
+          clientId: in_player_client_id,
+          callbacks: notificationObservers,
+        }),
       ]);
 
       const purchasableItems = retrievePurchasableItems({
@@ -104,18 +146,21 @@ const AssetFlow = (props) => {
         stillMounted && setActionSheetDataSource(actionSheetDS);
       } else {
         const error = new Error("Can not create action sheet data source");
-        invokeCallBack(props, { success: false, error });
+        completeAssetFlow({ success: false, error });
       }
     } else if (packageData.loading == false && packageData.error) {
-      invokeCallBack(props, { success: false, error: packageData.error });
+      completeAssetFlow({ success: false, error: packageData.error });
     }
   };
 
   const loadAsset = ({ startPurchaseFlow = false }) => {
+    console.log("LoadAsset");
     const retryInCaseFail = startPurchaseFlow == false;
     const { payload } = props;
     checkAccessForAsset({ assetId: assetId, retryInCaseFail: retryInCaseFail })
       .then((data) => {
+        console.log("LoadAsset2", { data });
+
         const src = data?.src;
 
         if (data && src) {
@@ -123,17 +168,17 @@ const AssetFlow = (props) => {
             ...payload,
             content: { src },
           };
-          invokeCallBack(props, { newPayload });
+          completeAssetFlow({ newPayload });
         } else {
           const error = new Error("Source for asset not exist");
-          invokeCallBack(props, { success: false, error });
+          completeAssetFlow({ success: false, error });
         }
       })
       .catch((error) => {
         if (error?.requestedToPurchase && startPurchaseFlow) {
           stillMounted && setAssetLoading(false);
         } else {
-          invokeCallBack(props, {
+          completeAssetFlow({
             success: false,
             error: { ...error, message: error?.response?.status },
           });
@@ -141,30 +186,26 @@ const AssetFlow = (props) => {
       });
   };
 
+  const completeAssetFlow = (completionObject) => {
+    unsubscribeNotifications();
+    notificationObservers = null;
+    invokeCallBack(props, completionObject);
+  };
+
   const buyItem = (itemToPurchase) => {
     const { productIdentifier } = itemToPurchase;
 
     if (productIdentifier) {
-      const purchaseData = productIdentifier.split("_");
-
-      purchaseAnItem({
-        purchaseID: productIdentifier,
-        item_id: purchaseData[0],
-        access_fee_id: purchaseData[1],
-      })
-        .then(() => loadAsset({ startPurchaseFlow: false }))
-        .catch((error) => {
-          invokeCallBack(props, { success: false, error: error });
-        });
+      setPurchasesingProductIdentifier(productIdentifier);
     } else {
       const error = new Error("Can not purchase, product identifier not exist");
-      invokeCallBack(props, { success: false, error });
+      completeAssetFlow({ success: false, error });
     }
   };
 
   const onPressActionSheet = (index) => {
     if (cancelButtonIndex(actionSheetDataSource) === index) {
-      invokeCallBack(props, { success: false });
+      completeAssetFlow({ success: false });
     } else {
       const itemToPurchase = packageData.data[index];
       buyItem(itemToPurchase);

@@ -219,7 +219,32 @@ export async function validateExternalPayment({
     body: params(body),
   });
 
+  console.log({
+    request: {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${InPlayer.Account.getToken().token}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+      body: params(body),
+    },
+  });
   checkStatus(response);
 
   return await response.json();
+}
+
+export function unsubscribeNotifications() {
+  InPlayer.unsubscribe();
+}
+export async function subscribeNotifications({ clientId, callbacks }) {
+  console.log({ clientId: clientId });
+  const iotData = await InPlayer.Notifications.getIotToken();
+  // await InPlayer.subscribe(clientId, callbacks);
+  return await InPlayer.Notifications.handleSubscribe(
+    iotData,
+    callbacks,
+    clientId
+  );
 }

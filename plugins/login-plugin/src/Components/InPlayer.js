@@ -39,6 +39,7 @@ const InPlayer = (props) => {
     } = props;
 
     initFromNativeLocalStorage();
+
     setConfig(in_player_environment);
 
     if (isVideoEntry(payload)) {
@@ -110,6 +111,7 @@ const InPlayer = (props) => {
       ? renderPlayerHook()
       : renderScreenHook();
   };
+
   return hookType !== HookTypeData.UNDEFINED ? renderFlow() : null;
 };
 
