@@ -223,6 +223,12 @@ const baseManifest = {
         initial_value: "SIGN UP",
       },
       {
+        key: "action_button_forgot_password_text",
+        type: "text_input",
+        label: "Action button request passwor title",
+        initial_value: "REQUEST PASSWORD",
+      },
+      {
         key: "create_account_link_font_ios",
         type: "ios_font_selector",
         label: "iOS Create account link font",

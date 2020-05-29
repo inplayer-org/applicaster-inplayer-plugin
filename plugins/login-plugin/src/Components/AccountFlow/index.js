@@ -6,6 +6,7 @@ import { Keyboard } from "react-native";
 import DropdownAlert from "react-native-dropdownalert";
 
 import { Login } from "../Login";
+import { ForgotPassword } from "../ForgotPassword";
 import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";
@@ -54,8 +55,8 @@ const AccountFlow = (props) => {
     };
   }, []);
 
-  const showAlertToUser = ({ title, message }) => {
-    this.dropDownAlertRef.alertWithType("warn", title, message);
+  const showAlertToUser = ({ title, message, type = "warn" }) => {
+    this.dropDownAlertRef.alertWithType(type, title, message);
   };
 
   const maybeShowAlertToUser = (title) => async (error) => {
@@ -114,7 +115,48 @@ const AccountFlow = (props) => {
       });
   };
 
+  const forgotPasswordFlowCallback = ({ email }) => {
+    Keyboard.dismiss();
+    const {
+      configuration: { in_player_client_id },
+    } = props;
+    if (email) {
+      stillMounted && setLoading(true);
+      InPlayerService.requestPassword({ email, clientId: in_player_client_id })
+        .then((result) => {
+          const { message } = result;
+          console.log(result);
+          console.log(result);
+
+          showAlertToUser({
+            title: "Request Password Complete",
+            message,
+            type: "success",
+          });
+        })
+        .catch((error) => {
+          stillMounted && setLoading(false);
+          showAlertToUser({
+            title: "Request Password Complete",
+            message: "Can not request password",
+          });
+          console.error(error);
+        })
+        .finally(() => {
+          stillMounted && setLoading(false);
+          stillMounted && setScreen(ScreensData.LOGIN);
+        });
+    } else {
+      stillMounted && setScreen(ScreensData.LOGIN);
+    }
+  };
+
+  const onPresentForgotPasswordScreen = () => {
+    stillMounted && setScreen(ScreensData.FORGOT_PASSWORD);
+  };
+
   const renderAuthenteficationScreen = () => {
+    console.log("Render Screen:", screen);
     switch (screen) {
       case ScreensData.LOGIN:
         return (
@@ -124,6 +166,7 @@ const AccountFlow = (props) => {
             signUp={() => {
               stillMounted && setScreen(ScreensData.SIGN_UP);
             }}
+            onPresentForgotPasswordScreen={onPresentForgotPasswordScreen}
             onLoginError={showAlertToUser}
             {...props}
           />
@@ -133,10 +176,21 @@ const AccountFlow = (props) => {
         return (
           <SignUp
             createAccount={createAccount}
-            onSiginUpBack={() => {
+            onBackButton={() => {
               stillMounted && setScreen(ScreensData.LOGIN);
             }}
             onSignUpError={showAlertToUser}
+            {...props}
+          />
+        );
+      case ScreensData.FORGOT_PASSWORD:
+        return (
+          <ForgotPassword
+            forgotPasswordFlowCallback={forgotPasswordFlowCallback}
+            onBackButton={() => {
+              stillMounted && setScreen(ScreensData.LOGIN);
+            }}
+            onError={showAlertToUser}
             {...props}
           />
         );

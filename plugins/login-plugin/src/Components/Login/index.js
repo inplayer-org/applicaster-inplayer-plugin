@@ -94,6 +94,11 @@ export const Login = (props) => {
     accountFlowCallback && accountFlowCallback(false);
   };
 
+  const forgotPasswordButton = () => {
+    const { onPresentForgotPasswordScreen } = props;
+    onPresentForgotPasswordScreen && onPresentForgotPasswordScreen();
+  };
+
   const renderCreateAccountButton = () => {
     return (
       <TouchableOpacity onPress={props?.signUp}>
@@ -173,9 +178,11 @@ export const Login = (props) => {
           onChangeText={stillMounted && setPassword}
           secureTextEntry
         />
-        <Text style={forgotPasswordStyle(screenStyles)}>
-          {screenStyles?.forgot_password_text || "Forgot your password?"}
-        </Text>
+        <TouchableOpacity onPress={forgotPasswordButton}>
+          <Text style={forgotPasswordStyle(screenStyles)}>
+            {screenStyles?.forgot_password_text || "Forgot your password?"}
+          </Text>
+        </TouchableOpacity>
         <ActionButton
           screenStyles={screenStyles}
           title={screenStyles?.action_button_login_text || "LOG IN"}

@@ -158,6 +158,16 @@ export async function signUp(params) {
     type: "consumer",
   });
 }
+
+export async function requestPassword({ email, clientId }) {
+  const result = await InPlayer.Account.requestNewPassword({
+    email,
+    merchantUuid: clientId,
+    branding_id: null,
+  });
+  return result;
+}
+
 export async function signOut() {
   await initFromNativeLocalStorage();
   if (!InPlayer.Account.isAuthenticated()) {

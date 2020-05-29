@@ -87,10 +87,10 @@ const AssetFlow = (props) => {
 
   useEffect(() => {
     if (purchasesingProductIdentifier) {
-      const purchaseData = productIdentifier.split("_");
+      const purchaseData = purchasesingProductIdentifier.split("_");
 
       purchaseAnItem({
-        purchaseID: productIdentifier,
+        purchaseID: purchasesingProductIdentifier,
         item_id: purchaseData[0],
         access_fee_id: purchaseData[1],
       }).catch((error) => {

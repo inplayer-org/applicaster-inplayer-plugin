@@ -2,7 +2,7 @@ import React from "react";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const actionButtnoContainerStyle = (screenStyles) => {
+const actionButtonContainerStyle = (screenStyles) => {
   return {
     height: 50,
     width: 250,
@@ -26,11 +26,11 @@ const actionButtonTextStyle = (screenStyles) => {
 };
 
 const ActionButton = (props) => {
-  const { screenStyles, title, onPress } = props;
+  const { screenStyles, title, onPress, paddingTop = null } = props;
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={actionButtnoContainerStyle(screenStyles)}>
+    <TouchableOpacity onPress={onPress} style={{ paddingTop: paddingTop }}>
+      <View style={actionButtonContainerStyle(screenStyles)}>
         <Text style={actionButtonTextStyle(screenStyles)}>{title}</Text>
       </View>
     </TouchableOpacity>

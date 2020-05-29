@@ -51,7 +51,7 @@ const SignUp = (props) => {
 
   return (
     <View style={{ ...container, width: screenWidth }}>
-      <BackButton screenStyles={screenStyles} onPress={props?.onSiginUpBack} />
+      <BackButton screenStyles={screenStyles} onPress={props?.onBackButton} />
       <KeyboardAwareScrollView
         innerRef={(ref) => {
           this.scroll = ref;
