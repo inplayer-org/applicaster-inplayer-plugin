@@ -7,6 +7,7 @@ import DropdownAlert from "react-native-dropdownalert";
 
 import { Login } from "../Login";
 import { ForgotPassword } from "../ForgotPassword";
+import { SetNewPassword } from "../SetNewPassword";
 import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";
@@ -25,6 +26,7 @@ const AccountFlow = (props) => {
     LOGIN: "Login",
     SIGN_UP: "SignUp",
     FORGOT_PASSWORD: "ForgotPassword",
+    SET_NEW_PASSWORD: "SetNewPassword",
   };
   let stillMounted = true;
 
@@ -37,12 +39,13 @@ const AccountFlow = (props) => {
   useEffect(() => {
     InPlayerService.isAuthenticated()
       .then(async (isAuthenticated) => {
-        console.debug("InPlayerService.isAuthenticated", isAuthenticated);
         if (stillMounted) {
           if (isAuthenticated) {
             accountFlowCallback({ success: true });
           } else {
-            setLastEmailUsed(await InPlayerService.getLastEmailUsed());
+            setLastEmailUsed(
+              (await InPlayerService.getLastEmailUsed()) || null
+            );
             setScreen(ScreensData.LOGIN);
           }
         }
@@ -115,6 +118,36 @@ const AccountFlow = (props) => {
       });
   };
 
+  const setNewPasswordCallback = ({ password, token }) => {
+    Keyboard.dismiss();
+    if (token && password) {
+      stillMounted && setLoading(true);
+      InPlayerService.setNewPassword({
+        password,
+        token,
+      })
+        .then(() => {
+          showAlertToUser({
+            title: "Set New Password Success",
+            message: "Your password was successfully updated",
+            type: "success",
+          });
+          stillMounted && setLoading(false);
+          stillMounted && setScreen(ScreensData.LOGIN);
+        })
+        .catch((error) => {
+          stillMounted && setLoading(false);
+
+          showAlertToUser({
+            title: "Set New Password",
+            message: "New password could not be set. Please try again.",
+          });
+        });
+    } else {
+      stillMounted && setScreen(ScreensData.FORGOT_PASSWORD);
+    }
+  };
+
   const forgotPasswordFlowCallback = ({ email }) => {
     Keyboard.dismiss();
     const {
@@ -125,25 +158,21 @@ const AccountFlow = (props) => {
       InPlayerService.requestPassword({ email, clientId: in_player_client_id })
         .then((result) => {
           const { message } = result;
-          console.log(result);
-          console.log(result);
-
           showAlertToUser({
-            title: "Request Password Complete",
+            title: "Request Password Success",
             message,
             type: "success",
           });
+          stillMounted && setLoading(false);
+          stillMounted && setScreen(ScreensData.SET_NEW_PASSWORD);
         })
         .catch((error) => {
           stillMounted && setLoading(false);
           showAlertToUser({
-            title: "Request Password Complete",
+            title: "Request Password Fail",
             message: "Can not request password",
           });
           console.error(error);
-        })
-        .finally(() => {
-          stillMounted && setLoading(false);
           stillMounted && setScreen(ScreensData.LOGIN);
         });
     } else {
@@ -156,7 +185,6 @@ const AccountFlow = (props) => {
   };
 
   const renderAuthenteficationScreen = () => {
-    console.log("Render Screen:", screen);
     switch (screen) {
       case ScreensData.LOGIN:
         return (
@@ -189,6 +217,17 @@ const AccountFlow = (props) => {
             forgotPasswordFlowCallback={forgotPasswordFlowCallback}
             onBackButton={() => {
               stillMounted && setScreen(ScreensData.LOGIN);
+            }}
+            onError={showAlertToUser}
+            {...props}
+          />
+        );
+      case ScreensData.SET_NEW_PASSWORD:
+        return (
+          <SetNewPassword
+            setNewPasswordCallback={setNewPasswordCallback}
+            onBackButton={() => {
+              stillMounted && setScreen(ScreensData.FORGOT_PASSWORD);
             }}
             onError={showAlertToUser}
             {...props}

@@ -139,10 +139,22 @@ const baseManifest = {
         initial_value: "Password",
       },
       {
+        key: "fields_token_text",
+        type: "text_input",
+        label: "Tokne field placeholder text",
+        initial_value: "Token",
+      },
+      {
         key: "fields_password_confirmation_text",
         type: "text_input",
         label: "Password field confirmation placeholder text",
         initial_value: "Password Confirmation",
+      },
+      {
+        key: "fields_set_new_password_text",
+        type: "text_input",
+        label: "New password field placeholder text",
+        initial_value: "New password",
       },
       {
         key: "fields_name_text",
@@ -225,8 +237,14 @@ const baseManifest = {
       {
         key: "action_button_forgot_password_text",
         type: "text_input",
-        label: "Action button request passwor title",
+        label: "Action button request password title",
         initial_value: "REQUEST PASSWORD",
+      },
+      {
+        key: "action_button_set_new_password_text",
+        type: "text_input",
+        label: "Action button set new password title",
+        initial_value: "SET NEW PASSWORD",
       },
       {
         key: "create_account_link_font_ios",

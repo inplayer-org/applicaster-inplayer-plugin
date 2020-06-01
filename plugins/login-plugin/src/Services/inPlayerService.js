@@ -117,7 +117,7 @@ export async function isAuthenticated() {
 export async function login({ email, password, clientId, referrer }) {
   console.log("InPlayerService.login");
   await initFromNativeLocalStorage();
-  await localStorage.setItem(IN_PLAYER_LAST_EMAIL_USED_KEY, email);
+  email && (await localStorage.setItem(IN_PLAYER_LAST_EMAIL_USED_KEY, email));
   try {
     return await InPlayer.Account.authenticate({
       email,
@@ -168,13 +168,22 @@ export async function requestPassword({ email, clientId }) {
   return result;
 }
 
+export async function setNewPassword({ password, token }) {
+  await InPlayer.Account.setNewPassword(
+    {
+      password,
+      passwordConfirmation: password,
+    },
+    token
+  );
+}
+
 export async function signOut() {
   await initFromNativeLocalStorage();
   if (!InPlayer.Account.isAuthenticated()) {
     return false;
   } else {
     const result = await InPlayer.Account.signOut();
-    console.log({ result });
     return true;
   }
 }
