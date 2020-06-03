@@ -1,14 +1,13 @@
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
-const { ApplicasterIAPBridge } = NativeModules;
 import { validateExternalPayment } from "./inPlayerService";
-import { NativeModules } from "react-native";
+
 import R from "ramda";
 
 export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   console.log({ purchaseID, item_id, access_fee_id });
 
   if (purchaseID) {
-    return ApplicasterIAPBridge.purchase(purchaseID, false)
+    return ApplicasterIAPModule.purchase(purchaseID, false)
       .then((purchaseCompletion) =>
         extenralPaymentValidation({
           purchaseCompletion,
@@ -17,7 +16,7 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
           access_fee_id,
         })
       )
-      .then(ApplicasterIAPBridge.finishPurchasedTransaction);
+      .then(ApplicasterIAPModule.finishPurchasedTransaction);
   } else {
     throw new Error(`PurchaseID: ${purchaseID}  not exist`);
   }
