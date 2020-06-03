@@ -9,7 +9,7 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   if (purchaseID) {
     return ApplicasterIAPModule.purchase(purchaseID, false)
       .then((purchaseCompletion) =>
-        extenralPaymentValidation({
+        externalPaymentValidation({
           purchaseCompletion,
           purchaseID,
           item_id,
@@ -32,7 +32,7 @@ export function retrieveProducts(purchasableItems) {
   }
 }
 
-async function extenralPaymentValidation({
+async function externalPaymentValidation({
   purchaseCompletion,
   item_id,
   access_fee_id,
