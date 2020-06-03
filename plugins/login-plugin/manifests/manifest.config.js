@@ -121,9 +121,9 @@ const baseManifest = {
         initial_value: "#ffffffff",
       },
       {
-        key: "fields_underline_color",
+        key: "fields_separator_color",
         type: "color_picker",
-        label: "Input fields underline color",
+        label: "Input fields separator color",
         initial_value: "#a9a9a9ff",
       },
       {
@@ -141,7 +141,7 @@ const baseManifest = {
       {
         key: "fields_token_text",
         type: "text_input",
-        label: "Tokne field placeholder text",
+        label: "Token field placeholder text",
         initial_value: "Token",
       },
       {

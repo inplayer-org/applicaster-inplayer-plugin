@@ -24,22 +24,3 @@ export function prepareStyles(screenStyles) {
 
   return styles;
 }
-
-export function inputFieldStyle(screenStyles) {
-  return {
-    fontFamily: platformSelect({
-      ios: screenStyles?.fields_font_ios,
-      android: screenStyles?.fields_font_android,
-    }),
-    fontSize: screenStyles?.fields_font_size,
-    color: screenStyles?.fields_font_color,
-    backgroundColor: "transparent",
-    width: 250,
-    height: 50,
-    borderBottomWidth: 1,
-    borderBottomColor: screenStyles?.fields_underline_color || "#A9A9A9",
-    marginBottom: 10,
-    paddingHorizontal: 15,
-    alignSelf: "center",
-  };
-}

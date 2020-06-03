@@ -36,7 +36,7 @@ export function inputFieldStyle(screenStyles) {
     width: 250,
     height: 50,
     borderBottomWidth: 1,
-    borderBottomColor: screenStyles?.fields_underline_color || "#A9A9A9",
+    borderBottomColor: screenStyles?.fields_separator_color || "#A9A9A9",
     marginBottom: 10,
     paddingHorizontal: 15,
     alignSelf: "center",
