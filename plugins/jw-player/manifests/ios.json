@@ -20,8 +20,8 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.0.32",
-  "manifest_version": "0.0.32",
+  "dependency_version": "0.0.35",
+  "manifest_version": "0.0.35",
   "api": {},
   "npm_dependencies": [
     "react-native-jw-media-player-applicaster@0.0.6"
