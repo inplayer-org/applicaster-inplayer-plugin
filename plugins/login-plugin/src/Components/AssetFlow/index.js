@@ -186,7 +186,7 @@ const AssetFlow = (props) => {
       {<LoadingScreen />}
       <ActionSheet
         ref={(o) => (this.ActionSheet = o)}
-        title={"Please select subscription do you like to purchase ?"}
+        title={"Please select item to purchase ?"}
         options={actionSheetDataSource}
         cancelButtonIndex={cancelButtonIndex(actionSheetDataSource)}
         onPress={onPressActionSheet}
