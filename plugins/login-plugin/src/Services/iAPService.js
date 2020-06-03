@@ -1,17 +1,14 @@
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
+const { ApplicasterIAPBridge } = NativeModules;
 import { validateExternalPayment } from "./inPlayerService";
-import { localStorage } from "../LocalStorageHack";
-import { parseJsonIfNeeded } from "@applicaster/zapp-react-native-utils/functionUtils";
-
+import { NativeModules } from "react-native";
 import R from "ramda";
-
-const IN_PLAYER_VALIDATING_PURCHASE = "com.inplayer.validating_purchase";
 
 export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   console.log({ purchaseID, item_id, access_fee_id });
 
   if (purchaseID) {
-    return ApplicasterIAPModule.purchase(purchaseID, false)
+    return ApplicasterIAPBridge.purchase(purchaseID, false)
       .then((purchaseCompletion) =>
         extenralPaymentValidation({
           purchaseCompletion,
@@ -20,9 +17,7 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
           access_fee_id,
         })
       )
-      .then((result) => {
-        console.log("Verification Result", { result });
-      });
+      .then(ApplicasterIAPBridge.finishPurchasedTransaction);
   } else {
     throw new Error(`PurchaseID: ${purchaseID}  not exist`);
   }
@@ -41,32 +36,17 @@ export function retrieveProducts(purchasableItems) {
 
 async function extenralPaymentValidation({
   purchaseCompletion,
-  purchaseID,
   item_id,
   access_fee_id,
 }) {
-  // const transactionIdentifier =
-  //   purchaseCompletion?.purchase.transaction?.transactionIdentifier;
+  const transactionIdentifier =
+    purchaseCompletion?.purchase.transaction?.transactionIdentifier;
   const receipt = purchaseCompletion?.receipt;
-
-  // let validatingPurchases = await localStorage.getItem(
-  //   IN_PLAYER_VALIDATING_PURCHASE
-  // );
-  // validatingPurchases = (await parseJsonIfNeeded(validatingPurchases)) || {};
-  // validatingPurchases[purchaseID] = transactionIdentifier;
-  // await localStorage.setItem(
-  //   IN_PLAYER_VALIDATING_PURCHASE,
-  //   validatingPurchases
-  // );
   const result = await validateExternalPayment({
     receipt,
     item_id,
     access_fee_id,
   });
-
-  // await localStorage.removeItem(
-  //   IN_PLAYER_VALIDATING_PURCHASE,
-  // );
-
-  return result;
+  console.log("Verification Result:", { result });
+  return transactionIdentifier;
 }

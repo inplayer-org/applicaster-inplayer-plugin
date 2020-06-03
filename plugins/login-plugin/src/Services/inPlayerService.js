@@ -227,7 +227,7 @@ export async function validateExternalPayment({
     item_id,
     access_fee_id,
   };
-
+  console.log({ receipt });
   const response = await fetch(externalPurchaseValidationURL(), {
     method: "POST",
     headers: {
@@ -237,7 +237,6 @@ export async function validateExternalPayment({
     },
     body: params(body),
   });
-
   console.log({
     request: {
       method: "POST",
@@ -260,7 +259,7 @@ export function unsubscribeNotifications() {
 export async function subscribeNotifications({ clientId, callbacks }) {
   console.log({ clientId: clientId });
   const iotData = await InPlayer.Notifications.getIotToken();
-  // await InPlayer.subscribe(clientId, callbacks);
+
   return await InPlayer.Notifications.handleSubscribe(
     iotData,
     callbacks,
