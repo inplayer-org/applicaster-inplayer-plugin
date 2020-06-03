@@ -20,8 +20,8 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.0.35",
-  "manifest_version": "0.0.35",
+  "dependency_version": "0.0.36",
+  "manifest_version": "0.0.36",
   "api": {
     "class_name": "com.appgoalz.rnjwplayer.RNJWPlayerPackage",
     "react_packages": [
