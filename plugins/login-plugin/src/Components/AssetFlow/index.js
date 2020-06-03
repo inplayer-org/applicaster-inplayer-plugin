@@ -8,6 +8,7 @@ import {
   checkAccessForAsset,
   getAccessFees,
   getAllPackages,
+  unsubscribeNotifications,
 } from "../../Services/inPlayerService";
 
 import { purchaseAnItem, retrieveProducts } from "../../Services/iAPService";
@@ -27,13 +28,12 @@ const AssetFlow = (props) => {
 
   const [actionSheetDataSource, setActionSheetDataSource] = useState([]);
   const [assetLoading, setAssetLoading] = useState(true);
-
   const [packageData, setPackageData] = useState({
     loading: true,
     error: null,
     data: null,
   });
-  var stillMounted = true;
+  let stillMounted = true;
 
   useEffect(() => {
     loadAsset({ startPurchaseFlow: true });
@@ -104,36 +104,40 @@ const AssetFlow = (props) => {
         stillMounted && setActionSheetDataSource(actionSheetDS);
       } else {
         const error = new Error("Can not create action sheet data source");
-        invokeCallBack(props, { success: false, error });
+        completeAssetFlow({ success: false, error });
       }
     } else if (packageData.loading == false && packageData.error) {
-      invokeCallBack(props, { success: false, error: packageData.error });
+      completeAssetFlow({ success: false, error: packageData.error });
     }
   };
 
   const loadAsset = ({ startPurchaseFlow = false }) => {
+    console.log("LoadAsset");
     const retryInCaseFail = startPurchaseFlow == false;
     const { payload } = props;
     checkAccessForAsset({ assetId: assetId, retryInCaseFail: retryInCaseFail })
       .then((data) => {
+        console.log("LoadAsset2", { data });
+
         const src = data?.src;
 
         if (data && src) {
+          console.log({ src, data });
           newPayload = src && {
             ...payload,
             content: { src },
           };
-          invokeCallBack(props, { newPayload });
+          completeAssetFlow({ newPayload });
         } else {
           const error = new Error("Source for asset not exist");
-          invokeCallBack(props, { success: false, error });
+          completeAssetFlow({ success: false, error });
         }
       })
       .catch((error) => {
         if (error?.requestedToPurchase && startPurchaseFlow) {
           stillMounted && setAssetLoading(false);
         } else {
-          invokeCallBack(props, {
+          completeAssetFlow({
             success: false,
             error: { ...error, message: error?.response?.status },
           });
@@ -141,30 +145,36 @@ const AssetFlow = (props) => {
       });
   };
 
+  const completeAssetFlow = (completionObject) => {
+    invokeCallBack(props, completionObject);
+  };
+
   const buyItem = (itemToPurchase) => {
     const { productIdentifier } = itemToPurchase;
 
     if (productIdentifier) {
-      const purchaseData = productIdentifier.split("_");
+      const purchaseData = purchasesingProductIdentifier.split("_");
 
       purchaseAnItem({
-        purchaseID: productIdentifier,
+        purchaseID: purchasesingProductIdentifier,
         item_id: purchaseData[0],
         access_fee_id: purchaseData[1],
       })
-        .then(() => loadAsset({ startPurchaseFlow: false }))
+        .then(() => {
+          loadAsset({ startPurchaseFlow: false });
+        })
         .catch((error) => {
-          invokeCallBack(props, { success: false, error: error });
+          completeAssetFlow({ success: false, error: error });
         });
     } else {
       const error = new Error("Can not purchase, product identifier not exist");
-      invokeCallBack(props, { success: false, error });
+      completeAssetFlow({ success: false, error });
     }
   };
 
   const onPressActionSheet = (index) => {
     if (cancelButtonIndex(actionSheetDataSource) === index) {
-      invokeCallBack(props, { success: false });
+      completeAssetFlow({ success: false });
     } else {
       const itemToPurchase = packageData.data[index];
       buyItem(itemToPurchase);

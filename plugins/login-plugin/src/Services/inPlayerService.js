@@ -117,7 +117,7 @@ export async function isAuthenticated() {
 export async function login({ email, password, clientId, referrer }) {
   console.log("InPlayerService.login");
   await initFromNativeLocalStorage();
-  await localStorage.setItem(IN_PLAYER_LAST_EMAIL_USED_KEY, email);
+  email && (await localStorage.setItem(IN_PLAYER_LAST_EMAIL_USED_KEY, email));
   try {
     return await InPlayer.Account.authenticate({
       email,
@@ -158,13 +158,32 @@ export async function signUp(params) {
     type: "consumer",
   });
 }
+
+export async function requestPassword({ email, clientId }) {
+  const result = await InPlayer.Account.requestNewPassword({
+    email,
+    merchantUuid: clientId,
+    branding_id: null,
+  });
+  return result;
+}
+
+export async function setNewPassword({ password, token }) {
+  await InPlayer.Account.setNewPassword(
+    {
+      password,
+      passwordConfirmation: password,
+    },
+    token
+  );
+}
+
 export async function signOut() {
   await initFromNativeLocalStorage();
   if (!InPlayer.Account.isAuthenticated()) {
     return false;
   } else {
     const result = await InPlayer.Account.signOut();
-    console.log({ result });
     return true;
   }
 }
@@ -208,7 +227,7 @@ export async function validateExternalPayment({
     item_id,
     access_fee_id,
   };
-
+  console.log({ receipt });
   const response = await fetch(externalPurchaseValidationURL(), {
     method: "POST",
     headers: {
@@ -218,8 +237,32 @@ export async function validateExternalPayment({
     },
     body: params(body),
   });
-
+  console.log({
+    request: {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${InPlayer.Account.getToken().token}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+      body: params(body),
+    },
+  });
   checkStatus(response);
 
   return await response.json();
+}
+
+export function unsubscribeNotifications() {
+  InPlayer.unsubscribe();
+}
+export async function subscribeNotifications({ clientId, callbacks }) {
+  console.log({ clientId: clientId });
+  const iotData = await InPlayer.Notifications.getIotToken();
+
+  return await InPlayer.Notifications.handleSubscribe(
+    iotData,
+    callbacks,
+    clientId
+  );
 }

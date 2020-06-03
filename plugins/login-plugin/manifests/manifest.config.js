@@ -17,7 +17,7 @@ const baseManifest = {
   npm_dependencies: [
     "@inplayer-org/inplayer.js@2.13.3",
     "react-native-dropdownalert@4.2.1",
-    "@applicaster/applicaster-iap@0.2.2",
+    "@applicaster/applicaster-iap@0.2.3",
     "@react-native-community/async-storage@1.9.0",
     "react-native-actionsheet@2.4.0",
     "react-native-keyboard-aware-scroll-view@0.9.1",
@@ -139,10 +139,22 @@ const baseManifest = {
         initial_value: "Password",
       },
       {
+        key: "fields_token_text",
+        type: "text_input",
+        label: "Tokne field placeholder text",
+        initial_value: "Token",
+      },
+      {
         key: "fields_password_confirmation_text",
         type: "text_input",
         label: "Password field confirmation placeholder text",
         initial_value: "Password Confirmation",
+      },
+      {
+        key: "fields_set_new_password_text",
+        type: "text_input",
+        label: "New password field placeholder text",
+        initial_value: "New password",
       },
       {
         key: "fields_name_text",
@@ -221,6 +233,18 @@ const baseManifest = {
         type: "text_input",
         label: "Action button sign up title",
         initial_value: "SIGN UP",
+      },
+      {
+        key: "action_button_forgot_password_text",
+        type: "text_input",
+        label: "Action button request password title",
+        initial_value: "REQUEST PASSWORD",
+      },
+      {
+        key: "action_button_set_new_password_text",
+        type: "text_input",
+        label: "Action button set new password title",
+        initial_value: "SET NEW PASSWORD",
       },
       {
         key: "create_account_link_font_ios",
