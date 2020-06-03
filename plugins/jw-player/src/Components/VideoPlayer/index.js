@@ -21,9 +21,6 @@ export default class VideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    const { pluginConfiguration } = this.props;
-    console.log({ pluginConfiguration });
-
     const licenceKey = this.jwPlayerLicenceKey();
     JWPlayerAndroidLicenceModule.setLicenseKey(licenceKey).then(() => {
       this.setState({ licenceKeyProvided: true });

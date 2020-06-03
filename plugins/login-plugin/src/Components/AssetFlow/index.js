@@ -153,10 +153,10 @@ const AssetFlow = (props) => {
     const { productIdentifier } = itemToPurchase;
 
     if (productIdentifier) {
-      const purchaseData = purchasesingProductIdentifier.split("_");
+      const purchaseData = productIdentifier.split("_");
 
       purchaseAnItem({
-        purchaseID: purchasesingProductIdentifier,
+        purchaseID: productIdentifier,
         item_id: purchaseData[0],
         access_fee_id: purchaseData[1],
       })

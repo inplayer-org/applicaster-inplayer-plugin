@@ -28,7 +28,6 @@ export let playListItem = (props) => {
     displayDescription: true,
     displayTitle: true,
   };
-  console.log("Playlist Item", { retVal });
   return retVal;
 };
 

@@ -1,11 +1,11 @@
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
 import { validateExternalPayment } from "./inPlayerService";
+import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
 import R from "ramda";
 
 export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   console.log({ purchaseID, item_id, access_fee_id });
-
   if (purchaseID) {
     return ApplicasterIAPModule.purchase(purchaseID, false)
       .then((purchaseCompletion) =>
@@ -24,7 +24,6 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
 
 export function retrieveProducts(purchasableItems) {
   if (purchasableItems) {
-    console.log({ purchasableItems });
     return ApplicasterIAPModule.products(purchasableItems).then(
       R.prop("products")
     );
@@ -38,8 +37,11 @@ async function extenralPaymentValidation({
   item_id,
   access_fee_id,
 }) {
-  const transactionIdentifier =
-    purchaseCompletion?.purchase.transaction?.transactionIdentifier;
+  const transactionIdentifier = platformSelect({
+    ios: purchaseCompletion?.purchase.transaction?.transactionIdentifier,
+    android: purchaseCompletion?.purchase.transaction?.transactionIdentifier,
+  });
+
   const receipt = purchaseCompletion?.receipt;
   const result = await validateExternalPayment({
     receipt,

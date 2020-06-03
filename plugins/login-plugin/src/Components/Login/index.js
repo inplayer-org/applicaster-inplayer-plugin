@@ -39,6 +39,7 @@ const forgotPasswordStyle = (screenStyles) => {
     color: screenStyles?.forgot_password_font_color,
     alignSelf: "center",
     marginBottom: 30,
+    textDecorationLine: "underline",
   };
 };
 
