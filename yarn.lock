@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@applicaster/applicaster-iap@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/applicaster-iap/-/applicaster-iap-0.2.0.tgz#543f573eadd8efebaff4e28ed88781c8579865bf"
-  integrity sha512-IlTQ69D97KvJTiK5bEhu3iQtrowzd3UGqDgxdFiI5ut/XPEJE6VxidRUz/pVYvaZdut5/6UFNY3a19/L4B7kUA==
+"@applicaster/applicaster-iap@0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@applicaster/applicaster-iap/-/applicaster-iap-0.2.5.tgz#deac67f739afe40f6d300ce380806a87c94c26a2"
+  integrity sha512-nid6sT2SiIJlrX0XpyShvc8im/yVGANxVHhoYhTZscHnCeYP25N65eEL3nL2S329K3R3z+LsZaw6XpWBS8W6RQ==
 
 "@applicaster/babel-preset-quick-brick@2.3.1":
   version "2.3.1"
@@ -22,14 +22,12 @@
     metro-react-native-babel-preset "0.48.1"
     react-hot-loader "^4.12.5"
 
-"@applicaster/horizontal-list-qb@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/horizontal-list-qb/-/horizontal-list-qb-0.2.0.tgz#7aabae25ebddcdbecedcd78875ec0f45294c3610"
-  integrity sha512-3EsqTJHjRDSxypO6PMfD+BRzHwicHsP3lmNbrLIHqQ/Q3wCQ+BEExWag3k9Xy7sgNlXxbQ0eDfjKCJN7Ulpu4A==
+"@applicaster/horizontal-list-qb@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/horizontal-list-qb/-/horizontal-list-qb-0.3.0.tgz#116a5e4df3e5b3d7ec88458163156e2e20a857c8"
+  integrity sha512-j/blYPKiO2W3+4Xnx+mzJD5POzRvR8OkaZKq4SXKokVW9sXqvFjAaIsRkaaC580CRRAMfmItkjZFfP2murV3Yw==
   dependencies:
     ramda "^0.26.1"
-    react "16.8.3"
-    react-native "0.59.10"
 
 "@applicaster/quick-brick-applicaster2-vod-hook@latest":
   version "1.0.0"
@@ -38,27 +36,25 @@
   dependencies:
     ramda "^0.27.0"
 
-"@applicaster/quick-brick-base-theme@0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-base-theme/-/quick-brick-base-theme-0.5.1.tgz#ca0fe83cb8ec6271eba5045ee46184c70d83c68a"
-  integrity sha512-Y0PDX+0x5xjJ+rz4i6Xw/rElOUTnuBBmtT1cYUAgu3qeyw3m+bdtKnj1bsrlvy2A01rsVSWuejeSX7eF8iP+QA==
+"@applicaster/quick-brick-base-theme@0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-base-theme/-/quick-brick-base-theme-0.5.2.tgz#0301c6ba89dba8da4e73c34bfba9a5068f68f2e8"
+  integrity sha512-MgbZiEnuS/QS/aNw1WcAR31KLy1dwAtFhjMyXy4wHdLtKXSMEE51z7ISjt6n89twKJoLRml5xIiYvMx3IBmwZw==
   dependencies:
     axios "^0.19.1"
     moment "^2.24.0"
     ramda "^0.26.1"
-    react "16.8.3"
-    react-native "0.59.10"
     react-native-auth0 "2.1.1"
 
-"@applicaster/quick-brick-core@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-core/-/quick-brick-core-2.3.2-rc.8.tgz#0fa24228d736282cff3ffc0ad7c741099deaae47"
-  integrity sha512-WGJ+DXf+9eeBQ0UcHi5EC61AZ9hz0vCdM1N217Q8lvNhSkwdwCNic1nexgh0YVRXqGtfQLffM06Zalw5hOvAmQ==
+"@applicaster/quick-brick-core@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-core/-/quick-brick-core-2.3.2-rc.9.tgz#7d46f3ed0e5a6c8cd77eba2604f994ea67123e8c"
+  integrity sha512-ffDhHZ+mRL43/hKzp0ETVGbNz7khfmmNInecSbXxodtrAWEYkfmfLZFhQvmafGqnmTrK+13rxT5G4IykwBf9Xg==
   dependencies:
-    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-redux" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-redux" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     atob "^2.1.2"
     axios "^0.18.0"
     btoa "^1.2.1"
@@ -80,37 +76,33 @@
   resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-default-cell-renderer/-/quick-brick-default-cell-renderer-1.0.0.tgz#f93f65e623ebd0b2779aa072874e3d9648597a19"
   integrity sha512-xGjzRo/ZhvhcM9akfzxnCyTNqcG0LglyUTLXN6WN/JzkiOzErgYxfFquJNGG+ioqTmCrz4Y8r1+5vXFAMEDSkw==
 
-"@applicaster/quick-brick-grid@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-grid/-/quick-brick-grid-1.2.1.tgz#e9585976ab5b75aa9eebfd676c81d5ed27646e5f"
-  integrity sha512-TVUxW6jrE35LNwlnTyypZ8iC7xAK/r9vDd5KAxxWQXKa8P5AhExEiXdcPziFplBhkCYXcU5l6pdkUUOajGx9DQ==
-  dependencies:
-    ramda "^0.26.1"
-    react "16.8.3"
-    react-native "0.59.10"
-
-"@applicaster/quick-brick-hero@0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-hero/-/quick-brick-hero-0.2.3.tgz#6af32c133ba30772bfdbc111771daab34f942553"
-  integrity sha512-V8WDgr3X/ba8CxOEcBimapAVYKxJjesOFQzpZcciuOc1qsV05mDbWbp+I9mdV5vvmYMG/acK7Qt5rQQ+7GeedQ==
-  dependencies:
-    ramda "^0.26.1"
-    react "16.8.3"
-    react-native "0.59.10"
-
-"@applicaster/quick-brick-inplayer-logout@0.0.15":
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer-logout/-/quick-brick-inplayer-logout-0.0.15.tgz#7e1ea7003d93f50a646a66de289047561937fde1"
-  integrity sha512-6WkpOHwtthZSo5EwjY2OcXCHnmTStazk7jJBq0/kokdCkYcuG35DvHM6MZ5f8r3rotQa6ReHIZ5lzPSUt0530g==
+"@applicaster/quick-brick-grid@1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-grid/-/quick-brick-grid-1.3.1.tgz#e32259aa259638ba9603a6529313b18c23b48434"
+  integrity sha512-ejzonV70i6qLyFpuUZgIavLarPw2ErH+e5lOWe2feD5OMQN/pikf3z9ispIttBIfoj25nFgh/0oKeJVvN6QLLA==
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-inplayer@0.1.40":
-  version "0.1.40"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.1.40.tgz#6bde33a7ff4eb51020d2952c65128a65fca390fd"
-  integrity sha512-1bFhpZenCWozK0OI0+0UrUakAL0KeFRcfgK++TNMh1PmKHuvkwdeb0hFVsRRJSLQjp7a4SQK+wpca211QAPbnQ==
+"@applicaster/quick-brick-hero@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-hero/-/quick-brick-hero-0.3.0.tgz#bccc3b090612131cdcbe293b8f5cbaeb80e31667"
+  integrity sha512-eXv7cmdA6vjMWULETazmDDDMTBwwmfoSDMpMfsiqNb63dlgfE8ue1Ogi5zzV+Uff2ZkmltYzZoYEQdjrWzRokw==
   dependencies:
-    "@applicaster/applicaster-iap" "0.2.0"
+    ramda "^0.26.1"
+
+"@applicaster/quick-brick-inplayer-logout@0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer-logout/-/quick-brick-inplayer-logout-0.0.22.tgz#a72875327382d2fce6e15003276a36b8fe635c7d"
+  integrity sha512-oal74D1Pq1Lwfgg3UOy0ND8MKrcVpAjyUYwQ55yGCyj8tkldJUvnCDDLBDGIog59syeR8I0ed8nJGxsXZNBfag==
+  dependencies:
+    ramda "^0.26.1"
+
+"@applicaster/quick-brick-inplayer@0.1.52":
+  version "0.1.52"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.1.52.tgz#d1db63440f4e36e55c5edf2bff85199db1d4f10d"
+  integrity sha512-q85i8XLLbrMq550Aw+3EZAGEd5y5eWQlsdDPC0CdSbkNlkd8yFAF3zlzVMBZFCP86GQNk0DwYscogoOLjjOy/g==
+  dependencies:
+    "@applicaster/applicaster-iap" "0.2.5"
     "@inplayer-org/inplayer.js" "2.13.3"
     "@react-native-community/async-storage" "^1.9.0"
     axios "^0.19.1"
@@ -120,33 +112,31 @@
     react-native-dropdownalert "^4.2.1"
     react-native-keyboard-aware-scroll-view "0.9.1"
 
-"@applicaster/quick-brick-list@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-list/-/quick-brick-list-1.2.2.tgz#5496056e7d9abb047eacd96d8a9d74246e9bca8a"
-  integrity sha512-uXHEEoNvJRXD4wc8rZuAxCxi12fMiW7fjDfzRWoWO9q7bDipQCsabImyB12lRNi5i19mk3JZYttUmxJCgUnkzA==
+"@applicaster/quick-brick-list@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-list/-/quick-brick-list-1.3.0.tgz#d50eb4ebc0938135d7182324f39e4cf1604b3695"
+  integrity sha512-A8cJ/j5InM7+F8ZsR6KJ87JbPrRw1lmxi91juWeXKPmL/Xn2y/kb9ZGuT1KF5eLomyeZrVggFnlQxYY79rcCoA==
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-mobile-side-menu@1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-side-menu/-/quick-brick-mobile-side-menu-1.1.13.tgz#23916f3a73c0ec1a18b525941f380d25743ef6b6"
-  integrity sha512-ftCoeJaPoIpGqTh5V6OHxxSbJztaTR5V+XOeTFJg+4wJFhsEk59LSjkpTkZu+2Y6gMOIxjyzdeGKL9Ky6MhHGw==
+"@applicaster/quick-brick-mobile-side-menu@1.1.19":
+  version "1.1.19"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-side-menu/-/quick-brick-mobile-side-menu-1.1.19.tgz#ca773bc4d5b7d2ed7a865c518f5af5755b172cca"
+  integrity sha512-eL1mtU3AV2Tfb56VrcVDsMIAr7ifGu3NuDnpOb7SltzXbzaWLrlpTwCE9HPFl1f26dgSIQNKz+UrGBlMvOrH8Q==
 
-"@applicaster/quick-brick-mobile-toolbar@5.3.2":
-  version "5.3.2"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-toolbar/-/quick-brick-mobile-toolbar-5.3.2.tgz#3d0a5dc36c003e0b8da78fb0107afdd0a2ad2967"
-  integrity sha512-Ae8rjl+fIwyeqNqWEP2xOrkbIoBrbZtAQCuUxgCp3+tJPSvbqxsnf7WQC/PdMqiLt7DwzpiGgcvL9+AKeyrfhA==
+"@applicaster/quick-brick-mobile-toolbar@5.4.11":
+  version "5.4.11"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-mobile-toolbar/-/quick-brick-mobile-toolbar-5.4.11.tgz#b4192ff91accbb0d9b5739df2422676a38a3db90"
+  integrity sha512-BD/WWTeDsL5jAqXRs4BdjOYoeprGacnnjoPbM/6SEIcgKXXFkpfvaLuK430OjjhlkBYroszmZVe6SsKoz1RS2g==
   dependencies:
     ramda "^0.27.0"
 
-"@applicaster/quick-brick-tabs@0.2.10":
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-tabs/-/quick-brick-tabs-0.2.10.tgz#d441ec1039f1f3a5052b54beaec0bfffc8cfb334"
-  integrity sha512-UBRFTf0eBIKmZlZvnGUJOO9Kq7LNNO3sVi4m//QlbfnI9KZleEQJDLKAqtwx3gE/yt9BSTmFOgympbHDFyffcw==
+"@applicaster/quick-brick-tabs@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-tabs/-/quick-brick-tabs-0.3.1.tgz#32bef5506fbbb30da6c0bd1fa8b1a16926732309"
+  integrity sha512-Kb94uMB/YYAt1fI/dIoAoYgRtCIQZfmk4uBT72HXrqgqkTEu7sh5zKbae1zqXuYpBk30VY5HJMpPJ2sm1coOag==
   dependencies:
     ramda "^0.26.1"
-    react "16.8.3"
-    react-native "0.59.10"
 
 "@applicaster/zapp-pipes-dev-kit@^1.4.1":
   version "1.4.1"
@@ -204,89 +194,89 @@
     moment "^2.22.0"
     query-string "^6.0.0"
 
-"@applicaster/zapp-react-dom-app@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-app/-/zapp-react-dom-app-2.3.2-rc.8.tgz#957fcc43e06cea6b532def608b32736f57a0ce83"
-  integrity sha512-9Zm3mO4XvdUmbSu6+9SsbgrxhVhCFoWGuA64UHymfZRtydYx6bExFvbWK9bDq/hRc5DYETWnArBpaRbikaZV2w==
+"@applicaster/zapp-react-dom-app@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-app/-/zapp-react-dom-app-2.3.2-rc.9.tgz#19ac44941a926169ffe5ad61511a8b9bb7d95651"
+  integrity sha512-waAmkOoAPk0U3yHePycBYgv4Ow9yDqmqayeQDGgQHTFNPwwHvd15gvu9YBdUx4/WEf3zY7Pyn+KUVLZA1HXDUw==
   dependencies:
-    "@applicaster/zapp-react-dom-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-redux" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/zapp-react-dom-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-redux" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     history "^4.7.2"
     ramda "0.26.1"
     react-router-dom "^5.1.2"
     typeface-montserrat "^0.0.54"
     video.js "^7.2.2"
 
-"@applicaster/zapp-react-dom-cli-template@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-cli-template/-/zapp-react-dom-cli-template-2.3.2-rc.8.tgz#212a0b9a8b04e8609aa932e50eb7250bccd289c3"
-  integrity sha512-isZ8Ua1MX7n/RJTGtPUoBztipw1djiWiLzhcSSzq2yoSL4oN7oYBuJkjGdafT+anouSLm+H0nkEniX9bwZxVWA==
+"@applicaster/zapp-react-dom-cli-template@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-cli-template/-/zapp-react-dom-cli-template-2.3.2-rc.9.tgz#3439d857c286322e757d153c07a5861e863090d6"
+  integrity sha512-XJ2VZ8q0WzP6BkpLsUWlfzpsH79QxQ6kx6YCKgPJYCKWfs4y2GTJ2GqCvLHbxK1D/4S9Vkf6rLKVbYKn6FuWGA==
   dependencies:
-    "@applicaster/quick-brick-core" "2.3.2-rc.8"
-    "@applicaster/zapp-react-dom-app" "2.3.2-rc.8"
-    "@applicaster/zapp-react-dom-ui-components" "2.3.2-rc.8"
+    "@applicaster/quick-brick-core" "2.3.2-rc.9"
+    "@applicaster/zapp-react-dom-app" "2.3.2-rc.9"
+    "@applicaster/zapp-react-dom-ui-components" "2.3.2-rc.9"
     camelize "^1.0.0"
     ramda "0.26.1"
 
-"@applicaster/zapp-react-dom-ui-components@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-ui-components/-/zapp-react-dom-ui-components-2.3.2-rc.8.tgz#dacf36d5a25bfa1f57fe2ad1298f07108fe684d1"
-  integrity sha512-MD0VHk9+Y0gN7RBJv+h9d+VFN96jLNskJmrzRGAuFM62fiCrup0A9vyo2lWmm5mySbn4IoooLDJjYn/ans5eKw==
+"@applicaster/zapp-react-dom-ui-components@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-dom-ui-components/-/zapp-react-dom-ui-components-2.3.2-rc.9.tgz#8048e3d6ca18c78113178a160743cca937969ad3"
+  integrity sha512-TCaV/184F18vg9nIWuiysVETRoUiYkfweH0THExDHrxhq1TyWncd/lkKocoaph8fmvagyVIY1HZJfmkts725Tg==
   dependencies:
-    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-redux" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-redux" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     react-hot-loader "^4.3.8"
 
-"@applicaster/zapp-react-native-android-tv-app@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-app/-/zapp-react-native-android-tv-app-2.3.2-rc.8.tgz#46acb9d27ab2ae7aff6037beded74bd6dfd5a48b"
-  integrity sha512-o5ZEhDqRxF4HkS+5SyLSLj+oj+A8Zb14VnnjUbB0x+A6YZI9McFsmPq86y3u1fsdXC1EwjQOwXUM+SspNCdU1Q==
+"@applicaster/zapp-react-native-android-tv-app@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-app/-/zapp-react-native-android-tv-app-2.3.2-rc.9.tgz#6dc21f14c8fd4bbbb2e1ce947063c4f25e816705"
+  integrity sha512-y+8RFOvmTekd9tczYk2WUgbnHnHXt0GlE4J9b8GZnTLrUsDLbN+115HURwTYeHcqTam7XDPuMHqgalJhFZC7IQ==
   dependencies:
-    "@applicaster/quick-brick-core" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-redux" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/quick-brick-core" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-redux" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     ramda "^0.26.0"
     react-router-native "^5.1.2"
 
-"@applicaster/zapp-react-native-android-tv-cli-template@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-cli-template/-/zapp-react-native-android-tv-cli-template-2.3.2-rc.8.tgz#67b54762544afdaf09c6645dc3b2a7135f35fca3"
-  integrity sha512-dizdLNWrd96pn9h0MmIAD5QsHgnAOG1OuISaUTK/U9IH6cS8pNdkc1r6J2Ovo6xXrQ2S/GXx7kiUhn2r2hoDPQ==
+"@applicaster/zapp-react-native-android-tv-cli-template@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-cli-template/-/zapp-react-native-android-tv-cli-template-2.3.2-rc.9.tgz#4ecc6e003d7fa073ff43d4e02fd2241b7291fa46"
+  integrity sha512-rdMUw+LBtySjoPZ09dGRG/sieTUGnN8tUDNOn4Rpj9RkaBWPIWqIb6J3/JyODOGhMMtgNOe93bE6f0or8hHOvA==
   dependencies:
     "@applicaster/babel-preset-quick-brick" "2.3.1"
-    "@applicaster/quick-brick-core" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-android-tv-app" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-android-tv-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
+    "@applicaster/quick-brick-core" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-android-tv-app" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-android-tv-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
 
-"@applicaster/zapp-react-native-android-tv-ui-components@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-ui-components/-/zapp-react-native-android-tv-ui-components-2.3.2-rc.8.tgz#610fdda6f42afdc4914db5d60984f8432a19dd76"
-  integrity sha512-oLacbof/MkmlFzsKgB6zslT9+T84g+EfkQq/EZwPUp35Y5t7DoO07SmR2oql46MuR7fbGWQFn9Go2cPiclOjXQ==
+"@applicaster/zapp-react-native-android-tv-ui-components@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-android-tv-ui-components/-/zapp-react-native-android-tv-ui-components-2.3.2-rc.9.tgz#814001d929841498978949703ed5a80e5a3a800d"
+  integrity sha512-x23Ot1RPYn5QyMmysr9XWUNJp0a4ZDNUDjyvR5phcqrkI8aLKWEBGE0yq+3YU021LXJ1HmKXzBn/UvG/ODpy4A==
   dependencies:
-    "@applicaster/zapp-react-native-redux" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/zapp-react-native-redux" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     ramda "^0.26.0"
     uuid "^3.3.2"
 
-"@applicaster/zapp-react-native-app@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-app/-/zapp-react-native-app-2.3.2-rc.8.tgz#e89245aee548b595a92992cfb847d08490b4911b"
-  integrity sha512-ZJGaLVXLUR09Gio5gEAAnOkIr1uVngpQLawUOv+4xcPW6WmAbeGx3TNE1cb73cBm0x+5gCI0fbNJaZCweKcYTA==
+"@applicaster/zapp-react-native-app@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-app/-/zapp-react-native-app-2.3.2-rc.9.tgz#aa86f4c3e64b829e26f9d2dc068a695fb5696e02"
+  integrity sha512-jkhC0b4bMpELkBGfMNdTFjI5ZcxKHSTERmXY8SA1BvOJhcatoK1/3FSAcLnpQa8GmXicNglo4+ot2Pcbs4JRhQ==
   dependencies:
-    "@applicaster/quick-brick-core" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-redux" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/quick-brick-core" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-redux" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     axios "^0.18.0"
     camelize "^1.0.0"
     query-string "^6.1.0"
@@ -294,125 +284,119 @@
     react-router-native "5.1.2"
     url "^0.11.0"
 
-"@applicaster/zapp-react-native-bridge@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-bridge/-/zapp-react-native-bridge-2.3.2-rc.8.tgz#2475bb05e478bc81b14ac0b553484814cbddc126"
-  integrity sha512-XFPYv+gUOJIAHOzdNEzXIxki4MR+3NXIFMeCwbDWI8W9OjqaBS3Pbxuc+ICJW6TtxeqeT0fYMREkJwUF4Im49w==
+"@applicaster/zapp-react-native-bridge@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-bridge/-/zapp-react-native-bridge-2.3.2-rc.9.tgz#b435d0b79746a4ee9e052739236175f2d35bf0ab"
+  integrity sha512-kzgdaUS+iQnJ0h3G2Ct32YvFBq6AHR8IHN7acgIJKMdvi/ZhuGb6xXPN4Tl5VYXt2n6hVynhB00WGKVjDtF7Mw==
   dependencies:
     "@applicaster/zapp-pipes-dev-kit" "^1.4.1"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     uuid "^3.3.2"
 
-"@applicaster/zapp-react-native-cell-1-mobile@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-1-mobile/-/zapp-react-native-cell-1-mobile-0.3.1.tgz#af483acfedeef6039f032aa0c6f8ea11d8813f32"
-  integrity sha512-/E751a47YN/dGLcsgvvxo4PEGfz4EHnqghSpM9aXEKu9AWQBCSpCtI5YANi73cx7CiyTAcmdpTx+jKRx6DAUTA==
-  dependencies:
-    react "16.8.3"
-    react-native "0.59.10"
+"@applicaster/zapp-react-native-cell-1-mobile@0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-1-mobile/-/zapp-react-native-cell-1-mobile-0.7.3.tgz#3e6d0fc21823926f78353f8bab9c1d4b822ad758"
+  integrity sha512-CfSzI9ZInBVREyR3NlBTQRC8riRs3j0dztzT9gRaPtKqJ+GeL127KTe1N6hQnf5kkZqZD1vWmGVvKRpwaVBStg==
 
-"@applicaster/zapp-react-native-cell-2-mobile@0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-2-mobile/-/zapp-react-native-cell-2-mobile-0.5.1.tgz#73770ca0c0671c72160af76b0531cd2d44602ff2"
-  integrity sha512-hAjeWUR6U2ajDmy524yxUcCIC4XyYShcU18R2+VAkn90FzU86NxGybqDw/haALQy18maCPKCRKA8r7LuRncqnQ==
-  dependencies:
-    react "16.8.3"
-    react-native "0.59.10"
+"@applicaster/zapp-react-native-cell-2-mobile@0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-2-mobile/-/zapp-react-native-cell-2-mobile-0.7.0.tgz#5d21bfc646c9de6081fb786d9e1401fd10e3d1cc"
+  integrity sha512-rNBhzqlOdmhQ32O+H5mRjLkflLxVQjMVhaqHx6jJDv5WTJG3Z8+eMolxPzxucT81mgoUavxrRjN+x4qZ5OcnPg==
 
-"@applicaster/zapp-react-native-cell-3-mobile@0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-3-mobile/-/zapp-react-native-cell-3-mobile-0.5.3.tgz#e3eef358278f37150a3c128a73e580a5e1f04a92"
-  integrity sha512-jJ9ySS/IV8QFl33reZKfojItx/p3VmoFqUgiJOPAU74tB41vpmH9tHalRpm223IlQ2/GuOMXqof3ArcQfMQigw==
+"@applicaster/zapp-react-native-cell-3-mobile@0.5.17":
+  version "0.5.17"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-3-mobile/-/zapp-react-native-cell-3-mobile-0.5.17.tgz#03a3a2b8b744602bfe2fda802df278576b1724b1"
+  integrity sha512-o9xoeIsQyXXjZ7E7N3pzfM9s7T+HuBtTbb57ZZXsLNm0BUN2rnfJq3KuVAO/Ry7Mx6bDUxpGsKipLWNw/4e3IQ==
 
 "@applicaster/zapp-react-native-cell-info-mobile@0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cell-info-mobile/-/zapp-react-native-cell-info-mobile-0.2.1.tgz#724476d6114f853881f6515c2efcba1f64d19f64"
   integrity sha512-OsOX8wkLybp+Q6Xo07775pioKl+oGZlMzqJy1vUFmLcr55myUrE9ltVdk5UQTagj9aHoWMQLAiZgZWTcB0LmPQ==
 
-"@applicaster/zapp-react-native-cli-template@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cli-template/-/zapp-react-native-cli-template-2.3.2-rc.8.tgz#b1d8e1f310b42e56f1034a0e9fdac5aaafa318a0"
-  integrity sha512-q/4+Ceb+o2r1ONx+672iQJ6uD10b8JTsMGUoNvKPZWKRIkJgAOCACou9g6c2XXWy4p26U7hqwCJ3czfIlm9xag==
+"@applicaster/zapp-react-native-cli-template@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-cli-template/-/zapp-react-native-cli-template-2.3.2-rc.9.tgz#d0b6829ae8e9c007078d1b2d7ceb2170d9df6ed3"
+  integrity sha512-NpJ8v0pCKf6ZKgg4TMdvhZk7sQLfbDYUWC3f6aK2WJXz2/eKaImJJQMnBb5ahSi3pwwJXOqR9sSa/qgg67V+nw==
   dependencies:
     "@applicaster/babel-preset-quick-brick" "2.3.1"
-    "@applicaster/quick-brick-core" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-app" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
+    "@applicaster/quick-brick-core" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-app" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
 
-"@applicaster/zapp-react-native-default-player@2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-default-player/-/zapp-react-native-default-player-2.0.7.tgz#48cd51f6ba65e5b5250319156bbd5b264019e4b9"
-  integrity sha512-PjV5LCnTVqe9CvkREQDl9akrxdUdJDsY0QRqs/PHb8Wa5F3dN8BDigFPexErs8yxTfxACwBdOLe1RgZZanhA4w==
+"@applicaster/zapp-react-native-default-player@2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-default-player/-/zapp-react-native-default-player-2.2.6.tgz#1af09347138488066e171a0d91ea16ab381801b6"
+  integrity sha512-IFasIrIB8+byl6EimdzcI2jLkTpP2Kzm091vU93Bl6mKaNidXLpKfvrtyo0V7QfxrFXopgFQ15tEkAWDDO5fAw==
   dependencies:
     keymirror "^0.1.1"
 
-"@applicaster/zapp-react-native-redux@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-redux/-/zapp-react-native-redux-2.3.2-rc.8.tgz#3f0a6fc0dc49c8f452f1aae58066112d230d9a5c"
-  integrity sha512-4K9w8lhXrI4hgw6uZvbpcflsDc48eAh1pu4MOlIU1GYxcDjJTUgyHycH93YEicS47taLtgA4YOUKdMrQLq07Hg==
+"@applicaster/zapp-react-native-redux@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-redux/-/zapp-react-native-redux-2.3.2-rc.9.tgz#ed94cc7eec43d4ba763d4073307c97170dbce388"
+  integrity sha512-/pCh1XqBtDS/Z+HW1NoZkhYawjhMPOpidxAVOX7RevjbmvFBBYTvYNiNpjFgiqIWx1VQ0UZEwyHA3ifcIMF/cA==
   dependencies:
-    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     ramda "0.26.1"
     react-redux "^5.0.7"
     redux "4.0.0"
     redux-thunk "^2.3.0"
     reselect "^3.0.1"
 
-"@applicaster/zapp-react-native-tvos-app@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-app/-/zapp-react-native-tvos-app-2.3.2-rc.8.tgz#9a9a0e49ac0b901cd91def53fb379ab15019a957"
-  integrity sha512-FIpe7Blna9z8eZCuRmN7vX2HjsWOWvYjlVUnCwgHj1W4/keRLScHjswEJspRwFkBtqCsJu2p3SYNOFX9LQSijg==
+"@applicaster/zapp-react-native-tvos-app@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-app/-/zapp-react-native-tvos-app-2.3.2-rc.9.tgz#233d508cc6ad6d6e2f7a832c8e4a1eb4d8ba884d"
+  integrity sha512-HPnF8Tksd3gQyGXG7gJUUNa3Pgt+3Ta91VsspLhqSGPJY5YFd1kS28zl+s5z6Qna7arPjOGa7AausjY62011Ig==
   dependencies:
-    "@applicaster/quick-brick-core" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-redux" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/quick-brick-core" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-redux" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     ramda "^0.26.0"
     react-router-native "^5.1.2"
 
-"@applicaster/zapp-react-native-tvos-cli-template@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-cli-template/-/zapp-react-native-tvos-cli-template-2.3.2-rc.8.tgz#35a0bff86431eb6ee6d66709066669c7b3e20616"
-  integrity sha512-Szd04dpZU3UPmYOyeNtPjrkTP3txMGNBP0xSRSYjhxf6uYqLNpCjVpqaLXBU37IrfCZIKJ9sUpTn6OAUsVuQMg==
+"@applicaster/zapp-react-native-tvos-cli-template@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-cli-template/-/zapp-react-native-tvos-cli-template-2.3.2-rc.9.tgz#1eca3b8264035c639f51aac2b80cf6c8d89f3f8b"
+  integrity sha512-A/H4ol3f8r5+mr6zxSVzbFyVj8dUyRBqmYvpMTvABe78V4IMEsVyH+t/XZRDiOWycoHlbH0O0p3fBaR5VJ/GeQ==
   dependencies:
     "@applicaster/babel-preset-quick-brick" "2.3.1"
-    "@applicaster/quick-brick-core" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-tvos-app" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-tvos-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
+    "@applicaster/quick-brick-core" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-tvos-app" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-tvos-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
 
-"@applicaster/zapp-react-native-tvos-ui-components@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-ui-components/-/zapp-react-native-tvos-ui-components-2.3.2-rc.8.tgz#9b3dc7fa76e7efe343b155b9c0f890a62fa09c16"
-  integrity sha512-linHGa3JLOgLtEOxNEUnmqkUyz1TtO3wFwAn+kFXTSCCFe1F+cb5Sg6UW215+gv1D5Wy2n9pWcKv1IyPOUcaMw==
+"@applicaster/zapp-react-native-tvos-ui-components@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-tvos-ui-components/-/zapp-react-native-tvos-ui-components-2.3.2-rc.9.tgz#a85266b27bc6b8387a5ab85b15910d19a23e562c"
+  integrity sha512-F4e8RqwTNE1DS4EImJFxlhv319lUB011IaDdvFj6ssyMoYcqdob5VsjjKhdXIAThl9z31D6A4myE2Dsk+3IRnA==
   dependencies:
-    "@applicaster/zapp-react-native-redux" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/zapp-react-native-redux" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-ui-components" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     ramda "^0.26.0"
     uuid "^3.3.2"
 
-"@applicaster/zapp-react-native-ui-components@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-ui-components/-/zapp-react-native-ui-components-2.3.2-rc.8.tgz#69445e3273a8bf1ec871b78913879c5a8f631b61"
-  integrity sha512-PL0OFYDHASaAPWTRfa+IxIEKerOaA/R06g/24Uqk/bgqcte3UIpDaiaMkn8NY1hdo3wY0oXQkMErm1Qu9idQgQ==
+"@applicaster/zapp-react-native-ui-components@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-ui-components/-/zapp-react-native-ui-components-2.3.2-rc.9.tgz#c19e84b8f8af999b11bd4b992676b5578e5017a3"
+  integrity sha512-SA2e2Ers7MSBSNC7nrtq0rX7wFKHooEOoY7/u2sVRYyAZfHU1BZ9HnD6oMmdiCIx4UBaXm93ItNlR6C+GFHzig==
   dependencies:
-    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-redux" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-utils" "2.3.2-rc.8"
+    "@applicaster/zapp-react-native-bridge" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-redux" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-utils" "2.3.2-rc.9"
     ramda "0.26.1"
     react-native-status-bar-height "^2.4.0"
     react-router-native "^5.1.2"
     url "^0.11.0"
     uuid "^3.3.2"
 
-"@applicaster/zapp-react-native-utils@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-utils/-/zapp-react-native-utils-2.3.2-rc.8.tgz#0f49433c44f1164bf25f61eea1ca1c8069e8ac10"
-  integrity sha512-oFWLEFF93WicCIiwJEj02yn+nQ13hA2nyN6TFVppHuWQSYSaniiHhPcVR71VEMpczpcd/UVSM1r1LHr3LplNcg==
+"@applicaster/zapp-react-native-utils@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapp-react-native-utils/-/zapp-react-native-utils-2.3.2-rc.9.tgz#d62f034e83f382dfd89a9b682874ae649d6b2e9e"
+  integrity sha512-m3mzVBpdC1IZUvhjBO1QHJPNSEvtKqoUIEXUbvfCleI3n50dQA+GNsMHMs6s7Eu3CbkmDVzh7LywvoQZO/M6CQ==
   dependencies:
     buffer "^5.2.1"
     camelize "^1.0.0"
@@ -421,15 +405,15 @@
     prop-types "^15.0.0"
     ramda "0.26.1"
 
-"@applicaster/zapplicaster-cli@2.3.2-rc.8":
-  version "2.3.2-rc.8"
-  resolved "https://registry.yarnpkg.com/@applicaster/zapplicaster-cli/-/zapplicaster-cli-2.3.2-rc.8.tgz#e90d5bc21896897cceb795464afd09601d819827"
-  integrity sha512-/mZ12Nk1XDA8GJSqRBVhthhUGxdJsMnIIlKeyQ7N0J+ca9uDfKJ2vxe5yCQ93K5ddlQ6e3aIsMAm7Ci+yrnLQQ==
+"@applicaster/zapplicaster-cli@2.3.2-rc.9":
+  version "2.3.2-rc.9"
+  resolved "https://registry.yarnpkg.com/@applicaster/zapplicaster-cli/-/zapplicaster-cli-2.3.2-rc.9.tgz#e81d6aa2b960f01136071ef92a8be4127c2a41c1"
+  integrity sha512-0PNtsS+eJcECA5//KEu/Nn22y3SEXn+SR7oOxMjHfdd+LQ1A2ZnCp8hxy65fetoSy5unkB8tXQSwd+aHyrNR1A==
   dependencies:
-    "@applicaster/zapp-react-dom-cli-template" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-android-tv-cli-template" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-cli-template" "2.3.2-rc.8"
-    "@applicaster/zapp-react-native-tvos-cli-template" "2.3.2-rc.8"
+    "@applicaster/zapp-react-dom-cli-template" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-android-tv-cli-template" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-cli-template" "2.3.2-rc.9"
+    "@applicaster/zapp-react-native-tvos-cli-template" "2.3.2-rc.9"
     aws-sdk "^2.224.1"
     axios "^0.18.0"
     camelize "^1.0.0"

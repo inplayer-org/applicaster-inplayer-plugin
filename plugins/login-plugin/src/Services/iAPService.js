@@ -38,7 +38,7 @@ async function externalPaymentValidation({
   access_fee_id,
 }) {
   const transactionIdentifier = platformSelect({
-    ios: purchaseCompletion?.purchase.transaction?.transactionIdentifier,
+    ios: purchaseCompletion?.purchase?.transaction?.transactionIdentifier,
     android: purchaseCompletion?.transactionIdentifier,
   });
 
