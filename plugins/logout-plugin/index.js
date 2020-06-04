@@ -8,12 +8,7 @@ import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils"
 import { signOut } from "@applicaster/quick-brick-inplayer/src/Services/inPlayerService";
 import { getStyles } from "./Customization";
 
-const getScreenStyles = R.compose(
-  R.prop("styles"),
-  R.find(R.propEq("type", "quick-brick-inplayer-logout")),
-  R.values,
-  R.prop("rivers")
-);
+const getScreenStyles = R.path(["screenData", "styles"]);
 
 const InPlayerLogout = (props) => {
   const [loading, setLoading] = useState(true);
@@ -22,7 +17,6 @@ const InPlayerLogout = (props) => {
     configuration: { completion_action = "go_back" },
   } = props;
   const screenStyles = getStyles(getScreenStyles(props));
-
   var infoText = screenStyles?.title_succeed_text;
 
   const invokeCompleteAction = () => {
