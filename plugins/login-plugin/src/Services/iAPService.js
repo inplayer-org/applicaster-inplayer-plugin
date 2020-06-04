@@ -39,7 +39,7 @@ async function externalPaymentValidation({
 }) {
   const transactionIdentifier = platformSelect({
     ios: purchaseCompletion?.purchase.transaction?.transactionIdentifier,
-    android: purchaseCompletion?.transactionIdentifier,,
+    android: purchaseCompletion?.transactionIdentifier,
   });
 
   const receipt = purchaseCompletion?.receipt;
