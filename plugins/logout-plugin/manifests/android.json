@@ -91,7 +91,7 @@
     ]
   },
   "platform": "android",
-  "dependency_version": "0.0.23",
-  "manifest_version": "0.0.23",
+  "dependency_version": "0.0.24",
+  "manifest_version": "0.0.24",
   "min_zapp_sdk": "20.0.0"
 }
