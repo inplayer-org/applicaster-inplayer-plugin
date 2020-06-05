@@ -62,19 +62,31 @@ const AssetFlow = (props) => {
 
   const preparePurchaseData = async () => {
     const {
-      configuration: { in_player_client_id },
+      configuration: {
+        in_player_client_id,
+        consumable_type_mapper,
+        non_consumable_type_mapper,
+        subscription_type_mapper,
+      },
     } = props;
     try {
       const resultPurchaseData = await Promise.all([
         getAccessFees(assetId),
-        getAllPackages(in_player_client_id),
+        getAllPackages({
+          clientId: in_player_client_id,
+          purchaseMapping: {
+            consumable_type_mapper,
+            non_consumable_type_mapper,
+            subscription_type_mapper,
+          },
+        }),
       ]);
 
       const purchasableItems = retrievePurchasableItems({
         feesToSearch: resultPurchaseData[0],
         allPackagesData: resultPurchaseData[1],
       });
-      console.log({ purchasableItems });
+
       const purchasableItemsData = await retrieveProducts(purchasableItems);
       console.log({ purchasableItemsData });
       stillMounted &&

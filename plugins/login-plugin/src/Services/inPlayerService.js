@@ -88,13 +88,15 @@ export function getAccessFees(assetId) {
   return InPlayer.Asset.getAssetAccessFees(assetId);
 }
 
-export function getAllPackages(clientId) {
+export function getAllPackages({ clientId, purchaseMapping }) {
   return InPlayer.Asset.getPackage(clientId)
     .then((packagesList) => {
       return packagesList.collection;
     })
     .then(loadAllPackages)
-    .then(retrieveMappedAccessFees)
+    .then((packages) => {
+      return retrieveMappedAccessFees({ packages, purchaseMapping });
+    })
     .catch((error) => {
       console.log({ error });
     });
@@ -108,11 +110,11 @@ export function loadAllPackages(collection) {
   return Promise.all(promises);
 }
 
-export function retrieveMappedAccessFees(packages) {
+export function retrieveMappedAccessFees({ packages, purchaseMapping }) {
   return packages.map((packageData) => {
     const { access_fees, id } = packageData;
     const purchaseData = access_fees.map((fee) => {
-      const product_type = accessTypeToProducType(fee);
+      const product_type = accessTypeToProducType({ fee, purchaseMapping });
       return {
         ...fee,
         package_id: id,
@@ -124,13 +126,19 @@ export function retrieveMappedAccessFees(packages) {
   });
 }
 
-export function accessTypeToProducType(fee) {
+export function accessTypeToProducType({ fee, purchaseMapping }) {
+  const {
+    consumable_type_mapper,
+    non_consumable_type_mapper,
+    subscription_type_mapper,
+  } = purchaseMapping;
   const accessType = fee?.access_type?.name;
-  if (accessType == "ppv") {
-    return "nonConsumable";
-  } else if (accessType == "consumable") {
+
+  if (accessType == consumable_type_mapper) {
     return "consumable";
-  } else if (accessType == "subscription") {
+  } else if (accessType == non_consumable_type_mapper) {
+    return "nonConsumable";
+  } else if (accessType == subscription_type_mapper) {
     return "subscription";
   }
   return null;
