@@ -310,7 +310,8 @@ const baseManifest = {
     {
       group: true,
       label: "Purchases mapping",
-      folded: true,
+      tooltip: "",
+      folded: false,
       fields: [
         {
           type: "text",
