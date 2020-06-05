@@ -310,30 +310,22 @@
       "initial_value": "prod"
     },
     {
-      "group": true,
-      "label": "Purchases mapping",
-      "tooltip": "",
-      "folded": false,
-      "fields": [
-        {
-          "type": "text",
-          "key": "consumable_type_mapper",
-          "tooltip_text": "Mapping key for consumable purchase",
-          "default": "consumable"
-        },
-        {
-          "type": "text",
-          "key": "non_consumable_type_mapper",
-          "tooltip_text": "Mapping key for non consumable purchase",
-          "default": "ppv"
-        },
-        {
-          "type": "text",
-          "key": "subscription_type_mapper",
-          "tooltip_text": "Mapping key for subscription purchase",
-          "default": "subscription"
-        }
-      ]
+      "type": "text",
+      "key": "consumable_type_mapper",
+      "tooltip_text": "Mapping key for consumable purchase",
+      "default": "consumable"
+    },
+    {
+      "type": "text",
+      "key": "non_consumable_type_mapper",
+      "tooltip_text": "Mapping key for non consumable purchase",
+      "default": "ppv"
+    },
+    {
+      "type": "text",
+      "key": "subscription_type_mapper",
+      "tooltip_text": "Mapping key for subscription purchase",
+      "default": "subscription"
     }
   ],
   "targets": [
@@ -343,8 +335,8 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.1.61",
-  "manifest_version": "0.1.61",
+  "dependency_version": "0.1.62",
+  "manifest_version": "0.1.62",
   "api": {},
   "project_dependencies": [],
   "min_zapp_sdk": "20.2.0-Dev",
