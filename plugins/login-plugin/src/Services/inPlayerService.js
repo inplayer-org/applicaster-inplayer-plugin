@@ -128,6 +128,8 @@ export function accessTypeToProducType(fee) {
   const accessType = fee?.access_type?.name;
   if (accessType == "ppv") {
     return "nonConsumable";
+  } else if (accessType == "consumable") {
+    return "consumable";
   } else if (accessType == "subscription") {
     return "subscription";
   }
