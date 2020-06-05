@@ -11,13 +11,8 @@ export default class VideoPlayer extends React.Component {
     this.state = { licenceKeyProvided: false };
   }
 
-  // Must be removed when plugin will move to quickbrick 3.0.0 + when double screen bug will be fixed.
-  // Latest version of quickbrick has plugin configuration as a prop
   jwPlayerLicenceKey() {
-    // Proper way to get it
-    //const licenceKey = jwLicenceKey(pluginConfiguration);
-    return this._reactInternalFiber?.elementType?.__plugin_configuration
-      ?.jw_player_android_key;
+    return jwLicenceKey(pluginConfiguration);
   }
 
   componentDidMount() {

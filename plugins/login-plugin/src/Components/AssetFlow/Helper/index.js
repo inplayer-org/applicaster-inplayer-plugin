@@ -13,7 +13,7 @@ export function invokeCallBack(
 
 export function prepareActionSheetDataSource(data) {
   var actionSheetDataSource = data.map((item) => {
-    return `${item.localizedTitle}: ${item.priceLocale}`;
+    return `${item.title}: ${item.price}`;
   });
   actionSheetDataSource.push("Cancel");
   return actionSheetDataSource;

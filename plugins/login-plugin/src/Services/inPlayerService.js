@@ -62,11 +62,20 @@ export function retrievePurchasableItems({ feesToSearch, allPackagesData }) {
     purchaseData: searchedPackage?.purchase_data,
   });
 
-  return getAvailiblePurchaseIDs(searchedPackage);
+  return getAvailiblePurchaseData(searchedPackage);
 }
 
-export function getAvailiblePurchaseIDs(packageData) {
-  return packageData?.purchase_data.map(R.prop("purchase_id"));
+export function getAvailiblePurchaseData(packageData) {
+  return packageData?.purchase_data.map((currentPackage) => {
+    const {
+      product_type: productType,
+      purchase_id: productIdentifier,
+    } = currentPackage;
+    return {
+      productType,
+      productIdentifier,
+    };
+  });
 }
 
 export function findPackageByAssetFees({ feesToSearch, allPackagesData }) {
@@ -103,10 +112,26 @@ export function retrieveMappedAccessFees(packages) {
   return packages.map((packageData) => {
     const { access_fees, id } = packageData;
     const purchaseData = access_fees.map((fee) => {
-      return { ...fee, package_id: id, purchase_id: `${id}_${fee.id}` };
+      const product_type = accessTypeToProducType(fee);
+      return {
+        ...fee,
+        package_id: id,
+        product_type,
+        purchase_id: `${id}_${fee.id}`,
+      };
     });
     return { ...packageData, purchase_data: purchaseData };
   });
+}
+
+export function accessTypeToProducType(fee) {
+  const accessType = fee?.access_type?.name;
+  if (accessType == "ppv") {
+    return "nonConsumable";
+  } else if (accessType == "subscription") {
+    return "subscription";
+  }
+  return null;
 }
 
 export async function isAuthenticated() {

@@ -1,13 +1,14 @@
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
 import { validateExternalPayment } from "./inPlayerService";
-import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
-
 import R from "ramda";
 
 export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   console.log({ purchaseID, item_id, access_fee_id });
   if (purchaseID) {
-    return ApplicasterIAPModule.purchase(purchaseID, false)
+    return ApplicasterIAPModule.purchase({
+      productIdentifier: purchaseID,
+      finishing: false,
+    })
       .then((purchaseCompletion) =>
         externalPaymentValidation({
           purchaseCompletion,
@@ -18,7 +19,7 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
       )
       .then(ApplicasterIAPModule.finishPurchasedTransaction);
   } else {
-    throw new Error(`PurchaseID: ${purchaseID}  not exist`);
+    throw new Error(`PurchaseID: ${purchaseID} not exist`);
   }
 }
 
@@ -37,10 +38,7 @@ async function externalPaymentValidation({
   item_id,
   access_fee_id,
 }) {
-  const transactionIdentifier = platformSelect({
-    ios: purchaseCompletion?.purchase?.transaction?.transactionIdentifier,
-    android: purchaseCompletion?.transactionIdentifier,
-  });
+  const transactionIdentifier = purchaseCompletion?.transactionIdentifier;
 
   const receipt = purchaseCompletion?.receipt;
   const result = await validateExternalPayment({
@@ -49,5 +47,5 @@ async function externalPaymentValidation({
     access_fee_id,
   });
   console.log("Verification Result:", { result });
-  return transactionIdentifier;
+  return { transactionIdentifier };
 }

@@ -16,10 +16,6 @@ export const isVideoEntry = (payload) => {
   return R.compose(R.equals("video"), R.path(["type", "value"]))(payload);
 };
 
-export const retrievePurchaseProductId = ({ payload }) => {
-  return R.compose(R.path(["extensions", "purchase_id"]))(payload);
-};
-
 export const assetPaymentRequired = R.compose(
   R.equals(402),
   R.path(["response", "status"])

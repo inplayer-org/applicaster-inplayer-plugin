@@ -57,7 +57,12 @@ const InPlayer = (props) => {
   }, []);
 
   const assetFlowCallback = ({ success, payload, error }) => {
-    console.log("Asset Flow CallBack", { success, payload, error });
+    console.log("Asset Flow CallBack Anton", {
+      success,
+      payload,
+      error,
+      callback,
+    });
     if (error) {
       showAlert("General Error!", error?.message);
     }

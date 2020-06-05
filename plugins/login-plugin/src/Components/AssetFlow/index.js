@@ -8,7 +8,6 @@ import {
   checkAccessForAsset,
   getAccessFees,
   getAllPackages,
-  unsubscribeNotifications,
 } from "../../Services/inPlayerService";
 
 import { purchaseAnItem, retrieveProducts } from "../../Services/iAPService";
@@ -75,8 +74,9 @@ const AssetFlow = (props) => {
         feesToSearch: resultPurchaseData[0],
         allPackagesData: resultPurchaseData[1],
       });
-
+      console.log({ purchasableItems });
       const purchasableItemsData = await retrieveProducts(purchasableItems);
+      console.log({ purchasableItemsData });
       stillMounted &&
         setPackageData({
           loading: false,
@@ -115,7 +115,7 @@ const AssetFlow = (props) => {
     console.log("LoadAsset");
     const retryInCaseFail = startPurchaseFlow == false;
     const { payload } = props;
-    checkAccessForAsset({ assetId: assetId, retryInCaseFail: retryInCaseFail })
+    checkAccessForAsset({ assetId, retryInCaseFail })
       .then((data) => {
         console.log("LoadAsset2", { data });
 
