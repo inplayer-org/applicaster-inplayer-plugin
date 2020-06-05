@@ -312,7 +312,8 @@
     {
       "group": true,
       "label": "Purchases mapping",
-      "folded": true,
+      "tooltip": "",
+      "folded": false,
       "fields": [
         {
           "type": "text",
@@ -342,8 +343,8 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.1.60",
-  "manifest_version": "0.1.60",
+  "dependency_version": "0.1.61",
+  "manifest_version": "0.1.61",
   "api": {},
   "project_dependencies": [],
   "min_zapp_sdk": "20.2.0-Dev",
