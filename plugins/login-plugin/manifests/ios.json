@@ -317,8 +317,8 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.1.53",
-  "manifest_version": "0.1.53",
+  "dependency_version": "0.1.54",
+  "manifest_version": "0.1.54",
   "api": {},
   "project_dependencies": [],
   "min_zapp_sdk": "20.2.0-Dev",
