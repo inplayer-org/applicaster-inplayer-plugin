@@ -8,7 +8,7 @@
         "value": "video"
       },
       "id": "asset-73075",
-      "title": "Generic HTML Purchasable Consumable  asset_id: 73075",
+      "title": "Generic HTML Purchasable Non Consumable asset_id: 73075",
       "published": "1970-01-19T07:14:18+00:00",
       "media_group": [
         {
@@ -40,7 +40,7 @@
           "type": "image",
           "media_item": [
             {
-              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover3.jpg",
+              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover1.jpg",
               "key": "image_base"
             }
           ]
@@ -51,6 +51,31 @@
       },
       "extensions": {
         "inplayer_asset_id": "72343"
+      }
+    },
+    {
+      "type": {
+        "value": "video"
+      },
+      "id": "asset-73224",
+      "title": "Generic HTML Purchasable Consumable asset_id: 73224",
+      "published": "1970-01-19T07:14:18+00:00",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": [
+            {
+              "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover2.jpg",
+              "key": "image_base"
+            }
+          ]
+        }
+      ],
+      "content": {
+        "src": ""
+      },
+      "extensions": {
+        "inplayer_asset_id": "73075"
       }
     },
     {
