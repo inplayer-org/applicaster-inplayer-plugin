@@ -39,6 +39,7 @@ async function externalPaymentValidation({
   access_fee_id,
 }) {
   const transactionIdentifier = purchaseCompletion?.transactionIdentifier;
+  const productIdentifier = purchaseCompletion?.productIdentifier;
 
   const receipt = purchaseCompletion?.receipt;
   const result = await validateExternalPayment({
@@ -47,5 +48,5 @@ async function externalPaymentValidation({
     access_fee_id,
   });
   console.log("Verification Result:", { result });
-  return { transactionIdentifier };
+  return { transactionIdentifier, productIdentifier };
 }
