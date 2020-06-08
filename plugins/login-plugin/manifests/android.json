@@ -335,8 +335,8 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.1.65",
-  "manifest_version": "0.1.65",
+  "dependency_version": "0.1.66",
+  "manifest_version": "0.1.66",
   "api": {
     "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     "react_packages": [
@@ -347,10 +347,13 @@
   },
   "project_dependencies": [
     {
-      "@react-native-community_async-storage": "node_modules/@react-native-community/async-storage/android"
+      "react-native-community_async-storage": "node_modules/@react-native-community/async-storage/android"
     },
     {
       "ApplicasterIAP": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap"
+    },
+    {
+      "ApplicasterIAPRN": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-rn"
     }
   ],
   "extra_dependencies": [],
