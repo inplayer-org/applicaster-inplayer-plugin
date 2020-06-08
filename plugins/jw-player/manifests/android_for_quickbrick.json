@@ -19,7 +19,7 @@
   "ui_frameworks": [
     "quickbrick"
   ],
-  "platform": "android",
+  "platform": "android_for_quickbrick",
   "dependency_version": "0.0.44",
   "manifest_version": "0.0.44",
   "api": {
@@ -38,7 +38,7 @@
       "url": "https://mvn.jwplayer.com/content/repositories/releases/"
     }
   ],
-  "min_zapp_sdk": "20.0.0",
+  "min_zapp_sdk": "0.1.0-alpha1",
   "project_dependencies": [
     {
       "jw-media-player": "node_modules/react-native-jw-media-player-applicaster/android"

@@ -19,36 +19,29 @@
   "ui_frameworks": [
     "quickbrick"
   ],
-  "platform": "android",
+  "platform": "ios_for_quickbrick",
   "dependency_version": "0.0.44",
   "manifest_version": "0.0.44",
-  "api": {
-    "class_name": "com.appgoalz.rnjwplayer.RNJWPlayerPackage",
-    "react_packages": [
-      "com.appgoalz.rnjwplayer.RNJWPlayerPackage"
-    ],
-    "proguard_rules": "-keep public class com.appgoalz.rnjwplayer.** {*;}"
-  },
+  "api": {},
   "npm_dependencies": [
-    "react-native-jw-media-player-applicaster@0.0.6",
-    "@applicaster/quick-brick-jw-player@0.0.14"
+    "react-native-jw-media-player-applicaster@0.0.6"
   ],
-  "dependency_repository_url": [
+  "dependency_repository_url": [],
+  "min_zapp_sdk": "0.1.0-alpha1",
+  "extra_dependencies": [
     {
-      "url": "https://mvn.jwplayer.com/content/repositories/releases/"
+      "JWPlayer-SDK": "'= 3.12.0'"
+    },
+    {
+      "react-native-jw-media-player-applicaster": ":path => 'node_modules/react-native-jw-media-player-applicaster/ios/react-native-jw-media-player-applicaster.podspec'"
     }
   ],
-  "min_zapp_sdk": "20.0.0",
-  "project_dependencies": [
-    {
-      "jw-media-player": "node_modules/react-native-jw-media-player-applicaster/android"
-    }
-  ],
+  "project_dependencies": [],
   "custom_configuration_fields": [
     {
       "type": "text",
-      "key": "jw_player_android_key",
-      "tooltip_text": "JWPlayerKey android licence key",
+      "key": "plist.JWPlayerKey",
+      "tooltip_text": "JWPlayerKey tvos licence key",
       "default": ""
     }
   ]
