@@ -364,12 +364,16 @@ const project_dependencies = {
   ios: [],
   android: [
     {
-      "@react-native-community_async-storage":
+      "react-native-community_async-storage":
         "node_modules/@react-native-community/async-storage/android",
     },
     {
       ApplicasterIAP:
         "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap",
+    },
+    {
+      ApplicasterIAPRN:
+        "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-rn",
     },
   ],
 };
