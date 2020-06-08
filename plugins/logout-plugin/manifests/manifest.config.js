@@ -100,5 +100,7 @@ function createManifest({ version, platform }) {
 const min_zapp_sdk = {
   ios: "20.2.0-Dev",
   android: "20.0.0",
+  ios_for_quickbrick: "0.1.0-alpha1",
+  android_for_quickbrick: "0.1.0-alpha1",
 };
 module.exports = createManifest;

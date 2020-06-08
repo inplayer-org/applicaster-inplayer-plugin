@@ -16,19 +16,21 @@ const baseManifest = {
 };
 
 function createManifest({ version, platform }) {
+  const basePlatform = platform.includes(ios) ? "ios" : "android";
+
   const manifest = {
     ...baseManifest,
 
     platform,
     dependency_version: version,
     manifest_version: version,
-    api: api[platform],
-    npm_dependencies: npm_dependencies[platform],
-    dependency_repository_url: dependency_repository_url[platform],
+    api: api[basePlatform],
+    npm_dependencies: npm_dependencies[basePlatform],
+    dependency_repository_url: dependency_repository_url[basePlatform],
     min_zapp_sdk: min_zapp_sdk[platform],
-    extra_dependencies: extra_dependencies[platform],
-    project_dependencies: project_dependencies[platform],
-    custom_configuration_fields: custom_configuration_fields[platform],
+    extra_dependencies: extra_dependencies[basePlatform],
+    project_dependencies: project_dependencies[basePlatform],
+    custom_configuration_fields: custom_configuration_fields[basePlatform],
   };
 
   return manifest;
@@ -47,6 +49,8 @@ const min_zapp_sdk = {
   tvos: "12.2.0-Dev",
   ios: "20.2.0-Dev",
   android: "20.0.0",
+  ios_for_quickbrick: "0.1.0-alpha1",
+  android_for_quickbrick: "0.1.0-alpha1",
 };
 
 const dependency_repository_url = {

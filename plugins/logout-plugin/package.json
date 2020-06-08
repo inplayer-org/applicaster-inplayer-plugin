@@ -16,13 +16,15 @@
     "@applicaster/quick-brick-inplayer": "^0.0.23",
     "@applicaster/zapp-react-native-redux": "^2.3.1",
     "@applicaster/zapp-react-native-utils": "^2.3.1",
-    "react": "16.8.3",
-    "react-native": "0.59.10"
+    "react": "16.11.0",
+    "react-native": "0.62.2"
   },
   "applicaster": {
     "supportedPlatforms": [
       "ios",
-      "android"
+      "android",
+      "ios_for_quickbrick",
+      "android_for_quickbrick"
     ],
     "zappOwnerAccountId": "5e12fac7666333000ec0f8ab"
   }

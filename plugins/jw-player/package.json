@@ -11,8 +11,8 @@
   "license": "ISC",
   "peerDependencies": {
     "@applicaster/zapp-react-native-utils": "^2.3.1",
-    "react": "16.8.3",
-    "react-native": "0.59.10"
+    "react": "16.11.0",
+    "react-native": "0.62.2"
   },
   "dependencies": {
     "react-native-jw-media-player-applicaster": "0.0.5"
@@ -20,7 +20,9 @@
   "applicaster": {
     "supportedPlatforms": [
       "ios",
-      "android"
+      "android",
+      "ios_for_quickbrick",
+      "android_for_quickbrick"
     ],
     "zappOwnerAccountId": "5e12fac7666333000ec0f8ab"
   }

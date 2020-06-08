@@ -331,15 +331,17 @@ const baseManifest = {
 };
 
 function createManifest({ version, platform }) {
+  const basePlatform = platform.includes(ios) ? "ios" : "android";
+
   const manifest = {
     ...baseManifest,
     platform,
     dependency_version: version,
     manifest_version: version,
-    api: api[platform],
-    project_dependencies: project_dependencies[platform],
+    api: api[basePlatform],
+    project_dependencies: project_dependencies[basePlatform],
+    extra_dependencies: extra_dependencies[basePlatform],
     min_zapp_sdk: min_zapp_sdk[platform],
-    extra_dependencies: extra_dependencies[platform],
   };
 
   return manifest;
@@ -388,6 +390,8 @@ const extra_dependencies = {
 const min_zapp_sdk = {
   ios: "20.2.0-Dev",
   android: "20.0.0",
+  ios_for_quickbrick: "0.1.0-alpha1",
+  android_for_quickbrick: "0.1.0-alpha1",
 };
 
 module.exports = createManifest;

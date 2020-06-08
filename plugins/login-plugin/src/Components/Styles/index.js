@@ -10,7 +10,7 @@ export const title = {
   marginBottom: 80,
 };
 export const input = {
-  fontFamily: "Montserrat-SemiBold",
+  fontFamily: "Montserrat-SemiBold", //TODO: Change to another deafult font
   backgroundColor: "transparent",
   fontSize: 13,
   color: "white",
