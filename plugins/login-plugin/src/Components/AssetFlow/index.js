@@ -151,7 +151,7 @@ const AssetFlow = (props) => {
         } else {
           completeAssetFlow({
             success: false,
-            error: { ...error, message: error?.response?.status },
+            error: { ...error, message: error?.response?.status?.toString() },
           });
         }
       });
