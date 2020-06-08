@@ -334,7 +334,7 @@
   "ui_frameworks": [
     "quickbrick"
   ],
-  "platform": "android",
+  "platform": "android_for_quickbrick",
   "dependency_version": "0.1.65",
   "manifest_version": "0.1.65",
   "api": {
@@ -354,5 +354,5 @@
     }
   ],
   "extra_dependencies": [],
-  "min_zapp_sdk": "20.0.0"
+  "min_zapp_sdk": "0.1.0-alpha1"
 }
