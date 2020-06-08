@@ -16,7 +16,7 @@ const baseManifest = {
 };
 
 function createManifest({ version, platform }) {
-  const basePlatform = platform.includes(ios) ? "ios" : "android";
+  const basePlatform = platform.includes("ios") ? "ios" : "android";
 
   const manifest = {
     ...baseManifest,
