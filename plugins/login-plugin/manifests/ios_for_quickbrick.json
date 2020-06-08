@@ -334,25 +334,18 @@
   "ui_frameworks": [
     "quickbrick"
   ],
-  "platform": "android",
+  "platform": "ios_for_quickbrick",
   "dependency_version": "0.1.65",
   "manifest_version": "0.1.65",
-  "api": {
-    "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
-    "react_packages": [
-      "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
-      "com.applicaster.iap.reactnative.IAPPackage"
-    ],
-    "proguard_rules": "-keep public class com.reactnativecommunity.asyncstorage.** {*;}"
-  },
-  "project_dependencies": [
+  "api": {},
+  "project_dependencies": [],
+  "extra_dependencies": [
     {
-      "@react-native-community_async-storage": "node_modules/@react-native-community/async-storage/android"
+      "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'"
     },
     {
-      "ApplicasterIAP": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap"
+      "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
     }
   ],
-  "extra_dependencies": [],
-  "min_zapp_sdk": "20.0.0"
+  "min_zapp_sdk": "0.1.0-alpha1"
 }

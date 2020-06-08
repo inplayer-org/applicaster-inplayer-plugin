@@ -335,11 +335,10 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.1.63",
-  "manifest_version": "0.1.63",
+  "dependency_version": "0.1.65",
+  "manifest_version": "0.1.65",
   "api": {},
   "project_dependencies": [],
-  "min_zapp_sdk": "20.2.0-Dev",
   "extra_dependencies": [
     {
       "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'"
@@ -347,5 +346,6 @@
     {
       "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
     }
-  ]
+  ],
+  "min_zapp_sdk": "20.2.0-Dev"
 }
