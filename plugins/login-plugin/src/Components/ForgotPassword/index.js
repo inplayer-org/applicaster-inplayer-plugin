@@ -32,6 +32,7 @@ export const ForgotPassword = (props) => {
   }, []);
 
   const onPressRequestPaswordButton = () => {
+    Keyboard.dismiss();
     const { forgotPasswordFlowCallback, onError } = props;
     const title = "Login form issue";
     if (validateEmail(email) == false) {
@@ -55,6 +56,7 @@ export const ForgotPassword = (props) => {
         innerRef={(ref) => {
           this.scroll = ref;
         }}
+        keyboardShouldPersistTaps="handled"
         extraScrollHeight={65}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}

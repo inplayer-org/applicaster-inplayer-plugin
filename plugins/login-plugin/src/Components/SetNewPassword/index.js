@@ -41,6 +41,7 @@ export const SetNewPassword = (props) => {
   };
 
   const onPressSetNewPasswordButton = () => {
+    Keyboard.dismiss();
     const { setNewPasswordCallback, onError } = props;
 
     const errorData = validateData();
@@ -62,6 +63,7 @@ export const SetNewPassword = (props) => {
         innerRef={(ref) => {
           this.scroll = ref;
         }}
+        keyboardShouldPersistTaps="handled"
         extraScrollHeight={65}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}

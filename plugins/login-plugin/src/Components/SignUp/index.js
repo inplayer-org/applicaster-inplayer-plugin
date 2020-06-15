@@ -22,6 +22,7 @@ const SignUp = (props) => {
   const { width: screenWidth } = useDimensions("window");
 
   const signUp = () => {
+    Keyboard.dismiss();
     const { createAccount, onSignUpError } = props;
     const errorData = validateData();
     if (errorData) {
@@ -57,6 +58,7 @@ const SignUp = (props) => {
         innerRef={(ref) => {
           this.scroll = ref;
         }}
+        keyboardShouldPersistTaps="handled"
         extraScrollHeight={65}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}

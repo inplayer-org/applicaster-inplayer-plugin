@@ -76,6 +76,7 @@ export const Login = (props) => {
   }, [initialEmail]);
 
   const onPressLoginButton = () => {
+    Keyboard.dismiss();
     const { login, onLoginError } = props;
 
     const title = "Login form issue";
@@ -127,6 +128,7 @@ export const Login = (props) => {
         innerRef={(ref) => {
           this.scroll = ref;
         }}
+        keyboardShouldPersistTaps="handled"
         extraScrollHeight={65}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}
