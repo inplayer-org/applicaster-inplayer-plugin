@@ -26,8 +26,9 @@ const SignUp = (props) => {
     const errorData = validateData();
     if (errorData) {
       onSignUpError(errorData);
+    } else {
+      createAccount({ fullName, email, password });
     }
-    createAccount({ fullName, email, password });
   };
 
   const validateData = () => {
