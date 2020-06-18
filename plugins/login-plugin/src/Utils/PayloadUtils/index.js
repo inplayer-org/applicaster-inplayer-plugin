@@ -1,6 +1,6 @@
 import R from "ramda";
 
-export const inPlayerAssetId = (payload) => {
+export const inPlayerAssetId = ({ payload, configuration }) => {
   const assetIdFromCustomKey = inPlayerAssetIdFromCustomKey({
     payload,
     configuration,
@@ -28,6 +28,7 @@ const inPlayerAssetIdFromCustomKey = ({ payload, configuration }) => {
   if (in_player_custom_asset_key) {
     const devidedArray = R.split(".")(in_player_custom_asset_key);
     const assetId = R.path(devidedArray)(payload);
+    console.log("MytestItem", { assetId });
     return assetId;
   } else {
     return null;
