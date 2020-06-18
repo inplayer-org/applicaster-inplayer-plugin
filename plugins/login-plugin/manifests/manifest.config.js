@@ -292,6 +292,12 @@ const baseManifest = {
       default: "",
     },
     {
+      type: "text",
+      key: "in_player_custom_asset_key",
+      tooltip_text: "Custom asset key",
+      default: "extensions.event_inplayer_id",
+    },
+    {
       type: "tag_select",
       key: "in_player_environment",
       tooltip_text: "InPlayer working environment",

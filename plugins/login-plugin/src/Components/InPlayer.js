@@ -43,7 +43,7 @@ const InPlayer = (props) => {
     setConfig(in_player_environment);
 
     if (isVideoEntry(payload)) {
-      if (inPlayerAssetId(payload)) {
+      if (inPlayerAssetId({ payload, configuration: props.configuration })) {
         stillMounted && setHookType(HookTypeData.PLAYER_HOOK);
       } else {
         callback && callback({ success: true, error: null, payload });

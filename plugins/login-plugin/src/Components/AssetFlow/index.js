@@ -23,7 +23,10 @@ const styles = StyleSheet.create({
 });
 
 const AssetFlow = (props) => {
-  const assetId = inPlayerAssetId(props.payload);
+  const assetId = inPlayerAssetId({
+    payload: props.payload,
+    configuration: props.configuration,
+  });
 
   const [actionSheetDataSource, setActionSheetDataSource] = useState([]);
   const [assetLoading, setAssetLoading] = useState(true);
