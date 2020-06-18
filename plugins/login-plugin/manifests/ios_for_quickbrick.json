@@ -294,6 +294,12 @@
       "default": ""
     },
     {
+      "type": "text",
+      "key": "in_player_custom_asset_key",
+      "tooltip_text": "Custom asset key",
+      "default": "extensions.event_inplayer_id"
+    },
+    {
       "type": "tag_select",
       "key": "in_player_environment",
       "tooltip_text": "InPlayer working environment",
@@ -335,8 +341,8 @@
     "quickbrick"
   ],
   "platform": "ios_for_quickbrick",
-  "dependency_version": "0.1.70",
-  "manifest_version": "0.1.70",
+  "dependency_version": "0.1.71",
+  "manifest_version": "0.1.71",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
