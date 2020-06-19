@@ -5,7 +5,6 @@ import LoadingScreen from "../LoadingScreen";
 import { container } from "../Styles";
 
 import {
-  retrievePurchasableItems,
   checkAccessForAsset,
   getAccessFees,
   getAllPackages,
@@ -18,6 +17,7 @@ import {
   prepareActionSheetDataSource,
   cancelButtonIndex,
   mergeFeesTitlesIfNeeded,
+  retrieveInPlayerFeesData,
 } from "./Helper";
 
 const styles = StyleSheet.create({
@@ -75,7 +75,7 @@ const AssetFlow = (props) => {
       },
     } = props;
     try {
-      const purchaseMapping = {
+      const purchaseKeysMapping = {
         consumable_type_mapper,
         non_consumable_type_mapper,
         subscription_type_mapper,
@@ -85,18 +85,18 @@ const AssetFlow = (props) => {
         getAccessFees(assetId),
         getAllPackages({
           clientId: in_player_client_id,
-          purchaseMapping,
+          purchaseKeysMapping,
         }),
       ]);
 
       if (resultPurchaseData.length === 0) {
         throw new Error("No fees availible for current asset");
       }
-      const inPlayerFeesData = retrievePurchasableItems({
+      const inPlayerFeesData = retrieveInPlayerFeesData({
         feesToSearch: resultPurchaseData[0],
         allPackagesData: resultPurchaseData[1],
         assetId,
-        purchaseMapping,
+        purchaseKeysMapping,
       });
 
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
@@ -109,8 +109,7 @@ const AssetFlow = (props) => {
         storeFeesData,
         inPlayerFeesData,
       });
-      //Callback if no items
-      console.log({ storeFeesData });
+
       stillMounted &&
         setPackageData({
           loading: false,

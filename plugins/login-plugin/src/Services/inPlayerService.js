@@ -1,5 +1,3 @@
-import { Platform } from "react-native";
-import R from "ramda";
 import InPlayer from "@inplayer-org/inplayer.js";
 import { checkStatus, params, errorResponse } from "./InPlayerUtils";
 import { getSrcFromAsset } from "../Utils/OVPProvidersMapper";
@@ -7,7 +5,7 @@ import { initFromNativeLocalStorage, localStorage } from "../LocalStorageHack";
 import { withTimeout, DEFAULT_NETWORK_TIMEOUT } from "../Utils";
 
 import { assetPaymentRequired } from "../Utils/PayloadUtils";
-import { accessTypeToProducType } from "./InPlayerServiceHelper";
+import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
 
 const IN_PLAYER_LAST_EMAIL_USED_KEY = "com.inplayer.lastEmailUsed";
 
@@ -53,107 +51,12 @@ export async function checkAccessForAsset({
   }
 }
 
-export function retrievePurchasableItems({
-  feesToSearch,
-  allPackagesData,
-  assetId,
-  purchaseMapping,
-}) {
-  console.log({ feesToSearch, allPackagesData });
-  const searchedPackage = findPackageByAssetFees({
-    feesToSearch,
-    allPackagesData,
-  });
-
-  return getAvailiblePurchaseData({
-    feesToSearch,
-    allPackagesData,
-    assetId,
-    purchaseMapping,
-  });
-}
-export function purchaseDataForFee({
-  fee,
-  allPackagesData,
-  assetId,
-  purchaseMapping,
-}) {
-  const { item_type, id, item_title, description } = fee;
-  console.log({ fee });
-  if (item_type === "package") {
-    for (let i = 0; i < allPackagesData.length; i++) {
-      const packageItem = allPackagesData[i];
-      const packageId = packageItem?.id;
-      const access_fees = packageItem?.access_fees;
-      console.log({
-        packageItem,
-        packageId,
-        access_fees,
-        searchItem: R.find(R.propEq("id", id))(access_fees),
-      });
-      if (access_fees && packageId && R.find(R.propEq("id", id))(access_fees)) {
-        console.log({
-          productType: accessTypeToProducType({ fee, purchaseMapping }),
-          productIdentifier: `${packageId}_${id}`,
-        });
-        return {
-          productType: accessTypeToProducType({ fee, purchaseMapping }),
-          productIdentifier: `${packageId}_${id}`,
-          title: item_title || description,
-        };
-      }
-    }
-    return null;
-  } else {
-    console.log({
-      productType: accessTypeToProducType({ fee, purchaseMapping }),
-      productIdentifier: `${assetId}_${id}`,
-    });
-    return {
-      productType: accessTypeToProducType({ fee, purchaseMapping }),
-      productIdentifier: `${assetId}_${id}`,
-      title: item_title || description,
-    };
-  }
-}
-
-export function getAvailiblePurchaseData({
-  allPackagesData,
-  feesToSearch,
-  assetId,
-  purchaseMapping,
-}) {
-  let purchaseDataArray = [];
-
-  for (let i = 0; i < feesToSearch.length; i++) {
-    const fee = feesToSearch[i];
-    const purchaseData = purchaseDataForFee({
-      allPackagesData,
-      fee,
-      assetId,
-      purchaseMapping,
-    });
-    if (purchaseData) {
-      console.log("Adding new Item:", { purchaseData });
-      purchaseDataArray.push(purchaseData);
-    }
-  }
-  console.log({ purchaseDataArray });
-  return purchaseDataArray;
-}
-
-export function findPackageByAssetFees({ feesToSearch, allPackagesData }) {
-  return allPackagesData.find((packageData) => {
-    return R.equals(packageData.access_fees, feesToSearch);
-  });
-}
-
 export function getAccessFees(assetId) {
   return InPlayer.Asset.getAssetAccessFees(assetId);
 }
 
-export function getAllPackages({ clientId, purchaseMapping }) {
-  console.log({ clientId, purchaseMapping });
+export function getAllPackages({ clientId, purchaseKeysMapping }) {
+  console.log({ clientId, purchaseKeysMapping });
   return InPlayer.Asset.getPackage(clientId)
     .then((packagesList) => {
       return packagesList.collection;
@@ -170,44 +73,6 @@ export function loadAllPackages(collection) {
   });
 
   return Promise.all(promises);
-}
-
-export function retrieveMappedAccessFees({ packages, purchaseMapping }) {
-  return packages.map((packageData) => {
-    const { access_fees, id } = packageData;
-    const purchaseData = access_fees.map((fee) => {
-      const product_type = accessTypeToProducType({ fee, purchaseMapping });
-      return {
-        ...fee,
-        package_id: id,
-        product_type,
-        purchase_id: `${id}_${fee.id}`,
-      };
-    });
-    return { ...packageData, purchase_data: purchaseData };
-  });
-}
-
-export function accessTypeToProducType({ fee, purchaseMapping }) {
-  console.log({ purchaseMapping });
-  const {
-    consumable_type_mapper,
-    non_consumable_type_mapper,
-    subscription_type_mapper,
-  } = purchaseMapping;
-  const accessType = fee?.access_type?.name;
-
-  if (accessType == consumable_type_mapper) {
-    return "consumable";
-  } else if (
-    accessType == non_consumable_type_mapper ||
-    accessType === "ppv_custom"
-  ) {
-    return "nonConsumable";
-  } else if (accessType == subscription_type_mapper) {
-    return "subscription";
-  }
-  return null;
 }
 
 export async function isAuthenticated() {
@@ -294,12 +159,6 @@ export async function getLastEmailUsed() {
   return localStorage.getItem(IN_PLAYER_LAST_EMAIL_USED_KEY);
 }
 
-function externalPurchaseValidationURL() {
-  // URL Example: https://staging-v2.inplayer.com/v2/external-payments/apple/validate
-  const platform = Platform.OS === "ios" ? "apple" : "google-play";
-  return `${InPlayer.config.BASE_URL}/v2/external-payments/${platform}/validate`;
-}
-
 //TODO: This func not working with Web, implement proper way in future
 export async function validateExternalPayment({
   receipt,
@@ -354,9 +213,12 @@ export async function validateExternalPayment({
   return await response.json();
 }
 
+// Currently is not working
 export function unsubscribeNotifications() {
   InPlayer.unsubscribe();
 }
+
+// Currently is not working
 export async function subscribeNotifications({ clientId, callbacks }) {
   console.log({ clientId: clientId });
   const iotData = await InPlayer.Notifications.getIotToken();
