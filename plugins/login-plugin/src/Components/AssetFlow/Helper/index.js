@@ -69,7 +69,7 @@ function purchaseDataForFee({
   assetId,
   purchaseKeysMapping,
 }) {
-  const { item_type, id, item_title, description } = fee;
+  const { item_type } = fee;
   console.log({ fee });
   if (item_type === "package") {
     return purchaseDataForPackageFee({
@@ -83,6 +83,8 @@ function purchaseDataForFee({
 }
 
 function purchaseDataForSingleFee({ fee, assetId, purchaseKeysMapping }) {
+  const { id, item_title, description } = fee;
+
   console.log({
     productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
     productIdentifier: `${assetId}_${id}`,
@@ -93,7 +95,13 @@ function purchaseDataForSingleFee({ fee, assetId, purchaseKeysMapping }) {
     title: item_title || description,
   };
 }
-function purchaseDataForPackageFee({ fee, allPackagesData, purchaseKeysMapping }) {
+function purchaseDataForPackageFee({
+  fee,
+  allPackagesData,
+  purchaseKeysMapping,
+}) {
+  const { id, item_title, description } = fee;
+
   for (let i = 0; i < allPackagesData.length; i++) {
     const packageItem = allPackagesData[i];
     const packageId = packageItem?.id;
