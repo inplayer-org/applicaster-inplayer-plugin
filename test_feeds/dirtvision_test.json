@@ -1,0 +1,26 @@
+{
+  "title": "From the vault",
+  "type": { "value": "feed" },
+  "entry": [
+    {
+      "id": 105063,
+      "type": { "value": "video" },
+      "title": "DIRTcar eSports | Eldora | June 17, 2020 | Exclusive",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "event_id": 105063,
+        "event_inplayer_id": "105063",
+        "ds_product_ids": ["105063"]
+      }
+    }
+  ]
+}
