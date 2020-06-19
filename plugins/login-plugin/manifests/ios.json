@@ -341,8 +341,8 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.1.72",
-  "manifest_version": "0.1.72",
+  "dependency_version": "0.2.0",
+  "manifest_version": "0.2.0",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
