@@ -3,8 +3,8 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import ActionSheet from "react-native-actionsheet";
 import LoadingScreen from "../LoadingScreen";
 import { container } from "../Styles";
+
 import {
-  retrievePurchasableItems,
   checkAccessForAsset,
   getAccessFees,
   getAllPackages,
@@ -16,6 +16,8 @@ import {
   invokeCallBack,
   prepareActionSheetDataSource,
   cancelButtonIndex,
+  mergeFeesTitlesIfNeeded,
+  retrieveInPlayerFeesData,
 } from "./Helper";
 
 const styles = StyleSheet.create({
@@ -73,30 +75,46 @@ const AssetFlow = (props) => {
       },
     } = props;
     try {
+      const purchaseKeysMapping = {
+        consumable_type_mapper,
+        non_consumable_type_mapper,
+        subscription_type_mapper,
+      };
+
       const resultPurchaseData = await Promise.all([
         getAccessFees(assetId),
         getAllPackages({
           clientId: in_player_client_id,
-          purchaseMapping: {
-            consumable_type_mapper,
-            non_consumable_type_mapper,
-            subscription_type_mapper,
-          },
+          purchaseKeysMapping,
         }),
       ]);
 
-      const purchasableItems = retrievePurchasableItems({
+      if (resultPurchaseData.length === 0) {
+        throw new Error("No fees availible for current asset");
+      }
+      const inPlayerFeesData = retrieveInPlayerFeesData({
         feesToSearch: resultPurchaseData[0],
         allPackagesData: resultPurchaseData[1],
+        assetId,
+        purchaseKeysMapping,
       });
 
-      const purchasableItemsData = await retrieveProducts(purchasableItems);
-      console.log({ purchasableItemsData });
+      const storeFeesData = await retrieveProducts(inPlayerFeesData);
+
+      if (storeFeesData.length === 0) {
+        throw new Error("No items availible in store");
+      }
+
+      mergeFeesTitlesIfNeeded({
+        storeFeesData,
+        inPlayerFeesData,
+      });
+
       stillMounted &&
         setPackageData({
           loading: false,
           error: null,
-          data: purchasableItemsData,
+          data: storeFeesData,
         });
     } catch (error) {
       stillMounted &&

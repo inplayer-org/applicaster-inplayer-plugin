@@ -20,6 +20,8 @@ export const inPlayerAssetId = ({ payload, configuration }) => {
     R.ifElse(Array.isArray, R.head, R.always(null)),
     R.path(["extensions", "ds_product_ids"])
   )(payload);
+  console.log({ payload, assetIdFallback });
+
   return assetIdFallback;
 };
 
