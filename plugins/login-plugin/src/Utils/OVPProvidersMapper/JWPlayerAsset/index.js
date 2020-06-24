@@ -1,27 +1,44 @@
-import { Platform } from 'react-native';
+import { Platform } from "react-native";
 
-export const getSrcForJWPlayer = ({ inPlayerItemAccess, inPlayerContent }) => {
+export const getSrcForJWPlayer = ({ inPlayerContent }) => {
   return inPlayerContent ? JWPlayerContent(inPlayerContent) : null;
 };
 const JWPlayerContent = (inPlayerContent) => {
   console.log("JWPlayerContent", { inPlayerContent });
 
-  const mobilePlatform = Platform.OS === 'ios' || Platform.OS === 'android';
-  const webPlatform = Platform.OS === 'web';
-  const { mobile_url = null, web_url = null} = inPlayerContent;
-  if (mobile_url && mobilePlatform) {
+  const {
+    mobile_url = null,
+    web_url = null,
+    video_id = null,
+  } = inPlayerContent;
+
+  if (isMobileURLValid({ mobile_url, video_id })) {
     return mobile_url;
   }
-  if (web_url && webPlatform) {
+  if (isWebURLValid({ web_url, video_id })) {
     return web_url;
   }
 
-  const { video_id = null, stream_url = null } = inPlayerContent;
-  return stream_url || JWPlayerContentFromMediaID(video_id);
+  return video_id || fallbackURL({ video_id });
 };
 
-const JWPlayerContentFromMediaID = (mediaId) => {
-  return mediaId
-    ? `https://content.jwplatform.com/videos/${mediaId}.m3u8`
+const fallbackURL = ({ video_id }) => {
+  return video_id
+    ? `https://content.jwplatform.com/videos/${video_id}.m3u8`
     : null;
+};
+
+const isMobileURLValid = ({ mobile_url, video_id }) => {
+  const mobilePlatform = Platform.OS === "ios" || Platform.OS === "android";
+
+  return mobilePlatform && isUrlValidForPlatform({ video_id, url: mobile_url });
+};
+
+const isWebURLValid = ({ web_url, video_id }) => {
+  const webPlatform = Platform.OS === "web";
+  return webPlatform && isUrlValidForPlatform({ video_id, url: web_url });
+};
+
+const isUrlValidForPlatform = ({ video_id, url }) => {
+  return video_id && video_id.length > 0 && url && url.length > 0;
 };
