@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { View, TextInput, findNodeHandle, Keyboard } from "react-native";
+import { View, TextInput, findNodeHandle, Keyboard, BackHandler } from "react-native";
 import { inputFieldStyle } from "../../Utils/Customization";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -31,6 +31,13 @@ const SignUp = (props) => {
       createAccount({ fullName, email, password });
     }
   };
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', props?.onBackButton);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', props?.onBackButton);
+    };
+  }, []);
 
   const validateData = () => {
     const title = "Sign Up form issue";

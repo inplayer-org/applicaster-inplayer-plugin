@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, findNodeHandle, Keyboard } from "react-native";
+import {View, TextInput, findNodeHandle, Keyboard, BackHandler} from "react-native";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -22,8 +22,10 @@ export const SetNewPassword = (props) => {
   let stillMounted = true;
 
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', props?.onBackButton);
     return () => {
       stillMounted = false;
+      BackHandler.removeEventListener('hardwareBackPress', props?.onBackButton);
     };
   }, []);
 
