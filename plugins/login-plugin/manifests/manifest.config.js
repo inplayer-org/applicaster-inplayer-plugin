@@ -5,7 +5,7 @@ const baseManifest = {
   author_email: "zapp@applicaster.com",
   name: "inPlayer Hook Plugin",
   description: "InPlayer Hook Plugin",
-  type: "general",
+  type: "login",
   screen: true,
   react_native: true,
   identifier: "quick-brick-inplayer",
