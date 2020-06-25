@@ -7,17 +7,15 @@ export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   if (purchaseID) {
     return ApplicasterIAPModule.purchase({
       productIdentifier: purchaseID,
-      finishing: false,
-    })
-      .then((purchaseCompletion) =>
-        externalPaymentValidation({
-          purchaseCompletion,
-          purchaseID,
-          item_id,
-          access_fee_id,
-        })
-      )
-      .then(ApplicasterIAPModule.finishPurchasedTransaction);
+      finishing: true,
+    }).then((purchaseCompletion) =>
+      externalPaymentValidation({
+        purchaseCompletion,
+        purchaseID,
+        item_id,
+        access_fee_id,
+      })
+    );
   } else {
     throw new Error(`PurchaseID: ${purchaseID} not exist`);
   }

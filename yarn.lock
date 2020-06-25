@@ -121,10 +121,10 @@
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-inplayer@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.2.1.tgz#5855be229f5be74226d3bb16e3a5f694c994edbe"
-  integrity sha512-63DILh//ywGD303lZI6oOZL7hOMy+6eR7S7f48OLKIbNtlqfGoIswNtGtEcLm7NrzNxGppYwf6BB6Lk79KkZ4g==
+"@applicaster/quick-brick-inplayer@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.2.2.tgz#b584278c5c993ccc6ee5165c83c611b30cf3df82"
+  integrity sha512-7Ocjqas+7TC/QKnV35N3tMsopfrLMAi7auOJUrZik6tcGDqafbVcxBsRJ0lMd8S8XxvcMT6VaHi9hsx/r/z/gA==
   dependencies:
     "@applicaster/applicaster-iap" "0.2.9"
     "@inplayer-org/inplayer.js" "2.13.3"
