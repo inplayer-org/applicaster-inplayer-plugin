@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, ActivityIndicator } from "react-native";
-
-import R from "ramda";
+import { Alert, View, ActivityIndicator } from "react-native";
 
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
-import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
-import { signOut } from "@applicaster/quick-brick-inplayer/src/Services/inPlayerService";
+import { signOut } from "../../Services/inPlayerService";
 import { removeFromLocalStorage} from "../../Utils/UserAccount";
-
-const getScreenStyles = R.path(["screenData", "styles"]);
 
 const LogoutFlow = (props) => {
     const [loading, setLoading] = useState(true);
     const navigator = useNavigation();
     const {
-        configuration: { completion_action = "go_back" },
+        configuration: { logout_completion_action = "go_back" },
     } = props;
+    const { screenStyles } = props;
 
     const invokeCompleteAction = () => {
-        if (completion_action === "go_home") {
+        if (logout_completion_action === "go_home") {
             navigator.goHome();
         } else {
             navigator.goBack();
@@ -34,6 +30,16 @@ const LogoutFlow = (props) => {
         await removeFromLocalStorage('idToken');
     }
 
+    const showLogoutError = () => {
+        const errorMessage = screenStyles?.logout_fail_text;
+        const buttonText = screenStyles?.logout_fail_button_text;
+        Alert.alert("",
+                    errorMessage,
+                    [{text: buttonText, onPress: () => navigator.goBack()}
+                    ]
+        );
+    }
+
     const performSignOut = () => {
         signOut()
             .then((didLogout) => {
@@ -43,11 +49,11 @@ const LogoutFlow = (props) => {
                         invokeCompleteAction();
                     }, 2000);
                 } else {
-                    navigator.goBack();
+                    showLogoutError();
                 }
             })
             .catch(() => {
-                //infoText = screenStyles?.title_fail_text;
+                showLogoutError();
             })
             .finally(() => {
                 setLoading(false);
@@ -58,12 +64,15 @@ const LogoutFlow = (props) => {
         <View
             style={{
                 flex: 1,
+                backgroundColor: screenStyles?.logout_background_color,
                 alignItems: "center",
                 height: "100%",
                 justifyContent: "center",
             }}
         >
-            <ActivityIndicator color={"white"} size={"large"} />
+            {loading === true ? (
+                <ActivityIndicator color={"white"} size={"large"} />
+            ) : null }
         </View>
     );
 };

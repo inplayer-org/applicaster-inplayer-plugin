@@ -277,6 +277,24 @@
         "type": "text_input",
         "label": "Create account link title",
         "initial_value": "No user? Sign Up!"
+      },
+      {
+        "key": "logout_background_color",
+        "type": "color_picker",
+        "label": "Logout screen background color",
+        "initial_value": "#161b29ff"
+      },
+      {
+        "key": "logout_fail_text",
+        "type": "text_input",
+        "label": "Text failed title",
+        "initial_value": "Logout Failed"
+      },
+      {
+        "key": "logout_fail_button_text",
+        "type": "text_input",
+        "label": "Logout failed alert button title",
+        "initial_value": "Ok"
       }
     ]
   },

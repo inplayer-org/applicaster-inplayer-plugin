@@ -31,6 +31,7 @@ const InPlayer = (props) => {
     USER_ACCOUNT: "UserAccount"
   };
 
+  console.log("KEK21", getScreenStyles(props));
   const [token, setIdtoken] = useState(null);
   const navigator = useNavigation();
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
@@ -139,12 +140,14 @@ const InPlayer = (props) => {
 
   const renderLogoutScreen = () => {
     return (
-        <LogoutFlow {...props} />
+        <LogoutFlow
+            screenStyles={screenStyles}
+            {...props}
+        />
     );
   }
 
   const renderUACFlow = () => {
-    console.log("LUL",token);
     return token ? renderLogoutScreen() : renderScreenHook();
   };
 

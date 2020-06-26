@@ -276,6 +276,24 @@ const baseManifest = {
         label: "Create account link title",
         initial_value: "No user? Sign Up!",
       },
+      {
+        "key": "logout_background_color",
+        "type": "color_picker",
+        "label": "Logout screen background color",
+        "initial_value": "#161b29ff"
+      },
+      {
+        "key": "logout_fail_text",
+        "type": "text_input",
+        "label": "Logout failed text",
+        "initial_value": "Logout Failed"
+      },
+      {
+        "key": "logout_fail_button_text",
+        "type": "text_input",
+        "label": "Logout failed alert button text",
+        "initial_value": "Ok"
+      }
     ],
   },
   custom_configuration_fields: [
@@ -312,6 +330,22 @@ const baseManifest = {
         },
       ],
       initial_value: "prod",
+    },
+    {
+      type: "tag_select",
+      key: "logout_completion_action",
+      tooltip_text: "Defines what action plugin should do after user log out. ",
+      options: [
+        {
+          text: "Go back to previous screen",
+          value: "go_back",
+        },
+        {
+          text: "Go back to home screen",
+          value: "go_home",
+        },
+      ],
+      initial_value: "go_back",
     },
     {
       type: "text",
