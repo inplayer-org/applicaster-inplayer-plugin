@@ -31,9 +31,8 @@ const InPlayer = (props) => {
     USER_ACCOUNT: "UserAccount"
   };
 
-  console.log("KEK21", getScreenStyles(props));
-  const [token, setIdtoken] = useState(null);
   const navigator = useNavigation();
+  const [token, setIdtoken] = useState(null);
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const { callback, payload } = props;
