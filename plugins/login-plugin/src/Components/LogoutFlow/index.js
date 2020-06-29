@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Alert, View, ActivityIndicator } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 
+import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { signOut } from "../../Services/inPlayerService";
 import { removeFromLocalStorage} from "../../Utils/UserAccount";
@@ -12,6 +13,7 @@ const LogoutFlow = (props) => {
         configuration: { logout_completion_action = "go_back" },
     } = props;
     const { screenStyles } = props;
+    var infoText = screenStyles?.logout_title_succeed_text;
 
     const invokeCompleteAction = () => {
         if (logout_completion_action === "go_home") {
@@ -30,33 +32,33 @@ const LogoutFlow = (props) => {
         await removeFromLocalStorage('idToken');
     }
 
-    const showLogoutError = () => {
-        const errorMessage = screenStyles?.logout_fail_text;
-        const buttonText = screenStyles?.logout_fail_button_text;
-        Alert.alert("",
-                    errorMessage,
-                    [
-                        { text: buttonText, onPress: () => navigator.goBack() }
-                    ]
-        );
-    }
-
     const performSignOut = () => {
         signOut()
             .then(async (didLogout) => {
                 if (didLogout) {
                     await removeIdToken();
-                    invokeCompleteAction();
+                    setTimeout(() => {
+                        invokeCompleteAction();
+                    }, 2000);
                 } else {
-                    showLogoutError();
+                    navigator.goBack();
                 }
             })
             .catch(() => {
-                showLogoutError();
+                infoText = screenStyles?.logout_title_fail_text;
             })
             .finally(() => {
                 setLoading(false);
             });
+    };
+
+    const textStyle = {
+        fontFamily: platformSelect({
+            ios: screenStyles?.logout_title_font_ios,
+            android: screenStyles?.logout_title_font_android,
+        }),
+        fontSize: screenStyles?.logout_title_font_size,
+        color: screenStyles?.logout_title_font_color,
     };
 
     return (
@@ -69,9 +71,11 @@ const LogoutFlow = (props) => {
                 justifyContent: "center",
             }}
         >
-            {
-                loading && <ActivityIndicator color={"white"} size={"large"} />
-            }
+            {loading === true ? (
+                <ActivityIndicator color={"white"} size={"large"} />
+            ) : (
+                <Text style={textStyle}>{infoText}</Text>
+            )}
         </View>
     );
 };

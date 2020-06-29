@@ -279,21 +279,45 @@ const baseManifest = {
       {
         "key": "logout_background_color",
         "type": "color_picker",
-        "label": "Logout screen background color",
+        "label": "Logout background font color",
         "initial_value": "#161b29ff"
       },
       {
-        "key": "logout_fail_text",
-        "type": "text_input",
-        "label": "Logout failed text",
-        "initial_value": "Logout Failed"
+        "key": "logout_title_font_ios",
+        "type": "ios_font_selector",
+        "label": "Logout iOS title font",
+        "initial_value": "Montserrat-Bold"
       },
       {
-        "key": "logout_fail_button_text",
+        "key": "logout_title_font_android",
+        "type": "android_font_selector",
+        "label": "Logout Android title font",
+        "initial_value": "Montserrat-Bold"
+      },
+      {
+        "key": "logout_title_font_size",
+        "type": "number_input",
+        "label": "Logout title font size",
+        "initial_value": 15
+      },
+      {
+        "key": "logout_title_font_color",
+        "type": "color_picker",
+        "label": "Logout title font color",
+        "initial_value": "#ffffffff"
+      },
+      {
+        "key": "logout_title_succeed_text",
         "type": "text_input",
-        "label": "Logout failed alert button text",
-        "initial_value": "Ok"
-      }
+        "label": "Logout text succeed title",
+        "initial_value": "Successfully Logged Out"
+      },
+      {
+        "key": "logout_title_fail_text",
+        "type": "text_input",
+        "label": "Logout text failed title",
+        "initial_value": "Logout Failed"
+      },
     ],
   },
   custom_configuration_fields: [
