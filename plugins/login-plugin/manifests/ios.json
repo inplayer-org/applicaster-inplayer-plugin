@@ -5,7 +5,7 @@
   "author_email": "zapp@applicaster.com",
   "name": "inPlayer Hook Plugin",
   "description": "InPlayer Hook Plugin",
-  "type": "general",
+  "type": "login",
   "screen": true,
   "react_native": true,
   "identifier": "quick-brick-inplayer",
@@ -399,8 +399,8 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.2.3",
-  "manifest_version": "0.2.3",
+  "dependency_version": "0.2.4",
+  "manifest_version": "0.2.4",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
