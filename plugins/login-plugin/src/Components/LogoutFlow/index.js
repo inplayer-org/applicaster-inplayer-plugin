@@ -35,7 +35,8 @@ const LogoutFlow = (props) => {
         const buttonText = screenStyles?.logout_fail_button_text;
         Alert.alert("",
                     errorMessage,
-                    [{text: buttonText, onPress: () => navigator.goBack()}
+                    [
+                        { text: buttonText, onPress: () => navigator.goBack() }
                     ]
         );
     }
@@ -45,9 +46,7 @@ const LogoutFlow = (props) => {
             .then((didLogout) => {
                 if (didLogout) {
                     removeIdToken();
-                    setTimeout(() => {
-                        invokeCompleteAction();
-                    }, 2000);
+                    invokeCompleteAction();
                 } else {
                     showLogoutError();
                 }
@@ -70,9 +69,9 @@ const LogoutFlow = (props) => {
                 justifyContent: "center",
             }}
         >
-            {loading === true ? (
-                <ActivityIndicator color={"white"} size={"large"} />
-            ) : null }
+            {
+                loading && <ActivityIndicator color={"white"} size={"large"} />
+            }
         </View>
     );
 };

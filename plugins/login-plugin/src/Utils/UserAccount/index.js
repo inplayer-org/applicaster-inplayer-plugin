@@ -1,7 +1,7 @@
-import * as R from 'ramda';
+import * as R from "ramda";
 
-import { parseJsonIfNeeded } from '@applicaster/zapp-react-native-utils/functionUtils';
-import { localStorage as storage } from '@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage';
+import { parseJsonIfNeeded } from "@applicaster/zapp-react-native-utils/functionUtils";
+import { localStorage as storage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 
 export const isHook = (navigator) => {
     return !!R.propOr(false, 'hookPlugin')(navigator.routeData());

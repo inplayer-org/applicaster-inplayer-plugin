@@ -6,7 +6,7 @@ import LogoutFlow from "./LogoutFlow";
 import R from "ramda";
 
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
-import { localStorage as storage } from '@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage';
+import { localStorage as storage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 import { initFromNativeLocalStorage } from "../LocalStorageHack";
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
@@ -32,7 +32,7 @@ const InPlayer = (props) => {
   };
 
   const navigator = useNavigation();
-  const [token, setIdtoken] = useState(null);
+  const [idToken, setIdtoken] = useState(null);
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const { callback, payload } = props;
@@ -97,7 +97,8 @@ const InPlayer = (props) => {
 
   const accountFlowCallback = ({ success }) => {
     if (success) {
-      storage.setItem('idToken', true);
+      const token = localStorage.getItem("inplayer_token");
+      storage.setItem('idToken', token);
     }
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
@@ -147,7 +148,7 @@ const InPlayer = (props) => {
   }
 
   const renderUACFlow = () => {
-    return token ? renderLogoutScreen() : renderScreenHook();
+    return idToken ? renderLogoutScreen() : renderScreenHook();
   };
 
   const renderFlow = () => {
