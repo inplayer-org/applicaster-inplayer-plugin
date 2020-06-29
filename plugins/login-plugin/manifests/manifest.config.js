@@ -5,7 +5,7 @@ const baseManifest = {
   author_email: "zapp@applicaster.com",
   name: "inPlayer Hook Plugin",
   description: "InPlayer Hook Plugin",
-  type: "general",
+  type: "login",
   screen: true,
   react_native: true,
   identifier: "quick-brick-inplayer",
@@ -276,6 +276,48 @@ const baseManifest = {
         label: "Create account link title",
         initial_value: "No user? Sign Up!",
       },
+      {
+        "key": "logout_background_color",
+        "type": "color_picker",
+        "label": "Logout background font color",
+        "initial_value": "#161b29ff"
+      },
+      {
+        "key": "logout_title_font_ios",
+        "type": "ios_font_selector",
+        "label": "Logout iOS title font",
+        "initial_value": "Montserrat-Bold"
+      },
+      {
+        "key": "logout_title_font_android",
+        "type": "android_font_selector",
+        "label": "Logout Android title font",
+        "initial_value": "Montserrat-Bold"
+      },
+      {
+        "key": "logout_title_font_size",
+        "type": "number_input",
+        "label": "Logout title font size",
+        "initial_value": 15
+      },
+      {
+        "key": "logout_title_font_color",
+        "type": "color_picker",
+        "label": "Logout title font color",
+        "initial_value": "#ffffffff"
+      },
+      {
+        "key": "logout_title_succeed_text",
+        "type": "text_input",
+        "label": "Logout text succeed title",
+        "initial_value": "Successfully Logged Out"
+      },
+      {
+        "key": "logout_title_fail_text",
+        "type": "text_input",
+        "label": "Logout text failed title",
+        "initial_value": "Logout Failed"
+      },
     ],
   },
   custom_configuration_fields: [
@@ -312,6 +354,22 @@ const baseManifest = {
         },
       ],
       initial_value: "prod",
+    },
+    {
+      type: "tag_select",
+      key: "logout_completion_action",
+      tooltip_text: "Defines what action plugin should do after user log out. ",
+      options: [
+        {
+          text: "Go back to previous screen",
+          value: "go_back",
+        },
+        {
+          text: "Go back to home screen",
+          value: "go_home",
+        },
+      ],
+      initial_value: "go_back",
     },
     {
       type: "text",
