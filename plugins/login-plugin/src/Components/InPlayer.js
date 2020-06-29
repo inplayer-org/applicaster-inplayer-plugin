@@ -6,7 +6,7 @@ import LogoutFlow from "./LogoutFlow";
 import R from "ramda";
 
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
-import { localStorage as storage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
+import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 import { initFromNativeLocalStorage } from "../LocalStorageHack";
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
@@ -95,10 +95,10 @@ const InPlayer = (props) => {
       });
   };
 
-  const accountFlowCallback = ({ success }) => {
+  const accountFlowCallback = async ({ success }) => {
     if (success) {
       const token = localStorage.getItem("inplayer_token");
-      storage.setItem('idToken', token);
+      await defaultStorage.setItem('idToken', token);
     }
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;

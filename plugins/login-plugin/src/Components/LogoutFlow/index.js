@@ -43,9 +43,9 @@ const LogoutFlow = (props) => {
 
     const performSignOut = () => {
         signOut()
-            .then((didLogout) => {
+            .then(async (didLogout) => {
                 if (didLogout) {
-                    removeIdToken();
+                    await removeIdToken();
                     invokeCompleteAction();
                 } else {
                     showLogoutError();
