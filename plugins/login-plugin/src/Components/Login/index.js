@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,
+    alignSelf: "center",
   },
 });
 
@@ -38,6 +39,7 @@ const forgotPasswordStyle = (screenStyles) => {
     fontSize: screenStyles?.forgot_password_font_size,
     color: screenStyles?.forgot_password_font_color,
     alignSelf: "center",
+    textAlign: "center",
     marginBottom: 30,
     textDecorationLine: "underline",
   };
@@ -52,6 +54,8 @@ const newUserButtonStyle = (screenStyles) => {
     fontSize: screenStyles?.create_account_link_font_size,
     color: screenStyles?.create_account_link_font_color,
     textDecorationLine: "underline",
+    alignSelf: "center",
+    textAlign: "center",
   };
 };
 
