@@ -279,6 +279,12 @@
         "initial_value": "No user? Sign Up!"
       },
       {
+        "key": "video_stream_exception_message",
+        "type": "text_input",
+        "label": "Message in case video url is empty",
+        "initial_value": "Video stream in not available. Please try again later"
+      },
+      {
         "key": "logout_background_color",
         "type": "color_picker",
         "label": "Logout background font color",
