@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 });
 
 const AssetFlow = (props) => {
+  const { screenStyles } = props;
   const assetId = inPlayerAssetId({
     payload: props.payload,
     configuration: props.configuration,
@@ -162,7 +163,8 @@ const AssetFlow = (props) => {
           };
           completeAssetFlow({ newPayload });
         } else {
-          const error = new Error("Source for asset not exist");
+          const errorMessage = screenStyles.video_stream_exception_message || "";
+          const error = new Error(errorMessage);
           completeAssetFlow({ success: false, error });
         }
       })

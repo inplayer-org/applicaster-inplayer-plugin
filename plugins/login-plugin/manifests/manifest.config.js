@@ -276,6 +276,12 @@ const baseManifest = {
         label: "Create account link title",
         initial_value: "No user? Sign Up!",
       },
+      {
+        "key": "video_stream_exception_message",
+        "type": "text_input",
+        "label": "Message in case source url is empty",
+        "initial_value": "Video stream in not available. Please try again later"
+      },
     ],
   },
   custom_configuration_fields: [

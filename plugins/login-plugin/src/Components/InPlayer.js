@@ -89,7 +89,9 @@ const InPlayer = (props) => {
 
   const renderPlayerHook = () => {
     return isUserAuthenticated ? (
-      <AssetFlow assetFlowCallback={assetFlowCallback} {...props} />
+      <AssetFlow assetFlowCallback={assetFlowCallback}
+                 screenStyles={screenStyles}
+                 {...props} />
     ) : (
       <AccountFlow
         accountFlowCallback={accountFlowCallback}
