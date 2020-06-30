@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
+import LogoutFlow from "./LogoutFlow";
 import R from "ramda";
 
+import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
+import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 import { initFromNativeLocalStorage } from "../LocalStorageHack";
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
 import { setConfig } from "../Services/inPlayerService";
 import { getStyles } from "../Utils/Customization";
+import { isHook, isTokenInStorage } from "../Utils/UserAccount";
 
 const getScreenStyles = R.compose(
   R.prop("styles"),
@@ -24,8 +28,11 @@ const InPlayer = (props) => {
     UNDEFINED: "Undefined",
     PLAYER_HOOK: "PlayerHook",
     SCREEN_HOOK: "ScreenHook",
+    USER_ACCOUNT: "UserAccount"
   };
 
+  const navigator = useNavigation();
+  const [idToken, setIdtoken] = useState(null);
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const { callback, payload } = props;
@@ -34,10 +41,20 @@ const InPlayer = (props) => {
   let stillMounted = true;
 
   useEffect(() => {
+    setupEnviroment();
+  }, []);
+
+  const checkIdToken = async () => {
+    const token = await isTokenInStorage('idToken');
+    setIdtoken(token);
+  };
+
+  const setupEnviroment = async () => {
     const {
       configuration: { in_player_environment },
     } = props;
 
+    await checkIdToken();
     initFromNativeLocalStorage();
 
     setConfig(in_player_environment);
@@ -49,12 +66,16 @@ const InPlayer = (props) => {
         callback && callback({ success: true, error: null, payload });
       }
     } else {
-      stillMounted && setHookType(HookTypeData.SCREEN_HOOK);
+      if (!isHook(navigator)) {
+        stillMounted && setHookType(HookTypeData.USER_ACCOUNT);
+      } else {
+        stillMounted && setHookType(HookTypeData.SCREEN_HOOK);
+      }
     }
     return () => {
       stillMounted = false;
     };
-  }, []);
+  }
 
   const assetFlowCallback = ({ success, payload, error }) => {
     console.log("Asset Flow CallBack Anton", {
@@ -74,7 +95,11 @@ const InPlayer = (props) => {
       });
   };
 
-  const accountFlowCallback = ({ success }) => {
+  const accountFlowCallback = async ({ success }) => {
+    if (success) {
+      const token = localStorage.getItem("inplayer_token");
+      await defaultStorage.setItem('idToken', token);
+    }
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
       callback && callback({ success, error: null, payload: payload });
@@ -82,6 +107,8 @@ const InPlayer = (props) => {
       success
         ? stillMounted && setIsUserAuthenticated(true)
         : callback && callback({ success, error: null, payload: payload });
+    } else if (hookType === HookTypeData.USER_ACCOUNT) {
+      navigator.goBack();
     } else {
       callback && callback({ success: success, error: null, payload: payload });
     }
@@ -113,13 +140,33 @@ const InPlayer = (props) => {
     );
   };
 
-  const renderFlow = () => {
-    return hookType === HookTypeData.PLAYER_HOOK
-      ? renderPlayerHook()
-      : renderScreenHook();
+  const renderLogoutScreen = () => {
+    return (
+        <LogoutFlow
+            screenStyles={screenStyles}
+            {...props}
+        />
+    );
+  }
+
+  const renderUACFlow = () => {
+    return idToken ? renderLogoutScreen() : renderScreenHook();
   };
 
-  return hookType !== HookTypeData.UNDEFINED ? renderFlow() : null;
+  const renderFlow = () => {
+    switch (hookType) {
+      case HookTypeData.PLAYER_HOOK:
+        return renderPlayerHook();
+      case HookTypeData.SCREEN_HOOK:
+        return renderScreenHook();
+      case HookTypeData.USER_ACCOUNT:
+        return renderUACFlow();
+      case HookTypeData.UNDEFINED:
+        return null;
+    }
+  };
+
+  return renderFlow();
 };
 
 export default InPlayer;
