@@ -405,8 +405,8 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.2.4",
-  "manifest_version": "0.2.4",
+  "dependency_version": "0.2.5",
+  "manifest_version": "0.2.5",
   "api": {
     "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     "react_packages": [
