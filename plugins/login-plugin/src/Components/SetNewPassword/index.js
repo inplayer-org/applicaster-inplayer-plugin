@@ -5,7 +5,7 @@ import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils"
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { inputFieldStyle } from "../../Utils/Customization";
-import { validatePassword } from "../../Utils/Account";
+import { validateNewPassword } from "../../Utils/Account";
 import { container } from "../Styles";
 import ActionButton from "../UIComponents/ActionButton";
 import TitleLabel from "../UIComponents/TitleLabel";
@@ -29,14 +29,12 @@ export const SetNewPassword = (props) => {
 
   const validateData = () => {
     const title = "Set New Password form issue";
-    let message = null;
-    if (!token || token.length == 0) {
-      message = "Token can not be empty";
-    } else if (validatePassword(password) == false) {
-      message = "Password must be at least 8 characters";
-    } else if (password !== passwordConfirmation) {
-      message = "Password not equal confirmation password";
-    }
+    const newPwdData = {
+      token: token,
+      password: password,
+      passwordConfirmation: passwordConfirmation
+    };
+    const message = validateNewPassword(newPwdData);
     return message ? { title, message } : null;
   };
 

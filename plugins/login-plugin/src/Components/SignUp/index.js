@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { View, TextInput, findNodeHandle, Keyboard } from "react-native";
+import { View, TextInput, findNodeHandle, Keyboard, BackHandler } from "react-native";
 import { inputFieldStyle } from "../../Utils/Customization";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
 import { container } from "../Styles";
-import { validateEmail, validatePassword } from "../../Utils/Account";
+import { validateSignUpData } from "../../Utils/Account";
 import ActionButton from "../UIComponents/ActionButton";
 import TitleLabel from "../UIComponents/TitleLabel";
 import BackButton from "../UIComponents/BackButton";
@@ -32,18 +32,22 @@ const SignUp = (props) => {
     }
   };
 
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', props?.onBackButton);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', props?.onBackButton);
+    };
+  }, []);
+
   const validateData = () => {
     const title = "Sign Up form issue";
-    let message = null;
-    if (!fullName || fullName.length == 0) {
-      message = "Name can not be empty";
-    } else if (validateEmail(email) == false) {
-      message = "Email is not valid";
-    } else if (validatePassword(password) == false) {
-      message = "Password must be at least 8 characters";
-    } else if (password !== passwordConfirmation) {
-      message = "Password not equal confirmation password";
-    }
+    const signUpData = {
+      fullName: fullName,
+      email: email,
+      password: password,
+      passwordConfirmation: passwordConfirmation
+    };
+    const message = validateSignUpData(signUpData);
     return message ? { title, message } : null;
   };
 
