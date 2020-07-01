@@ -1,3 +1,5 @@
+import * as R from 'ramda';
+
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import { populateConfigurationValues } from "@applicaster/zapp-react-native-utils/stylesUtils";
 
@@ -23,6 +25,10 @@ export function prepareStyles(screenStyles) {
 
   return styles;
 }
+
+export const isHomeScreen = (navigator, homeScreen) => {
+  return  R.pathOr(false, ['payload', 'home'], navigator.routeData());
+};
 
 export function inputFieldStyle(screenStyles) {
   return {
