@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   findNodeHandle,
   Keyboard,
+  BackHandler,
 } from "react-native";
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -26,8 +27,10 @@ export const ForgotPassword = (props) => {
   let stillMounted = true;
 
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', props?.onBackButton);
     return () => {
       stillMounted = false;
+      BackHandler.removeEventListener('hardwareBackPress', props?.onBackButton);
     };
   }, []);
 
