@@ -11,7 +11,7 @@ import { initFromNativeLocalStorage } from "../LocalStorageHack";
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
 import { setConfig } from "../Services/inPlayerService";
-import { getStyles } from "../Utils/Customization";
+import { getStyles, isHomeScreen } from "../Utils/Customization";
 import { isHook, isTokenInStorage } from "../Utils/UserAccount";
 
 const getScreenStyles = R.compose(
@@ -122,7 +122,7 @@ const InPlayer = (props) => {
     ) : (
       <AccountFlow
         accountFlowCallback={accountFlowCallback}
-        backButton={hookType === HookTypeData.PLAYER_HOOK}
+        backButton={!isHomeScreen(navigator)}
         screenStyles={screenStyles}
         {...props}
       />
@@ -133,7 +133,7 @@ const InPlayer = (props) => {
     return (
       <AccountFlow
         accountFlowCallback={accountFlowCallback}
-        backButton={hookType === HookTypeData.PLAYER_HOOK}
+        backButton={!isHomeScreen(navigator)}
         screenStyles={screenStyles}
         {...props}
       />
