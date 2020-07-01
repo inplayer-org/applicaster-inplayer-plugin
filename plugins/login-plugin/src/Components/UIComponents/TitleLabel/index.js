@@ -15,6 +15,7 @@ const TitleLabel = (props) => {
     marginTop: 100,
     marginBottom: 80,
     alignSelf: "center",
+    textAlign: "center",
   };
   return <Text style={style}>{title || "InPlayer"}</Text>;
 };
