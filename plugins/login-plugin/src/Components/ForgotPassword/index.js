@@ -27,12 +27,17 @@ export const ForgotPassword = (props) => {
   let stillMounted = true;
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', props?.onBackButton);
+    BackHandler.addEventListener('hardwareBackPress', hardwareBack);
     return () => {
       stillMounted = false;
-      BackHandler.removeEventListener('hardwareBackPress', props?.onBackButton);
+      BackHandler.removeEventListener('hardwareBackPress', hardwareBack);
     };
   }, []);
+
+  const hardwareBack = () => {
+    props?.onBackButton();
+    return true;
+  };
 
   const onPressRequestPasswordButton = () => {
     Keyboard.dismiss();

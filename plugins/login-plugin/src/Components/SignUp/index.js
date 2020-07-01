@@ -33,11 +33,16 @@ const SignUp = (props) => {
   };
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', props?.onBackButton);
+    BackHandler.addEventListener('hardwareBackPress', hardwareBack);
     return () => {
-      BackHandler.removeEventListener('hardwareBackPress', props?.onBackButton);
+      BackHandler.removeEventListener('hardwareBackPress', hardwareBack);
     };
   }, []);
+
+  const hardwareBack = () => {
+    props?.onBackButton();
+    return true;
+  };
 
   const validateData = () => {
     const title = "Sign Up form issue";
