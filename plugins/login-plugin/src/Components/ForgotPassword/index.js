@@ -31,14 +31,15 @@ export const ForgotPassword = (props) => {
     };
   }, []);
 
-  const onPressRequestPaswordButton = () => {
+  const onPressRequestPasswordButton = () => {
     Keyboard.dismiss();
     const { forgotPasswordFlowCallback, onError } = props;
     const title = "Login form issue";
-    if (validateEmail(email) == false) {
+    const validateEmailMsg = validateEmail(email);
+    if (validateEmailMsg != null) {
       onError({
         title,
-        message: "Email is not valid",
+        message: validateEmailMsg,
       });
       return;
     }
@@ -88,7 +89,7 @@ export const ForgotPassword = (props) => {
             screenStyles?.action_button_forgot_password_text ||
             "REQUEST NEW PASSWORD"
           }
-          onPress={onPressRequestPaswordButton}
+          onPress={onPressRequestPasswordButton}
         />
       </KeyboardAwareScrollView>
     </View>

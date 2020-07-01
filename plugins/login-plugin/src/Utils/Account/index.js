@@ -4,7 +4,7 @@ export function showAlert(title, message) {
   Alert.alert(title, message);
 }
 
-function validateEmail(email) {
+export function validateEmail(email) {
   const message = "Email is not valid";
   if (!email) return message;
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false)

@@ -85,10 +85,11 @@ export const Login = (props) => {
 
     const title = "Login form issue";
 
-    if (validateEmail(email) == false) {
+    const validateEmailMsg = validateEmail(email);
+    if (validateEmailMsg != null) {
       onLoginError({
         title,
-        message: "Email is not valid",
+        message: validateEmailMsg,
       });
       return;
     }
