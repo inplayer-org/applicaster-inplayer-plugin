@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   findNodeHandle,
   Keyboard,
+  BackHandler,
 } from "react-native";
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -26,19 +27,27 @@ export const ForgotPassword = (props) => {
   let stillMounted = true;
 
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', hardwareBack);
     return () => {
       stillMounted = false;
+      BackHandler.removeEventListener('hardwareBackPress', hardwareBack);
     };
   }, []);
 
-  const onPressRequestPaswordButton = () => {
+  const hardwareBack = () => {
+    props?.onBackButton();
+    return true;
+  };
+
+  const onPressRequestPasswordButton = () => {
     Keyboard.dismiss();
     const { forgotPasswordFlowCallback, onError } = props;
     const title = "Login form issue";
-    if (validateEmail(email) == false) {
+    const validateEmailMsg = validateEmail(email);
+    if (validateEmailMsg != null) {
       onError({
         title,
-        message: "Email is not valid",
+        message: validateEmailMsg,
       });
       return;
     }
@@ -88,7 +97,7 @@ export const ForgotPassword = (props) => {
             screenStyles?.action_button_forgot_password_text ||
             "REQUEST NEW PASSWORD"
           }
-          onPress={onPressRequestPaswordButton}
+          onPress={onPressRequestPasswordButton}
         />
       </KeyboardAwareScrollView>
     </View>
