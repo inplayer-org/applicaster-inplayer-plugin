@@ -21,6 +21,26 @@
         "event_inplayer_id": "106880",
         "ds_product_ids": ["106880"]
       }
+    },
+    {
+      "id": 106884,
+      "type": { "value": "video" },
+      "title": "APP TEST 106884 HTML",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "event_id": 106884,
+        "event_inplayer_id": "106884",
+        "ds_product_ids": ["106884"]
+      }
     }
   ]
 }
