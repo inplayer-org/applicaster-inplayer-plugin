@@ -325,6 +325,300 @@
         "type": "text_input",
         "label": "Logout text failed title",
         "initial_value": "Logout Failed"
+      },
+      {
+        "group": true,
+        "label": "Storefront Screen Design and Text",
+        "tooltip": "These fields affect the design of the storefront screen.",
+        "folded": true,
+        "fields": [
+          {
+            "key": "payment_screen_background",
+            "type": "color_picker_rgba",
+            "label": "Payment Screen Background Color",
+            "label_tooltip": "Background Color for the payment screen.",
+            "initial_value": "rgba(66,74,87,1)"
+          },
+          {
+            "key": "close_button",
+            "type": "uploader",
+            "label": "Close Button",
+            "label_tooltip": "Icon for close button. Dimensions 45 x 45.",
+            "placeholder": "Default close Icon image"
+          },
+          {
+            "key": "client_logo",
+            "type": "uploader",
+            "label": "Client Logo",
+            "label_tooltip": "Client logo image. Dimension 200 x44."
+          },
+          {
+            "key": "payment_screen_title_text",
+            "type": "text_input",
+            "label": "Payment Screen Title Text",
+            "label_tooltip": "Main Title for the payment screen.",
+            "initial_value": "Choose Your Subscription",
+            "placeholder": "Choose Your Subscription"
+          },
+          {
+            "key": "payment_screen_title_font_ios",
+            "type": "ios_font_selector",
+            "label": "Payment Screen Title Font",
+            "label_tooltip": "Font for Main Title for ios.",
+            "initial_value": "Montserrat-Bold"
+          },
+          {
+            "key": "payment_screen_title_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for Main Title for android.",
+            "initial_value": "Montserrat-Bold"
+          },
+          {
+            "key": "payment_screen_title_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Main Title Text.",
+            "initial_value": "21"
+          },
+          {
+            "key": "payment_screen_title_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Main Title Text.",
+            "initial_value": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "key": "restore_purchases_text",
+            "type": "text_input",
+            "label": "Restore Purchases Description Text",
+            "label_tooltip": "Description text for restoring purchases.",
+            "initial_value": "Purchased already a subscription?",
+            "placeholder": "Purchased already a subscription?"
+          },
+          {
+            "key": "restore_purchases_text_font_ios",
+            "type": "ios_font_selector",
+            "label": "Restore Purchases Description Text Font",
+            "label_tooltip": "Font for Restore Purchases Description Text for ios.",
+            "initial_value": "Montserrat"
+          },
+          {
+            "key": "restore_purchases_text_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for Restore Purchases Description Text for android.",
+            "initial_value": "Montserrat"
+          },
+          {
+            "key": "restore_purchases_text_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Restore Purchases Description Text.",
+            "initial_value": "12"
+          },
+          {
+            "key": "restore_purchases_text_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Restore Purchases Description Text.",
+            "initial_value": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "key": "restore_purchases_link",
+            "type": "text_input",
+            "label": "Restore Purchases Link Text",
+            "label_tooltip": "Text for the Restore Purchases link.",
+            "initial_value": "Restore",
+            "placeholder": "Restore"
+          },
+          {
+            "key": "restore_purchases_link_font_ios",
+            "type": "ios_font_selector",
+            "label": "Restore Purchases Link Text Font",
+            "label_tooltip": "Font for Restore Purchases Link Text for ios.",
+            "initial_value": "Montserrat-Bold"
+          },
+          {
+            "key": "restore_purchases_link_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for Restore Purchases Link Text for android.",
+            "initial_value": "Montserrat-Bold"
+          },
+          {
+            "key": "restore_purchases_link_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Restore Purchases Link Text.",
+            "initial_value": "13"
+          },
+          {
+            "key": "restore_purchases_link_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Restore Purchases Link Text.",
+            "initial_value": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "key": "payment_option_background",
+            "type": "color_picker_rgba",
+            "label": "Payment Option Background Color",
+            "label_tooltip": "Background Color for the Payment Option.",
+            "initial_value": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "key": "payment_option_corner_radius",
+            "type": "number_input",
+            "label": "Payment Option Corner Radius",
+            "label_tooltip": "Corner Radius for the Payment Option.",
+            "initial_value": "6"
+          },
+          {
+            "key": "payment_option_title_font_ios",
+            "type": "ios_font_selector",
+            "label": "Payment Option Title Font",
+            "label_tooltip": "Font for the Payment Option Title for ios.",
+            "initial_value": "Montserrat-Bold"
+          },
+          {
+            "key": "payment_option_title_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for the Payment Option Title for android.",
+            "initial_value": "Montserrat-Bold"
+          },
+          {
+            "key": "payment_option_title_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Payment Option Title.",
+            "initial_value": "20"
+          },
+          {
+            "key": "payment_option_title_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Payment Option Title.",
+            "initial_value": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "key": "payment_option_description_font_ios",
+            "type": "ios_font_selector",
+            "label": "Payment Option Description Font",
+            "label_tooltip": "Font for the Payment Option Description for ios.",
+            "initial_value": "Montserrat"
+          },
+          {
+            "key": "payment_option_description_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for the Payment Option Description for android.",
+            "initial_value": "Montserrat"
+          },
+          {
+            "key": "payment_option_description_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Payment Option Description.",
+            "initial_value": "14"
+          },
+          {
+            "key": "payment_option_description_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Payment Option Description.",
+            "initial_value": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "key": "payment_option_button_background",
+            "type": "color_picker_rgba",
+            "label": "Payment Option Action Button Background Color",
+            "label_tooltip": "Background Color for the Payment Option Action Button.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "payment_option_button_corner_radius",
+            "type": "number_input",
+            "label": "Payment Option Action Button Corner Radius",
+            "label_tooltip": "Corner Radius for the Payment Option Action Button.",
+            "initial_value": "18"
+          },
+          {
+            "key": "payment_option_button_font_ios",
+            "type": "ios_font_selector",
+            "label": "Payment Option Action Button Text Font",
+            "label_tooltip": "Font for the Payment Option Action Button Text for ios.",
+            "initial_value": "Montserrat-Bold"
+          },
+          {
+            "key": "payment_option_button_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for the Payment Option Action Button Text for android.",
+            "initial_value": "Montserrat-Bold"
+          },
+          {
+            "key": "payment_option_button_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Payment Option Action Button Text.",
+            "initial_value": "12"
+          },
+          {
+            "key": "payment_option_button_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Payment Option Action Button Text.",
+            "initial_value": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "key": "terms_of_use_instructions_text",
+            "type": "text_input",
+            "label": "Payment Terms of use instructions Text",
+            "label_tooltip": "Brief text to give context to the terms of use link.",
+            "initial_value": "By making a selection and completing this transaction, you verify that you are at least 18 years old and agree to the"
+          },
+          {
+            "key": "terms_of_use_instructions_font_ios",
+            "type": "ios_font_selector",
+            "label": "Payment Terms of Use instructions Text Font",
+            "label_tooltip": "Font for the Terms of Use Instructions Text for ios.",
+            "initial_value": "Montserrat"
+          },
+          {
+            "key": "terms_of_use_instructions_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for the Terms of Use Instructions Text for android.",
+            "initial_value": "Montserrat"
+          },
+          {
+            "key": "terms_of_use_instructions_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for the Terms of Use Instructions Text.",
+            "initial_value": "10"
+          },
+          {
+            "key": "terms_of_use_instructions_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for the Terms of Use Instructions Text.",
+            "initial_value": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "key": "terms_of_use_link_text",
+            "type": "text_input",
+            "label": "Payment Terms of use Link Text",
+            "label_tooltip": "Text for the Terms of Use Link.",
+            "initial_value": "terms of use."
+          },
+          {
+            "key": "terms_of_use_link_font_ios",
+            "type": "ios_font_selector",
+            "label": "Payment Terms of Use Link Text Font",
+            "label_tooltip": "Font for the Terms of Use Link Text for ios.",
+            "initial_value": "Montserrat"
+          },
+          {
+            "key": "terms_of_use_link_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for the Terms of Use Link Text for android.",
+            "initial_value": "Montserrat"
+          },
+          {
+            "key": "terms_of_use_link_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for the Terms of Use Link Text.",
+            "initial_value": "10"
+          },
+          {
+            "key": "terms_of_use_link_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for the Terms of Use Link Text.",
+            "initial_value": "rgba(255, 255, 255, 1)"
+          }
+        ]
       }
     ]
   },
@@ -405,8 +699,8 @@
     "quickbrick"
   ],
   "platform": "android_for_quickbrick",
-  "dependency_version": "0.2.6",
-  "manifest_version": "0.2.6",
+  "dependency_version": "0.3.0",
+  "manifest_version": "0.3.0",
   "api": {
     "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     "react_packages": [
