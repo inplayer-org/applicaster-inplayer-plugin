@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import PaymentOptionView from "../PaymentOptionView";
 import { container } from "../../Styles";
 import { mapKeyToStyle, withEndSpace } from "../../../Utils/Customization";
+import OpenURLButton from "../OpenUrlButton";
 
 const storefrontStyleKeys = [
   "payment_screen_title",
@@ -11,6 +12,8 @@ const storefrontStyleKeys = [
   "terms_of_use_instructions",
   "terms_of_use_link",
 ];
+
+const termsOfUseUrl = "https://google.com";
 
 export default function Storefront(props) {
   const { screenStyles, dataSource, onPressPaymentOption } = props;
@@ -51,9 +54,11 @@ export default function Storefront(props) {
         ))}
       </ScrollView>
       <View style={styles.footer}>
-        <Text style={[termsOfUseStyle, { margin: 20 }]}>
+        <Text style={[termsOfUseStyle, { textAlign: "center" }]}>
           {withEndSpace(termsOfUseText)}
-          <Text style={termsOfUseLinkStyle}>{termsOfUseLink}</Text>
+          <OpenURLButton linkStyle={termsOfUseLinkStyle} url={termsOfUseUrl}>
+            {termsOfUseLink}
+          </OpenURLButton>
         </Text>
       </View>
     </View>
@@ -67,9 +72,9 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   footer: {
-    flex: 1,
     position: "absolute",
     bottom: 0,
     height: 80,
+    paddingVertical: 10,
   },
 });
