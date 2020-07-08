@@ -2,14 +2,14 @@ import React from "react";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const actionButtonContainerStyle = (screenStyles) => {
+const actionButtonContainerStyle = (backgroundColor, borderRadius) => {
   return {
     height: 50,
     width: 250,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: screenStyles?.action_button_background_color || "#F1AD12",
-    borderRadius: 50,
+    backgroundColor,
+    borderRadius,
     alignSelf: "center",
   };
 };
@@ -26,12 +26,26 @@ const actionButtonTextStyle = (screenStyles) => {
 };
 
 const ActionButton = (props) => {
-  const { screenStyles, title, onPress, paddingTop = null } = props;
+  const {
+    screenStyles,
+    labelStyle,
+    buttonStyle,
+    title,
+    onPress,
+    paddingTop = null,
+  } = props;
+
+  const textStyle = labelStyle || actionButtonTextStyle(screenStyles);
+  const background =
+    buttonStyle?.backgroundColor ||
+    screenStyles?.action_button_background_color ||
+    "#F1AD12";
+  const radius = buttonStyle?.borderRadius || 50;
 
   return (
     <TouchableOpacity onPress={onPress} style={{ paddingTop: paddingTop }}>
-      <View style={actionButtonContainerStyle(screenStyles)}>
-        <Text style={actionButtonTextStyle(screenStyles)}>{title}</Text>
+      <View style={actionButtonContainerStyle(background, radius)}>
+        <Text style={textStyle}>{title}</Text>
       </View>
     </TouchableOpacity>
   );

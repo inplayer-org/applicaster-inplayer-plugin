@@ -13,19 +13,7 @@ export function invokeCallBack(
     });
 }
 
-export function prepareActionSheetDataSource(data) {
-  var actionSheetDataSource = data.map((item) => {
-    return `${item.title}: ${item.price}`;
-  });
-  actionSheetDataSource.push("Cancel");
-  return actionSheetDataSource;
-}
-
-export function cancelButtonIndex(actionSheetDataSource) {
-  return actionSheetDataSource.length - 1;
-}
-
-export function mergeFeesTitlesIfNeeded({ storeFeesData, inPlayerFeesData }) {
+export function mergeFeesTitlesAndAddType({ storeFeesData, inPlayerFeesData }) {
   for (let i = 0; i < storeFeesData.length; i++) {
     const storeFee = storeFeesData[i];
     console.log({ storeFee });
@@ -37,6 +25,7 @@ export function mergeFeesTitlesIfNeeded({ storeFeesData, inPlayerFeesData }) {
       if (inPlayerFee?.title) {
         storeFee.title = inPlayerFee.title;
       }
+      storeFee.productType = inPlayerFee?.productType || "";
     }
   }
 }

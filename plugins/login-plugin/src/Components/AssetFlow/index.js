@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import ActionSheet from "react-native-actionsheet";
 import LoadingScreen from "../LoadingScreen";
+import PaymentOptionView from "../UIComponents/PaymentOptionView";
 import { container } from "../Styles";
 
 import {
@@ -14,9 +14,7 @@ import { purchaseAnItem, retrieveProducts } from "../../Services/iAPService";
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
 import {
   invokeCallBack,
-  prepareActionSheetDataSource,
-  cancelButtonIndex,
-  mergeFeesTitlesIfNeeded,
+  mergeFeesTitlesAndAddType,
   retrieveInPlayerFeesData,
 } from "./Helper";
 
@@ -31,7 +29,7 @@ const AssetFlow = (props) => {
     configuration: props.configuration,
   });
 
-  const [actionSheetDataSource, setActionSheetDataSource] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   const [assetLoading, setAssetLoading] = useState(true);
   const [packageData, setPackageData] = useState({
     loading: true,
@@ -49,22 +47,16 @@ const AssetFlow = (props) => {
   }, []);
 
   useEffect(() => {
-    if ([packageData.loading == false]) {
+    if ([packageData.loading === false]) {
       invokePurchaseLogicIfNeeded();
     }
   }, [packageData.loading]);
 
   useEffect(() => {
-    if (assetLoading == false) {
+    if (assetLoading === false) {
       invokePurchaseLogicIfNeeded();
     }
   }, [assetLoading]);
-
-  useEffect(() => {
-    if (actionSheetDataSource.length > 0) {
-      this.ActionSheet.show();
-    }
-  }, [actionSheetDataSource]);
 
   const preparePurchaseData = async () => {
     const {
@@ -91,7 +83,7 @@ const AssetFlow = (props) => {
       ]);
 
       if (resultPurchaseData.length === 0) {
-        throw new Error("No fees availible for current asset");
+        throw new Error("No fees available for current asset");
       }
       const inPlayerFeesData = retrieveInPlayerFeesData({
         feesToSearch: resultPurchaseData[0],
@@ -103,10 +95,10 @@ const AssetFlow = (props) => {
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
 
       if (storeFeesData.length === 0) {
-        throw new Error("No items availible in store");
+        throw new Error("No items available in store");
       }
 
-      mergeFeesTitlesIfNeeded({
+      mergeFeesTitlesAndAddType({
         storeFeesData,
         inPlayerFeesData,
       });
@@ -129,18 +121,17 @@ const AssetFlow = (props) => {
 
   const invokePurchaseLogicIfNeeded = () => {
     if (
-      assetLoading == false &&
-      packageData.loading == false &&
+      assetLoading === false &&
+      packageData.loading === false &&
       packageData.data
     ) {
-      const actionSheetDS = prepareActionSheetDataSource(packageData.data);
-      if (actionSheetDS) {
-        stillMounted && setActionSheetDataSource(actionSheetDS);
+      if (packageData.data) {
+        stillMounted && setDataSource(packageData.data);
       } else {
         const error = new Error("Can not create action sheet data source");
         completeAssetFlow({ success: false, error });
       }
-    } else if (packageData.loading == false && packageData.error) {
+    } else if (packageData.loading === false && packageData.error) {
       completeAssetFlow({ success: false, error: packageData.error });
     }
   };
@@ -163,7 +154,8 @@ const AssetFlow = (props) => {
           };
           completeAssetFlow({ newPayload });
         } else {
-          const errorMessage = screenStyles.video_stream_exception_message || "";
+          const errorMessage =
+            screenStyles.video_stream_exception_message || "";
           const error = new Error(errorMessage);
           completeAssetFlow({ success: false, error });
         }
@@ -207,25 +199,22 @@ const AssetFlow = (props) => {
     }
   };
 
-  const onPressActionSheet = (index) => {
-    if (cancelButtonIndex(actionSheetDataSource) === index) {
-      completeAssetFlow({ success: false });
-    } else {
-      const itemToPurchase = packageData.data[index];
-      buyItem(itemToPurchase);
-    }
+  const onPressPaymentOption = (index) => {
+    const itemToPurchase = packageData.data[index];
+    buyItem(itemToPurchase);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {<LoadingScreen />}
-      <ActionSheet
-        ref={(o) => (this.ActionSheet = o)}
-        title={"Please select item to purchase ?"}
-        options={actionSheetDataSource}
-        cancelButtonIndex={cancelButtonIndex(actionSheetDataSource)}
-        onPress={onPressActionSheet}
-      />
+      {(assetLoading || packageData.loading) && <LoadingScreen />}
+      {dataSource.map((item) => (
+        <PaymentOptionView
+          screenStyles={screenStyles}
+          paymentOptionItem={item}
+          key={item.productIdentifier}
+          onPress={onPressPaymentOption}
+        />
+      ))}
     </SafeAreaView>
   );
 };
