@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
 import LoadingScreen from "../LoadingScreen";
-import PaymentOptionView from "../UIComponents/PaymentOptionView";
+import Storefront from "../UIComponents/Storefront";
+import NavbarComponent from "../UIComponents/NavbarComponent";
 import { container } from "../Styles";
 
 import {
@@ -24,6 +25,13 @@ const styles = StyleSheet.create({
 
 const AssetFlow = (props) => {
   const { screenStyles } = props;
+
+  const {
+    payment_screen_background: screenBackground = "",
+    client_logo: logoUrl = "",
+    close_button: buttonUrl = "",
+  } = screenStyles;
+
   const assetId = inPlayerAssetId({
     payload: props.payload,
     configuration: props.configuration,
@@ -205,16 +213,20 @@ const AssetFlow = (props) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: screenBackground }]}
+    >
       {(assetLoading || packageData.loading) && <LoadingScreen />}
-      {dataSource.map((item) => (
-        <PaymentOptionView
-          screenStyles={screenStyles}
-          paymentOptionItem={item}
-          key={item.productIdentifier}
-          onPress={onPressPaymentOption}
-        />
-      ))}
+      <NavbarComponent
+        buttonAction={completeAssetFlow}
+        logoUrl={logoUrl}
+        buttonUrl={buttonUrl}
+      />
+      <Storefront
+        screenStyles={screenStyles}
+        dataSource={dataSource}
+        onPressPaymentOption={onPressPaymentOption}
+      />
     </SafeAreaView>
   );
 };

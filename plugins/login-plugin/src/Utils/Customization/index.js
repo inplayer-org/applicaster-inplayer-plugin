@@ -41,6 +41,10 @@ export const mapKeyToStyle = (key, obj) => {
   };
 };
 
+export const withEndSpace = (str) => {
+  return `${str}\xa0`; // explicitly add space after string
+};
+
 export function inputFieldStyle(screenStyles) {
   return {
     fontFamily: platformSelect({
