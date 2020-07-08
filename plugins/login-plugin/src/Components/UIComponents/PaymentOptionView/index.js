@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { mapKeyToStyle } from "../../../Utils/Customization";
-import ActionButton from "../ActionButton";
+import ActionButton from "../Buttons/ActionButton.js";
 
 function getBoxStyles(screenStyles) {
   const borderRadius = Number(screenStyles.payment_option_corner_radius);

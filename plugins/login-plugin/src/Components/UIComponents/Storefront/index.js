@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import PaymentOptionView from "../PaymentOptionView";
 import { container } from "../../Styles";
 import { mapKeyToStyle, withEndSpace } from "../../../Utils/Customization";
-import OpenURLButton from "../OpenUrlButton";
+import OpenURLButton from "../Buttons/OpenUrlButton";
 
 const storefrontStyleKeys = [
   "payment_screen_title",

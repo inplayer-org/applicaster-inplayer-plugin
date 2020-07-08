@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {View, TextInput, findNodeHandle, Keyboard, BackHandler} from "react-native";
+import {
+  View,
+  TextInput,
+  findNodeHandle,
+  Keyboard,
+  BackHandler,
+} from "react-native";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -7,9 +13,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { inputFieldStyle } from "../../Utils/Customization";
 import { validateNewPassword } from "../../Utils/Account";
 import { container } from "../Styles";
-import ActionButton from "../UIComponents/ActionButton";
+import ActionButton from "../UIComponents/Buttons/ActionButton.js";
 import TitleLabel from "../UIComponents/TitleLabel";
-import BackButton from "../UIComponents/BackButton";
+import BackButton from "../UIComponents/Buttons/BackButton";
 
 export const SetNewPassword = (props) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState(null);
@@ -22,10 +28,10 @@ export const SetNewPassword = (props) => {
   let stillMounted = true;
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', hardwareBack);
+    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
     return () => {
       stillMounted = false;
-      BackHandler.removeEventListener('hardwareBackPress', hardwareBack);
+      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
     };
   }, []);
 
@@ -39,7 +45,7 @@ export const SetNewPassword = (props) => {
     const newPwdData = {
       token: token,
       password: password,
-      passwordConfirmation: passwordConfirmation
+      passwordConfirmation: passwordConfirmation,
     };
     const message = validateNewPassword(newPwdData);
     return message ? { title, message } : null;
