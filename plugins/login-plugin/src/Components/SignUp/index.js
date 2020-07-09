@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import { View, TextInput, findNodeHandle, Keyboard, BackHandler } from "react-native";
+import {
+  View,
+  TextInput,
+  findNodeHandle,
+  Keyboard,
+  BackHandler,
+} from "react-native";
 import { inputFieldStyle } from "../../Utils/Customization";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -8,9 +14,9 @@ import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils"
 
 import { container } from "../Styles";
 import { validateSignUpData } from "../../Utils/Account";
-import ActionButton from "../UIComponents/ActionButton";
+import ActionButton from "../UIComponents/Buttons/ActionButton.js";
 import TitleLabel from "../UIComponents/TitleLabel";
-import BackButton from "../UIComponents/BackButton";
+import BackButton from "../UIComponents/Buttons/BackButton";
 
 const SignUp = (props) => {
   const [fullName, setFullName] = useState(null);
@@ -33,9 +39,9 @@ const SignUp = (props) => {
   };
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', hardwareBack);
+    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
     return () => {
-      BackHandler.removeEventListener('hardwareBackPress', hardwareBack);
+      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
     };
   }, []);
 
@@ -50,7 +56,7 @@ const SignUp = (props) => {
       fullName: fullName,
       email: email,
       password: password,
-      passwordConfirmation: passwordConfirmation
+      passwordConfirmation: passwordConfirmation,
     };
     const message = validateSignUpData(signUpData);
     return message ? { title, message } : null;

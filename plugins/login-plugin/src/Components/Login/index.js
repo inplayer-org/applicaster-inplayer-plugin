@@ -15,9 +15,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { inputFieldStyle } from "../../Utils/Customization";
 import { validateEmail } from "../../Utils/Account";
 import { container } from "../Styles";
-import ActionButton from "../UIComponents/ActionButton";
+import ActionButton from "../UIComponents/Buttons/ActionButton.js";
 import TitleLabel from "../UIComponents/TitleLabel";
-import BackButton from "../UIComponents/BackButton";
+import BackButton from "../UIComponents/Buttons/BackButton";
 
 const styles = StyleSheet.create({
   newUserButton: {

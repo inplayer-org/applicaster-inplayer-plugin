@@ -15,9 +15,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { inputFieldStyle } from "../../Utils/Customization";
 import { validateEmail } from "../../Utils/Account";
 import { container } from "../Styles";
-import ActionButton from "../UIComponents/ActionButton";
+import ActionButton from "../UIComponents/Buttons/ActionButton.js";
 import TitleLabel from "../UIComponents/TitleLabel";
-import BackButton from "../UIComponents/BackButton";
+import BackButton from "../UIComponents/Buttons/BackButton";
 
 export const ForgotPassword = (props) => {
   const [email, setEmail] = useState(null);
@@ -27,10 +27,10 @@ export const ForgotPassword = (props) => {
   let stillMounted = true;
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', hardwareBack);
+    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
     return () => {
       stillMounted = false;
-      BackHandler.removeEventListener('hardwareBackPress', hardwareBack);
+      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
     };
   }, []);
 
