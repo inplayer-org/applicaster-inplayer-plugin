@@ -24,7 +24,10 @@ const styles = StyleSheet.create({
 export default function NavbarComponent({ buttonUrl, logoUrl, buttonAction }) {
   return (
     <View style={styles.navbar}>
-      <TouchableOpacity onPress={buttonAction} style={{ width: "25%" }}>
+      <TouchableOpacity
+        onPress={() => buttonAction({ success: false })}
+        style={{ width: "25%" }}
+      >
         <Image style={styles.closeBtn} source={{ uri: buttonUrl }} />
       </TouchableOpacity>
       <Image style={styles.logo} source={{ uri: logoUrl }} />

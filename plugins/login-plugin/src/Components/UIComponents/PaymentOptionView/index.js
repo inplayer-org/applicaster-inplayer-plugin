@@ -1,61 +1,62 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { mapKeyToStyle } from "../../../Utils/Customization";
+import {
+  paymentOptionStyleKeys,
+  styles,
+  getBoxStyles,
+  getButtonStyle,
+} from "./StyleUtils";
 import ActionButton from "../Buttons/ActionButton.js";
 
-function getBoxStyles(screenStyles) {
-  const borderRadius = Number(screenStyles.payment_option_corner_radius);
-  const backgroundColor = screenStyles.payment_option_background;
-
-  return {
-    backgroundColor,
-    minHeight: 170,
-    width: 350,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius,
-    alignSelf: "center",
-  };
-}
+const paymentActions = {
+  subscribe: "Subscribe",
+  buy: "Buy",
+};
 
 export default function PaymentOptionView({
   screenStyles,
   paymentOptionItem,
   onPress,
 }) {
-  const styleKeys = [
-    "payment_option_title",
-    "payment_option_description",
-    "payment_option_button",
-  ];
-
-  const actions = {
-    subscribe: "Subscribe",
-    buy: "Buy",
-  };
+  const {
+    payment_option_button_corner_radius: radius = 50,
+    payment_option_button_background: backgroundColor = "",
+  } = screenStyles;
 
   const { title, description, price, productType } = paymentOptionItem;
-  const [titleStyle, descriptionStyle, labelStyle] = styleKeys.map((key) =>
-    mapKeyToStyle(key, screenStyles)
-  );
 
-  const buttonRadius = Number(screenStyles.payment_option_button_corner_radius);
+  const [
+    titleStyle,
+    descriptionStyle,
+    labelStyle,
+  ] = paymentOptionStyleKeys.map((key) => mapKeyToStyle(key, screenStyles));
+
   const actionForLabel =
-    productType === "subscription" ? actions.subscribe : actions.buy;
+    productType === "subscription"
+      ? paymentActions.subscribe
+      : paymentActions.buy;
 
-  const buttonStyle = {
-    backgroundColor: screenStyles.payment_option_button_background,
-    borderRadius: buttonRadius,
-  };
+  const buttonStyle = getButtonStyle(radius, backgroundColor);
+
+  const label = `${actionForLabel} for ${price}`.toUpperCase();
 
   return (
     <View style={getBoxStyles(screenStyles)}>
-      <Text style={titleStyle}>{title}</Text>
-      <Text style={descriptionStyle}>{description}</Text>
+      <Text style={titleStyle} numberOfLines={1} ellipsizeMode="tail">
+        {title}
+      </Text>
+      <Text
+        style={[descriptionStyle, styles.description]}
+        numberOfLines={2}
+        ellipsizeMode="tail"
+      >
+        {description}
+      </Text>
       <ActionButton
         labelStyle={labelStyle}
         buttonStyle={buttonStyle}
-        title={`${actionForLabel} for ${price}`}
+        title={label}
         onPress={onPress}
       />
     </View>
