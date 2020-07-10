@@ -48,3 +48,24 @@ async function externalPaymentValidation({
   console.log("Verification Result:", { result });
   return { transactionIdentifier, productIdentifier };
 }
+
+export async function restore(data) {
+  try {
+    const purchaseCompletion = await ApplicasterIAPModule.restore();
+    return data.forEach((itemToRestore) => {
+      const { productIdentifier: purchaseID } = itemToRestore;
+
+      if (!purchaseID) throw new Error(`PurchaseID: ${purchaseID} not exist`);
+
+      const [item_id, access_fee_id] = purchaseID.split("_");
+      return externalPaymentValidation({
+        purchaseCompletion,
+        item_id,
+        access_fee_id,
+        purchaseID,
+      });
+    });
+  } catch (err) {
+    throw err;
+  }
+}

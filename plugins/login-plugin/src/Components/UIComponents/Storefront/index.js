@@ -12,7 +12,12 @@ const storefrontStyleKeys = [
 ];
 
 export default function Storefront(props) {
-  const { screenStyles, dataSource, onPressPaymentOption } = props;
+  const {
+    screenStyles,
+    dataSource,
+    onPressPaymentOption,
+    onPressRestore,
+  } = props;
 
   const {
     payment_screen_title_text: paymentTitle,
@@ -34,16 +39,18 @@ export default function Storefront(props) {
       <View style={styles.restoreContainer}>
         <Text style={restoreTextStyle} numberOfLines={2} ellipsizeMode="tail">
           {withEndSpace(restoreText)}
-          <Text style={restoreLinkStyle}>{restoreLink}</Text>
+          <Text style={restoreLinkStyle} onPress={onPressRestore}>
+            {restoreLink}
+          </Text>
         </Text>
       </View>
       <ScrollView>
-        {dataSource.map((item) => (
+        {dataSource.map((item, index) => (
           <PaymentOptionView
             screenStyles={screenStyles}
             paymentOptionItem={item}
             key={item.productIdentifier}
-            onPress={onPressPaymentOption}
+            onPress={() => onPressPaymentOption(index)}
           />
         ))}
       </ScrollView>
