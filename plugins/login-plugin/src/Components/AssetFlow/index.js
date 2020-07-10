@@ -239,6 +239,9 @@ const AssetFlow = (props) => {
       })
       .finally(() => setAssetLoading(false));
   };
+  if (packageData.loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <SafeAreaView
@@ -255,7 +258,7 @@ const AssetFlow = (props) => {
         onPressPaymentOption={onPressPaymentOption}
         onPressRestore={onPressRestore}
       />
-      {(assetLoading || packageData.loading) && <LoadingScreen />}
+      {assetLoading && <LoadingScreen />}
     </SafeAreaView>
   );
 };

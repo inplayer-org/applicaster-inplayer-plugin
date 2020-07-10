@@ -37,7 +37,11 @@ export default function Storefront(props) {
         {paymentTitle}
       </Text>
       <View style={styles.restoreContainer}>
-        <Text style={restoreTextStyle} numberOfLines={2} ellipsizeMode="tail">
+        <Text
+          style={[restoreTextStyle, { textAlign: "center" }]}
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
           {withEndSpace(restoreText)}
           <Text style={restoreLinkStyle} onPress={onPressRestore}>
             {restoreLink}
