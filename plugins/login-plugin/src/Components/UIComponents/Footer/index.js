@@ -4,12 +4,12 @@ import OpenURLButton from "../Buttons/OpenUrlButton";
 import React from "react";
 
 const termsOFUseStyleKeys = ["terms_of_use_instructions", "terms_of_use_link"];
-const termsOfUseUrl = "https://google.com";
 
 export default function Footer({ screenStyles }) {
   const {
     terms_of_use_instructions_text: termsOfUseText,
     terms_of_use_link_text: termsOfUseLink,
+    terms_of_use_link: termsOfUseUrl,
   } = screenStyles;
 
   const [
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
   footer: {
     position: "absolute",
     bottom: 0,
-    height: 80,
-    paddingVertical: 10,
+    minHeight: 80,
+    maxHeight: 120,
+    paddingVertical: 25,
   },
 });

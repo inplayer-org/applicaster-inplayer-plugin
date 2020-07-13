@@ -17,15 +17,15 @@ export function mergeFeesTitlesAndAddType({ storeFeesData, inPlayerFeesData }) {
   for (let i = 0; i < storeFeesData.length; i++) {
     const storeFee = storeFeesData[i];
     console.log({ storeFee });
-    if (storeFee.title == null || storeFee.title.length === 0) {
-      const inPlayerFee = R.find(
-        R.propEq("productIdentifier", storeFee.productIdentifier)
-      )(inPlayerFeesData);
-      console.log({ inPlayerFeesData });
-      if (inPlayerFee?.title) {
-        storeFee.title = inPlayerFee.title;
-      }
-      storeFee.productType = inPlayerFee?.productType || "";
+
+    const inPlayerFee = R.find(
+      R.propEq("productIdentifier", storeFee.productIdentifier)
+    )(inPlayerFeesData);
+    console.log({ inPlayerFeesData });
+
+    storeFee.productType = inPlayerFee?.productType || "";
+    if (inPlayerFee?.title && !storeFee.title) {
+      storeFee.title = inPlayerFee.title;
     }
   }
 }

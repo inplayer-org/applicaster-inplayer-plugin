@@ -34,13 +34,13 @@ const baseManifest = {
         key: "title_font_ios",
         type: "ios_font_selector",
         label: "iOS title font",
-        initial_value: "Montserrat-Bold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "title_font_android",
         type: "android_font_selector",
         label: "Android title font",
-        initial_value: "Montserrat-Bold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "title_font_size",
@@ -64,13 +64,13 @@ const baseManifest = {
         key: "back_button_font_ios",
         type: "ios_font_selector",
         label: "iOS back button font",
-        initial_value: "Montserrat-Bold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "back_button_font_android",
         type: "android_font_selector",
         label: "Android back button font",
-        initial_value: "Montserrat-Bold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "back_button_font_size",
@@ -94,13 +94,13 @@ const baseManifest = {
         key: "fields_font_ios",
         type: "ios_font_selector",
         label: "iOS input fields title font",
-        initial_value: "Montserrat-SemiBold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "fields_font_android",
         type: "android_font_selector",
         label: "Android input fields title font",
-        initial_value: "Montserrat-SemiBold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "fields_font_size",
@@ -166,13 +166,13 @@ const baseManifest = {
         key: "forgot_password_font_ios",
         type: "ios_font_selector",
         label: "iOS forgot password font",
-        initial_value: "Montserrat-Regular",
+        initial_value: "Roboto-Regular",
       },
       {
         key: "forgot_password_font_android",
         type: "android_font_selector",
         label: "Android forgot password font",
-        initial_value: "Montserrat-Regular",
+        initial_value: "Roboto-Regular",
       },
       {
         key: "forgot_password_font_size",
@@ -202,13 +202,13 @@ const baseManifest = {
         key: "action_button_font_ios",
         type: "ios_font_selector",
         label: "iOS action button font",
-        initial_value: "Montserrat-Bold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "action_button_font_android",
         type: "android_font_selector",
         label: "Android action button font",
-        initial_value: "Montserrat-Bold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "action_button_font_size",
@@ -250,13 +250,13 @@ const baseManifest = {
         key: "create_account_link_font_ios",
         type: "ios_font_selector",
         label: "iOS Create account link font",
-        initial_value: "Montserrat",
+        initial_value: "Roboto-Regular",
       },
       {
         key: "create_account_link_font_android",
         type: "android_font_selector",
         label: "Android Create account link font",
-        initial_value: "Montserrat",
+        initial_value: "Roboto-Regular",
       },
       {
         key: "create_account_link_font_size",
@@ -292,13 +292,13 @@ const baseManifest = {
         key: "logout_title_font_ios",
         type: "ios_font_selector",
         label: "Logout iOS title font",
-        initial_value: "Montserrat-Bold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "logout_title_font_android",
         type: "android_font_selector",
         label: "Logout Android title font",
-        initial_value: "Montserrat-Bold",
+        initial_value: "Roboto-Bold",
       },
       {
         key: "logout_title_font_size",
@@ -342,13 +342,14 @@ const baseManifest = {
             type: "uploader",
             label: "Close Button",
             label_tooltip: "Icon for close button. Dimensions 45 x 45.",
-            placeholder: "Default close Icon image",
+            placeholder: "W 45px x H 45px",
           },
           {
             key: "client_logo",
             type: "uploader",
             label: "Client Logo",
             label_tooltip: "Client logo image. Dimension 200 x44.",
+            placeholder: "W 200px x H 44px",
           },
           {
             key: "payment_screen_title_text",
@@ -361,15 +362,14 @@ const baseManifest = {
           {
             key: "payment_screen_title_font_ios",
             type: "ios_font_selector",
-            label: "Payment Screen Title Font",
             label_tooltip: "Font for Main Title for ios.",
-            initial_value: "Montserrat-Bold",
+            initial_value: "Roboto-Bold",
           },
           {
             key: "payment_screen_title_font_android",
             type: "android_font_selector",
             label_tooltip: "Font for Main Title for android.",
-            initial_value: "Montserrat-Bold",
+            initial_value: "Roboto-Bold",
           },
           {
             key: "payment_screen_title_fontsize",
@@ -394,17 +394,16 @@ const baseManifest = {
           {
             key: "restore_purchases_text_font_ios",
             type: "ios_font_selector",
-            label: "Restore Purchases Description Text Font",
             label_tooltip:
               "Font for Restore Purchases Description Text for ios.",
-            initial_value: "Montserrat",
+            initial_value: "Roboto-Regular",
           },
           {
             key: "restore_purchases_text_font_android",
             type: "android_font_selector",
             label_tooltip:
               "Font for Restore Purchases Description Text for android.",
-            initial_value: "Montserrat",
+            initial_value: "Roboto-Regular",
           },
           {
             key: "restore_purchases_text_fontsize",
@@ -429,15 +428,14 @@ const baseManifest = {
           {
             key: "restore_purchases_link_font_ios",
             type: "ios_font_selector",
-            label: "Restore Purchases Link Text Font",
             label_tooltip: "Font for Restore Purchases Link Text for ios.",
-            initial_value: "Montserrat-Bold",
+            initial_value: "Roboto-Bold",
           },
           {
             key: "restore_purchases_link_font_android",
             type: "android_font_selector",
             label_tooltip: "Font for Restore Purchases Link Text for android.",
-            initial_value: "Montserrat-Bold",
+            initial_value: "Roboto-Bold",
           },
           {
             key: "restore_purchases_link_fontsize",
@@ -468,15 +466,14 @@ const baseManifest = {
           {
             key: "payment_option_title_font_ios",
             type: "ios_font_selector",
-            label: "Payment Option Title Font",
             label_tooltip: "Font for the Payment Option Title for ios.",
-            initial_value: "Montserrat-Bold",
+            initial_value: "Roboto-Bold",
           },
           {
             key: "payment_option_title_font_android",
             type: "android_font_selector",
             label_tooltip: "Font for the Payment Option Title for android.",
-            initial_value: "Montserrat-Bold",
+            initial_value: "Roboto-Bold",
           },
           {
             key: "payment_option_title_fontsize",
@@ -488,21 +485,20 @@ const baseManifest = {
             key: "payment_option_title_fontcolor",
             type: "color_picker_rgba",
             label_tooltip: "Font Color for Payment Option Title.",
-            initial_value: "rgba(255, 255, 255, 1)",
+            initial_value: "rgba(0,0,0,1)",
           },
           {
             key: "payment_option_description_font_ios",
             type: "ios_font_selector",
-            label: "Payment Option Description Font",
             label_tooltip: "Font for the Payment Option Description for ios.",
-            initial_value: "Montserrat",
+            initial_value: "Roboto-Regular",
           },
           {
             key: "payment_option_description_font_android",
             type: "android_font_selector",
             label_tooltip:
               "Font for the Payment Option Description for android.",
-            initial_value: "Montserrat",
+            initial_value: "Roboto-Regular",
           },
           {
             key: "payment_option_description_fontsize",
@@ -514,7 +510,7 @@ const baseManifest = {
             key: "payment_option_description_fontcolor",
             type: "color_picker_rgba",
             label_tooltip: "Font Color for Payment Option Description.",
-            initial_value: "rgba(255, 255, 255, 1)",
+            initial_value: "rgba(66,74,87,1)",
           },
           {
             key: "payment_option_button_background",
@@ -535,17 +531,16 @@ const baseManifest = {
           {
             key: "payment_option_button_font_ios",
             type: "ios_font_selector",
-            label: "Payment Option Action Button Text Font",
             label_tooltip:
               "Font for the Payment Option Action Button Text for ios.",
-            initial_value: "Montserrat-Bold",
+            initial_value: "Roboto-Bold",
           },
           {
             key: "payment_option_button_font_android",
             type: "android_font_selector",
             label_tooltip:
               "Font for the Payment Option Action Button Text for android.",
-            initial_value: "Montserrat-Bold",
+            initial_value: "Roboto-Bold",
           },
           {
             key: "payment_option_button_fontsize",
@@ -571,17 +566,16 @@ const baseManifest = {
           {
             key: "terms_of_use_instructions_font_ios",
             type: "ios_font_selector",
-            label: "Payment Terms of Use instructions Text Font",
             label_tooltip:
               "Font for the Terms of Use Instructions Text for ios.",
-            initial_value: "Montserrat",
+            initial_value: "Roboto-Regular",
           },
           {
             key: "terms_of_use_instructions_font_android",
             type: "android_font_selector",
             label_tooltip:
               "Font for the Terms of Use Instructions Text for android.",
-            initial_value: "Montserrat",
+            initial_value: "Roboto-Regular",
           },
           {
             key: "terms_of_use_instructions_fontsize",
@@ -596,6 +590,13 @@ const baseManifest = {
             initial_value: "rgba(255, 255, 255, 1)",
           },
           {
+            key: "terms_of_use_link",
+            type: "text_input",
+            label: "Payment Terms of use Link",
+            label_tooltip: "Link for the Terms of Use.",
+            initial_value: "http://google.com",
+          },
+          {
             key: "terms_of_use_link_text",
             type: "text_input",
             label: "Payment Terms of use Link Text",
@@ -605,15 +606,14 @@ const baseManifest = {
           {
             key: "terms_of_use_link_font_ios",
             type: "ios_font_selector",
-            label: "Payment Terms of Use Link Text Font",
             label_tooltip: "Font for the Terms of Use Link Text for ios.",
-            initial_value: "Montserrat",
+            initial_value: "Roboto-Regular",
           },
           {
             key: "terms_of_use_link_font_android",
             type: "android_font_selector",
             label_tooltip: "Font for the Terms of Use Link Text for android.",
-            initial_value: "Montserrat",
+            initial_value: "Roboto-Regular",
           },
           {
             key: "terms_of_use_link_fontsize",

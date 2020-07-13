@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
 import { validateExternalPayment } from "./inPlayerService";
 import R from "ramda";
@@ -36,6 +37,7 @@ async function externalPaymentValidation({
   item_id,
   access_fee_id,
 }) {
+  console.log(purchaseCompletion, item_id, access_fee_id);
   const transactionIdentifier = purchaseCompletion?.transactionIdentifier;
   const productIdentifier = purchaseCompletion?.productIdentifier;
 
@@ -47,4 +49,38 @@ async function externalPaymentValidation({
   });
   console.log("Verification Result:", { result });
   return { transactionIdentifier, productIdentifier };
+}
+
+function restoreAnItem(purchaseID, restoreResult) {
+  let purchaseCompletion = restoreResult;
+
+  if (Array.isArray(restoreResult)) {
+    purchaseCompletion = restoreResult.find(
+      ({ productIdentifier }) => productIdentifier === purchaseID
+    );
+  }
+
+  const [item_id, access_fee_id] = purchaseID.split("_");
+  return externalPaymentValidation({
+    purchaseCompletion,
+    item_id,
+    access_fee_id,
+    purchaseID,
+  });
+}
+
+export async function restore(data) {
+  const restoreResult = await ApplicasterIAPModule.restore();
+
+  console.log("Restore Result:", { restoreResult });
+
+  if (Array.isArray(restoreResult) && restoreResult.length === 0) {
+    throw new Error("No items to restore");
+  }
+
+  return data.forEach(({ productIdentifier: purchaseID }) => {
+    if (!purchaseID) throw new Error(`PurchaseID: ${purchaseID} not exist`);
+
+    return restoreAnItem(purchaseID, restoreResult);
+  });
 }

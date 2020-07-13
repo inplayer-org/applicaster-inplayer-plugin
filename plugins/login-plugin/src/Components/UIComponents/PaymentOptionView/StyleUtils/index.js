@@ -13,7 +13,7 @@ function getBoxStyles(screenStyles) {
   return {
     backgroundColor,
     minHeight: 170,
-    width: 350,
+    width: 320,
     marginVertical: 10,
     padding: 30,
     alignItems: "center",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
+import { SafeAreaView, StyleSheet, Alert } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
 import NavbarComponent from "../UIComponents/NavbarComponent";
@@ -11,7 +11,12 @@ import {
   getAllPackages,
 } from "../../Services/inPlayerService";
 
-import { purchaseAnItem, retrieveProducts } from "../../Services/iAPService";
+import {
+  purchaseAnItem,
+  retrieveProducts,
+  restore,
+} from "../../Services/iAPService";
+
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
 import {
   invokeCallBack,
@@ -212,11 +217,36 @@ const AssetFlow = (props) => {
     buyItem(itemToPurchase);
   };
 
+  const onPressRestore = () => {
+    setAssetLoading(true);
+    restore(packageData.data)
+      .then(() => {
+        Alert.alert("Restore was successful", "", [
+          {
+            text: "OK",
+            onPress: () => loadAsset({ startPurchaseFlow: false }),
+          },
+        ]);
+      })
+      .catch((err) => {
+        console.log(err);
+        Alert.alert("Restore failed", "", [
+          {
+            text: "OK",
+            onPress: () => completeAssetFlow({ success: false, error: err }),
+          },
+        ]);
+      })
+      .finally(() => setAssetLoading(false));
+  };
+  if (packageData.loading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: screenBackground }]}
     >
-      {(assetLoading || packageData.loading) && <LoadingScreen />}
       <NavbarComponent
         buttonAction={completeAssetFlow}
         logoUrl={logoUrl}
@@ -226,7 +256,9 @@ const AssetFlow = (props) => {
         screenStyles={screenStyles}
         dataSource={dataSource}
         onPressPaymentOption={onPressPaymentOption}
+        onPressRestore={onPressRestore}
       />
+      {assetLoading && <LoadingScreen />}
     </SafeAreaView>
   );
 };
