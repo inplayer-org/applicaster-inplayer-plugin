@@ -49,23 +49,29 @@ async function externalPaymentValidation({
   return { transactionIdentifier, productIdentifier };
 }
 
+function restoreAnItem(purchaseID, purchasedItemsArr) {
+  const purchasedItem = purchasedItemsArr.find(
+    ({ productIdentifier }) => productIdentifier === purchaseID
+  );
+
+  const [item_id, access_fee_id] = purchaseID.split("_");
+  return externalPaymentValidation({
+    purchaseCompletion: purchasedItem,
+    item_id,
+    access_fee_id,
+    purchaseID,
+  });
+}
+
 export async function restore(data) {
-  try {
-    const purchaseCompletion = await ApplicasterIAPModule.restore();
-    return data.forEach((itemToRestore) => {
-      const { productIdentifier: purchaseID } = itemToRestore;
+  const purchasedItemsArr = await ApplicasterIAPModule.restore();
 
+  if (Array.isArray(purchasedItemsArr) && purchasedItemsArr.length > 0) {
+    return data.forEach(({ productIdentifier: purchaseID }) => {
       if (!purchaseID) throw new Error(`PurchaseID: ${purchaseID} not exist`);
-
-      const [item_id, access_fee_id] = purchaseID.split("_");
-      return externalPaymentValidation({
-        purchaseCompletion,
-        item_id,
-        access_fee_id,
-        purchaseID,
-      });
+      return restoreAnItem(purchaseID, purchasedItemsArr);
     });
-  } catch (err) {
-    throw err;
+  } else {
+    throw new Error("No items to restore");
   }
 }
