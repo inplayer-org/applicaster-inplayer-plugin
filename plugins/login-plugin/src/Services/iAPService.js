@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
 import { validateExternalPayment } from "./inPlayerService";
 import R from "ramda";
@@ -36,6 +37,7 @@ async function externalPaymentValidation({
   item_id,
   access_fee_id,
 }) {
+  console.log(purchaseCompletion, item_id, access_fee_id);
   const transactionIdentifier = purchaseCompletion?.transactionIdentifier;
   const productIdentifier = purchaseCompletion?.productIdentifier;
 
@@ -49,14 +51,18 @@ async function externalPaymentValidation({
   return { transactionIdentifier, productIdentifier };
 }
 
-function restoreAnItem(purchaseID, purchasedItemsArr) {
-  const purchasedItem = purchasedItemsArr.find(
-    ({ productIdentifier }) => productIdentifier === purchaseID
-  );
+function restoreAnItem(purchaseID, restoreResult) {
+  let purchaseCompletion = restoreResult;
+
+  if (Array.isArray(restoreResult)) {
+    purchaseCompletion = restoreResult.find(
+      ({ productIdentifier }) => productIdentifier === purchaseID
+    );
+  }
 
   const [item_id, access_fee_id] = purchaseID.split("_");
   return externalPaymentValidation({
-    purchaseCompletion: purchasedItem,
+    purchaseCompletion,
     item_id,
     access_fee_id,
     purchaseID,
@@ -64,14 +70,17 @@ function restoreAnItem(purchaseID, purchasedItemsArr) {
 }
 
 export async function restore(data) {
-  const purchasedItemsArr = await ApplicasterIAPModule.restore();
+  const restoreResult = await ApplicasterIAPModule.restore();
 
-  if (Array.isArray(purchasedItemsArr) && purchasedItemsArr.length > 0) {
-    return data.forEach(({ productIdentifier: purchaseID }) => {
-      if (!purchaseID) throw new Error(`PurchaseID: ${purchaseID} not exist`);
-      return restoreAnItem(purchaseID, purchasedItemsArr);
-    });
-  } else {
+  console.log("Restore Result:", { restoreResult });
+
+  if (Array.isArray(restoreResult) && restoreResult.length === 0) {
     throw new Error("No items to restore");
   }
+
+  return data.forEach(({ productIdentifier: purchaseID }) => {
+    if (!purchaseID) throw new Error(`PurchaseID: ${purchaseID} not exist`);
+
+    return restoreAnItem(purchaseID, restoreResult);
+  });
 }
