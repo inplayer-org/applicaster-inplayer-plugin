@@ -17,7 +17,7 @@ const baseManifest = {
   npm_dependencies: [
     "@inplayer-org/inplayer.js@2.13.3",
     "react-native-dropdownalert@4.2.1",
-    "@applicaster/applicaster-iap@0.2.10",
+    "@applicaster/applicaster-iap@0.2.12",
     "@react-native-community/async-storage@1.9.0",
     "react-native-actionsheet@2.4.0",
     "react-native-keyboard-aware-scroll-view@0.9.1",
