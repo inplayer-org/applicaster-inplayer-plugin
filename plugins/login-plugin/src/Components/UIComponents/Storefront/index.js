@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import PaymentOptionView from "../PaymentOptionView";
 import { container } from "../../Styles";
 import { mapKeyToStyle, withEndSpace } from "../../../Utils/Customization";
-import Footer from "../Footer";
 
 const storefrontStyleKeys = [
   "payment_screen_title",
@@ -32,7 +31,7 @@ export default function Storefront(props) {
   ] = storefrontStyleKeys.map((key) => mapKeyToStyle(key, screenStyles));
 
   return (
-    <View style={[styles.container, { paddingHorizontal: 30 }]}>
+    <View style={[styles.container, { paddingHorizontal: 25 }]}>
       <Text style={paymentTitleStyle} numberOfLines={1} ellipsizeMode="tail">
         {paymentTitle}
       </Text>
@@ -48,7 +47,7 @@ export default function Storefront(props) {
           </Text>
         </Text>
       </View>
-      <ScrollView>
+      <ScrollView style={{ width: "100%" }}>
         {dataSource.map((item, index) => (
           <PaymentOptionView
             screenStyles={screenStyles}
@@ -58,7 +57,6 @@ export default function Storefront(props) {
           />
         ))}
       </ScrollView>
-      <Footer screenStyles={screenStyles} />
     </View>
   );
 }
@@ -67,6 +65,6 @@ const styles = StyleSheet.create({
   container,
   restoreContainer: {
     alignItems: "center",
-    marginVertical: 30,
+    marginVertical: 20,
   },
 });

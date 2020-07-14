@@ -23,6 +23,7 @@ import {
   mergeFeesTitlesAndAddType,
   retrieveInPlayerFeesData,
 } from "./Helper";
+import Footer from "../UIComponents/Footer";
 
 const styles = StyleSheet.create({
   container,
@@ -258,6 +259,7 @@ const AssetFlow = (props) => {
         onPressPaymentOption={onPressPaymentOption}
         onPressRestore={onPressRestore}
       />
+      <Footer screenStyles={screenStyles} />
       {assetLoading && <LoadingScreen />}
     </SafeAreaView>
   );
