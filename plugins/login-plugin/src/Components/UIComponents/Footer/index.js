@@ -10,7 +10,6 @@ export default function Footer({ screenStyles }) {
     terms_of_use_instructions_text: termsOfUseText,
     terms_of_use_link_text: termsOfUseLink,
     terms_of_use_link: termsOfUseUrl,
-    payment_screen_background: screenBackground = "",
   } = screenStyles;
 
   const [
@@ -19,7 +18,7 @@ export default function Footer({ screenStyles }) {
   ] = termsOFUseStyleKeys.map((key) => mapKeyToStyle(key, screenStyles));
 
   return (
-    <View style={[styles.footer, { backgroundColor: screenBackground }]}>
+    <View style={styles.footer}>
       <Text
         style={[termsOfUseStyle, { textAlign: "center" }]}
         numberOfLines={3}
@@ -37,7 +36,7 @@ export default function Footer({ screenStyles }) {
 const styles = StyleSheet.create({
   footer: {
     position: "absolute",
-    bottom: 0,
+    bottom: 10,
     padding: 25,
     minHeight: 80,
     maxHeight: 120,
