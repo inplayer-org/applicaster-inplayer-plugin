@@ -3,14 +3,12 @@ export const container = {
   alignItems: "center",
 };
 export const title = {
-  fontFamily: "Montserrat-Bold",
   fontSize: 15,
   color: "white",
   marginTop: 100,
   marginBottom: 80,
 };
 export const input = {
-  fontFamily: "Montserrat-SemiBold", //TODO: Change to another deafult font
   backgroundColor: "transparent",
   fontSize: 13,
   color: "white",
@@ -31,6 +29,5 @@ export const button = {
 };
 export const buttonText = {
   color: "white",
-  fontFamily: "Montserrat-Bold",
   fontSize: 15,
 };
