@@ -1,15 +1,26 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import PaymentOptionView from "../PaymentOptionView";
 import { container } from "../../Styles";
 import { mapKeyToStyle, withEndSpace } from "../../../Utils/Customization";
-import Footer from "../Footer";
 
 const storefrontStyleKeys = [
   "payment_screen_title",
   "restore_purchases_text",
   "restore_purchases_link",
 ];
+
+const { height, width } = Dimensions.get("window");
+const aspectRatio = height / width;
+const isMobile = !Platform.isTV;
+const isPad = isMobile && aspectRatio < 1.6;
 
 export default function Storefront(props) {
   const {
@@ -32,7 +43,7 @@ export default function Storefront(props) {
   ] = storefrontStyleKeys.map((key) => mapKeyToStyle(key, screenStyles));
 
   return (
-    <View style={[styles.container, { paddingHorizontal: 30 }]}>
+    <View style={[styles.container, { paddingHorizontal: 25 }]}>
       <Text style={paymentTitleStyle} numberOfLines={1} ellipsizeMode="tail">
         {paymentTitle}
       </Text>
@@ -48,17 +59,23 @@ export default function Storefront(props) {
           </Text>
         </Text>
       </View>
-      <ScrollView>
-        {dataSource.map((item, index) => (
-          <PaymentOptionView
-            screenStyles={screenStyles}
-            paymentOptionItem={item}
-            key={item.productIdentifier}
-            onPress={() => onPressPaymentOption(index)}
-          />
-        ))}
-      </ScrollView>
-      <Footer screenStyles={screenStyles} />
+      <View
+        style={{
+          width: isPad ? 400 : "100%",
+          height: isPad ? 650 : 320,
+        }}
+      >
+        <ScrollView>
+          {dataSource.map((item, index) => (
+            <PaymentOptionView
+              screenStyles={screenStyles}
+              paymentOptionItem={item}
+              key={item.productIdentifier}
+              onPress={() => onPressPaymentOption(index)}
+            />
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 }
@@ -67,6 +84,6 @@ const styles = StyleSheet.create({
   container,
   restoreContainer: {
     alignItems: "center",
-    marginVertical: 30,
+    marginVertical: 20,
   },
 });

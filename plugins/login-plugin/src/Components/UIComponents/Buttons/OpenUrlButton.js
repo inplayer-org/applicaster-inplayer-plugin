@@ -15,7 +15,7 @@ const OpenURLButton = ({ url, children, linkStyle }) => {
   }, [url]);
 
   return (
-    <Text style={linkStyle} accessibilityRole="link" onPress={handlePress}>
+    <Text style={linkStyle} onPress={handlePress}>
       {children}
     </Text>
   );

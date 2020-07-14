@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     height: 60,
     padding: 10,
     marginTop: 10,
-    marginBottom: 50,
+    marginBottom: 40,
   },
   btnContainer: {
     position: "absolute",

@@ -13,9 +13,11 @@ function getBoxStyles(screenStyles) {
   return {
     backgroundColor,
     minHeight: 170,
-    width: 320,
+    width: "100%",
+    maxWidth: 370,
     marginVertical: 10,
-    padding: 30,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
     borderRadius,
@@ -34,7 +36,7 @@ function getButtonStyle(radius, backgroundColor) {
 
 const styles = StyleSheet.create({
   description: {
-    marginVertical: 25,
+    marginVertical: 20,
     textAlign: "center",
   },
 });

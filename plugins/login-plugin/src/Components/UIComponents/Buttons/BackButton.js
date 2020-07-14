@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity, Dimensions } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
 const BackButton = (props) => {
