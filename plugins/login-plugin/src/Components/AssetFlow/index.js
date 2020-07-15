@@ -231,12 +231,7 @@ const AssetFlow = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        Alert.alert("Restore failed", "", [
-          {
-            text: "OK",
-            onPress: () => completeAssetFlow({ success: false, error: err }),
-          },
-        ]);
+        Alert.alert("Restore failed", err.message);
       })
       .finally(() => setAssetLoading(false));
   };

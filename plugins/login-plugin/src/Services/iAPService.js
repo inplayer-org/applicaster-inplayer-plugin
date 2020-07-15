@@ -1,7 +1,8 @@
 import { Platform } from "react-native";
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
 import { validateExternalPayment } from "./inPlayerService";
-import R from "ramda";
+import { findAsync } from "./InPlayerUtils";
+import * as R from "ramda";
 
 export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   console.log({ purchaseID, item_id, access_fee_id });
@@ -37,7 +38,6 @@ async function externalPaymentValidation({
   item_id,
   access_fee_id,
 }) {
-  console.log(purchaseCompletion, item_id, access_fee_id);
   const transactionIdentifier = purchaseCompletion?.transactionIdentifier;
   const productIdentifier = purchaseCompletion?.productIdentifier;
 
@@ -51,36 +51,72 @@ async function externalPaymentValidation({
   return { transactionIdentifier, productIdentifier };
 }
 
-function restoreAnItem(purchaseID, restoreResult) {
-  let purchaseCompletion = restoreResult;
+async function findItemInRestoreAndroid(
+  purchaseIdInPlayer,
+  restoreResultFromStore
+) {
+  if (R.isEmpty(restoreResultFromStore)) return false;
 
-  if (Array.isArray(restoreResult)) {
-    purchaseCompletion = restoreResult.find(
-      ({ productIdentifier }) => productIdentifier === purchaseID
-    );
-  }
+  const itemFromRestore = await findAsync(
+    restoreResultFromStore,
+    async ({ productIdentifier }) => {
+      return productIdentifier === purchaseIdInPlayer;
+    }
+  );
+  return itemFromRestore?.receipt ? itemFromRestore : false;
+}
 
-  const [item_id, access_fee_id] = purchaseID.split("_");
+async function findItemInRestoreIos(
+  purchaseIdInPlayer,
+  restoreResultFromStore
+) {
+  const restoredProductsIdArr = restoreResultFromStore?.restoredProducts;
+  if (R.isEmpty(restoredProductsIdArr)) return false;
+
+  const productIdFromRestore = await findAsync(
+    restoredProductsIdArr,
+    async (productIdentifier) => {
+      return productIdentifier === purchaseIdInPlayer;
+    }
+  );
+
+  const itemInRestore = {
+    productIdentifier: productIdFromRestore,
+    receipt: restoreResultFromStore.receipt,
+  };
+  return productIdFromRestore ? itemInRestore : false;
+}
+
+async function restoreAnItem(purchaseID, restoreResultFromStore) {
+  const purchaseIdStr = purchaseID.toString();
+
+  const itemFromStoreResult =
+    Platform.OS === "android"
+      ? await findItemInRestoreAndroid(purchaseIdStr, restoreResultFromStore)
+      : await findItemInRestoreIos(purchaseIdStr, restoreResultFromStore);
+
+  if (!itemFromStoreResult) return false;
+
+  const [item_id, access_fee_id] = purchaseIdStr.split("_");
   return externalPaymentValidation({
-    purchaseCompletion,
+    purchaseCompletion: itemFromStoreResult,
     item_id,
     access_fee_id,
-    purchaseID,
   });
 }
 
-export async function restore(data) {
-  const restoreResult = await ApplicasterIAPModule.restore();
+export async function restore(dataFromInPlayer) {
+  const restoreResultFromStore = await ApplicasterIAPModule.restore();
 
-  console.log("Restore Result:", { restoreResult });
+  const promises = dataFromInPlayer.map(
+    async ({ productIdentifier }) =>
+      await restoreAnItem(productIdentifier, restoreResultFromStore)
+  );
 
-  if (Array.isArray(restoreResult) && restoreResult.length === 0) {
-    throw new Error("No items to restore");
-  }
+  const restoreCompletionsArr = await Promise.all(promises);
 
-  return data.forEach(({ productIdentifier: purchaseID }) => {
-    if (!purchaseID) throw new Error(`PurchaseID: ${purchaseID} not exist`);
+  const restoreSucceededArr = restoreCompletionsArr.filter(Boolean);
+  const isRestoreFailed = R.isEmpty(restoreSucceededArr);
 
-    return restoreAnItem(purchaseID, restoreResult);
-  });
+  if (isRestoreFailed) throw new Error("No items to restore");
 }
