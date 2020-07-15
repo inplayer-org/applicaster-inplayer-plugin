@@ -35,8 +35,6 @@ export default function Footer({ screenStyles }) {
 
 const styles = StyleSheet.create({
   footer: {
-    position: "absolute",
-    bottom: 10,
     padding: 25,
     minHeight: 80,
     maxHeight: 120,
