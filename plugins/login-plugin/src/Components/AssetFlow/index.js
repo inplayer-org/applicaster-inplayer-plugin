@@ -24,6 +24,7 @@ import {
   retrieveInPlayerFeesData,
 } from "./Helper";
 import Footer from "../UIComponents/Footer";
+import MESSAGES from "./Config";
 
 const styles = StyleSheet.create({
   container,
@@ -218,23 +219,34 @@ const AssetFlow = (props) => {
     buyItem(itemToPurchase);
   };
 
+  const onRestoreSuccess = (data) => {
+    setPackageData({
+      data,
+      loading: true,
+      error: null,
+    });
+    loadAsset({ startPurchaseFlow: false });
+  };
+
   const onPressRestore = () => {
     setAssetLoading(true);
+
     restore(packageData.data)
       .then(() => {
-        Alert.alert("Restore was successful", "", [
+        Alert.alert(MESSAGES.restore.success, "", [
           {
             text: "OK",
-            onPress: () => loadAsset({ startPurchaseFlow: false }),
+            onPress: () => onRestoreSuccess(packageData.data),
           },
         ]);
       })
       .catch((err) => {
         console.log(err);
-        Alert.alert("Restore failed", err.message);
-      })
-      .finally(() => setAssetLoading(false));
+        setAssetLoading(false);
+        Alert.alert(MESSAGES.restore.fail, err.message);
+      });
   };
+
   if (packageData.loading) {
     return <LoadingScreen />;
   }

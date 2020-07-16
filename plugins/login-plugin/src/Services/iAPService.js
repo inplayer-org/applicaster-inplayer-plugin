@@ -3,6 +3,7 @@ import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
 import { validateExternalPayment } from "./inPlayerService";
 import { findAsync } from "./InPlayerUtils";
 import * as R from "ramda";
+import MESSAGES from "../Components/AssetFlow/Config";
 
 export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   console.log({ purchaseID, item_id, access_fee_id });
@@ -98,11 +99,20 @@ async function restoreAnItem(purchaseID, restoreResultFromStore) {
   if (!itemFromStoreResult) return false;
 
   const [item_id, access_fee_id] = purchaseIdStr.split("_");
-  return externalPaymentValidation({
-    purchaseCompletion: itemFromStoreResult,
-    item_id,
-    access_fee_id,
-  });
+  try {
+    const result = await externalPaymentValidation({
+      purchaseCompletion: itemFromStoreResult,
+      item_id,
+      access_fee_id,
+    });
+    return result;
+  } catch (err) {
+    return {
+      code: err?.response?.status,
+      success: false,
+      message: MESSAGES.restore.failDescription,
+    };
+  }
 }
 
 export async function restore(dataFromInPlayer) {
@@ -115,8 +125,13 @@ export async function restore(dataFromInPlayer) {
 
   const restoreCompletionsArr = await Promise.all(promises);
 
-  const restoreSucceededArr = restoreCompletionsArr.filter(Boolean);
-  const isRestoreFailed = R.isEmpty(restoreSucceededArr);
+  const restoreProcessedArr = restoreCompletionsArr.filter(Boolean);
 
-  if (isRestoreFailed) throw new Error("No items to restore");
+  const isRestoreFailed = R.isEmpty(restoreProcessedArr);
+  const isErrorOnAllRestores = restoreProcessedArr.every(
+    ({ success }) => success === false
+  );
+
+  if (isRestoreFailed) throw new Error(MESSAGES.restore.empty);
+  if (isErrorOnAllRestores) throw new Error(restoreProcessedArr[0].message);
 }
