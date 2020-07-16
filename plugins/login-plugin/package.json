@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@applicaster/applicaster-iap": "0.2.13",
+    "@applicaster/applicaster-iap": "0.2.14",
     "@inplayer-org/inplayer.js": "2.13.3",
     "@react-native-community/async-storage": "^1.9.0",
     "axios": "^0.19.1",
