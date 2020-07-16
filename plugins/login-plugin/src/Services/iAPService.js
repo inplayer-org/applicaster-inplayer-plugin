@@ -1,7 +1,9 @@
 import { Platform } from "react-native";
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
 import { validateExternalPayment } from "./inPlayerService";
-import R from "ramda";
+import { findAsync } from "./InPlayerUtils";
+import * as R from "ramda";
+import MESSAGES from "../Components/AssetFlow/Config";
 
 export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   console.log({ purchaseID, item_id, access_fee_id });
@@ -37,7 +39,6 @@ async function externalPaymentValidation({
   item_id,
   access_fee_id,
 }) {
-  console.log(purchaseCompletion, item_id, access_fee_id);
   const transactionIdentifier = purchaseCompletion?.transactionIdentifier;
   const productIdentifier = purchaseCompletion?.productIdentifier;
 
@@ -51,36 +52,86 @@ async function externalPaymentValidation({
   return { transactionIdentifier, productIdentifier };
 }
 
-function restoreAnItem(purchaseID, restoreResult) {
-  let purchaseCompletion = restoreResult;
+async function findItemInRestoreAndroid(
+  purchaseIdInPlayer,
+  restoreResultFromStore
+) {
+  if (R.isEmpty(restoreResultFromStore)) return false;
 
-  if (Array.isArray(restoreResult)) {
-    purchaseCompletion = restoreResult.find(
-      ({ productIdentifier }) => productIdentifier === purchaseID
-    );
-  }
-
-  const [item_id, access_fee_id] = purchaseID.split("_");
-  return externalPaymentValidation({
-    purchaseCompletion,
-    item_id,
-    access_fee_id,
-    purchaseID,
-  });
+  const itemFromRestore = await findAsync(
+    restoreResultFromStore,
+    async ({ productIdentifier }) => {
+      return productIdentifier === purchaseIdInPlayer;
+    }
+  );
+  return itemFromRestore?.receipt ? itemFromRestore : false;
 }
 
-export async function restore(data) {
-  const restoreResult = await ApplicasterIAPModule.restore();
+async function findItemInRestoreIos(
+  purchaseIdInPlayer,
+  restoreResultFromStore
+) {
+  const restoredProductsIdArr = restoreResultFromStore?.restoredProducts;
+  if (R.isEmpty(restoredProductsIdArr)) return false;
 
-  console.log("Restore Result:", { restoreResult });
+  const productIdFromRestore = await findAsync(
+    restoredProductsIdArr,
+    async (productIdentifier) => {
+      return productIdentifier === purchaseIdInPlayer;
+    }
+  );
 
-  if (Array.isArray(restoreResult) && restoreResult.length === 0) {
-    throw new Error("No items to restore");
+  const itemInRestore = {
+    productIdentifier: productIdFromRestore,
+    receipt: restoreResultFromStore.receipt,
+  };
+  return productIdFromRestore ? itemInRestore : false;
+}
+
+async function restoreAnItem(purchaseID, restoreResultFromStore) {
+  const purchaseIdStr = purchaseID.toString();
+
+  const itemFromStoreResult =
+    Platform.OS === "android"
+      ? await findItemInRestoreAndroid(purchaseIdStr, restoreResultFromStore)
+      : await findItemInRestoreIos(purchaseIdStr, restoreResultFromStore);
+
+  if (!itemFromStoreResult) return false;
+
+  const [item_id, access_fee_id] = purchaseIdStr.split("_");
+  try {
+    const result = await externalPaymentValidation({
+      purchaseCompletion: itemFromStoreResult,
+      item_id,
+      access_fee_id,
+    });
+    return result;
+  } catch (err) {
+    return {
+      code: err?.response?.status,
+      success: false,
+      message: MESSAGES.restore.failDescription,
+    };
   }
+}
 
-  return data.forEach(({ productIdentifier: purchaseID }) => {
-    if (!purchaseID) throw new Error(`PurchaseID: ${purchaseID} not exist`);
+export async function restore(dataFromInPlayer) {
+  const restoreResultFromStore = await ApplicasterIAPModule.restore();
 
-    return restoreAnItem(purchaseID, restoreResult);
-  });
+  const promises = dataFromInPlayer.map(
+    async ({ productIdentifier }) =>
+      await restoreAnItem(productIdentifier, restoreResultFromStore)
+  );
+
+  const restoreCompletionsArr = await Promise.all(promises);
+
+  const restoreProcessedArr = restoreCompletionsArr.filter(Boolean);
+
+  const isRestoreFailed = R.isEmpty(restoreProcessedArr);
+  const isErrorOnAllRestores = restoreProcessedArr.every(
+    ({ success }) => success === false
+  );
+
+  if (isRestoreFailed) throw new Error(MESSAGES.restore.empty);
+  if (isErrorOnAllRestores) throw new Error(restoreProcessedArr[0].message);
 }
