@@ -5,23 +5,19 @@ import { findAsync } from "./InPlayerUtils";
 import * as R from "ramda";
 import MESSAGES from "../Components/AssetFlow/Config";
 
-export function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
-  console.log({ purchaseID, item_id, access_fee_id });
-  if (purchaseID) {
-    return ApplicasterIAPModule.purchase({
-      productIdentifier: purchaseID,
-      finishing: true,
-    }).then((purchaseCompletion) =>
-      externalPaymentValidation({
-        purchaseCompletion,
-        purchaseID,
-        item_id,
-        access_fee_id,
-      })
-    );
-  } else {
-    throw new Error(`PurchaseID: ${purchaseID} not exist`);
-  }
+export async function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
+  if (!purchaseID) throw new Error(MESSAGES.validation.productId);
+
+  const purchaseCompletion = await ApplicasterIAPModule.purchase({
+    productIdentifier: purchaseID,
+    finishing: true,
+  });
+
+  return externalPaymentValidation({
+    purchaseCompletion,
+    item_id,
+    access_fee_id,
+  });
 }
 
 export function retrieveProducts(purchasableItems) {
@@ -30,7 +26,7 @@ export function retrieveProducts(purchasableItems) {
       R.prop("products")
     );
   } else {
-    throw new Error(`PurchaseID: ${purchasableItems}  not exist`);
+    throw new Error(MESSAGES.validation.productId);
   }
 }
 
@@ -110,7 +106,7 @@ async function restoreAnItem(purchaseID, restoreResultFromStore) {
     return {
       code: err?.response?.status,
       success: false,
-      message: MESSAGES.restore.failDescription,
+      message: MESSAGES.restore.failInfo,
     };
   }
 }

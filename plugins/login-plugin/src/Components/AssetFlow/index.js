@@ -22,6 +22,7 @@ import {
   invokeCallBack,
   mergeFeesTitlesAndAddType,
   retrieveInPlayerFeesData,
+  isRequirePurchaseError,
 } from "./Helper";
 import Footer from "../UIComponents/Footer";
 import MESSAGES from "./Config";
@@ -44,34 +45,16 @@ const AssetFlow = (props) => {
     configuration: props.configuration,
   });
 
-  const [dataSource, setDataSource] = useState([]);
-  const [assetLoading, setAssetLoading] = useState(true);
-  const [packageData, setPackageData] = useState({
-    loading: true,
-    error: null,
-    data: null,
-  });
+  const [dataSource, setDataSource] = useState(null);
+  const [assetLoading, setAssetLoading] = useState(false);
   let stillMounted = true;
 
   useEffect(() => {
     loadAsset({ startPurchaseFlow: true });
-    preparePurchaseData();
     return () => {
       stillMounted = false;
     };
   }, []);
-
-  useEffect(() => {
-    if ([packageData.loading === false]) {
-      invokePurchaseLogicIfNeeded();
-    }
-  }, [packageData.loading]);
-
-  useEffect(() => {
-    if (assetLoading === false) {
-      invokePurchaseLogicIfNeeded();
-    }
-  }, [assetLoading]);
 
   const preparePurchaseData = async () => {
     const {
@@ -118,42 +101,15 @@ const AssetFlow = (props) => {
         inPlayerFeesData,
       });
 
-      stillMounted &&
-        setPackageData({
-          loading: false,
-          error: null,
-          data: storeFeesData,
-        });
+      stillMounted && setDataSource(storeFeesData);
     } catch (error) {
-      stillMounted &&
-        setPackageData({
-          loading: false,
-          error,
-          data: null,
-        });
-    }
-  };
-
-  const invokePurchaseLogicIfNeeded = () => {
-    if (
-      assetLoading === false &&
-      packageData.loading === false &&
-      packageData.data
-    ) {
-      if (packageData.data) {
-        stillMounted && setDataSource(packageData.data);
-      } else {
-        const error = new Error("Can not create action sheet data source");
-        completeAssetFlow({ success: false, error });
-      }
-    } else if (packageData.loading === false && packageData.error) {
-      completeAssetFlow({ success: false, error: packageData.error });
+      stillMounted && completeAssetFlow({ success: false, error });
     }
   };
 
   const loadAsset = ({ startPurchaseFlow = false }) => {
     console.log("LoadAsset");
-    const retryInCaseFail = startPurchaseFlow == false;
+    const retryInCaseFail = !startPurchaseFlow;
     const { payload } = props;
     checkAccessForAsset({ assetId, retryInCaseFail })
       .then((data) => {
@@ -163,7 +119,7 @@ const AssetFlow = (props) => {
 
         if (data && src) {
           console.log({ src, data });
-          newPayload = src && {
+          const newPayload = src && {
             ...payload,
             content: { src },
           };
@@ -177,13 +133,16 @@ const AssetFlow = (props) => {
       })
       .catch((error) => {
         if (error?.requestedToPurchase && startPurchaseFlow) {
-          stillMounted && setAssetLoading(false);
-        } else {
-          completeAssetFlow({
-            success: false,
-            error: { ...error, message: error?.response?.status?.toString() },
-          });
+          return preparePurchaseData();
         }
+
+        const status = error?.response?.status?.toString();
+
+        const message = isRequirePurchaseError(status)
+          ? MESSAGES.purchase.required
+          : status;
+        const errorWithMessage = { ...error, message };
+        completeAssetFlow({ success: false, error: errorWithMessage });
       });
   };
 
@@ -191,63 +150,64 @@ const AssetFlow = (props) => {
     invokeCallBack(props, completionObject);
   };
 
-  const buyItem = (itemToPurchase) => {
-    const { productIdentifier } = itemToPurchase;
+  const buyItem = async ({ productIdentifier }) => {
+    if (!productIdentifier) {
+      const error = new Error(MESSAGES.validation.productId);
+      return completeAssetFlow({ success: false, error });
+    }
 
-    if (productIdentifier) {
-      const purchaseData = productIdentifier.split("_");
+    try {
+      const [item_id, access_fee_id] = productIdentifier.split("_");
 
-      purchaseAnItem({
+      await purchaseAnItem({
         purchaseID: productIdentifier,
-        item_id: purchaseData[0],
-        access_fee_id: purchaseData[1],
-      })
-        .then(() => {
-          loadAsset({ startPurchaseFlow: false });
-        })
-        .catch((error) => {
-          completeAssetFlow({ success: false, error: error });
-        });
-    } else {
-      const error = new Error("Can not purchase, product identifier not exist");
-      completeAssetFlow({ success: false, error });
+        item_id,
+        access_fee_id,
+      });
+
+      return loadAsset({ startPurchaseFlow: false });
+    } catch (error) {
+      Alert.alert(MESSAGES.purchase.fail, error.message);
+      assetLoading && setAssetLoading(false);
     }
   };
 
   const onPressPaymentOption = (index) => {
-    const itemToPurchase = packageData.data[index];
-    buyItem(itemToPurchase);
+    Platform.OS === "ios" && setAssetLoading(true);
+
+    const itemToPurchase = dataSource[index];
+    return buyItem(itemToPurchase);
   };
 
-  const onRestoreSuccess = (data) => {
-    setPackageData({
-      data,
-      loading: true,
-      error: null,
-    });
+  const onRestoreSuccess = () => {
+    setDataSource(null);
     loadAsset({ startPurchaseFlow: false });
   };
 
   const onPressRestore = () => {
     setAssetLoading(true);
 
-    restore(packageData.data)
+    restore(dataSource)
       .then(() => {
-        Alert.alert(MESSAGES.restore.success, "", [
+        Alert.alert(MESSAGES.restore.success, MESSAGES.restore.successInfo, [
           {
             text: "OK",
-            onPress: () => onRestoreSuccess(packageData.data),
+            onPress: () => onRestoreSuccess(dataSource),
           },
         ]);
       })
       .catch((err) => {
         console.log(err);
-        setAssetLoading(false);
-        Alert.alert(MESSAGES.restore.fail, err.message);
+        Alert.alert(MESSAGES.restore.fail, err.message, [
+          {
+            text: "OK",
+            onPress: () => setAssetLoading(false),
+          },
+        ]);
       });
   };
 
-  if (packageData.loading) {
+  if (!dataSource) {
     return <LoadingScreen />;
   }
 

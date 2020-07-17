@@ -134,3 +134,7 @@ export function retrieveInPlayerFeesData({
   console.log({ purchaseDataArray });
   return purchaseDataArray;
 }
+
+export const isRequirePurchaseError = (status) => {
+  return status.toString() === "402";
+};

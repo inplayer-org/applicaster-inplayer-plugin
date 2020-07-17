@@ -1,9 +1,17 @@
 const MESSAGES = {
   restore: {
-    success: "Restore was successful",
+    success: "Restore success",
     fail: "Restore failed",
-    failDescription: "Error occurred while restoring purchases.",
+    failInfo: "Error occurred while restoring purchases.",
+    successInfo: "Purchase was successfully restored!",
     empty: "No items to restore.",
+  },
+  purchase: {
+    fail: "Purchase failed",
+    required: "This item requires purchase.",
+  },
+  validation: {
+    productId: "Can not purchase, product identifier not exist",
   },
 };
 
