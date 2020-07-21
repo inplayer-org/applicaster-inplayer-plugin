@@ -63,6 +63,7 @@ const AssetFlow = (props) => {
         consumable_type_mapper,
         non_consumable_type_mapper,
         subscription_type_mapper,
+        in_player_environment,
       },
     } = props;
     try {
@@ -88,10 +89,12 @@ const AssetFlow = (props) => {
         allPackagesData: resultPurchaseData[1],
         assetId,
         purchaseKeysMapping,
+        in_player_environment,
       });
 
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
 
+      console.log({ inPlayerFeesData, storeFeesData });
       if (storeFeesData.length === 0) {
         throw new Error("No items available in store");
       }
@@ -176,6 +179,7 @@ const AssetFlow = (props) => {
     Platform.OS === "ios" && setAssetLoading(true);
 
     const itemToPurchase = dataSource[index];
+    console.log({ itemToPurchase });
     return buyItem(itemToPurchase);
   };
 

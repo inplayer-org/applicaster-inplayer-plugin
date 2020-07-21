@@ -22,9 +22,27 @@ export async function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
 
 export function retrieveProducts(purchasableItems) {
   if (purchasableItems) {
-    return ApplicasterIAPModule.products(purchasableItems).then(
-      R.prop("products")
-    );
+    const mappedPurchasableItems = R.map((item) => {
+      const { externalFeeId, productIdentifier } = item;
+      if (externalFeeId) {
+        return {
+          ...item,
+          productIdentifier: externalFeeId,
+          originalProductIdentifier: productIdentifier,
+        };
+      }
+
+      return item;
+    })(purchasableItems);
+    console.log({ mappedPurchasableItems });
+
+    return ApplicasterIAPModule.products(mappedPurchasableItems)
+
+      .then(R.prop("products"))
+      .then((result) => {
+        console.log({ result });
+        return result;
+      });
   } else {
     throw new Error(MESSAGES.validation.productId);
   }
