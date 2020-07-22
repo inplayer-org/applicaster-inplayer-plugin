@@ -15,7 +15,7 @@ export function externalIdProviderId({ in_player_environment }) {
     } else if (in_player_environment == "develop") {
       return 12;
     }
-  } else if (Platform.OS === "google-play") {
+  } else if (Platform.OS === "android") {
     if (in_player_environment == "prod") {
       return 15;
     } else if (in_player_environment == "develop") {

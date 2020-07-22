@@ -13,20 +13,21 @@ export function invokeCallBack(
     });
 }
 
-export function mergeFeesTitlesAndAddType({ storeFeesData, inPlayerFeesData }) {
+export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
   for (let i = 0; i < storeFeesData.length; i++) {
     const storeFee = storeFeesData[i];
-    console.log({ storeFee });
 
     const inPlayerFee = R.find(
-      R.propEq("productIdentifier", storeFee.productIdentifier)
+      R.propEq("externalFeeId", storeFee.productIdentifier)
     )(inPlayerFeesData);
     console.log({ inPlayerFeesData });
 
     storeFee.productType = inPlayerFee?.productType || "";
+    storeFee.inPlayerProductId = inPlayerFee?.productIdentifier;
     if (inPlayerFee?.title && !storeFee.title) {
       storeFee.title = inPlayerFee.title;
     }
+    console.log({ storeFee });
   }
 }
 

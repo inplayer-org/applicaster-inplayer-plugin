@@ -13,6 +13,8 @@ export async function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
     finishing: true,
   });
 
+  console.log({ purchaseID, item_id, access_fee_id });
+
   return externalPaymentValidation({
     purchaseCompletion,
     item_id,

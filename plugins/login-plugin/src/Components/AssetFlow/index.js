@@ -20,7 +20,7 @@ import {
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
 import {
   invokeCallBack,
-  mergeFeesTitlesAndAddType,
+  addInPlayerProductId,
   retrieveInPlayerFeesData,
   isRequirePurchaseError,
 } from "./Helper";
@@ -99,7 +99,7 @@ const AssetFlow = (props) => {
         throw new Error("No items available in store");
       }
 
-      mergeFeesTitlesAndAddType({
+      addInPlayerProductId({
         storeFeesData,
         inPlayerFeesData,
       });
@@ -153,14 +153,14 @@ const AssetFlow = (props) => {
     invokeCallBack(props, completionObject);
   };
 
-  const buyItem = async ({ productIdentifier }) => {
-    if (!productIdentifier) {
+  const buyItem = async ({ productIdentifier, inPlayerProductId }) => {
+    if (!productIdentifier || !inPlayerProductId) {
       const error = new Error(MESSAGES.validation.productId);
       return completeAssetFlow({ success: false, error });
     }
 
     try {
-      const [item_id, access_fee_id] = productIdentifier.split("_");
+      const [item_id, access_fee_id] = inPlayerProductId.split("_");
 
       await purchaseAnItem({
         purchaseID: productIdentifier,
