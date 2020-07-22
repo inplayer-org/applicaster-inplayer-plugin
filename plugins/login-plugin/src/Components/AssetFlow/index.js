@@ -20,7 +20,7 @@ import {
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
 import {
   invokeCallBack,
-  mergeFeesTitlesAndAddType,
+  addInPlayerProductId,
   retrieveInPlayerFeesData,
   isRequirePurchaseError,
 } from "./Helper";
@@ -63,6 +63,7 @@ const AssetFlow = (props) => {
         consumable_type_mapper,
         non_consumable_type_mapper,
         subscription_type_mapper,
+        in_player_environment,
       },
     } = props;
     try {
@@ -88,15 +89,17 @@ const AssetFlow = (props) => {
         allPackagesData: resultPurchaseData[1],
         assetId,
         purchaseKeysMapping,
+        in_player_environment,
       });
 
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
 
+      console.log({ inPlayerFeesData, storeFeesData });
       if (storeFeesData.length === 0) {
         throw new Error("No items available in store");
       }
 
-      mergeFeesTitlesAndAddType({
+      addInPlayerProductId({
         storeFeesData,
         inPlayerFeesData,
       });
@@ -135,14 +138,22 @@ const AssetFlow = (props) => {
         if (error?.requestedToPurchase && startPurchaseFlow) {
           return preparePurchaseData();
         }
+        let status = error?.response?.status;
+        console.log({ error, status });
 
-        const status = error?.response?.status?.toString();
-
-        const message = isRequirePurchaseError(status)
-          ? MESSAGES.purchase.required
-          : status;
-        const errorWithMessage = { ...error, message };
-        completeAssetFlow({ success: false, error: errorWithMessage });
+        if (status) {
+          const statusString = status.toString();
+          const message = isRequirePurchaseError(statusString)
+            ? MESSAGES.purchase.required
+            : statusString;
+          const errorWithMessage = { ...error, message };
+          completeAssetFlow({ success: false, error: errorWithMessage });
+        } else {
+          completeAssetFlow({
+            success: false,
+            error: { message: "Cannot load asset info." },
+          });
+        }
       });
   };
 
@@ -150,15 +161,19 @@ const AssetFlow = (props) => {
     invokeCallBack(props, completionObject);
   };
 
-  const buyItem = async ({ productIdentifier }) => {
-    if (!productIdentifier) {
+  const buyItem = async ({ productIdentifier, inPlayerProductId }) => {
+    if (!productIdentifier || !inPlayerProductId) {
       const error = new Error(MESSAGES.validation.productId);
       return completeAssetFlow({ success: false, error });
     }
 
     try {
-      const [item_id, access_fee_id] = productIdentifier.split("_");
-
+      const [item_id, access_fee_id] = inPlayerProductId.split("_");
+      console.log({
+        purchaseID: productIdentifier,
+        item_id,
+        access_fee_id,
+      });
       await purchaseAnItem({
         purchaseID: productIdentifier,
         item_id,
@@ -168,7 +183,7 @@ const AssetFlow = (props) => {
       return loadAsset({ startPurchaseFlow: false });
     } catch (error) {
       Alert.alert(MESSAGES.purchase.fail, error.message);
-      assetLoading && setAssetLoading(false);
+      Platform.OS === "ios" && setAssetLoading(false);
     }
   };
 
@@ -176,6 +191,7 @@ const AssetFlow = (props) => {
     Platform.OS === "ios" && setAssetLoading(true);
 
     const itemToPurchase = dataSource[index];
+    console.log({ itemToPurchase });
     return buyItem(itemToPurchase);
   };
 

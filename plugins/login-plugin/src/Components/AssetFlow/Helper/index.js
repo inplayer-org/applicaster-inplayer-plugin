@@ -1,5 +1,5 @@
 import R from "ramda";
-
+import { externalIdForPlatform } from "../../../Services/InPlayerServiceHelper";
 export function invokeCallBack(
   props,
   { success = true, newPayload = null, error = null }
@@ -13,20 +13,34 @@ export function invokeCallBack(
     });
 }
 
-export function mergeFeesTitlesAndAddType({ storeFeesData, inPlayerFeesData }) {
-  for (let i = 0; i < storeFeesData.length; i++) {
-    const storeFee = storeFeesData[i];
-    console.log({ storeFee });
+function findInPlayerFee(storeFee, inPlayerFeesData) {
+  let inPlayerFee = R.find(
+    R.propEq("externalFeeId", storeFee.productIdentifier)
+  )(inPlayerFeesData);
 
-    const inPlayerFee = R.find(
+  if (!inPlayerFee) {
+    inPlayerFee = R.find(
       R.propEq("productIdentifier", storeFee.productIdentifier)
     )(inPlayerFeesData);
+  }
+
+  if (!inPlayerFee) throw new Error("Cannot find product Id");
+  return inPlayerFee;
+}
+
+export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
+  for (let i = 0; i < storeFeesData.length; i++) {
+    const storeFee = storeFeesData[i];
+
+    const inPlayerFee = findInPlayerFee(storeFee, inPlayerFeesData);
     console.log({ inPlayerFeesData });
 
     storeFee.productType = inPlayerFee?.productType || "";
+    storeFee.inPlayerProductId = inPlayerFee.productIdentifier;
     if (inPlayerFee?.title && !storeFee.title) {
       storeFee.title = inPlayerFee.title;
     }
+    console.log({ storeFee });
   }
 }
 
@@ -57,22 +71,35 @@ function purchaseDataForFee({
   allPackagesData,
   assetId,
   purchaseKeysMapping,
+  in_player_environment,
 }) {
   const { item_type } = fee;
-  console.log({ fee });
+  console.log({ fee, in_player_environment });
   if (item_type === "package") {
     return purchaseDataForPackageFee({
       fee,
       allPackagesData,
       purchaseKeysMapping,
+      in_player_environment,
     });
   } else {
-    return purchaseDataForSingleFee({ fee, assetId, purchaseKeysMapping });
+    return purchaseDataForSingleFee({
+      fee,
+      assetId,
+      purchaseKeysMapping,
+      in_player_environment,
+    });
   }
 }
 
-function purchaseDataForSingleFee({ fee, assetId, purchaseKeysMapping }) {
+function purchaseDataForSingleFee({
+  fee,
+  assetId,
+  purchaseKeysMapping,
+  in_player_environment,
+}) {
   const { id, item_title, description } = fee;
+  const externalFeeId = externalIdForPlatform({ fee, in_player_environment });
 
   console.log({
     productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
@@ -82,12 +109,14 @@ function purchaseDataForSingleFee({ fee, assetId, purchaseKeysMapping }) {
     productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
     productIdentifier: `${assetId}_${id}`,
     title: item_title || description,
+    externalFeeId,
   };
 }
 function purchaseDataForPackageFee({
   fee,
   allPackagesData,
   purchaseKeysMapping,
+  in_player_environment,
 }) {
   const { id, item_title, description } = fee;
 
@@ -95,6 +124,8 @@ function purchaseDataForPackageFee({
     const packageItem = allPackagesData[i];
     const packageId = packageItem?.id;
     const access_fees = packageItem?.access_fees;
+    const externalFeeId = externalIdForPlatform({ fee, in_player_environment });
+
     if (access_fees && packageId && R.find(R.propEq("id", id))(access_fees)) {
       console.log({
         productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
@@ -104,6 +135,7 @@ function purchaseDataForPackageFee({
         productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
         productIdentifier: `${packageId}_${id}`,
         title: item_title || description,
+        externalFeeId,
       };
     }
   }
@@ -115,6 +147,7 @@ export function retrieveInPlayerFeesData({
   feesToSearch,
   assetId,
   purchaseKeysMapping,
+  in_player_environment,
 }) {
   let purchaseDataArray = [];
 
@@ -125,6 +158,7 @@ export function retrieveInPlayerFeesData({
       fee,
       assetId,
       purchaseKeysMapping,
+      in_player_environment,
     });
     if (purchaseData) {
       console.log("Adding new Item:", { purchaseData });
