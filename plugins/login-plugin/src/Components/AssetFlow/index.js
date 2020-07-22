@@ -138,14 +138,22 @@ const AssetFlow = (props) => {
         if (error?.requestedToPurchase && startPurchaseFlow) {
           return preparePurchaseData();
         }
+        let status = error?.response?.status;
+        console.log({ error, status });
 
-        const status = error?.response?.status?.toString();
-
-        const message = isRequirePurchaseError(status)
-          ? MESSAGES.purchase.required
-          : status;
-        const errorWithMessage = { ...error, message };
-        completeAssetFlow({ success: false, error: errorWithMessage });
+        if (status) {
+          const statusString = status.toString();
+          const message = isRequirePurchaseError(statusString)
+            ? MESSAGES.purchase.required
+            : statusString;
+          const errorWithMessage = { ...error, message };
+          completeAssetFlow({ success: false, error: errorWithMessage });
+        } else {
+          completeAssetFlow({
+            success: false,
+            error: { message: "Cannot load asset info." },
+          });
+        }
       });
   };
 
@@ -161,7 +169,11 @@ const AssetFlow = (props) => {
 
     try {
       const [item_id, access_fee_id] = inPlayerProductId.split("_");
-
+      console.log({
+        purchaseID: productIdentifier,
+        item_id,
+        access_fee_id,
+      });
       await purchaseAnItem({
         purchaseID: productIdentifier,
         item_id,
@@ -171,6 +183,7 @@ const AssetFlow = (props) => {
       return loadAsset({ startPurchaseFlow: false });
     } catch (error) {
       Alert.alert(MESSAGES.purchase.fail, error.message);
+      console.log({ assetLoading });
       assetLoading && setAssetLoading(false);
     }
   };
