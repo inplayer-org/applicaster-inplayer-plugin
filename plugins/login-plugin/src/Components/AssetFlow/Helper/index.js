@@ -13,17 +13,30 @@ export function invokeCallBack(
     });
 }
 
+function findInPlayerFee(storeFee, inPlayerFeesData) {
+  let inPlayerFee = R.find(
+    R.propEq("externalFeeId", storeFee.productIdentifier)
+  )(inPlayerFeesData);
+
+  if (!inPlayerFee) {
+    inPlayerFee = R.find(
+      R.propEq("productIdentifier", storeFee.productIdentifier)
+    )(inPlayerFeesData);
+  }
+
+  if (!inPlayerFee) throw new Error("Cannot find product Id");
+  return inPlayerFee;
+}
+
 export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
   for (let i = 0; i < storeFeesData.length; i++) {
     const storeFee = storeFeesData[i];
 
-    const inPlayerFee = R.find(
-      R.propEq("externalFeeId", storeFee.productIdentifier)
-    )(inPlayerFeesData);
+    const inPlayerFee = findInPlayerFee(storeFee, inPlayerFeesData);
     console.log({ inPlayerFeesData });
 
     storeFee.productType = inPlayerFee?.productType || "";
-    storeFee.inPlayerProductId = inPlayerFee?.productIdentifier;
+    storeFee.inPlayerProductId = inPlayerFee.productIdentifier;
     if (inPlayerFee?.title && !storeFee.title) {
       storeFee.title = inPlayerFee.title;
     }

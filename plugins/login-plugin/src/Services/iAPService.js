@@ -104,7 +104,11 @@ async function findItemInRestoreIos(
   return productIdFromRestore ? itemInRestore : false;
 }
 
-async function restoreAnItem(purchaseID, restoreResultFromStore) {
+async function restoreAnItem(
+  purchaseID,
+  inPlayerProductId,
+  restoreResultFromStore
+) {
   const purchaseIdStr = purchaseID.toString();
 
   const itemFromStoreResult =
@@ -114,7 +118,7 @@ async function restoreAnItem(purchaseID, restoreResultFromStore) {
 
   if (!itemFromStoreResult) return false;
 
-  const [item_id, access_fee_id] = purchaseIdStr.split("_");
+  const [item_id, access_fee_id] = inPlayerProductId.split("_");
   try {
     const result = await externalPaymentValidation({
       purchaseCompletion: itemFromStoreResult,
@@ -135,8 +139,12 @@ export async function restore(dataFromInPlayer) {
   const restoreResultFromStore = await ApplicasterIAPModule.restore();
 
   const promises = dataFromInPlayer.map(
-    async ({ productIdentifier }) =>
-      await restoreAnItem(productIdentifier, restoreResultFromStore)
+    async ({ productIdentifier, inPlayerProductId }) =>
+      await restoreAnItem(
+        productIdentifier,
+        inPlayerProductId,
+        restoreResultFromStore
+      )
   );
 
   const restoreCompletionsArr = await Promise.all(promises);
