@@ -183,8 +183,7 @@ const AssetFlow = (props) => {
       return loadAsset({ startPurchaseFlow: false });
     } catch (error) {
       Alert.alert(MESSAGES.purchase.fail, error.message);
-      console.log({ assetLoading });
-      assetLoading && setAssetLoading(false);
+      Platform.OS === "ios" && setAssetLoading(false);
     }
   };
 
