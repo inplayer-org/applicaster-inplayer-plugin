@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, Alert } from "react-native";
+import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
 import NavbarComponent from "../UIComponents/NavbarComponent";
-import { container } from "../Styles";
 
 import {
   checkAccessForAsset,
@@ -23,12 +22,19 @@ import {
   addInPlayerProductId,
   retrieveInPlayerFeesData,
   isRequirePurchaseError,
+  showAlert
 } from "./Helper";
 import Footer from "../UIComponents/Footer";
 import MESSAGES from "./Config";
 
+const { height, width } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
-  container,
+  container: {
+    height,
+    width,
+    paddingBottom: 15,
+  },
 });
 
 const AssetFlow = (props) => {
@@ -55,6 +61,10 @@ const AssetFlow = (props) => {
       stillMounted = false;
     };
   }, []);
+
+  const hideLoader = () => {
+    setAssetLoading(false);
+  };
 
   const preparePurchaseData = async () => {
     const {
@@ -180,10 +190,12 @@ const AssetFlow = (props) => {
         access_fee_id,
       });
 
+      setDataSource(null);
       return loadAsset({ startPurchaseFlow: false });
     } catch (error) {
-      Alert.alert(MESSAGES.purchase.fail, error.message);
-      Platform.OS === "ios" && setAssetLoading(false);
+      const alertTitle = MESSAGES.purchase.fail;
+      showAlert(alertTitle, error.message);
+      Platform.OS === "ios" && hideLoader();
     }
   };
 
@@ -205,21 +217,14 @@ const AssetFlow = (props) => {
 
     restore(dataSource)
       .then(() => {
-        Alert.alert(MESSAGES.restore.success, MESSAGES.restore.successInfo, [
-          {
-            text: "OK",
-            onPress: () => onRestoreSuccess(dataSource),
-          },
-        ]);
+        const alertTitle = MESSAGES.restore.success;
+        const alertMessage = MESSAGES.restore.successInfo;
+        showAlert(alertTitle, alertMessage, onRestoreSuccess);
       })
       .catch((err) => {
         console.log(err);
-        Alert.alert(MESSAGES.restore.fail, err.message, [
-          {
-            text: "OK",
-            onPress: () => setAssetLoading(false),
-          },
-        ]);
+        const alertTitle = MESSAGES.restore.fail;
+        showAlert(alertTitle, err.message, hideLoader);
       });
   };
 

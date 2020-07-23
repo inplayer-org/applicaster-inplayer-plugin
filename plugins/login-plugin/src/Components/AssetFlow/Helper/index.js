@@ -1,5 +1,7 @@
 import R from "ramda";
 import { externalIdForPlatform } from "../../../Services/InPlayerServiceHelper";
+import { Alert } from "react-native";
+
 export function invokeCallBack(
   props,
   { success = true, newPayload = null, error = null }
@@ -171,4 +173,13 @@ export function retrieveInPlayerFeesData({
 
 export const isRequirePurchaseError = (status) => {
   return status.toString() === "402";
+};
+
+export const showAlert = (title, message, action) => {
+  Alert.alert(title, message, [
+    {
+      text: "OK",
+      onPress: action,
+    },
+  ]);
 };
