@@ -701,6 +701,22 @@ const baseManifest = {
       default: "subscription",
     },
   ],
+  hooks: {
+    fields: [
+      {
+        group: true,
+        label: "Before Load",
+        folded: true,
+        fields: [
+          {
+            key: "preload_plugins",
+            type: "preload_plugins_selector",
+            label: "Select Plugins"
+          }
+        ]
+      }
+    ]
+  },
   targets: ["mobile"],
   ui_frameworks: ["quickbrick"],
 };
