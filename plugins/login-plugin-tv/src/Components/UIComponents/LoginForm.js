@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View, StyleSheet } from "react-native";
 import { Formik } from "formik";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
 import session from "../../globalSessionManager";
@@ -7,21 +7,48 @@ import validationSchema from "../../Utils/validation";
 import Button from "./Button";
 import Input from "./Input";
 import { PluginContext } from "../../Config/PluginData";
+import { mapKeyToStyle } from "../../Utils/customizationUtils";
+
+const formStyleKeys = [
+  "username_input",
+  "password_input",
+  "login_action_button",
+  "skip_action_button",
+];
+
+const groupId = "my-inputs";
+
+const getInputStyle = (backgroundColor) => {
+  return {
+    ...styles.input,
+    backgroundColor: backgroundColor || "grey",
+  };
+};
 
 export default function LoginForm(props) {
   const { onLogin, isLoading, handleSkip, handleError } = props;
 
+  const customStyles = useContext(PluginContext);
+
   const {
-    customText,
-    skipButtonStyle,
+    username_input_placeholder: usernamePlaceholder,
+    password_input_placeholder: passwordPlaceholder,
+    login_action_button_text: loginLabel,
+    skip_action_button_text: skipLabel,
+    login_action_button_background: loginButtonBackground,
+    skip_action_button_background: skipButtonBackground,
+    password_input_background: passwordBackground,
+    username_input_background: usernameBackground,
+    enable_skip_functionality: skip,
+    use_dark_keyboard: isDarkKeyboard,
+  } = customStyles;
+
+  const [
     usernameInputStyle,
     passwordInputStyle,
     loginButtonStyle,
-    skip,
-    isDarkKeyboard,
-  } = useContext(PluginContext);
-
-  const groupId = "my-inputs";
+    skipButtonStyle,
+  ] = formStyleKeys.map((key) => mapKeyToStyle(key, customStyles));
 
   const handleValidation = async (validateForm, handleSubmit) => {
     try {
@@ -39,16 +66,14 @@ export default function LoginForm(props) {
     onLogin(username, password);
   };
 
-  const renderSkipButton = () =>
-    session.isHomeScreen &&
-    session.appLaunch && (
-      <Button
-        label={customText.skipLabel}
-        onPress={handleSkip}
-        buttonStyle={styles.input}
-        textStyle={skipButtonStyle}
-      />
-    );
+  const renderSkipButton = () => (
+    <Button
+      label={skipLabel}
+      onPress={handleSkip}
+      buttonStyle={getInputStyle(skipButtonBackground)}
+      textStyle={skipButtonStyle}
+    />
+  );
 
   return (
     <Formik
@@ -58,42 +83,40 @@ export default function LoginForm(props) {
     >
       {({ handleChange, values, handleSubmit, validateForm }) => (
         <>
-          <View style={styles.container}>
-            <FocusableGroup id={groupId} isParallaxDisabled>
-              <Input
-                handleError={handleError}
-                value={values.username}
-                isDarkKeyboard={isDarkKeyboard}
-                keyboardType="email-address"
-                onChangeText={handleChange("username")}
-                secureTextEntry={false}
-                placeholder={customText.usernamePlaceholder}
-                style={{ ...styles.input, ...usernameInputStyle }}
-              />
-              <Input
-                handleError={handleError}
-                value={values.password}
-                isDarkKeyboard={isDarkKeyboard}
-                keyboardType="default"
-                onChangeText={handleChange("password")}
-                secureTextEntry
-                placeholder={customText.passwordPlaceholder}
-                style={{
-                  ...styles.input,
-                  ...passwordInputStyle,
-                  marginBottom: 0,
-                }}
-              />
-            </FocusableGroup>
-          </View>
+          <FocusableGroup
+            id={groupId}
+            isParallaxDisabled
+            style={styles.container}
+          >
+            <Input
+              handleError={handleError}
+              value={values.username}
+              isDarkKeyboard={isDarkKeyboard}
+              keyboardType="email-address"
+              onChangeText={handleChange("username")}
+              secureTextEntry={false}
+              placeholder={usernamePlaceholder}
+              style={[getInputStyle(usernameBackground), usernameInputStyle]}
+            />
+            <Input
+              handleError={handleError}
+              value={values.password}
+              isDarkKeyboard={isDarkKeyboard}
+              keyboardType="default"
+              onChangeText={handleChange("password")}
+              secureTextEntry={true}
+              placeholder={passwordPlaceholder}
+              style={[getInputStyle(passwordBackground), passwordInputStyle]}
+            />
+          </FocusableGroup>
           <View style={styles.container}>
             {isLoading ? (
               <ActivityIndicator size="large" />
             ) : (
               <>
                 <Button
-                  label={customText.loginLabel}
-                  buttonStyle={styles.input}
+                  label={loginLabel}
+                  buttonStyle={getInputStyle(loginButtonBackground)}
                   onPress={() => handleValidation(validateForm, handleSubmit)}
                   textStyle={loginButtonStyle}
                 />
@@ -109,20 +132,16 @@ export default function LoginForm(props) {
 
 const styles = {
   container: {
-    minWidth: 600,
-    minHeight: "6%",
-    justifyContent: "center",
+    flex: 1,
+    maxHeight: 200,
+    justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "7%",
+    marginBottom: 50,
   },
   input: {
-    borderWidth: 1,
-    backgroundColor: "grey",
-    borderColor: "white",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: "#787878",
     width: 600,
     height: 90,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: "1.5%",
   },
 };

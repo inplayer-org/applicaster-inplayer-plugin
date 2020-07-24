@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
 
 class Input extends Component {
@@ -15,6 +15,8 @@ class Input extends Component {
       groupId,
     } = this.props;
 
+    const [inputStyle, textStyle] = style;
+
     return (
       <Focusable
         id={placeholder}
@@ -22,17 +24,12 @@ class Input extends Component {
         onPress={() => {
           this.root.focus();
         }}
-        onBlur={() => {
-          this.root.blur();
-        }}
         isParallaxDisabled
         preferredFocus
       >
         {(focused) => {
           return (
-            <View
-              style={focused ? { ...style, backgroundColor: "red" } : style}
-            >
+            <View style={getInputStyles(focused, inputStyle)}>
               <TextInput
                 ref={(component) => (this.root = component)}
                 value={value}
@@ -41,7 +38,8 @@ class Input extends Component {
                 onChangeText={onChangeText}
                 secureTextEntry={secureTextEntry}
                 placeholder={placeholder}
-                style={style}
+                placeholderTextColor={textStyle.color}
+                style={[textStyle, { flex: 1 }]}
                 maxLength={50}
               />
             </View>
@@ -51,5 +49,23 @@ class Input extends Component {
     );
   }
 }
+
+const getInputStyles = (focused, customStyles) => {
+  return {
+    ...customStyles,
+    ...(focused ? styles.focusedView : styles.defaultView),
+  };
+};
+
+const styles = {
+  focusedView: {
+    borderColor: "#b3b3b3",
+    borderWidth: StyleSheet.hairlineWidth,
+    opacity: 1,
+  },
+  defaultView: {
+    opacity: 0.9,
+  },
+};
 
 export default Input;

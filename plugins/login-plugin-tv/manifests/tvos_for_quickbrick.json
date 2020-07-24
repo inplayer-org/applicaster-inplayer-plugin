@@ -17,11 +17,7 @@
   "unsupported_since_zapp_sdk": "",
   "preload": true,
   "npm_dependencies": [
-    "@inplayer-org/inplayer.js@2.13.3",
-    "react-native-dropdownalert@4.2.1",
-    "@applicaster/applicaster-iap@0.2.10",
-    "@react-native-community/async-storage@1.9.0",
-    "react-native-actionsheet@2.4.0"
+    "@inplayer-org/inplayer.js@2.13.3"
   ],
   "general": {
     "fields": [
@@ -734,17 +730,10 @@
     "quickbrick"
   ],
   "platform": "tvos_for_quickbrick",
-  "dependency_version": "0.0.1",
-  "manifest_version": "0.0.1",
+  "dependency_version": "0.0.4",
+  "manifest_version": "0.0.4",
   "api": {},
   "project_dependencies": [],
-  "extra_dependencies": [
-    {
-      "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'"
-    },
-    {
-      "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
-    }
-  ],
+  "extra_dependencies": [],
   "min_zapp_sdk": "0.1.0-alpha1"
 }

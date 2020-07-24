@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
+import TextComponent from "./TextComponent";
 
 export default function Button({
   label = "",
@@ -11,9 +12,9 @@ export default function Button({
   nextFocusUp,
   groupId,
   textStyle = {},
-  backgroundColor = "",
+  buttonStyle: customButtonStyle = {},
 }) {
-  const buttonStyle = { ...styles.input, backgroundColor };
+  const buttonStyle = { ...customButtonStyle, ...styles.button };
 
   return (
     <Focusable
@@ -27,14 +28,15 @@ export default function Button({
     >
       {(focused) => {
         return (
-          <View style={[buttonStyle, { opacity: focused ? 1 : 0.9 }]}>
-            <Text
-              style={focused ? { ...textStyle, color: "#5F5F5F" } : textStyle}
-              numberOfLines={2}
-              ellipsizeMode="tail"
-            >
+          <View
+            style={[
+              buttonStyle,
+              focused ? styles.focusedButton : styles.defaultButton,
+            ]}
+          >
+            <TextComponent style={textStyle} lines={2}>
               {label}
-            </Text>
+            </TextComponent>
           </View>
         );
       }}
@@ -43,11 +45,23 @@ export default function Button({
 }
 
 const styles = {
-  input: {
-    width: 600,
-    height: 90,
+  button: {
     justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
+  },
+  focusedButton: {
+    opacity: 1,
+    shadowColor: "rgba(24,24,24, 0.4)",
+    shadowOpacity: 1.5,
+    elevation: 8,
+    shadowRadius: 5,
+    shadowOffset: { width: 3, height: 10 },
+  },
+  defaultButton: {
+    opacity: 0.9,
+    shadowColor: "rgba(56,56,56, 0.4)",
+    shadowOpacity: 1.5,
+    elevation: 2,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 4 },
   },
 };
