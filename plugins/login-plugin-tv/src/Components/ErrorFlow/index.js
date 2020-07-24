@@ -1,30 +1,34 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { View, Text, Platform } from "react-native";
+import React, { useContext, useRef } from "react";
+import { View, Platform } from "react-native";
 import { useInitialFocus } from "@applicaster/zapp-react-native-utils/focusManager";
 import { PluginContext } from "../../Config/PluginData";
 import Layout from "../UIComponents/Layout";
 import Button from "../UIComponents/Button";
+import { getInputStyle, mapKeyToStyle } from "../../Utils/customizationUtils";
+import TextComponent from "../UIComponents/TextComponent";
+
+const errorScreenStyleKeys = ["error_description", "close_action_button"];
 
 function ErrorScreen(props) {
-  const { error, remoteHandler, navigator, skipLoginflow } = props;
-
-  // useEffect(() => {
-  //   hideMenu(navigator);
-  //   return () => showMenu(navigator);
-  // }, []);
+  const { error, remoteHandler, navigator, closeHook } = props;
+  const customStyles = useContext(PluginContext);
 
   const {
+    close_action_button_text: closeLabel,
+    close_action_button_background: closeButtonBackground,
+    alert_background: errorScreenBackground,
+  } = customStyles;
+
+  const [
     errorDescriptionStyle,
     closeButtonStyle,
-    customText: { closeLabel },
-    background: { errorScreenBackground, closeButtonBackground },
-  } = useContext(PluginContext);
+  ] = errorScreenStyleKeys.map((key) => mapKeyToStyle(key, customStyles));
 
   const onClose = () => {
     if (navigator.canGoBack()) {
       navigator.goBack();
     } else {
-      return skipLoginflow();
+      return closeHook();
     }
   };
 
@@ -34,25 +38,26 @@ function ErrorScreen(props) {
     useInitialFocus(true, closeButton);
   }
 
+  const buttonStyle = getInputStyle(closeButtonBackground);
+
   return (
     <Layout
       backgroundColor={errorScreenBackground}
       remoteHandler={remoteHandler}
     >
       <View style={styles.container}>
-        <Text
+        <TextComponent
           style={[styles.errorText, errorDescriptionStyle]}
-          numberOfLines={3}
-          ellipsizeMode="tail"
+          lines={3}
         >
           {error.message}
-        </Text>
+        </TextComponent>
         <Button
           label={closeLabel}
           onPress={onClose}
           buttonRef={closeButton}
           textStyle={closeButtonStyle}
-          backgroundColor={closeButtonBackground}
+          buttonStyle={buttonStyle}
         />
       </View>
     </Layout>
@@ -68,7 +73,6 @@ const styles = {
     width: "100%",
   },
   errorText: {
-    textAlign: "center",
     marginBottom: 95,
   },
 };

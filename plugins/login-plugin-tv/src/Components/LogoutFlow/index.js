@@ -1,36 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { View } from "react-native";
-import session from "../../globalSessionManager";
 import Layout from "../UIComponents/Layout";
 import LogoutComponent from "../UIComponents/LogoutComponent";
-import { logOut } from "../../pluginInterface";
 import { PluginContext } from "../../Config/PluginData";
 
 function LogoutScreen(props) {
-  const { screenData, homeScreen, remoteHandler, navigator } = props;
+  const { homeScreen, remoteHandler, navigator } = props;
+  const customStyles = useContext(PluginContext);
 
-  useEffect(() => {
-    return () => {
-      if (session.navBarHidden) {
-        navigator.showNavBar();
-      }
-    };
-  }, []);
+  const {
+    confirmation_background: logoutScreenBackground,
+    enable_skip_functionality: skip,
+  } = customStyles;
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const {
-    general: { login_screen_background_color: loginBackground = "" } = {},
-  } = screenData || {};
-
-  const { skip } = useContext(PluginContext);
-
   const handleLogout = async () => {
     try {
       setLoading(true);
-
-      await logOut();
 
       setLoading(false);
       if (skip && navigator.canGoBack()) {
@@ -56,7 +44,7 @@ function LogoutScreen(props) {
 
   return (
     <Layout
-      backgroundColor={loginBackground}
+      backgroundColor={logoutScreenBackground}
       error={error}
       remoteHandler={remoteHandler}
     >
@@ -73,7 +61,7 @@ function LogoutScreen(props) {
 
 const styles = {
   container: {
-    marginTop: "4%",
+    marginTop: 50,
     alignItems: "center",
     height: "100%",
     width: "100%",

@@ -8,7 +8,7 @@ export default function TextComponent(props) {
     <Text
       numberOfLines={lines}
       elipsizeMode="tail"
-      style={[customStyle, defaultStyle]}
+      style={[defaultStyle, customStyle]}
     >
       {children}
     </Text>

@@ -1,50 +1,31 @@
-import * as R from "ramda";
-import { fontcolor, fontsize } from "../Config/DefaultStyles";
+import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
+import { StyleSheet } from "react-native";
 
-function getPluginData(screenData) {
-  let pluginData = {};
-
-  if (screenData && screenData.general) {
-    pluginData = { ...pluginData, ...screenData.general };
-    validateStyles(pluginData);
-  }
-
-  return pluginData;
-}
-
-function validateStyles(pluginData) {
-  const keys = Object.keys(pluginData);
-  keys.forEach((key) => {
-    const type = key.split("_").pop();
-    if (type === "fontsize" || type === "fontcolor") {
-      validateKey(type, key, pluginData);
-    }
-  });
-}
-
-function validateKey(type, key, pluginData) {
-  const keysValidation = {
-    fontsize: validateFontsize,
-    fontcolor: validateFontcolor,
+const mapKeyToStyle = (key, obj) => {
+  return {
+    fontFamily: platformSelect({
+      ios: obj?.[`${key}_font_tvos`],
+      android: obj?.[`${key}_font_android`],
+    }),
+    fontSize: Number(obj?.[`${key}_fontsize`]),
+    color: obj?.[`${key}_fontcolor`],
   };
-
-  return keysValidation[type](key, pluginData);
-}
-
-const validateFontsize = (key, pluginData) => {
-  const value = pluginData[key];
-  const keyname = R.replace("_fontsize", "", key);
-
-  const num = Number(value);
-  pluginData[key] = Number.isFinite(num) ? num : fontsize[keyname];
 };
 
-const validateFontcolor = (key, pluginData) => {
-  const value = pluginData[key];
-  const keyname = R.replace("_fontcolor", "", key);
-
-  pluginData[key] =
-    value !== undefined && value !== null ? value : fontcolor[keyname];
+const getInputStyle = (backgroundColor) => {
+  return {
+    ...styles.input,
+    backgroundColor: backgroundColor || "grey",
+  };
 };
 
-export { getPluginData };
+const styles = {
+  input: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: "#787878",
+    width: 600,
+    height: 90,
+  },
+};
+
+export { mapKeyToStyle, getInputStyle };

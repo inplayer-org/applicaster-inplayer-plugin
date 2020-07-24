@@ -7,7 +7,7 @@ import validationSchema from "../../Utils/validation";
 import Button from "./Button";
 import Input from "./Input";
 import { PluginContext } from "../../Config/PluginData";
-import { mapKeyToStyle } from "../../Utils/customizationUtils";
+import { mapKeyToStyle, getInputStyle } from "../../Utils/customizationUtils";
 
 const formStyleKeys = [
   "username_input",
@@ -17,13 +17,6 @@ const formStyleKeys = [
 ];
 
 const groupId = "my-inputs";
-
-const getInputStyle = (backgroundColor) => {
-  return {
-    ...styles.input,
-    backgroundColor: backgroundColor || "grey",
-  };
-};
 
 export default function LoginForm(props) {
   const { onLogin, isLoading, handleSkip, handleError } = props;
@@ -137,11 +130,5 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 50,
-  },
-  input: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#787878",
-    width: 600,
-    height: 90,
   },
 };

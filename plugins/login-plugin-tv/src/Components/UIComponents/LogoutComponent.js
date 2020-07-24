@@ -1,19 +1,34 @@
 import React, { useContext, useRef } from "react";
-import { Text, View, ActivityIndicator, Platform } from "react-native";
+import { View, ActivityIndicator, Platform } from "react-native";
 import { useInitialFocus } from "@applicaster/zapp-react-native-utils/focusManager";
 import Button from "./Button";
 import { PluginContext } from "../../Config/PluginData";
+import { mapKeyToStyle, getInputStyle } from "../../Utils/customizationUtils";
+import TextComponent from "./TextComponent";
+
+const logoutScreenStyleKeys = [
+  "confirmation_message",
+  "confirm_action_button",
+  "cancel_action_button",
+];
 
 export default function LogoutComponent(props) {
   const { handleLogout, handleCancel, loading = false } = props;
+  const customStyles = useContext(PluginContext);
 
   const {
-    confirmButtonStyle,
-    cancelButtonStyle,
-    confirmationMessageStyle,
-    customText,
-    background: { confirmButtonBackground, cancelButtonBackground },
-  } = useContext(PluginContext);
+    confirm_action_button_background: confirmButtonBackground,
+    cancel_action_button_background: cancelButtonBackground,
+    confirmation_message_text: message,
+    confirm_action_button_text: confirmButtonLabel,
+    cancel_action_button_text: cancelButtonLabel,
+  } = customStyles;
+
+  const [
+    messageStyle,
+    confirmTextStyle,
+    cancelTextStyle,
+  ] = logoutScreenStyleKeys.map((key) => mapKeyToStyle(key, customStyles));
 
   const confirmButton = useRef(null);
   const cancelButton = useRef(null);
@@ -22,35 +37,34 @@ export default function LogoutComponent(props) {
     useInitialFocus(true, confirmButton);
   }
 
+  const confirmButtonStyle = getInputStyle(confirmButtonBackground);
+  const cancelButtonStyle = getInputStyle(cancelButtonBackground);
+
   return (
     <View style={styles.container}>
-      <Text
-        style={confirmationMessageStyle}
-        numberOfLines={4}
-        ellipsizeMode="tail"
-      >
-        {customText.confirmationMessage}
-      </Text>
+      <TextComponent style={messageStyle} lines={4}>
+        {message}
+      </TextComponent>
       <View style={styles.buttonContainer}>
         {loading ? (
           <ActivityIndicator color="white" size="large" />
         ) : (
           <>
             <Button
-              label={customText.confirmLabel}
+              label={confirmButtonLabel}
               onPress={handleLogout}
               buttonRef={confirmButton}
               nextFocusDown={cancelButton}
-              textStyle={confirmButtonStyle}
-              backgroundColor={confirmButtonBackground}
+              textStyle={confirmTextStyle}
+              buttonStyle={confirmButtonStyle}
             />
             <Button
-              label={customText.cancelLabel}
+              label={cancelButtonLabel}
               onPress={handleCancel}
               buttonRef={cancelButton}
               nextFocusUp={confirmButton}
-              textStyle={cancelButtonStyle}
-              backgroundColor={cancelButtonBackground}
+              textStyle={cancelTextStyle}
+              buttonStyle={cancelButtonStyle}
             />
           </>
         )}
@@ -67,7 +81,8 @@ const styles = {
     width: "100%",
   },
   buttonContainer: {
-    minHeight: 90,
+    height: 200,
+    justifyContent: "space-between",
     marginTop: 95,
   },
 };
