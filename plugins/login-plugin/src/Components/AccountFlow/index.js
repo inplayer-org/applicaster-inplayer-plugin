@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
-import R from "ramda";
+import { View, SafeAreaView } from "react-native";
 import { Keyboard } from "react-native";
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
@@ -30,14 +29,20 @@ const AccountFlow = (props) => {
   };
   let stillMounted = true;
 
-  const { accountFlowCallback } = props;
+  const {
+    configuration: {
+      in_player_client_id: clientId,
+      in_player_referrer: referrer
+    },
+    accountFlowCallback
+  } = props;
 
   const [loading, setLoading] = useState(true);
   const [screen, setScreen] = useState(ScreensData.EMPTY);
   const [lastEmailUsed, setLastEmailUsed] = useState(null);
 
   useEffect(() => {
-    InPlayerService.isAuthenticated()
+    InPlayerService.isAuthenticated(clientId)
       .then(async (isAuthenticated) => {
         if (stillMounted) {
           if (isAuthenticated) {
@@ -75,15 +80,12 @@ const AccountFlow = (props) => {
 
   const login = ({ email, password } = params) => {
     Keyboard.dismiss();
-    const {
-      configuration: { in_player_client_id, in_player_referrer },
-    } = props;
     stillMounted && setLoading(true);
     InPlayerService.login({
       email,
       password,
-      clientId: in_player_client_id,
-      referrer: in_player_referrer,
+      clientId,
+      referrer,
     })
       .then(() => {
         accountFlowCallback({ success: true });
@@ -97,16 +99,13 @@ const AccountFlow = (props) => {
 
   const createAccount = ({ fullName, email, password } = params) => {
     Keyboard.dismiss();
-    const {
-      configuration: { in_player_client_id, in_player_referrer },
-    } = props;
     stillMounted && setLoading(true);
     InPlayerService.signUp({
       fullName,
       email,
       password,
-      clientId: in_player_client_id,
-      referrer: in_player_referrer,
+      clientId,
+      referrer,
     })
       .then(() => {
         accountFlowCallback({ success: true });
