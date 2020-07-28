@@ -17,7 +17,8 @@
   "unsupported_since_zapp_sdk": "",
   "preload": true,
   "npm_dependencies": [
-    "@inplayer-org/inplayer.js@2.13.3"
+    "@inplayer-org/inplayer.js@2.13.3",
+    "@react-native-community/async-storage@1.9.0"
   ],
   "general": {
     "fields": [
@@ -734,6 +735,10 @@
   "manifest_version": "0.0.4",
   "api": {},
   "project_dependencies": [],
-  "extra_dependencies": [],
+  "extra_dependencies": [
+    {
+      "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
+    }
+  ],
   "min_zapp_sdk": "0.1.0-alpha1"
 }
