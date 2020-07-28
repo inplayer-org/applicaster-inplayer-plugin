@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { ActivityIndicator, View, StyleSheet } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { Formik } from "formik";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
 import session from "../../globalSessionManager";
 import validationSchema from "../../Utils/validation";
 import Button from "./Button";
 import Input from "./Input";
-import { PluginContext } from "../../Config/PluginData";
+import { PluginContext, HookTypeData } from "../../Config/PluginData";
 import { mapKeyToStyle, getInputStyle } from "../../Utils/customizationUtils";
 
 const formStyleKeys = [
@@ -46,8 +46,12 @@ export default function LoginForm(props) {
   const handleValidation = async (validateForm, handleSubmit) => {
     try {
       const errors = await validateForm();
+      const error = {
+        message: errors.username || errors.password,
+        screen: HookTypeData.SCREEN_HOOK,
+      };
       return Object.keys(errors).length > 0
-        ? handleError({ message: errors.username || errors.password })
+        ? handleError({ error })
         : handleSubmit();
     } catch (err) {
       console.log(err);
@@ -59,14 +63,19 @@ export default function LoginForm(props) {
     onLogin(username, password);
   };
 
-  const renderSkipButton = () => (
-    <Button
-      label={skipLabel}
-      onPress={handleSkip}
-      buttonStyle={getInputStyle(skipButtonBackground)}
-      textStyle={skipButtonStyle}
-    />
-  );
+  const renderSkipButton = () => {
+    return (
+      session.isHomeScreen &&
+      session.appLaunch && (
+        <Button
+          label={skipLabel}
+          onPress={handleSkip}
+          buttonStyle={getInputStyle(skipButtonBackground)}
+          textStyle={skipButtonStyle}
+        />
+      )
+    );
+  };
 
   return (
     <Formik
@@ -104,7 +113,7 @@ export default function LoginForm(props) {
           </FocusableGroup>
           <View style={styles.container}>
             {isLoading ? (
-              <ActivityIndicator size="large" />
+              <ActivityIndicator size="large" color="white" />
             ) : (
               <>
                 <Button
@@ -127,6 +136,7 @@ const styles = {
   container: {
     flex: 1,
     maxHeight: 200,
+    width: 600,
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 50,

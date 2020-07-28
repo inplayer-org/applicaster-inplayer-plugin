@@ -1,78 +1,100 @@
 import React, { useState, useEffect } from "react";
+import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 
 import AssetFlow from "./AssetFlow";
 import LogoutFlow from "./LogoutFlow";
-import * as R from "ramda";
+import ErrorFlow from "./ErrorFlow";
+import LoginScreen from "./Login";
 
-import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
-import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
-import { isVideoEntry, inPlayerAssetId } from "../Utils/payloadUtils";
+import {
+  isVideoEntry,
+  inPlayerAssetId,
+  isHook,
+  isHomeScreen,
+} from "../Utils/payloadUtils";
 import { setConfig } from "../Services/inPlayerService";
-import { getPluginData } from "../Utils/customizationUtils";
-import { isValueInStorage } from "../Utils/storageUtils";
-import { isHook } from "../Utils/payloadUtils";
 
-const getScreenStyles = R.compose(
-  R.prop("styles"),
-  R.find(R.propEq("type", "quick-brick-inplayer")),
-  R.values,
-  R.prop("rivers")
-);
+import {
+  getScreenStyles,
+  PluginContext,
+  HookTypeData,
+} from "../Config/PluginData";
+import * as InPlayerService from "../Services/inPlayerService";
+import session from "../globalSessionManager";
 
 console.disableYellowBox = true;
 
 const InPlayer = (props) => {
-  const HookTypeData = {
-    UNDEFINED: "Undefined",
-    PLAYER_HOOK: "PlayerHook",
-    SCREEN_HOOK: "ScreenHook",
-    USER_ACCOUNT: "UserAccount",
+  const navigator = useNavigation();
+  let stillMounted = true;
+  const { callback, payload, configuration } = props;
+  const screenStyles = getScreenStyles(props);
+  const { enable_skip_functionality: skip } = screenStyles;
+
+  session.isHomeScreen = isHomeScreen(navigator);
+
+  const useSetState = (initialState = {}) => {
+    const [state, regularSetState] = useState(initialState);
+
+    const setState = (newState) => {
+      regularSetState((prevState) => {
+        return stillMounted ? { ...prevState, ...newState } : prevState;
+      });
+    };
+
+    return [state, setState];
   };
 
-  const navigator = useNavigation();
-  const [idToken, setIdtoken] = useState(null);
-  const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
-  const { callback, payload } = props;
-  const screenStyles = getPluginData(screenData);
-
-  let stillMounted = true;
+  const [state, setState] = useSetState({
+    idToken: null,
+    hookType: HookTypeData.UNDEFINED,
+    isAuthenticated: false,
+    error: null,
+  });
 
   useEffect(() => {
-    setupEnviroment();
-  }, []);
+    setupEnvironment()
+      .then(defineFlow)
+      .catch((err) => console.log(err));
 
-  const checkIdToken = async () => {
-    const token = await isTokenInStorage("idToken");
-    setIdtoken(token);
-  };
-
-  const setupEnviroment = async () => {
-    const {
-      configuration: { in_player_environment },
-    } = props;
-
-    await checkIdToken();
-    initFromNativeLocalStorage();
-
-    setConfig(in_player_environment);
-
-    if (isVideoEntry(payload)) {
-      if (inPlayerAssetId({ payload, configuration: props.configuration })) {
-        stillMounted && setHookType(HookTypeData.PLAYER_HOOK);
-      } else {
-        callback && callback({ success: true, error: null, payload });
-      }
-    } else {
-      if (!isHook(navigator)) {
-        stillMounted && setHookType(HookTypeData.USER_ACCOUNT);
-      } else {
-        stillMounted && setHookType(HookTypeData.SCREEN_HOOK);
-      }
-    }
     return () => {
       stillMounted = false;
     };
+  }, []);
+
+  const setupEnvironment = async () => {
+    const { in_player_environment } = configuration;
+    await setConfig(in_player_environment);
+  };
+
+  const defineFlow = async () => {
+    const isAuthenticated = await checkAuthentication();
+    setState({ isAuthenticated });
+
+    const isPlayerHook = isVideoEntry(payload);
+    const isTriggeredFromUAC = !isHook(navigator);
+    const isAsset = inPlayerAssetId({ payload, configuration });
+
+    if (isPlayerHook) {
+      if (!isAsset) return successHook();
+      return setState({ hookType: HookTypeData.PLAYER_HOOK });
+    }
+    if (isTriggeredFromUAC) {
+      return setState({ hookType: HookTypeData.USER_ACCOUNT });
+    }
+    if (!isAuthenticated) {
+      return setState({ hookType: HookTypeData.SCREEN_HOOK });
+    }
+    return successHook();
+  };
+
+  const checkAuthentication = async () => {
+    try {
+      return InPlayerService.isAuthenticated();
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
   };
 
   const assetFlowCallback = ({ success, payload, error }) => {
@@ -83,7 +105,7 @@ const InPlayer = (props) => {
       callback,
     });
     if (error) {
-      showAlert("General Error!", error?.message);
+      Alert.alert("General Error!", error?.message);
     }
     callback &&
       callback({
@@ -93,63 +115,129 @@ const InPlayer = (props) => {
       });
   };
 
-  const accountFlowCallback = async ({ success }) => {
-    if (success) {
-      const token = localStorage.getItem("inplayer_token");
-      await defaultStorage.setItem("idToken", token);
+  const accountFlowCallback = ({ success, error }) => {
+    console.log("Account Flow");
+    if (error) {
+      return setState({ error });
     }
-    if (hookType === HookTypeData.SCREEN_HOOK && success) {
-      const { callback } = props;
-      callback && callback({ success, error: null, payload: payload });
-    } else if (hookType === HookTypeData.PLAYER_HOOK) {
-      success
-        ? stillMounted && setIsUserAuthenticated(true)
-        : callback && callback({ success, error: null, payload: payload });
-    } else if (hookType === HookTypeData.USER_ACCOUNT) {
-      navigator.goBack();
-    } else {
-      callback && callback({ success: success, error: null, payload: payload });
+
+    switch (state.hookType) {
+      case HookTypeData.SCREEN_HOOK:
+        success && successHook();
+        break;
+      case HookTypeData.PLAYER_HOOK:
+        success ? setState({ isUserAuthenticated: true }) : closeHook();
+        break;
+      case HookTypeData.USER_ACCOUNT:
+        goBackOrHome();
+        break;
+      default:
+        callback && callback({ success, error: null, payload });
     }
   };
 
-  const renderPlayerHook = () => {
-    return isUserAuthenticated ? (
-      <AssetFlow
-        assetFlowCallback={assetFlowCallback}
-        screenStyles={screenStyles}
-        {...props}
-      />
-    ) : (
-      <AccountFlow
-        accountFlowCallback={accountFlowCallback}
-        backButton={hookType === HookTypeData.PLAYER_HOOK}
-        screenStyles={screenStyles}
-        {...props}
-      />
+  const goBackOrHome = () => {
+    if (skip && navigator.canGoBack()) {
+      navigator.goBack();
+    } else {
+      navigator.goHome();
+    }
+  };
+
+  const closeHook = () => {
+    callback({ success: false, payload });
+  };
+
+  const successHook = () => {
+    callback && callback({ success: true, error: null, payload });
+  };
+
+  const screenCallback = (error) => {
+    if (error?.screen) {
+      return setState({
+        error: null,
+        hookType: error.screen,
+      });
+    }
+    if (navigator.canGoBack()) {
+      return navigator.goBack();
+    }
+    return closeHook();
+  };
+
+  const remoteHandler = async (component, event) => {
+    const isHome = isHomeScreen(navigator);
+    const { eventType } = event;
+
+    if (eventType === "menu" && isHome) return null;
+    if (eventType === "menu" && navigator.canGoBack()) {
+      navigator.goBack();
+      return closeHook();
+    }
+  };
+
+  const renderAssetFlow = () => {
+    return (
+      <PluginContext.Provider value={screenStyles}>
+        <AssetFlow
+          assetFlowCallback={assetFlowCallback}
+          screenStyles={screenStyles}
+          remoteHandler={remoteHandler}
+          navigator={navigator}
+        />
+      </PluginContext.Provider>
     );
   };
 
   const renderScreenHook = () => {
     return (
-      <AccountFlow
-        accountFlowCallback={accountFlowCallback}
-        backButton={hookType === HookTypeData.PLAYER_HOOK}
-        screenStyles={screenStyles}
-        {...props}
-      />
+      <PluginContext.Provider value={screenStyles}>
+        <LoginScreen
+          accountFlowCallback={accountFlowCallback}
+          screenStyles={screenStyles}
+          remoteHandler={remoteHandler}
+          configuration={configuration}
+          navigator={navigator}
+        />
+      </PluginContext.Provider>
     );
   };
 
   const renderLogoutScreen = () => {
-    return <LogoutFlow screenStyles={screenStyles} {...props} />;
+    return (
+      <PluginContext.Provider value={screenStyles}>
+        <LogoutFlow
+          accountFlowCallback={accountFlowCallback}
+          navigator={navigator}
+          remoteHandler={remoteHandler}
+        />
+      </PluginContext.Provider>
+    );
+  };
+
+  const renderErrorFlow = () => {
+    return (
+      <PluginContext.Provider value={screenStyles}>
+        <ErrorFlow
+          error={state.error}
+          screenCallback={screenCallback}
+          navigator={navigator}
+          remoteHandler={remoteHandler}
+        />
+      </PluginContext.Provider>
+    );
   };
 
   const renderUACFlow = () => {
-    return idToken ? renderLogoutScreen() : renderScreenHook();
+    return state.isAuthenticated ? renderLogoutScreen() : renderScreenHook();
+  };
+
+  const renderPlayerHook = () => {
+    return state.isAuthenticated ? renderAssetFlow() : renderScreenHook();
   };
 
   const renderFlow = () => {
-    switch (hookType) {
+    switch (state.hookType) {
       case HookTypeData.PLAYER_HOOK:
         return renderPlayerHook();
       case HookTypeData.SCREEN_HOOK:
@@ -161,7 +249,7 @@ const InPlayer = (props) => {
     }
   };
 
-  return renderFlow();
+  return state.error ? renderErrorFlow() : renderFlow();
 };
 
 export default InPlayer;

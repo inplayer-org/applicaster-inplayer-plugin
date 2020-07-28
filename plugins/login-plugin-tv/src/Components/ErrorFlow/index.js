@@ -10,7 +10,7 @@ import TextComponent from "../UIComponents/TextComponent";
 const errorScreenStyleKeys = ["error_description", "close_action_button"];
 
 function ErrorScreen(props) {
-  const { error, remoteHandler, navigator, closeHook } = props;
+  const { error, remoteHandler, navigator, screenCallback } = props;
   const customStyles = useContext(PluginContext);
 
   const {
@@ -25,11 +25,7 @@ function ErrorScreen(props) {
   ] = errorScreenStyleKeys.map((key) => mapKeyToStyle(key, customStyles));
 
   const onClose = () => {
-    if (navigator.canGoBack()) {
-      navigator.goBack();
-    } else {
-      return closeHook();
-    }
+    return screenCallback(error);
   };
 
   const closeButton = useRef(null);

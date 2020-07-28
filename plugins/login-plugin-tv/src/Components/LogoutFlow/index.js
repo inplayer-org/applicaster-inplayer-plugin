@@ -2,33 +2,32 @@ import React, { useState, useContext } from "react";
 import { View } from "react-native";
 import Layout from "../UIComponents/Layout";
 import LogoutComponent from "../UIComponents/LogoutComponent";
-import { PluginContext } from "../../Config/PluginData";
+import { HookTypeData, PluginContext } from "../../Config/PluginData";
+import { signOut } from "../../Services/inPlayerService";
 
 function LogoutScreen(props) {
-  const { homeScreen, remoteHandler, navigator } = props;
+  const { accountFlowCallback, remoteHandler, navigator } = props;
   const customStyles = useContext(PluginContext);
+  const { confirmation_background: logoutScreenBackground } = customStyles;
 
-  const {
-    confirmation_background: logoutScreenBackground,
-    enable_skip_functionality: skip,
-  } = customStyles;
-
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const handleError = (error) => {
+    console.log(error);
+    error.screen = HookTypeData.USER_ACCOUNT;
+    return accountFlowCallback({ error });
+  };
 
   const handleLogout = async () => {
     try {
       setLoading(true);
 
+      await signOut();
+
       setLoading(false);
-      if (skip && navigator.canGoBack()) {
-        navigator.goBack();
-      } else {
-        navigator.replace(homeScreen);
-      }
+      accountFlowCallback({ success: true });
     } catch (err) {
-      console.log(err);
-      setError(err);
+      handleError(err);
     }
   };
 
@@ -38,14 +37,13 @@ function LogoutScreen(props) {
         navigator.goBack();
       }
     } catch (err) {
-      console.log(err);
+      handleError(err);
     }
   };
 
   return (
     <Layout
       backgroundColor={logoutScreenBackground}
-      error={error}
       remoteHandler={remoteHandler}
     >
       <View style={styles.container}>

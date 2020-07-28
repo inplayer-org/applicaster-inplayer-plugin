@@ -54,7 +54,7 @@ const isHomeScreen = (navigator) => {
 };
 
 const isHook = (navigator) => {
-  return !!R.propOr(false, 'hookPlugin')(navigator.routeData());
+  return !!R.propOr(false, "hookPlugin")(navigator.routeData());
 };
 
 export {
