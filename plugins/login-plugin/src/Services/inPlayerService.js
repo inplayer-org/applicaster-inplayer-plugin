@@ -75,9 +75,21 @@ export function loadAllPackages(collection) {
   return Promise.all(promises);
 }
 
-export async function isAuthenticated() {
-  await initFromNativeLocalStorage();
-  return InPlayer.Account.isAuthenticated();
+export async function isAuthenticated(clientId) {
+  try {
+    await initFromNativeLocalStorage();
+    // InPlayer.Account.isAuthenticated() returns true even if token expired
+    // To handle this case InPlayer.Account.getAccount() was used
+    await InPlayer.Account.getAccount();
+    return true;
+  } catch (err) {
+    const res = await err.response.json();
+    if (res?.code === 403 ) {
+      await InPlayer.Account.refreshToken(clientId);
+      return true;
+    }
+    return false;
+  }
 }
 
 export async function login({ email, password, clientId, referrer }) {
