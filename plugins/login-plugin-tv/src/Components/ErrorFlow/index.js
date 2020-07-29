@@ -5,6 +5,7 @@ import { PluginContext } from "../../Config/PluginData";
 import Layout from "../UIComponents/Layout";
 import Button from "../UIComponents/Button";
 import { getInputStyle, mapKeyToStyle } from "../../Utils/customizationUtils";
+import { useToggleNavBar } from "../../Utils/reactHooks";
 import TextComponent from "../UIComponents/TextComponent";
 
 const errorScreenStyleKeys = ["error_description", "close_action_button"];
@@ -23,6 +24,8 @@ function ErrorScreen(props) {
     errorDescriptionStyle,
     closeButtonStyle,
   ] = errorScreenStyleKeys.map((key) => mapKeyToStyle(key, customStyles));
+
+  useToggleNavBar(navigator);
 
   const onClose = () => {
     return screenCallback(error);

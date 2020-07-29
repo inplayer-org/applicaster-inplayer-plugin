@@ -6,6 +6,7 @@ import TextBlockComponent from "../UIComponents/TextBlockComponent";
 import LoginForm from "../UIComponents/LoginForm";
 import * as InPlayerService from "../../Services/inPlayerService";
 import { HookTypeData } from "../../Config/PluginData";
+import { useToggleNavBar } from "../../Utils/reactHooks";
 
 const { height } = Dimensions.get("window");
 
@@ -26,6 +27,8 @@ function LoginScreen(props) {
 
   const [loading, setLoading] = useState(false);
   let stillMounted = true;
+
+  useToggleNavBar(navigator);
 
   useEffect(() => {
     return () => {

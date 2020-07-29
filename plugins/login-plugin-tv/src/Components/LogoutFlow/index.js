@@ -4,6 +4,7 @@ import Layout from "../UIComponents/Layout";
 import LogoutComponent from "../UIComponents/LogoutComponent";
 import { HookTypeData, PluginContext } from "../../Config/PluginData";
 import { signOut } from "../../Services/inPlayerService";
+import { useToggleNavBar } from "../../Utils/reactHooks";
 
 function LogoutScreen(props) {
   const { accountFlowCallback, remoteHandler, navigator } = props;
@@ -11,6 +12,8 @@ function LogoutScreen(props) {
   const { confirmation_background: logoutScreenBackground } = customStyles;
 
   const [loading, setLoading] = useState(false);
+
+  useToggleNavBar(navigator);
 
   const handleError = (error) => {
     console.log(error);
