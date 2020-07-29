@@ -747,7 +747,7 @@ const api = {
       "com.applicaster.iap.reactnative.IAPPackage",
     ],
     proguard_rules:
-      "-keep public class com.reactnativecommunity.asyncstorage.** {*;}",
+      "-keep public class com.reactnativecommunity.asyncstorage.** {*;} -keep public class * extends com.facebook.react.ReactPackage {*;} -keepclasseswithmembers,includedescriptorclasses class * { @com.facebook.react.bridge.ReactMethod <methods>;} -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; } -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }",
   },
 };
 
