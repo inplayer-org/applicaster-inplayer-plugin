@@ -76,18 +76,14 @@ const AssetFlow = (props) => {
     setAssetLoading(false);
   };
 
-  const presentStorefront = () => {
-    setScreen(ScreensData.STOREFRONT);
-  };
-
   const presentParentLock = () => {
     setScreen(ScreensData.PARENT_LOCK);
-    onParentLockAppeared();
+    props.setParentLockWasPresented(true);
   };
 
   const parentLockCallback = (result) => {
     if (result.success) {
-      presentStorefront();
+      setScreen(ScreensData.STOREFRONT);
     } else {
       completeAssetFlow({ success: false});
     }
@@ -141,10 +137,11 @@ const AssetFlow = (props) => {
         inPlayerFeesData,
       });
 
-      if (shouldShowParentLock && shouldShowParentLock()) {
+      if (shouldShowParentLock && shouldShowParentLock(props.parentLockWasPresented)) {
         presentParentLock();
+      } else {
+        setScreen(ScreensData.STOREFRONT);
       }
-
       stillMounted && setDataSource(storeFeesData);
     } catch (error) {
       stillMounted && completeAssetFlow({ success: false, error });

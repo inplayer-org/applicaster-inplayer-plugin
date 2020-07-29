@@ -45,7 +45,7 @@ const AccountFlow = (props) => {
           if (isAuthenticated) {
             accountFlowCallback({ success: true });
           } else {
-            if (shouldShowParentLock && shouldShowParentLock()) {
+            if (shouldShowParentLock && shouldShowParentLock(props.parentLockWasPresented)) {
               presentParentLock();
             } else {
               await authenticateUser();
@@ -70,7 +70,7 @@ const AccountFlow = (props) => {
 
   const presentParentLock = () => {
     setScreen(ScreensData.PARENT_LOCK);
-    onParentLockAppeared();
+    props.setParentLockWasPresented(true);
   };
 
   const parentLockCallback = async (result) => {

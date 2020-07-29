@@ -33,7 +33,7 @@ const InPlayer = (props) => {
   };
 
   const navigator = useNavigation();
-  let parentLockWasPresented = false;
+  const [parentLockWasPresented, setParentLockWasPresented] = useState(false);
   const [idToken, setIdtoken] = useState(null);
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
@@ -118,14 +118,16 @@ const InPlayer = (props) => {
 
   const renderPlayerHook = () => {
     return isUserAuthenticated ? (
-      <AssetFlow onParentLockAppeared={onParentLockAppeared}
+      <AssetFlow setParentLockWasPresented={setParentLockWasPresented}
+                 parentLockWasPresented={parentLockWasPresented}
                  shouldShowParentLock={shouldShowParentLock}
                  assetFlowCallback={assetFlowCallback}
                  screenStyles={screenStyles}
                  {...props} />
     ) : (
       <AccountFlow
-        onParentLockAppeared={onParentLockAppeared}
+        setParentLockWasPresented={setParentLockWasPresented}
+        parentLockWasPresented = {parentLockWasPresented}
         shouldShowParentLock={shouldShowParentLock}
         accountFlowCallback={accountFlowCallback}
         backButton={!isHomeScreen(navigator)}
@@ -159,15 +161,7 @@ const InPlayer = (props) => {
     return idToken ? renderLogoutScreen() : renderScreenHook();
   };
 
-  const onParentLockAppeared = () => {
-    parentLockWasPresented = true;
-  };
-
-  const kek = () => {
-    return parentLockWasPresented;
-  };
-
-  const shouldShowParentLock = () => {
+  const shouldShowParentLock = (parentLockWasPresented) => {
     const config = true;
     switch (hookType) {
       case HookTypeData.PLAYER_HOOK:
