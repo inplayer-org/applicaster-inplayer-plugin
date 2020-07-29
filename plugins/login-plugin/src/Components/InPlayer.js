@@ -5,6 +5,7 @@ import AssetFlow from "./AssetFlow";
 import LogoutFlow from "./LogoutFlow";
 import R from "ramda";
 
+import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 import { initFromNativeLocalStorage } from "../LocalStorageHack";
@@ -32,6 +33,7 @@ const InPlayer = (props) => {
   };
 
   const navigator = useNavigation();
+  let parentLockWasPresented = false;
   const [idToken, setIdtoken] = useState(null);
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
@@ -116,11 +118,15 @@ const InPlayer = (props) => {
 
   const renderPlayerHook = () => {
     return isUserAuthenticated ? (
-      <AssetFlow assetFlowCallback={assetFlowCallback}
+      <AssetFlow onParentLockAppeared={onParentLockAppeared}
+                 shouldShowParentLock={shouldShowParentLock}
+                 assetFlowCallback={assetFlowCallback}
                  screenStyles={screenStyles}
                  {...props} />
     ) : (
       <AccountFlow
+        onParentLockAppeared={onParentLockAppeared}
+        shouldShowParentLock={shouldShowParentLock}
         accountFlowCallback={accountFlowCallback}
         backButton={!isHomeScreen(navigator)}
         screenStyles={screenStyles}
@@ -151,6 +157,31 @@ const InPlayer = (props) => {
 
   const renderUACFlow = () => {
     return idToken ? renderLogoutScreen() : renderScreenHook();
+  };
+
+  const onParentLockAppeared = () => {
+    parentLockWasPresented = true;
+  };
+
+  const kek = () => {
+    return parentLockWasPresented;
+  };
+
+  const shouldShowParentLock = () => {
+    const config = true;
+    switch (hookType) {
+      case HookTypeData.PLAYER_HOOK:
+        if (parentLockWasPresented || !config) {
+          return false;
+        }
+        return true;
+      case HookTypeData.SCREEN_HOOK:
+        return false;
+      case HookTypeData.USER_ACCOUNT:
+        return false;
+      case HookTypeData.UNDEFINED:
+        return false;
+    }
   };
 
   const renderFlow = () => {
