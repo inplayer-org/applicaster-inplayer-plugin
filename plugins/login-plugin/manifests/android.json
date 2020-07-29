@@ -715,15 +715,15 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.5.10",
-  "manifest_version": "0.5.10",
+  "dependency_version": "0.5.11",
+  "manifest_version": "0.5.11",
   "api": {
     "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     "react_packages": [
       "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
       "com.applicaster.iap.reactnative.IAPPackage"
     ],
-    "proguard_rules": "-keep public class com.reactnativecommunity.asyncstorage.** {*;}"
+    "proguard_rules": "-keep public class com.reactnativecommunity.asyncstorage.** {*;} -keep public class * extends com.facebook.react.ReactPackage {*;} -keepclasseswithmembers,includedescriptorclasses class * { @com.facebook.react.bridge.ReactMethod <methods>;} -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; } -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }"
   },
   "project_dependencies": [
     {
