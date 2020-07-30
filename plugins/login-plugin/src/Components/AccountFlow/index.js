@@ -209,10 +209,6 @@ const AccountFlow = (props) => {
 
   const renderAuthenteficationScreen = () => {
     switch (screen) {
-      case ScreensData.PARENT_LOCK:
-        return (
-            <ParentLockPlugin.Component callback={parentLockCallback}/>
-        );
       case ScreensData.LOGIN:
         return (
           <Login
@@ -265,6 +261,12 @@ const AccountFlow = (props) => {
   };
 
   const { screenStyles } = props;
+
+  if (screen === ScreensData.PARENT_LOCK) {
+    return (
+        <ParentLockPlugin.Component callback={parentLockCallback}/>
+    );
+  }
   return (
     <View style={containerStyle(screenStyles)}>
       <SafeAreaView style={container}>
