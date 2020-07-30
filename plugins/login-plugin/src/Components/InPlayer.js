@@ -39,7 +39,7 @@ const InPlayer = (props) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const { callback, payload } = props;
   const screenStyles = getStyles(getScreenStyles(props));
-
+  const { import_parent_lock: showParentLock } = screenStyles;
   let stillMounted = true;
 
   useEffect(() => {
@@ -162,10 +162,9 @@ const InPlayer = (props) => {
   };
 
   const shouldShowParentLock = (parentLockWasPresented) => {
-    const config = true;
     switch (hookType) {
       case HookTypeData.PLAYER_HOOK:
-        if (parentLockWasPresented || !config) {
+        if (parentLockWasPresented || !showParentLock) {
           return false;
         }
         return true;

@@ -22,7 +22,7 @@ export function prepareStyles(screenStyles) {
   styles = populateConfigurationValues(manifestJson.styles.fields)(
     screenStyles
   );
-
+  styles.import_parent_lock = screenStyles.import_parent_lock ? screenStyles.import_parent_lock : false;
   return styles;
 }
 
