@@ -493,13 +493,6 @@
         "folded": true,
         "fields": [
           {
-            "key": "alert_background",
-            "type": "color_picker_rgba",
-            "label": "Activation Alert Background Color",
-            "label_tooltip": "Background Color for the Activation Alert Screen. The screen is shown when the service returns an error or notice.",
-            "initial_value": "rgba(74, 74, 74, 1)"
-          },
-          {
             "key": "video_stream_exception_message",
             "type": "text_input",
             "label": "Message in case video url is empty",

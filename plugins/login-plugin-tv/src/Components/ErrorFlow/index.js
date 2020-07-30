@@ -17,7 +17,6 @@ function ErrorScreen(props) {
   const {
     close_action_button_text: closeLabel,
     close_action_button_background: closeButtonBackground,
-    alert_background: errorScreenBackground,
   } = customStyles;
 
   const [
@@ -40,10 +39,7 @@ function ErrorScreen(props) {
   const buttonStyle = getInputStyle(closeButtonBackground);
 
   return (
-    <Layout
-      backgroundColor={errorScreenBackground}
-      remoteHandler={remoteHandler}
-    >
+    <Layout isErrorScreen={true} remoteHandler={remoteHandler}>
       <View style={styles.container}>
         <TextComponent
           style={[styles.errorText, errorDescriptionStyle]}
