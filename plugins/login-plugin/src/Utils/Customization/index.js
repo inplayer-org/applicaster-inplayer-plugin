@@ -2,6 +2,7 @@ import * as R from "ramda";
 
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import { populateConfigurationValues } from "@applicaster/zapp-react-native-utils/stylesUtils";
+import MESSAGES from "../../Components/AssetFlow/Config";
 
 const manifestJson = platformSelect({
   ios: require("../../../manifests/ios.json"),
@@ -62,4 +63,29 @@ export function inputFieldStyle(screenStyles) {
     paddingHorizontal: 15,
     alignSelf: "center",
   };
+}
+
+export function getMessageOrDefault(error, screenStyles) {
+  const message = error?.message;
+  const defaultMessage = screenStyles.general_error_message;
+
+  const isStreamException = isStreamExceptionError(message, screenStyles);
+  if (isStreamException) return message;
+
+  const isUserFriendlyMessage = findInObject(MESSAGES, message);
+  return isUserFriendlyMessage ? message : defaultMessage;
+}
+
+function isStreamExceptionError(message, screenStyles) {
+  const streamExceptionMessage = screenStyles.video_stream_exception_message;
+  return message === streamExceptionMessage;
+}
+
+function findInObject(obj, condition) {
+  return Object.values(obj).some((value) => {
+    if (Array.isArray(value) || (typeof value === 'object' && value !== null)) {
+      return findInObject(value, condition);
+    }
+    return value === condition;
+  });
 }

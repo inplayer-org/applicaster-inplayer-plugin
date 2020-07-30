@@ -11,8 +11,13 @@ const MESSAGES = {
     required: "This item requires purchase.",
   },
   validation: {
-    productId: "Can not purchase, product identifier not exist",
+    productId: "Product identifier does not exist.",
+    noFees: "No fees available for current asset.",
+    emptyStore: "No items available in store."
   },
+  asset: {
+    fail: "Cannot load asset info."
+  }
 };
 
 export default MESSAGES;

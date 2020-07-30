@@ -1,6 +1,7 @@
 import R from "ramda";
 import { externalIdForPlatform } from "../../../Services/InPlayerServiceHelper";
 import { Alert } from "react-native";
+import MESSAGES from "../Config";
 
 export function invokeCallBack(
   props,
@@ -26,7 +27,7 @@ function findInPlayerFee(storeFee, inPlayerFeesData) {
     )(inPlayerFeesData);
   }
 
-  if (!inPlayerFee) throw new Error("Cannot find product Id");
+  if (!inPlayerFee) throw new Error(MESSAGES.validation.productId);
   return inPlayerFee;
 }
 

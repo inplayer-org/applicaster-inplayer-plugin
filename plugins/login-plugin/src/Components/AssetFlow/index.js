@@ -92,7 +92,7 @@ const AssetFlow = (props) => {
       ]);
 
       if (resultPurchaseData.length === 0) {
-        throw new Error("No fees available for current asset");
+        throw new Error(MESSAGES.validation.noFees);
       }
       const inPlayerFeesData = retrieveInPlayerFeesData({
         feesToSearch: resultPurchaseData[0],
@@ -106,7 +106,7 @@ const AssetFlow = (props) => {
 
       console.log({ inPlayerFeesData, storeFeesData });
       if (storeFeesData.length === 0) {
-        throw new Error("No items available in store");
+        throw new Error(MESSAGES.validation.emptyStore);
       }
 
       addInPlayerProductId({
@@ -161,7 +161,7 @@ const AssetFlow = (props) => {
         } else {
           completeAssetFlow({
             success: false,
-            error: { message: "Cannot load asset info." },
+            error: { message: MESSAGES.asset.fail },
           });
         }
       });
