@@ -166,7 +166,7 @@
           {
             "key": "email_input_background",
             "type": "color_picker_rgba",
-            "label": "email Input Background Color",
+            "label": "Email Input Background Color",
             "label_tooltip": "Background Color for the Email Input.",
             "initial_value": "rgba(39, 218, 134, 1)"
           },
@@ -187,7 +187,7 @@
           {
             "key": "email_input_font_android",
             "type": "android_font_selector",
-            "label_tooltip": "Font for email Input Text for Android TV.",
+            "label_tooltip": "Font for Email Input Text for Android TV.",
             "initial_value": "Roboto-Bold"
           },
           {
@@ -627,9 +627,9 @@
       "default": "subscription"
     },
     {
-      "key": "ios_assets_bundle",
+      "key": "android_assets_bundle",
       "type": "uploader",
-      "label": "tvOS Design Assets",
+      "label": "Android TV Design Assets",
       "label_tooltip": "Please upload a zip file to provide the design assets for this plugin. For guidance and proper naming of the assets, please refer to this <a href='https://assets-production.applicaster.com.s3.amazonaws.com/applicaster-employees/marketplace/OPT/Login%20Plugin%20-%20Designer%20Documentation.sketch'>resource</a>."
     }
   ],
@@ -639,15 +639,21 @@
   "ui_frameworks": [
     "quickbrick"
   ],
-  "platform": "tvos_for_quickbrick",
+  "platform": "android_tv_for_quickbrick",
   "dependency_version": "0.0.5",
   "manifest_version": "0.0.5",
-  "api": {},
-  "project_dependencies": [],
-  "extra_dependencies": [
+  "api": {
+    "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
+    "react_packages": [
+      "com.reactnativecommunity.asyncstorage.AsyncStoragePackage"
+    ],
+    "proguard_rules": "-keep public class com.reactnativecommunity.asyncstorage.** {*;}"
+  },
+  "project_dependencies": [
     {
-      "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
+      "react-native-community_async-storage": "node_modules/@react-native-community/async-storage/android"
     }
   ],
+  "extra_dependencies": [],
   "min_zapp_sdk": "0.1.0-alpha1"
 }

@@ -12,14 +12,12 @@ const { height } = Dimensions.get("window");
 
 function LoginScreen(props) {
   const {
-    screenStyles,
     configuration,
     remoteHandler,
     accountFlowCallback,
     navigator,
   } = props;
 
-  const { login_background: loginBackground } = screenStyles;
   const {
     in_player_client_id: clientId,
     in_player_referrer: referrer,
@@ -62,7 +60,7 @@ function LoginScreen(props) {
   };
 
   return (
-    <Layout backgroundColor={loginBackground} remoteHandler={remoteHandler}>
+    <Layout remoteHandler={remoteHandler}>
       <View style={styles.loginContainer}>
         <View style={styles.container}>
           <View style={styles.textContainer}>

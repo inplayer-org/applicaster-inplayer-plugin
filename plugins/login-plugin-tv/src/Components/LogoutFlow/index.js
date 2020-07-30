@@ -1,15 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import Layout from "../UIComponents/Layout";
 import LogoutComponent from "../UIComponents/LogoutComponent";
-import { HookTypeData, PluginContext } from "../../Config/PluginData";
+import { HookTypeData } from "../../Config/PluginData";
 import { signOut } from "../../Services/inPlayerService";
 import { useToggleNavBar } from "../../Utils/reactHooks";
 
 function LogoutScreen(props) {
   const { accountFlowCallback, remoteHandler, navigator } = props;
-  const customStyles = useContext(PluginContext);
-  const { confirmation_background: logoutScreenBackground } = customStyles;
 
   const [loading, setLoading] = useState(false);
 
@@ -45,10 +43,7 @@ function LogoutScreen(props) {
   };
 
   return (
-    <Layout
-      backgroundColor={logoutScreenBackground}
-      remoteHandler={remoteHandler}
-    >
+    <Layout remoteHandler={remoteHandler}>
       <View style={styles.container}>
         <LogoutComponent
           loading={loading}

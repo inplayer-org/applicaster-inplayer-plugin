@@ -6,6 +6,9 @@ class Input extends Component {
   render() {
     const {
       value = "",
+      inputRef,
+      nextFocusDown,
+      nextFocusUp,
       onChangeText,
       secureTextEntry = false,
       placeholder = "",
@@ -26,6 +29,9 @@ class Input extends Component {
         }}
         isParallaxDisabled
         preferredFocus
+        ref={inputRef}
+        nextFocusDown={nextFocusDown}
+        nextFocusUp={nextFocusUp}
       >
         {(focused) => {
           return (

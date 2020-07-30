@@ -1,9 +1,13 @@
 import * as Yup from "yup";
 
-const message = "Incorrect username or password.";
+const message = "Incorrect email or password.";
+const invalidEmailMessage = "Invalid email";
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string().label("Username").required(message),
+  email: Yup.string()
+    .label("Email")
+    .email(invalidEmailMessage)
+    .required(message),
   password: Yup.string().label("Password").required(message),
 });
 

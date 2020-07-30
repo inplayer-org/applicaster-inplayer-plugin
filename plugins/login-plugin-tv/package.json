@@ -1,6 +1,6 @@
 {
   "name": "@applicaster/quick-brick-inplayer-tv",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,6 @@
     "@applicaster/zapp-react-native-bridge": "^4.0.0",
     "@applicaster/zapp-react-native-tvos-ui-components": "^4.0.0",
     "react": "16.11.0",
-    "react-native": "npm:react-native-tvos@0.62.2-0",
-    "react-native-tvos": "0.62.2-0"
+    "react-native": "0.62.2"
   }
 }

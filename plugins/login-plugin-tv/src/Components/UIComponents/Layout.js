@@ -1,14 +1,17 @@
 import React from "react";
-import { View, Image } from "react-native";
+import { View, Image, ImageBackground } from "react-native";
 import TVRemoteHandlerComponent from "./TVRemoteHandlerComponent";
 import ASSETS from "../../Config/Assets";
 
 function Layout(props) {
-  const { backgroundColor = "", children, remoteHandler } = props;
+  const { children, remoteHandler } = props;
 
   return (
     <TVRemoteHandlerComponent tvEventHandler={remoteHandler}>
-      <View style={{ ...styles.container, backgroundColor }}>
+      <ImageBackground
+        source={{ uri: ASSETS.screenBackground }}
+        style={{ ...styles.container }}
+      >
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
@@ -17,7 +20,7 @@ function Layout(props) {
           />
         </View>
         <View style={styles.subContainer}>{children}</View>
-      </View>
+      </ImageBackground>
     </TVRemoteHandlerComponent>
   );
 }
