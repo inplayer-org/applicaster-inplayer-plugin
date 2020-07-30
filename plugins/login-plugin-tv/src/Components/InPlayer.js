@@ -90,7 +90,8 @@ const InPlayer = (props) => {
 
   const checkAuthentication = async () => {
     try {
-      return InPlayerService.isAuthenticated();
+      const { in_player_client_id: clientId } = configuration;
+      return InPlayerService.isAuthenticated(clientId);
     } catch (err) {
       console.log(err);
       return false;

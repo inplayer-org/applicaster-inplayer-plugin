@@ -76,30 +76,20 @@ export function loadAllPackages(collection) {
   return Promise.all(promises);
 }
 
-export async function isAuthenticated() {
+export async function isAuthenticated(clientId) {
   try {
     await initFromNativeLocalStorage();
-    return InPlayer.Account.isAuthenticated();
+    // InPlayer.Account.isAuthenticated() returns true even if token expired
+    // To handle this case InPlayer.Account.getAccount() was used
+    await InPlayer.Account.getAccount();
+    return true;
   } catch (err) {
-    console.log(err);
-  }
-}
-
-async function authWithRefreshToken(response, clientId, referrer) {
-  console.log("result", response);
-  const status = response?.status && response?.status.toString();
-
-  if (status !== 403) throw new Error(response.message);
-
-  try {
-    const refreshToken = response.headers.get("x-inplayer-token");
-    const authBody = { refreshToken, clientId, referrer };
-    console.log("Fetching with refreshToken", refreshToken);
-    const data = await InPlayer.Account.authenticate(authBody);
-    console.log("TOKEN AFTER REFRESH:", data);
-    // if (data) await zappStorage.setItem("data", data);
-  } catch (err) {
-    console.log(console.log("ERR AFTER REFRESH:", err));
+    const res = await err.response.json();
+    if (res?.code === 403) {
+      await InPlayer.Account.refreshToken(clientId);
+      return true;
+    }
+    return false;
   }
 }
 
@@ -117,7 +107,6 @@ export async function login({ email, password, clientId, referrer }) {
     const { response } = error;
     const result = await response.json();
     throw new Error(result.message);
-    //return authWithRefreshToken(result, clientId, referrer);
   }
 }
 
