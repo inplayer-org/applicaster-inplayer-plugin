@@ -17,6 +17,7 @@ const baseManifest = {
   npm_dependencies: [
     "@inplayer-org/inplayer.js@2.13.3",
     "@react-native-community/async-storage@1.9.0",
+    "@react-native-community/blur@3.4.1",
   ],
   general: {
     fields: [
@@ -671,6 +672,7 @@ const api = {
     class_name: "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     react_packages: [
       "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
+      "com.cmcewen.blurview.BlurViewPackage",
     ],
     proguard_rules:
       "-keep public class com.reactnativecommunity.asyncstorage.** {*;}",
@@ -684,6 +686,10 @@ const project_dependencies = {
       "react-native-community_async-storage":
         "node_modules/@react-native-community/async-storage/android",
     },
+    {
+      "react-native-community_blur":
+        "node_modules/@react-native-community/blur/android",
+    },
   ],
 };
 
@@ -692,6 +698,10 @@ const extra_dependencies = {
     {
       RNCAsyncStorage:
         ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'",
+    },
+    {
+      "react-native-blur":
+        ":path => 'node_modules/@react-native-community/blur/react-native-blur.podspec'",
     },
   ],
   android_tv_for_quickbrick: [],
