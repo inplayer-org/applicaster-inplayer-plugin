@@ -4,14 +4,13 @@ import TVRemoteHandlerComponent from "./TVRemoteHandlerComponent";
 import ASSETS from "../../Config/Assets";
 
 function Layout(props) {
-  const { children, remoteHandler, isErrorScreen } = props;
+  const { children, remoteHandler } = props;
 
   return (
     <TVRemoteHandlerComponent tvEventHandler={remoteHandler}>
       <ImageBackground
         source={{ uri: ASSETS.screenBackground }}
         style={{ ...styles.container }}
-        blurRadius={isErrorScreen ? 15 : 0}
       >
         <View style={styles.logoContainer}>
           <Image
