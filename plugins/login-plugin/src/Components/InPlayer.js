@@ -11,7 +11,7 @@ import { initFromNativeLocalStorage } from "../LocalStorageHack";
 import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
 import { setConfig } from "../Services/inPlayerService";
-import { getStyles, isHomeScreen } from "../Utils/Customization";
+import { getStyles, isHomeScreen, getMessageOrDefault } from "../Utils/Customization";
 import { isHook, isTokenInStorage } from "../Utils/UserAccount";
 
 const getScreenStyles = R.compose(
@@ -85,7 +85,8 @@ const InPlayer = (props) => {
       callback,
     });
     if (error) {
-      showAlert("General Error!", error?.message);
+      const message = getMessageOrDefault(error, screenStyles);
+      showAlert("General Error!", message);
     }
     callback &&
       callback({

@@ -283,6 +283,13 @@ const baseManifest = {
         initial_value: "Video stream in not available. Please try again later",
       },
       {
+        key: "general_error_message",
+        type: "text_input",
+        label: "General error message",
+        tooltip: "A default error message that is shown in case something goes wrong in the flow",
+        initial_value: "Something went wrong. Please try again later"
+      },
+      {
         key: "logout_background_color",
         type: "color_picker",
         label: "Logout background font color",
