@@ -18,7 +18,8 @@
   "preload": true,
   "npm_dependencies": [
     "@inplayer-org/inplayer.js@2.13.3",
-    "@react-native-community/async-storage@1.9.0"
+    "@react-native-community/async-storage@1.9.0",
+    "@react-native-community/blur@3.4.1"
   ],
   "general": {
     "fields": [
@@ -641,13 +642,16 @@
     "quickbrick"
   ],
   "platform": "tvos_for_quickbrick",
-  "dependency_version": "0.1.1",
-  "manifest_version": "0.1.1",
+  "dependency_version": "0.1.2",
+  "manifest_version": "0.1.2",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
     {
       "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
+    },
+    {
+      "react-native-blur": ":path => 'node_modules/@react-native-community/blur/react-native-blur.podspec'"
     }
   ],
   "min_zapp_sdk": "0.1.0-alpha1"

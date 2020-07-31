@@ -18,7 +18,8 @@
   "preload": true,
   "npm_dependencies": [
     "@inplayer-org/inplayer.js@2.13.3",
-    "@react-native-community/async-storage@1.9.0"
+    "@react-native-community/async-storage@1.9.0",
+    "@react-native-community/blur@3.4.1"
   ],
   "general": {
     "fields": [
@@ -641,18 +642,22 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "0.1.1",
-  "manifest_version": "0.1.1",
+  "dependency_version": "0.1.2",
+  "manifest_version": "0.1.2",
   "api": {
     "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     "react_packages": [
-      "com.reactnativecommunity.asyncstorage.AsyncStoragePackage"
+      "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
+      "com.cmcewen.blurview.BlurViewPackage"
     ],
     "proguard_rules": "-keep public class com.reactnativecommunity.asyncstorage.** {*;}"
   },
   "project_dependencies": [
     {
       "react-native-community_async-storage": "node_modules/@react-native-community/async-storage/android"
+    },
+    {
+      "react-native-community_blur": "node_modules/@react-native-community/blur/android"
     }
   ],
   "extra_dependencies": [],
