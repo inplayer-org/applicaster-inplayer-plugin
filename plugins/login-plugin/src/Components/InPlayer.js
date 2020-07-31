@@ -17,7 +17,7 @@ import { isHook, isTokenInStorage } from "../Utils/UserAccount";
 
 const getScreenStyles = R.compose(
   R.prop("styles"),
-  R.find(R.propEq("type", "quick-brick-inplayer")),
+  R.find(R.propEq("type", "quick-brick-inplayer-parent-lock")),
   R.values,
   R.prop("rivers")
 );
@@ -140,6 +140,9 @@ const InPlayer = (props) => {
   const renderScreenHook = () => {
     return (
       <AccountFlow
+        setParentLockWasPresented={setParentLockWasPresented}
+        parentLockWasPresented = {parentLockWasPresented}
+        shouldShowParentLock={shouldShowParentLock}
         accountFlowCallback={accountFlowCallback}
         backButton={!isHomeScreen(navigator)}
         screenStyles={screenStyles}
@@ -162,19 +165,10 @@ const InPlayer = (props) => {
   };
 
   const shouldShowParentLock = (parentLockWasPresented) => {
-    switch (hookType) {
-      case HookTypeData.PLAYER_HOOK:
-        if (parentLockWasPresented || !showParentLock) {
-          return false;
-        }
-        return true;
-      case HookTypeData.SCREEN_HOOK:
-        return false;
-      case HookTypeData.USER_ACCOUNT:
-        return false;
-      case HookTypeData.UNDEFINED:
-        return false;
+    if (parentLockWasPresented || !showParentLock) {
+      return false;
     }
+    return true;
   };
 
   const renderFlow = () => {
