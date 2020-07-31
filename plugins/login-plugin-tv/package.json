@@ -25,5 +25,12 @@
     "@applicaster/zapp-react-native-tvos-ui-components": "^4.0.0",
     "react": "16.11.0",
     "react-native": "0.62.2"
+  },
+  "applicaster": {
+    "supportedPlatforms": [
+      "tvos_for_quickbrick",
+      "android_tv_for_quickbrick"
+    ],
+    "zappOwnerAccountId": "5e12fe6948ca8800083c4116"
   }
 }
