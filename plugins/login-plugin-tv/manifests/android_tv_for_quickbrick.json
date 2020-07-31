@@ -628,12 +628,6 @@
       "default": "subscription"
     },
     {
-      "key": "ios_assets_bundle",
-      "type": "uploader",
-      "label": "tvOS Design Assets",
-      "label_tooltip": "Please upload a zip file to provide the design assets for this plugin. For guidance and proper naming of the assets, please refer to this <a href='https://assets-production.applicaster.com.s3.amazonaws.com/applicaster-employees/marketplace/OPT/Login%20Plugin%20-%20Designer%20Documentation.sketch'>resource</a>."
-    },
-    {
       "key": "android_assets_bundle",
       "type": "uploader",
       "label": "Android TV Design Assets",
@@ -647,8 +641,8 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "0.1.0",
-  "manifest_version": "0.1.0",
+  "dependency_version": "0.1.1",
+  "manifest_version": "0.1.1",
   "api": {
     "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     "react_packages": [
