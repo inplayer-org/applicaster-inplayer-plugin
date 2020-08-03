@@ -32,12 +32,13 @@ const InPlayer = (props) => {
   };
 
   const navigator = useNavigation();
+  const [parentLockWasPresented, setParentLockWasPresented] = useState(false);
   const [idToken, setIdtoken] = useState(null);
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const { callback, payload } = props;
   const screenStyles = getStyles(getScreenStyles(props));
-
+  const { import_parent_lock: showParentLock } = screenStyles;
   let stillMounted = true;
 
   useEffect(() => {
@@ -117,11 +118,17 @@ const InPlayer = (props) => {
 
   const renderPlayerHook = () => {
     return isUserAuthenticated ? (
-      <AssetFlow assetFlowCallback={assetFlowCallback}
+      <AssetFlow setParentLockWasPresented={setParentLockWasPresented}
+                 parentLockWasPresented={parentLockWasPresented}
+                 shouldShowParentLock={shouldShowParentLock}
+                 assetFlowCallback={assetFlowCallback}
                  screenStyles={screenStyles}
                  {...props} />
     ) : (
       <AccountFlow
+        setParentLockWasPresented={setParentLockWasPresented}
+        parentLockWasPresented = {parentLockWasPresented}
+        shouldShowParentLock={shouldShowParentLock}
         accountFlowCallback={accountFlowCallback}
         backButton={!isHomeScreen(navigator)}
         screenStyles={screenStyles}
@@ -133,6 +140,9 @@ const InPlayer = (props) => {
   const renderScreenHook = () => {
     return (
       <AccountFlow
+        setParentLockWasPresented={setParentLockWasPresented}
+        parentLockWasPresented = {parentLockWasPresented}
+        shouldShowParentLock={shouldShowParentLock}
         accountFlowCallback={accountFlowCallback}
         backButton={!isHomeScreen(navigator)}
         screenStyles={screenStyles}
@@ -152,6 +162,13 @@ const InPlayer = (props) => {
 
   const renderUACFlow = () => {
     return idToken ? renderLogoutScreen() : renderScreenHook();
+  };
+
+  const shouldShowParentLock = (parentLockWasPresented) => {
+    if (parentLockWasPresented || !showParentLock) {
+      return false;
+    }
+    return true;
   };
 
   const renderFlow = () => {

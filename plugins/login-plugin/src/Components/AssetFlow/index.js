@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
 import NavbarComponent from "../UIComponents/NavbarComponent";
-
+import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
 import {
   checkAccessForAsset,
   getAccessFees,
@@ -40,6 +40,16 @@ const styles = StyleSheet.create({
 const AssetFlow = (props) => {
   const { screenStyles } = props;
 
+  const ScreensData = {
+    EMPTY: "Empty",
+    STOREFRONT: "Storefront",
+    PARENT_LOCK: "ParentLock"
+  };
+
+  const [screen, setScreen] = useState(ScreensData.EMPTY);
+  const { shouldShowParentLock } = props;
+  const { onParentLockAppeared } = props;
+
   const {
     payment_screen_background: screenBackground = "",
     client_logo: logoUrl = "",
@@ -64,6 +74,19 @@ const AssetFlow = (props) => {
 
   const hideLoader = () => {
     setAssetLoading(false);
+  };
+
+  const presentParentLock = () => {
+    setScreen(ScreensData.PARENT_LOCK);
+    props.setParentLockWasPresented(true);
+  };
+
+  const parentLockCallback = (result) => {
+    if (result.success) {
+      setScreen(ScreensData.STOREFRONT);
+    } else {
+      completeAssetFlow({ success: false});
+    }
   };
 
   const preparePurchaseData = async () => {
@@ -114,6 +137,11 @@ const AssetFlow = (props) => {
         inPlayerFeesData,
       });
 
+      if (shouldShowParentLock && shouldShowParentLock(props.parentLockWasPresented)) {
+        presentParentLock();
+      } else {
+        setScreen(ScreensData.STOREFRONT);
+      }
       stillMounted && setDataSource(storeFeesData);
     } catch (error) {
       stillMounted && completeAssetFlow({ success: false, error });
@@ -228,29 +256,39 @@ const AssetFlow = (props) => {
       });
   };
 
-  if (!dataSource) {
-    return <LoadingScreen />;
-  }
+  const render = () => {
+    if (!dataSource) {
+      return <LoadingScreen />;
+    }
+    switch (screen) {
+      case ScreensData.PARENT_LOCK:
+        return (
+            <ParentLockPlugin.Component callback={parentLockCallback}/>
+        );
+      case ScreensData.STOREFRONT:
+        return (
+            <SafeAreaView
+                style={[styles.container, {backgroundColor: screenBackground}]}
+            >
+              <NavbarComponent
+                  buttonAction={completeAssetFlow}
+                  logoUrl={logoUrl}
+                  buttonUrl={buttonUrl}
+              />
+              <Storefront
+                  screenStyles={screenStyles}
+                  dataSource={dataSource}
+                  onPressPaymentOption={onPressPaymentOption}
+                  onPressRestore={onPressRestore}
+              />
+              <Footer screenStyles={screenStyles}/>
+              {assetLoading && <LoadingScreen/>}
+            </SafeAreaView>
+        );
+    }
+  };
 
-  return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: screenBackground }]}
-    >
-      <NavbarComponent
-        buttonAction={completeAssetFlow}
-        logoUrl={logoUrl}
-        buttonUrl={buttonUrl}
-      />
-      <Storefront
-        screenStyles={screenStyles}
-        dataSource={dataSource}
-        onPressPaymentOption={onPressPaymentOption}
-        onPressRestore={onPressRestore}
-      />
-      <Footer screenStyles={screenStyles} />
-      {assetLoading && <LoadingScreen />}
-    </SafeAreaView>
-  );
+  return render();
 };
 
 export default AssetFlow;

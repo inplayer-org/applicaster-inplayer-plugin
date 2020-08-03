@@ -4,6 +4,7 @@ import { Keyboard } from "react-native";
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
 
+import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
 import { Login } from "../Login";
 import { ForgotPassword } from "../ForgotPassword";
 import { SetNewPassword } from "../SetNewPassword";
@@ -26,8 +27,10 @@ const AccountFlow = (props) => {
     SIGN_UP: "SignUp",
     FORGOT_PASSWORD: "ForgotPassword",
     SET_NEW_PASSWORD: "SetNewPassword",
+    PARENT_LOCK: "ParentLock"
   };
   let stillMounted = true;
+
 
   const {
     configuration: {
@@ -37,6 +40,7 @@ const AccountFlow = (props) => {
     accountFlowCallback
   } = props;
 
+  const { shouldShowParentLock } = props;
   const [loading, setLoading] = useState(true);
   const [screen, setScreen] = useState(ScreensData.EMPTY);
   const [lastEmailUsed, setLastEmailUsed] = useState(null);
@@ -48,10 +52,11 @@ const AccountFlow = (props) => {
           if (isAuthenticated) {
             accountFlowCallback({ success: true });
           } else {
-            setLastEmailUsed(
-              (await InPlayerService.getLastEmailUsed()) || null
-            );
-            setScreen(ScreensData.LOGIN);
+            if (shouldShowParentLock && shouldShowParentLock(props.parentLockWasPresented)) {
+              presentParentLock();
+            } else {
+              await authenticateUser();
+            }
           }
         }
       })
@@ -62,6 +67,26 @@ const AccountFlow = (props) => {
       stillMounted = false;
     };
   }, []);
+
+  const authenticateUser = async () => {
+    setLastEmailUsed(
+        (await InPlayerService.getLastEmailUsed()) || null
+    );
+    setScreen(ScreensData.LOGIN);
+  };
+
+  const presentParentLock = () => {
+    setScreen(ScreensData.PARENT_LOCK);
+    props.setParentLockWasPresented(true);
+  };
+
+  const parentLockCallback = async (result) => {
+    if (result.success) {
+      await authenticateUser();
+    } else {
+      accountFlowCallback({ success: false });
+    }
+  };
 
   const showAlertToUser = ({ title, message, type = "warn" }) => {
     this.dropDownAlertRef.alertWithType(type, title, message);
@@ -237,6 +262,12 @@ const AccountFlow = (props) => {
   };
 
   const { screenStyles } = props;
+
+  if (screen === ScreensData.PARENT_LOCK) {
+    return (
+        <ParentLockPlugin.Component callback={parentLockCallback}/>
+    );
+  }
   return (
     <View style={containerStyle(screenStyles)}>
       <SafeAreaView style={container}>
