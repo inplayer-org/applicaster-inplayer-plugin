@@ -1,6 +1,6 @@
 {
   "name": "@applicaster/quick-brick-inplayer",
-  "version": "0.5.12",
+  "version": "0.6.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@applicaster/quick-brick-parent-lock": "0.0.4",
     "@applicaster/applicaster-iap": "0.2.14",
+    "@applicaster/quick-brick-parent-lock": "0.0.4",
     "@inplayer-org/inplayer.js": "2.13.3",
     "@react-native-community/async-storage": "^1.9.0",
     "axios": "^0.19.1",
