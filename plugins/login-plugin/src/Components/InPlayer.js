@@ -5,7 +5,6 @@ import AssetFlow from "./AssetFlow";
 import LogoutFlow from "./LogoutFlow";
 import R from "ramda";
 
-import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 import { initFromNativeLocalStorage } from "../LocalStorageHack";
@@ -17,7 +16,7 @@ import { isHook, isTokenInStorage } from "../Utils/UserAccount";
 
 const getScreenStyles = R.compose(
   R.prop("styles"),
-  R.find(R.propEq("type", "quick-brick-inplayer-parent-lock")),
+  R.find(R.propEq("type", "quick-brick-inplayer")),
   R.values,
   R.prop("rivers")
 );
