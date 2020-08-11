@@ -5,6 +5,7 @@ import Storefront from "../UIComponents/Storefront";
 import NavbarComponent from "../UIComponents/NavbarComponent";
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
 import {
+  getAssetByExternalId,
   checkAccessForAsset,
   getAccessFees,
   getAllPackages,
@@ -22,7 +23,7 @@ import {
   addInPlayerProductId,
   retrieveInPlayerFeesData,
   isRequirePurchaseError,
-  showAlert
+  showAlert,
 } from "./Helper";
 import Footer from "../UIComponents/Footer";
 import MESSAGES from "./Config";
@@ -43,7 +44,7 @@ const AssetFlow = (props) => {
   const ScreensData = {
     EMPTY: "Empty",
     STOREFRONT: "Storefront",
-    PARENT_LOCK: "ParentLock"
+    PARENT_LOCK: "ParentLock",
   };
 
   const [screen, setScreen] = useState(ScreensData.EMPTY);
@@ -56,21 +57,44 @@ const AssetFlow = (props) => {
     close_button: buttonUrl = "",
   } = screenStyles;
 
-  const assetId = inPlayerAssetId({
-    payload: props.payload,
-    configuration: props.configuration,
-  });
-
   const [dataSource, setDataSource] = useState(null);
   const [assetLoading, setAssetLoading] = useState(false);
+  const [assetId, setAssetId] = useState(null);
   let stillMounted = true;
 
   useEffect(() => {
-    loadAsset({ startPurchaseFlow: true });
+    prepareAssetId();
     return () => {
       stillMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (assetId) {
+      loadAsset({ startPurchaseFlow: true });
+    }
+  }, [assetId]);
+
+  const prepareAssetId = async () => {
+    const { payload, configuration } = props;
+
+    let newAssetId = inPlayerAssetId({
+      payload,
+      configuration,
+    });
+    if (!newAssetId) {
+      newAssetId = await getAssetByExternalId(payload);
+      console.log({ newAssetId });
+      if (newAssetId && stillMounted) {
+        setAssetId(newAssetId);
+      } else {
+        completeAssetFlow({
+          success: false,
+          error: { message: MESSAGES.asset.fail },
+        });
+      }
+    }
+  };
 
   const hideLoader = () => {
     setAssetLoading(false);
@@ -85,7 +109,7 @@ const AssetFlow = (props) => {
     if (result.success) {
       setScreen(ScreensData.STOREFRONT);
     } else {
-      completeAssetFlow({ success: false});
+      completeAssetFlow({ success: false });
     }
   };
 
@@ -113,7 +137,7 @@ const AssetFlow = (props) => {
           purchaseKeysMapping,
         }),
       ]);
-
+      console.log({ resultPurchaseData });
       if (resultPurchaseData.length === 0) {
         throw new Error(MESSAGES.validation.noFees);
       }
@@ -137,7 +161,10 @@ const AssetFlow = (props) => {
         inPlayerFeesData,
       });
 
-      if (shouldShowParentLock && shouldShowParentLock(props.parentLockWasPresented)) {
+      if (
+        shouldShowParentLock &&
+        shouldShowParentLock(props.parentLockWasPresented)
+      ) {
         presentParentLock();
       } else {
         setScreen(ScreensData.STOREFRONT);
@@ -148,10 +175,10 @@ const AssetFlow = (props) => {
     }
   };
 
-  const loadAsset = ({ startPurchaseFlow = false }) => {
+  const loadAsset = async ({ startPurchaseFlow = false }) => {
     console.log("LoadAsset");
     const retryInCaseFail = !startPurchaseFlow;
-    const { payload } = props;
+
     checkAccessForAsset({ assetId, retryInCaseFail })
       .then((data) => {
         console.log("LoadAsset2", { data });
@@ -173,6 +200,7 @@ const AssetFlow = (props) => {
         }
       })
       .catch((error) => {
+        console.log({ error });
         if (error?.requestedToPurchase && startPurchaseFlow) {
           return preparePurchaseData();
         }
@@ -262,28 +290,26 @@ const AssetFlow = (props) => {
     }
     switch (screen) {
       case ScreensData.PARENT_LOCK:
-        return (
-            <ParentLockPlugin.Component callback={parentLockCallback}/>
-        );
+        return <ParentLockPlugin.Component callback={parentLockCallback} />;
       case ScreensData.STOREFRONT:
         return (
-            <SafeAreaView
-                style={[styles.container, {backgroundColor: screenBackground}]}
-            >
-              <NavbarComponent
-                  buttonAction={completeAssetFlow}
-                  logoUrl={logoUrl}
-                  buttonUrl={buttonUrl}
-              />
-              <Storefront
-                  screenStyles={screenStyles}
-                  dataSource={dataSource}
-                  onPressPaymentOption={onPressPaymentOption}
-                  onPressRestore={onPressRestore}
-              />
-              <Footer screenStyles={screenStyles}/>
-              {assetLoading && <LoadingScreen/>}
-            </SafeAreaView>
+          <SafeAreaView
+            style={[styles.container, { backgroundColor: screenBackground }]}
+          >
+            <NavbarComponent
+              buttonAction={completeAssetFlow}
+              logoUrl={logoUrl}
+              buttonUrl={buttonUrl}
+            />
+            <Storefront
+              screenStyles={screenStyles}
+              dataSource={dataSource}
+              onPressPaymentOption={onPressPaymentOption}
+              onPressRestore={onPressRestore}
+            />
+            <Footer screenStyles={screenStyles} />
+            {assetLoading && <LoadingScreen />}
+          </SafeAreaView>
         );
     }
   };

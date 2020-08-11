@@ -1,5 +1,16 @@
 import R from "ramda";
 
+export const externalAssetData = ({ payload }) => {
+  const { id: externalAssetId } = payload;
+  const inplayerAssetType = R.path(["extensions", "inplayer_asset_type"])(
+    payload
+  );
+  if (externalAssetId && inplayerAssetType) {
+    return { externalAssetId, inplayerAssetType };
+  }
+  return null;
+};
+
 export const isAuthenticationRequired = ({ payload }) => {
   const requires_authentication = R.path([
     "extensions",
