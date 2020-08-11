@@ -1,6 +1,16 @@
 import R from "ramda";
 
+export const isAuthenticationRequired = ({ payload }) => {
+  const requires_authentication = R.path([
+    "extensions",
+    "requires_authentication",
+  ])(payload);
+  console.log({ requires_authentication });
+  return requires_authentication;
+};
+
 export const inPlayerAssetId = ({ payload, configuration }) => {
+  console.log({ payload, configuration });
   const assetIdFromCustomKey = inPlayerAssetIdFromCustomKey({
     payload,
     configuration,

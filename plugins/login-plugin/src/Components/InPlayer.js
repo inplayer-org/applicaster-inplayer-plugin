@@ -8,10 +8,18 @@ import R from "ramda";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 import { initFromNativeLocalStorage } from "../LocalStorageHack";
-import { isVideoEntry, inPlayerAssetId } from "../Utils/PayloadUtils";
+import {
+  isVideoEntry,
+  inPlayerAssetId,
+  isAuthenticationRequired,
+} from "../Utils/PayloadUtils";
 import { showAlert } from "../Utils/Account";
 import { setConfig } from "../Services/inPlayerService";
-import { getStyles, isHomeScreen, getMessageOrDefault } from "../Utils/Customization";
+import {
+  getStyles,
+  isHomeScreen,
+  getMessageOrDefault,
+} from "../Utils/Customization";
 import { isHook, isTokenInStorage } from "../Utils/UserAccount";
 
 const getScreenStyles = R.compose(
@@ -28,7 +36,7 @@ const InPlayer = (props) => {
     UNDEFINED: "Undefined",
     PLAYER_HOOK: "PlayerHook",
     SCREEN_HOOK: "ScreenHook",
-    USER_ACCOUNT: "UserAccount"
+    USER_ACCOUNT: "UserAccount",
   };
 
   const navigator = useNavigation();
@@ -46,7 +54,7 @@ const InPlayer = (props) => {
   }, []);
 
   const checkIdToken = async () => {
-    const token = await isTokenInStorage('idToken');
+    const token = await isTokenInStorage("idToken");
     setIdtoken(token);
   };
 
@@ -61,7 +69,10 @@ const InPlayer = (props) => {
     setConfig(in_player_environment);
 
     if (isVideoEntry(payload)) {
-      if (inPlayerAssetId({ payload, configuration: props.configuration })) {
+      if (
+        isAuthenticationRequired({ payload }) ||
+        inPlayerAssetId({ payload, configuration: props.configuration })
+      ) {
         stillMounted && setHookType(HookTypeData.PLAYER_HOOK);
       } else {
         callback && callback({ success: true, error: null, payload });
@@ -76,7 +87,7 @@ const InPlayer = (props) => {
     return () => {
       stillMounted = false;
     };
-  }
+  };
 
   const assetFlowCallback = ({ success, payload, error }) => {
     console.log("Asset Flow CallBack Anton", {
@@ -100,7 +111,7 @@ const InPlayer = (props) => {
   const accountFlowCallback = async ({ success }) => {
     if (success) {
       const token = localStorage.getItem("inplayer_token");
-      await defaultStorage.setItem('idToken', token);
+      await defaultStorage.setItem("idToken", token);
     }
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
@@ -118,16 +129,18 @@ const InPlayer = (props) => {
 
   const renderPlayerHook = () => {
     return isUserAuthenticated ? (
-      <AssetFlow setParentLockWasPresented={setParentLockWasPresented}
-                 parentLockWasPresented={parentLockWasPresented}
-                 shouldShowParentLock={shouldShowParentLock}
-                 assetFlowCallback={assetFlowCallback}
-                 screenStyles={screenStyles}
-                 {...props} />
+      <AssetFlow
+        setParentLockWasPresented={setParentLockWasPresented}
+        parentLockWasPresented={parentLockWasPresented}
+        shouldShowParentLock={shouldShowParentLock}
+        assetFlowCallback={assetFlowCallback}
+        screenStyles={screenStyles}
+        {...props}
+      />
     ) : (
       <AccountFlow
         setParentLockWasPresented={setParentLockWasPresented}
-        parentLockWasPresented = {parentLockWasPresented}
+        parentLockWasPresented={parentLockWasPresented}
         shouldShowParentLock={shouldShowParentLock}
         accountFlowCallback={accountFlowCallback}
         backButton={!isHomeScreen(navigator)}
@@ -141,7 +154,7 @@ const InPlayer = (props) => {
     return (
       <AccountFlow
         setParentLockWasPresented={setParentLockWasPresented}
-        parentLockWasPresented = {parentLockWasPresented}
+        parentLockWasPresented={parentLockWasPresented}
         shouldShowParentLock={shouldShowParentLock}
         accountFlowCallback={accountFlowCallback}
         backButton={!isHomeScreen(navigator)}
@@ -152,13 +165,8 @@ const InPlayer = (props) => {
   };
 
   const renderLogoutScreen = () => {
-    return (
-        <LogoutFlow
-            screenStyles={screenStyles}
-            {...props}
-        />
-    );
-  }
+    return <LogoutFlow screenStyles={screenStyles} {...props} />;
+  };
 
   const renderUACFlow = () => {
     return idToken ? renderLogoutScreen() : renderScreenHook();
