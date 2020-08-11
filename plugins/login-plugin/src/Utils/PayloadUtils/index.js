@@ -5,12 +5,10 @@ export const isAuthenticationRequired = ({ payload }) => {
     "extensions",
     "requires_authentication",
   ])(payload);
-  console.log({ requires_authentication });
   return requires_authentication;
 };
 
 export const inPlayerAssetId = ({ payload, configuration }) => {
-  console.log({ payload, configuration });
   const assetIdFromCustomKey = inPlayerAssetIdFromCustomKey({
     payload,
     configuration,
