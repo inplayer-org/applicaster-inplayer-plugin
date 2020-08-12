@@ -138,7 +138,6 @@ const AssetFlow = (props) => {
           purchaseKeysMapping,
         }),
       ]);
-      console.log({ resultPurchaseData });
       if (resultPurchaseData.length === 0) {
         throw new Error(MESSAGES.validation.noFees);
       }
@@ -201,7 +200,6 @@ const AssetFlow = (props) => {
         }
       })
       .catch((error) => {
-        console.log({ error });
         if (error?.requestedToPurchase && startPurchaseFlow) {
           return preparePurchaseData();
         }
