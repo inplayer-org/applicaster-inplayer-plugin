@@ -17,7 +17,7 @@
         }
       ],
       "extensions": {
-        "external_asset_type": "jw",
+        "inplayer_asset_type": "jw",
         "requires_authentication": true
       }
     },
@@ -55,25 +55,6 @@
       ],
       "content": {
         "src": "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
-      }
-    },
-    {
-      "id": "222222",
-      "type": { "value": "video" },
-      "title": "NO SRC, No login",
-      "summary": "",
-      "media_group": [
-        {
-          "type": "image",
-          "media_item": {
-            "key": "image_base",
-            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
-          }
-        }
-      ],
-      "extensions": {
-        "external_asset_type": "jw",
-        "requires_authentication": true
       }
     }
   ]
