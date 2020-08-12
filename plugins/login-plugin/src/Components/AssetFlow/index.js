@@ -175,7 +175,7 @@ const AssetFlow = (props) => {
     }
   };
 
-  const loadAsset = async ({ startPurchaseFlow = false }) => {
+  const loadAsset = ({ startPurchaseFlow = false }) => {
     console.log("LoadAsset");
     const retryInCaseFail = !startPurchaseFlow;
 

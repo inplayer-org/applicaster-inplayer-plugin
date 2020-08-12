@@ -42,7 +42,6 @@ export async function checkAccessForAsset({
   tries = 5,
 }) {
   try {
-    console.log("checkAccessForAsset");
     const asset = await checkAccessForAsset2(assetId);
     return { asset, src: getSrcFromAsset(asset) };
   } catch (error) {
