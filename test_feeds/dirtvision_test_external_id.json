@@ -1,0 +1,61 @@
+{
+  "title": "APP TEST",
+  "type": { "value": "feed" },
+  "entry": [
+    {
+      "id": "ZlULTeN3",
+      "type": { "value": "video" },
+      "title": "APP TEST External ID ZlULTeN3",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_type": "jw",
+        "requires_authentication": true
+      }
+    },
+    {
+      "id": "106880",
+      "type": { "value": "video" },
+      "title": "InPlayer Asset ID 106880",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_id": "106880"
+      }
+    },
+    {
+      "id": "11111",
+      "type": { "value": "video" },
+      "title": "Not inplayer, with content",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://assets-production.applicaster.com/static/InPlayerFeeds/cover1.jpg"
+          }
+        }
+      ],
+      "content": {
+        "src": "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+      }
+    }
+  ]
+}

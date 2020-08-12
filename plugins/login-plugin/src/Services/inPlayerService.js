@@ -4,7 +4,7 @@ import { getSrcFromAsset } from "../Utils/OVPProvidersMapper";
 import { initFromNativeLocalStorage, localStorage } from "../LocalStorageHack";
 import { withTimeout, DEFAULT_NETWORK_TIMEOUT } from "../Utils";
 
-import { assetPaymentRequired } from "../Utils/PayloadUtils";
+import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
 
 const IN_PLAYER_LAST_EMAIL_USED_KEY = "com.inplayer.lastEmailUsed";
@@ -22,7 +22,19 @@ export async function checkAccessForAsset2(assetId) {
   );
   return assetData;
 }
-
+export async function getAssetByExternalId(payload) {
+  const assetData = externalAssetData({ payload });
+  if (assetData) {
+    const { externalAssetId, inplayerAssetType } = assetData;
+    const result = await InPlayer.Asset.getExternalAsset(
+      inplayerAssetType,
+      externalAssetId
+    );
+    return result?.id || null;
+  } else {
+    return null;
+  }
+}
 export async function checkAccessForAsset({
   assetId,
   retryInCaseFail = false,
@@ -84,7 +96,7 @@ export async function isAuthenticated(clientId) {
     return true;
   } catch (err) {
     const res = await err.response.json();
-    if (res?.code === 403 ) {
+    if (res?.code === 403) {
       await InPlayer.Account.refreshToken(clientId);
       return true;
     }

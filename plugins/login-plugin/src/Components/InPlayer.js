@@ -29,8 +29,6 @@ const getScreenStyles = R.compose(
   R.prop("rivers")
 );
 
-console.disableYellowBox = true;
-
 const InPlayer = (props) => {
   const HookTypeData = {
     UNDEFINED: "Undefined",
@@ -90,12 +88,6 @@ const InPlayer = (props) => {
   };
 
   const assetFlowCallback = ({ success, payload, error }) => {
-    console.log("Asset Flow CallBack Anton", {
-      success,
-      payload,
-      error,
-      callback,
-    });
     if (error) {
       const message = getMessageOrDefault(error, screenStyles);
       showAlert("General Error!", message);
