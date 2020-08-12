@@ -82,9 +82,10 @@ const AssetFlow = (props) => {
       payload,
       configuration,
     });
-    if (!newAssetId) {
+    if (newAssetId) {
+      setAssetId(newAssetId);
+    } else {
       newAssetId = await getAssetByExternalId(payload);
-      console.log({ newAssetId });
       if (newAssetId && stillMounted) {
         setAssetId(newAssetId);
       } else {

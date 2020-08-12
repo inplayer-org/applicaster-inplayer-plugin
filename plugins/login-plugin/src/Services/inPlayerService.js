@@ -24,18 +24,12 @@ export async function checkAccessForAsset2(assetId) {
 }
 export async function getAssetByExternalId(payload) {
   const assetData = externalAssetData({ payload });
-  // assetData = {
-  //   externalAssetId: "ZlULTeN3",
-  //   inplayerAssetType: "jw",
-  // };
-
   if (assetData) {
     const { externalAssetId, inplayerAssetType } = assetData;
     const result = await InPlayer.Asset.getExternalAsset(
       inplayerAssetType,
       externalAssetId
     );
-    console.log({ result });
     return result?.id || null;
   } else {
     return null;
