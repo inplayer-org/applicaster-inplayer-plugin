@@ -177,6 +177,8 @@ const AssetFlow = (props) => {
 
   const loadAsset = ({ startPurchaseFlow = false }) => {
     console.log("LoadAsset");
+    const { payload } = props;
+
     const retryInCaseFail = !startPurchaseFlow;
 
     checkAccessForAsset({ assetId, retryInCaseFail })
