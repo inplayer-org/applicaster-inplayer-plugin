@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
-import NavbarComponent from "../UIComponents/NavbarComponent";
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
 import {
   getAssetByExternalId,
@@ -25,18 +23,7 @@ import {
   isRequirePurchaseError,
   showAlert,
 } from "./Helper";
-import Footer from "../UIComponents/Footer";
 import MESSAGES from "./Config";
-
-const { height, width } = Dimensions.get("window");
-
-const styles = StyleSheet.create({
-  container: {
-    height,
-    width,
-    paddingBottom: 15,
-  },
-});
 
 const AssetFlow = (props) => {
   const { screenStyles } = props;
@@ -48,14 +35,7 @@ const AssetFlow = (props) => {
   };
 
   const [screen, setScreen] = useState(ScreensData.EMPTY);
-  const { shouldShowParentLock } = props;
-  const { onParentLockAppeared } = props;
-
-  const {
-    payment_screen_background: screenBackground = "",
-    client_logo: logoUrl = "",
-    close_button: buttonUrl = "",
-  } = screenStyles;
+  const { shouldShowParentLock, onParentLockAppeared } = props;
 
   const [dataSource, setDataSource] = useState(null);
   const [assetLoading, setAssetLoading] = useState(false);
@@ -286,7 +266,7 @@ const AssetFlow = (props) => {
   };
 
   const render = () => {
-    if (!dataSource) {
+    if (!dataSource || assetLoading) {
       return <LoadingScreen />;
     }
     switch (screen) {
@@ -294,23 +274,13 @@ const AssetFlow = (props) => {
         return <ParentLockPlugin.Component callback={parentLockCallback} />;
       case ScreensData.STOREFRONT:
         return (
-          <SafeAreaView
-            style={[styles.container, { backgroundColor: screenBackground }]}
-          >
-            <NavbarComponent
-              buttonAction={completeAssetFlow}
-              logoUrl={logoUrl}
-              buttonUrl={buttonUrl}
-            />
-            <Storefront
-              screenStyles={screenStyles}
-              dataSource={dataSource}
-              onPressPaymentOption={onPressPaymentOption}
-              onPressRestore={onPressRestore}
-            />
-            <Footer screenStyles={screenStyles} />
-            {assetLoading && <LoadingScreen />}
-          </SafeAreaView>
+          <Storefront
+            {...props}
+            completeAssetFlow={completeAssetFlow}
+            dataSource={dataSource}
+            onPressPaymentOption={onPressPaymentOption}
+            onPressRestore={onPressRestore}
+          />
         );
     }
   };

@@ -5,9 +5,9 @@ import { Keyboard } from "react-native";
 import DropdownAlert from "react-native-dropdownalert";
 
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
-import { Login } from "../Login";
-import { ForgotPassword } from "../ForgotPassword";
-import { SetNewPassword } from "../SetNewPassword";
+import Login from "../Login";
+import ForgotPassword from "../ForgotPassword";
+import SetNewPassword from "../SetNewPassword";
 import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";
@@ -27,17 +27,16 @@ const AccountFlow = (props) => {
     SIGN_UP: "SignUp",
     FORGOT_PASSWORD: "ForgotPassword",
     SET_NEW_PASSWORD: "SetNewPassword",
-    PARENT_LOCK: "ParentLock"
+    PARENT_LOCK: "ParentLock",
   };
   let stillMounted = true;
-
 
   const {
     configuration: {
       in_player_client_id: clientId,
-      in_player_referrer: referrer
+      in_player_referrer: referrer,
     },
-    accountFlowCallback
+    accountFlowCallback,
   } = props;
 
   const { shouldShowParentLock } = props;
@@ -52,7 +51,10 @@ const AccountFlow = (props) => {
           if (isAuthenticated) {
             accountFlowCallback({ success: true });
           } else {
-            if (shouldShowParentLock && shouldShowParentLock(props.parentLockWasPresented)) {
+            if (
+              shouldShowParentLock &&
+              shouldShowParentLock(props.parentLockWasPresented)
+            ) {
               presentParentLock();
             } else {
               await authenticateUser();
@@ -69,9 +71,7 @@ const AccountFlow = (props) => {
   }, []);
 
   const authenticateUser = async () => {
-    setLastEmailUsed(
-        (await InPlayerService.getLastEmailUsed()) || null
-    );
+    setLastEmailUsed((await InPlayerService.getLastEmailUsed()) || null);
     setScreen(ScreensData.LOGIN);
   };
 
@@ -264,9 +264,7 @@ const AccountFlow = (props) => {
   const { screenStyles } = props;
 
   if (screen === ScreensData.PARENT_LOCK) {
-    return (
-        <ParentLockPlugin.Component callback={parentLockCallback}/>
-    );
+    return <ParentLockPlugin.Component callback={parentLockCallback} />;
   }
   return (
     <View style={containerStyle(screenStyles)}>
