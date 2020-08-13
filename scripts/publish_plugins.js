@@ -119,7 +119,9 @@ async function publishPlugin(pluginFolder, latestSha) {
   console.log(`publishing ${pluginFolder} with ${newVersion}`);
   try {
     const output = await exec(
-      `yarn publish:plugin plugins/${pluginFolder} -v ${newVersion}`
+      `yarn publish:plugin plugins/${pluginFolder} -v ${newVersion} ${
+        preRelease ? "--next" : ""
+      }`
     );
 
     return output;
