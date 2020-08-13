@@ -1,5 +1,7 @@
+import React from "react";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import SignUpMobile from "./SignUpMobile";
+
 export default function SignUp(props) {
   const mobile = <SignUpMobile {...props} />;
 

@@ -1,8 +1,11 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import PaymentOptionView from "../../PaymentOptionView";
-import { container } from "../../../Styles";
-import { mapKeyToStyle, withEndSpace } from "../../../../Utils/Customization";
+import PaymentOptionView from "../../../PaymentOptionView";
+import { container } from "../../../../Styles";
+import {
+  mapKeyToStyle,
+  withEndSpace,
+} from "../../../../../Utils/Customization";
 
 const storefrontStyleKeys = [
   "payment_screen_title",

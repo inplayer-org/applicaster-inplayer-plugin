@@ -12,12 +12,12 @@ import {
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { inputFieldStyle } from "../../Utils/Customization";
-import { validateEmail } from "../../Utils/Account";
-import { container } from "../Styles";
-import ActionButton from "../UIComponents/Buttons/ActionButton.js";
-import TitleLabel from "../UIComponents/TitleLabel";
-import BackButton from "../UIComponents/Buttons/BackButton";
+import { inputFieldStyle } from "../../../Utils/Customization";
+import { validateEmail } from "../../../Utils/Account";
+import { container } from "../../Styles";
+import ActionButton from "../../UIComponents/Buttons/ActionButton.js";
+import TitleLabel from "../../UIComponents/TitleLabel";
+import BackButton from "../../UIComponents/Buttons/BackButton";
 
 const styles = StyleSheet.create({
   newUserButton: {
@@ -59,7 +59,7 @@ const newUserButtonStyle = (screenStyles) => {
   };
 };
 
-export const LoginMobile = (props) => {
+const LoginMobile = (props) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
@@ -201,3 +201,5 @@ export const LoginMobile = (props) => {
     </View>
   );
 };
+
+export default LoginMobile;

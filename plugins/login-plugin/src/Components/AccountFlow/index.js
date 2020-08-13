@@ -5,9 +5,9 @@ import { Keyboard } from "react-native";
 import DropdownAlert from "react-native-dropdownalert";
 
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
-import { Login } from "../Login";
-import { ForgotPassword } from "../ForgotPassword";
-import { SetNewPassword } from "../SetNewPassword";
+import Login from "../Login";
+import ForgotPassword from "../ForgotPassword";
+import SetNewPassword from "../SetNewPassword";
 import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";

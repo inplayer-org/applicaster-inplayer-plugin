@@ -12,14 +12,14 @@ import {
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { inputFieldStyle } from "../../Utils/Customization";
-import { validateEmail } from "../../Utils/Account";
-import { container } from "../Styles";
-import ActionButton from "../UIComponents/Buttons/ActionButton.js";
-import TitleLabel from "../UIComponents/TitleLabel";
-import BackButton from "../UIComponents/Buttons/BackButton";
+import { inputFieldStyle } from "../../../Utils/Customization";
+import { validateEmail } from "../../../Utils/Account";
+import { container } from "../../Styles";
+import ActionButton from "../../UIComponents/Buttons/ActionButton.js";
+import TitleLabel from "../../UIComponents/TitleLabel";
+import BackButton from "../../UIComponents/Buttons/BackButton";
 
-export const ForgotPasswordMobile = (props) => {
+const ForgotPasswordMobile = (props) => {
   const [email, setEmail] = useState(null);
   const { screenStyles } = props;
   const textInputStyle = inputFieldStyle(screenStyles);
@@ -103,3 +103,5 @@ export const ForgotPasswordMobile = (props) => {
     </View>
   );
 };
+
+export default ForgotPasswordMobile;

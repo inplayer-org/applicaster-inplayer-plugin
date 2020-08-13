@@ -1,5 +1,7 @@
+import React from "react";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import SetNewPasswordMobile from "./SetNewPasswordMobile";
+
 export default function Login(props) {
   const mobile = <SetNewPasswordMobile {...props} />;
 

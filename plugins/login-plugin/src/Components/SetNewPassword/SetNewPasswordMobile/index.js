@@ -10,14 +10,14 @@ import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils"
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { inputFieldStyle } from "../../Utils/Customization";
-import { validateNewPassword } from "../../Utils/Account";
-import { container } from "../Styles";
-import ActionButton from "../UIComponents/Buttons/ActionButton.js";
-import TitleLabel from "../UIComponents/TitleLabel";
-import BackButton from "../UIComponents/Buttons/BackButton";
+import { inputFieldStyle } from "../../../Utils/Customization";
+import { validateNewPassword } from "../../../Utils/Account";
+import { container } from "../../Styles";
+import ActionButton from "../../UIComponents/Buttons/ActionButton.js";
+import TitleLabel from "../../UIComponents/TitleLabel";
+import BackButton from "../../UIComponents/Buttons/BackButton";
 
-export const SetNewPasswordMobile = (props) => {
+const SetNewPasswordMobile = (props) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState(null);
   const [password, setPassword] = useState(null);
   const [token, setToken] = useState(null);
@@ -168,3 +168,5 @@ export const SetNewPasswordMobile = (props) => {
     </View>
   );
 };
+
+export default SetNewPasswordMobile;

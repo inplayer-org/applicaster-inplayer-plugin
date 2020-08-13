@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
-import LoadingScreen from "../../LoadingScreen";
 import StoreFrontContainer from "./StoreFrontContainer";
-import NavbarComponent from "../../UIComponents/NavbarComponent";
+import NavbarComponent from "../../../UIComponents/NavbarComponent";
 
-import Footer from "../UIComponents/Footer";
+import Footer from "../../Footer";
 
 const { height, width } = Dimensions.get("window");
 

@@ -1,5 +1,7 @@
+import React from "react";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import StoreFrontMobile from "./StoreFrontMobile";
+
 export default function Storefront(props) {
   const mobile = <StoreFrontMobile {...props} />;
 

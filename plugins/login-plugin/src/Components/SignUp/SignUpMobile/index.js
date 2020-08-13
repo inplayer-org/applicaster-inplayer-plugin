@@ -7,16 +7,16 @@ import {
   Keyboard,
   BackHandler,
 } from "react-native";
-import { inputFieldStyle } from "../../Utils/Customization";
+import { inputFieldStyle } from "../../../Utils/Customization";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
-import { container } from "../Styles";
-import { validateSignUpData } from "../../Utils/Account";
-import ActionButton from "../UIComponents/Buttons/ActionButton.js";
-import TitleLabel from "../UIComponents/TitleLabel";
-import BackButton from "../UIComponents/Buttons/BackButton";
+import { container } from "../../Styles";
+import { validateSignUpData } from "../../../Utils/Account";
+import ActionButton from "../../UIComponents/Buttons/ActionButton.js";
+import TitleLabel from "../../UIComponents/TitleLabel";
+import BackButton from "../../UIComponents/Buttons/BackButton";
 
 const SignUpMobile = (props) => {
   const [fullName, setFullName] = useState(null);
