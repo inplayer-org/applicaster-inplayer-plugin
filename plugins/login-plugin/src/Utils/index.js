@@ -1,4 +1,4 @@
-export const DEFAULT_NETWORK_TIMEOUT = 5000;
+export const DEFAULT_NETWORK_TIMEOUT = 15000;
 
 export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
