@@ -1300,7 +1300,7 @@ const tvPlatforms = [
 ];
 
 const api = {
-  ios: {},
+  apple: {},
   android: {
     class_name: "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
     react_packages: [
@@ -1314,7 +1314,7 @@ const api = {
 };
 
 const project_dependencies = {
-  ios: [],
+  apple: [],
   android: [
     {
       "react-native-community_async-storage":
@@ -1336,7 +1336,7 @@ const project_dependencies = {
 };
 
 const extra_dependencies = {
-  ios: [
+  apple: [
     {
       ApplicasterIAP:
         ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
