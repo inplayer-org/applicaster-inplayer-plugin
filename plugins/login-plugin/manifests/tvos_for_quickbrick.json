@@ -1,14 +1,14 @@
 {
   "dependency_repository_url": [],
-  "dependency_name": "@applicaster/quick-brick-inplayer-tv",
-  "author_name": "Olga Duk",
-  "author_email": "oduk@scand.com",
-  "name": "inPlayer Hook Plugin for TV",
-  "description": "InPlayer Hook Plugin for TV",
+  "dependency_name": "@applicaster/quick-brick-inplayer",
+  "author_name": "Applicaster",
+  "author_email": "zapp@applicaster.com",
+  "name": "inPlayer Hook Plugin",
+  "description": "InPlayer Hook Plugin",
   "type": "login",
   "screen": true,
   "react_native": true,
-  "identifier": "quick-brick-inplayer-tv",
+  "identifier": "quick-brick-inplayer",
   "ui_builder_support": true,
   "whitelisted_account_ids": [
     "5c9ce7917b225c000f02dfbc"
@@ -17,11 +17,121 @@
   "unsupported_since_zapp_sdk": "",
   "preload": true,
   "npm_dependencies": [
-    "@inplayer-org/inplayer.js@2.13.3",
     "@react-native-community/async-storage@1.9.0",
+    "@applicaster/applicaster-iap@0.2.15",
     "@react-native-community/blur@3.4.1"
   ],
-  "general": {
+  "custom_configuration_fields": [
+    {
+      "type": "text",
+      "key": "in_player_client_id",
+      "tooltip_text": "In Player Client ID",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "key": "in_player_referrer",
+      "tooltip_text": "In Player Referrer URL",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "key": "in_player_custom_asset_key",
+      "tooltip_text": "Custom asset key",
+      "default": "extensions.event_inplayer_id"
+    },
+    {
+      "type": "tag_select",
+      "key": "in_player_environment",
+      "tooltip_text": "InPlayer working environment",
+      "options": [
+        {
+          "text": "Development",
+          "value": "develop"
+        },
+        {
+          "text": "Production",
+          "value": "prod"
+        }
+      ],
+      "initial_value": "prod"
+    },
+    {
+      "type": "tag_select",
+      "key": "logout_completion_action",
+      "tooltip_text": "Defines what action plugin should do after user log out. ",
+      "options": [
+        {
+          "text": "Go back to previous screen",
+          "value": "go_back"
+        },
+        {
+          "text": "Go back to home screen",
+          "value": "go_home"
+        }
+      ],
+      "initial_value": "go_back"
+    },
+    {
+      "type": "text",
+      "key": "consumable_type_mapper",
+      "tooltip_text": "Mapping key for consumable purchase",
+      "default": "consumable"
+    },
+    {
+      "type": "text",
+      "key": "non_consumable_type_mapper",
+      "tooltip_text": "Mapping key for non consumable purchase",
+      "default": "ppv"
+    },
+    {
+      "type": "text",
+      "key": "subscription_type_mapper",
+      "tooltip_text": "Mapping key for subscription purchase",
+      "default": "subscription"
+    }
+  ],
+  "hooks": {
+    "fields": [
+      {
+        "group": true,
+        "label": "Before Load",
+        "folded": true,
+        "fields": [
+          {
+            "key": "preload_plugins",
+            "type": "preload_plugins_selector",
+            "label": "Select Plugins"
+          }
+        ]
+      }
+    ]
+  },
+  "targets": [
+    "mobile",
+    "tv"
+  ],
+  "ui_frameworks": [
+    "quickbrick"
+  ],
+  "platform": "tvos_for_quickbrick",
+  "dependency_version": "0.7.0-beta.2",
+  "manifest_version": "0.7.0-beta.2",
+  "api": {},
+  "project_dependencies": [],
+  "extra_dependencies": [
+    {
+      "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'"
+    },
+    {
+      "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
+    },
+    {
+      "react-native-blur": ":path => 'node_modules/@react-native-community/blur/react-native-blur.podspec'"
+    }
+  ],
+  "min_zapp_sdk": "0.1.0-alpha1",
+  "styles": {
     "fields": [
       {
         "group": true,
@@ -580,79 +690,5 @@
         ]
       }
     ]
-  },
-  "custom_configuration_fields": [
-    {
-      "type": "text",
-      "key": "in_player_client_id",
-      "tooltip_text": "In Player Client ID",
-      "default": ""
-    },
-    {
-      "type": "text",
-      "key": "in_player_referrer",
-      "tooltip_text": "In Player Referrer URL",
-      "default": ""
-    },
-    {
-      "type": "tag_select",
-      "key": "in_player_environment",
-      "tooltip_text": "InPlayer working environment",
-      "options": [
-        {
-          "text": "Development",
-          "value": "develop"
-        },
-        {
-          "text": "Production",
-          "value": "prod"
-        }
-      ],
-      "initial_value": "prod"
-    },
-    {
-      "type": "text",
-      "key": "consumable_type_mapper",
-      "tooltip_text": "Mapping key for consumable purchase",
-      "default": "consumable"
-    },
-    {
-      "type": "text",
-      "key": "non_consumable_type_mapper",
-      "tooltip_text": "Mapping key for non consumable purchase",
-      "default": "ppv"
-    },
-    {
-      "type": "text",
-      "key": "subscription_type_mapper",
-      "tooltip_text": "Mapping key for subscription purchase",
-      "default": "subscription"
-    },
-    {
-      "key": "ios_assets_bundle",
-      "type": "uploader",
-      "label": "tvOS Design Assets",
-      "label_tooltip": "Please upload a zip file to provide the design assets for this plugin. For guidance and proper naming of the assets, please refer to this <a href='https://assets-production.applicaster.com.s3.amazonaws.com/applicaster-employees/marketplace/OPT/Login%20Plugin%20-%20Designer%20Documentation.sketch'>resource</a>."
-    }
-  ],
-  "targets": [
-    "tv"
-  ],
-  "ui_frameworks": [
-    "quickbrick"
-  ],
-  "platform": "tvos_for_quickbrick",
-  "dependency_version": "0.1.2",
-  "manifest_version": "0.1.2",
-  "api": {},
-  "project_dependencies": [],
-  "extra_dependencies": [
-    {
-      "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
-    },
-    {
-      "react-native-blur": ":path => 'node_modules/@react-native-community/blur/react-native-blur.podspec'"
-    }
-  ],
-  "min_zapp_sdk": "0.1.0-alpha1"
+  }
 }
