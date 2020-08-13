@@ -18,7 +18,7 @@ const baseManifest = {
   preload: true,
   npm_dependencies: [
     "@react-native-community/async-storage@1.9.0",
-    "@applicaster/applicaster-iap@0.2.14",
+    "@applicaster/applicaster-iap@0.2.15",
     "@react-native-community/blur@3.4.1",
   ],
   custom_configuration_fields: [
