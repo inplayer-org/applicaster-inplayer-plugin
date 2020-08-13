@@ -95,16 +95,26 @@ async function publishPlugin(pluginFolder, latestSha) {
   const result = await exec(
     `git log ${latestSha}..HEAD --pretty=tformat:%s -- plugins/${pluginFolder}`
   );
+  const { stdout } = shelljs.exec("echo $CIRCLE_BRANCH", { silent: true });
+  const CIRCLE_BRANCH = stdout.trim();
 
   const currentVersion = pluginPackageJson(pluginFolder).version;
   const lastCommits = R.compose(R.reject(R.isEmpty), R.split("\n"))(result);
 
   const minor = commitMessagesContains("feat")(lastCommits);
   const major = commitMessagesContains("BREAKING CHANGE")(lastCommits);
+  const preRelease = CIRCLE_BRANCH === "development";
+  const preReleaseIdentifier = preRelease ? "beta" : undefined;
 
-  const release = major ? "major" : minor ? "minor" : "patch";
+  const release = preRelease
+    ? "prerelease"
+    : major
+    ? "major"
+    : minor
+    ? "minor"
+    : "patch";
 
-  const newVersion = semver.inc(currentVersion, release);
+  const newVersion = semver.inc(currentVersion, release, preReleaseIdentifier);
 
   console.log(`publishing ${pluginFolder} with ${newVersion}`);
   try {
