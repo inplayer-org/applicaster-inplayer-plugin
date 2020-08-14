@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView } from "react-native";
-import { Keyboard } from "react-native";
+import { View, SafeAreaView, Keyboard, Platform } from "react-native";
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
 
@@ -89,7 +88,7 @@ const AccountFlow = (props) => {
   };
 
   const showAlertToUser = ({ title, message, type = "warn" }) => {
-    // this.dropDownAlertRef.alertWithType(type, title, message);
+    !Platform.isTV && this.dropDownAlertRef.alertWithType(type, title, message);
   };
 
   const maybeShowAlertToUser = (title) => async (error) => {
@@ -104,9 +103,7 @@ const AccountFlow = (props) => {
   };
 
   const login = ({ email, password } = params) => {
-    // Keyboard.dismiss();
-
-    console.log("login called", email, password);
+    Keyboard.dismiss();
     stillMounted && setLoading(true);
     InPlayerService.login({
       email,
@@ -274,7 +271,9 @@ const AccountFlow = (props) => {
         {renderAuthenteficationScreen()}
         {loading && <LoadingScreen />}
       </SafeAreaView>
-      {/* <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} /> */}
+      {!Platform.isTV && (
+        <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
+      )}
     </View>
   );
 };
