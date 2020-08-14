@@ -89,7 +89,7 @@ const AccountFlow = (props) => {
   };
 
   const showAlertToUser = ({ title, message, type = "warn" }) => {
-    this.dropDownAlertRef.alertWithType(type, title, message);
+    // this.dropDownAlertRef.alertWithType(type, title, message);
   };
 
   const maybeShowAlertToUser = (title) => async (error) => {
@@ -104,7 +104,9 @@ const AccountFlow = (props) => {
   };
 
   const login = ({ email, password } = params) => {
-    Keyboard.dismiss();
+    // Keyboard.dismiss();
+
+    console.log("login called", email, password);
     stillMounted && setLoading(true);
     InPlayerService.login({
       email,
@@ -272,7 +274,7 @@ const AccountFlow = (props) => {
         {renderAuthenteficationScreen()}
         {loading && <LoadingScreen />}
       </SafeAreaView>
-      <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
+      {/* <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} /> */}
     </View>
   );
 };
