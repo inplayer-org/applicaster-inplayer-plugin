@@ -1,19 +1,19 @@
 import React from "react";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 import LoginMobile from "./LoginMobile";
-import LoginTvos from "./LoginTvos";
+import LoginTv from "./LoginTv";
 
 export default function Login(props) {
   const mobile = <LoginMobile {...props} />;
-  const tvOs = <LoginTvos {...props} />;
+  const tvOs = <LoginTv {...props} />;
 
   return platformSelect({
-    tvos: tvOs,
+    tvos: LoginTv,
     ios: mobile,
     android: mobile,
-    android_tv: mobile,
-    web: mobile,
-    samsung_tv: mobile,
-    lg_tv: mobile,
+    android_tv: LoginTv,
+    web: LoginTv,
+    samsung_tv: LoginTv,
+    lg_tv: LoginTv,
   });
 }

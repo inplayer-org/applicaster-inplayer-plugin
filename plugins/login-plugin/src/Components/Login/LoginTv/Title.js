@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
   },
 });
 
+console.disableYellowBox = true;
+
 const Title = () => (
   <View style={styles.container}>
     <Text style={styles.text}>Login to Your Account</Text>

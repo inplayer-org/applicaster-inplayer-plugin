@@ -24,18 +24,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginInterface = ({ login: onLogin, errorMessage }) => (
-  <View style={styles.container}>
-    <View style={styles.contentWrapper}>
-      <Title />
-      <Subtitle />
-      <Paragraph />
+const LoginInterface = (props) => {
+  const { login: onLogin, errorMessage } = props;
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.contentWrapper}>
+        <Title />
+        <Subtitle />
+        <Paragraph />
+      </View>
+      <LoginControls
+        {...{ style: styles.loginControls, onLogin, errorMessage }}
+      />
     </View>
-    <LoginControls
-      {...{ style: styles.loginControls, onLogin, errorMessage }}
-    />
-  </View>
-);
+  );
+};
 
 LoginInterface.propTypes = {
   onLogin: PropTypes.func,
