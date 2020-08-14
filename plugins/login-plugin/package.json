@@ -17,6 +17,7 @@
     "@react-native-community/blur": "3.4.1",
     "axios": "^0.19.1",
     "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
     "ramda": "^0.26.1",
     "react-native-actionsheet": "^2.4.0",
     "react-native-dropdownalert": "^4.2.1",
