@@ -5,15 +5,15 @@ import LoginTv from "./LoginTv";
 
 export default function Login(props) {
   const mobile = <LoginMobile {...props} />;
-  const tvOs = <LoginTv {...props} />;
+  const tv = <LoginTv {...props} />;
 
   return platformSelect({
-    tvos: LoginTv,
+    tvos: tv,
     ios: mobile,
     android: mobile,
-    android_tv: LoginTv,
-    web: LoginTv,
-    samsung_tv: LoginTv,
-    lg_tv: LoginTv,
+    android_tv: tv,
+    web: tv,
+    samsung_tv: tv,
+    lg_tv: tv,
   });
 }
