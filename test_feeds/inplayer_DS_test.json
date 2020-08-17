@@ -1,0 +1,82 @@
+{
+  "title": "APP TEST",
+  "type": { "value": "feed" },
+  "entry": [
+    {
+      "id": "OhWpdw3n",
+      "type": { "value": "video" },
+      "title": "Jurassic World Fallen Kingdom OhWpdw3n",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_type": "jw",
+        "requires_authentication": true
+      }
+    },
+    {
+      "id": "1CUJ2aM1",
+      "type": { "value": "video" },
+      "title": "Red Sparrow 1CUJ2aM1",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_type": "jw",
+        "requires_authentication": true
+      }
+    },
+    {
+      "id": "IkKwwZcK",
+      "type": { "value": "video" },
+      "title": "Tomb Raider Trailer IkKwwZcK",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_type": "jw",
+        "requires_authentication": true
+      }
+    },
+    {
+      "id": "xF7Hk51k",
+      "type": { "value": "video" },
+      "title": "Hotel Transylvania 3 xF7Hk51k",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_type": "jw",
+        "requires_authentication": true
+      }
+    }
+  ]
+}
