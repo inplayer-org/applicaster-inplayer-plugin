@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { identity } from "ramda";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
 import { focusManager } from "@applicaster/zapp-react-native-utils/appUtils";
-import FocusableTextInput from "./FocusableTextInput";
-import Button from "./Button";
+import FocusableTextInput from "../../UIComponents/FocusableTextInput";
+import Button from "../../UIComponents/Buttons/FocusableButton";
 import colors from "../../../colors";
 
 const styles = StyleSheet.create({
