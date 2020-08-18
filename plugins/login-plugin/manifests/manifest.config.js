@@ -17,7 +17,6 @@ const baseManifest = {
   unsupported_since_zapp_sdk: "",
   preload: true,
   npm_dependencies: [
-    "@react-native-community/async-storage@1.9.0",
     "@applicaster/applicaster-iap@0.2.15",
     "@react-native-community/blur@3.4.1",
   ],
@@ -1302,24 +1301,19 @@ const tvPlatforms = [
 const api = {
   apple: {},
   android: {
-    class_name: "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
+    class_name: "",
     react_packages: [
-      "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
       "com.applicaster.iap.reactnative.IAPPackage",
       "com.cmcewen.blurview.BlurViewPackage",
     ],
     proguard_rules:
-      "-keep public class com.reactnativecommunity.asyncstorage.** {*;} -keep public class * extends com.facebook.react.ReactPackage {*;} -keepclasseswithmembers,includedescriptorclasses class * { @com.facebook.react.bridge.ReactMethod <methods>;} -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; } -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }",
+      "-keep public class * extends com.facebook.react.ReactPackage {*;} -keepclasseswithmembers,includedescriptorclasses class * { @com.facebook.react.bridge.ReactMethod <methods>;} -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; } -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }",
   },
 };
 
 const project_dependencies = {
   apple: [],
   android: [
-    {
-      "react-native-community_async-storage":
-        "node_modules/@react-native-community/async-storage/android",
-    },
     {
       ApplicasterIAP:
         "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap",
@@ -1340,10 +1334,6 @@ const extra_dependencies = {
     {
       ApplicasterIAP:
         ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
-    },
-    {
-      RNCAsyncStorage:
-        ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'",
     },
     {
       "react-native-blur":

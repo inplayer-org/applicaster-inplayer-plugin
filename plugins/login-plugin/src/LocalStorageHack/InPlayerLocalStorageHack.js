@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import { localStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 
 const IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY = "com.inplayer.localStorage";
 let inMemoryStore = null;
@@ -9,10 +9,12 @@ export function initFromNativeLocalStorage() {
   if (!initPromise) {
     console.debug("InPlayerLocalStorageHack: calling AsyncStorage.getItem");
 
-    initPromise = AsyncStorage.getItem(IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY)
+    initPromise = localStorage
+      .getItem("base", IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY)
       .then((json) => {
-        console.debug("AsyncStorage.getItem returned:", json);
-        inMemoryStore = new Map(JSON.parse(json));
+        const base = json ? JSON.parse(json) : null;
+        console.debug("AsyncStorage.getItem returned:", base);
+        inMemoryStore = new Map(base);
         console.debug("inMemoryStore is invitialized:", inMemoryStore);
         return inMemoryStore;
       })
@@ -28,17 +30,19 @@ export function initFromNativeLocalStorage() {
 
 function persistInMemoryStoreInBackground() {
   const serializedStore = JSON.stringify(Array.from(inMemoryStore.entries()));
-  return AsyncStorage.setItem(
-    IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY,
-    serializedStore
-  ).then(
-    () => {
-      console.debug("localStorage persisted to AsyncStorage", serializedStore);
-    },
-    (error) => {
-      console.error("error persisting to AsyncStorage", error);
-    }
-  );
+  return localStorage
+    .setItem("base", serializedStore, IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY)
+    .then(
+      () => {
+        console.debug(
+          "localStorage persisted to AsyncStorage",
+          serializedStore
+        );
+      },
+      (error) => {
+        console.error("error persisting to AsyncStorage", error);
+      }
+    );
 }
 
 function assertInitialized() {
@@ -103,6 +107,7 @@ export class InPlayerLocalStorageHack {
       );
     }
     var orderedKeys = Array.from(safeMemoryStore().keys());
+
     return orderedKeys[i];
   }
 }
