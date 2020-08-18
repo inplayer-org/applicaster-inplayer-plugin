@@ -442,13 +442,6 @@ const stylesMobile = {
           placeholder: "W 45px x H 45px",
         },
         {
-          key: "client_logo",
-          type: "uploader",
-          label: "Client Logo",
-          label_tooltip: "Client logo image. Dimension 200 x44.",
-          placeholder: "W 200px x H 44px",
-        },
-        {
           key: "payment_screen_title_text",
           type: "text_input",
           label: "Payment Screen Title Text",
@@ -727,9 +720,377 @@ const stylesMobile = {
 const stylesTv = {
   fields: [
     {
+      key: "client_logo",
+      type: "uploader",
+      label: "Client Logo",
+      label_tooltip: "Client logo image. Dimension 200 x44.",
+      placeholder: "W 200px x H 44px",
+    },
+    {
       group: true,
-      label: "Screen Design and Text",
+      label: "StoreFront Design and Text",
       tooltip: "These fields affect the design of the main screen plugin.",
+      folded: true,
+      fields: [
+        {
+          key: "storefront_screen_background_color",
+          type: "color_picker_rgba",
+          label: "Storefront Screen Background Color",
+          label_tooltip: "Background Color for the payment screen.",
+          initial_value: "rgba(54, 61, 71, 1)",
+        },
+        {
+          key: "subscription_default_title_text",
+          type: "text_input",
+          label: "Subscription Default Title Text",
+          label_tooltip: "Main Title for the payment screen.",
+          initial_value: "Choose Your Subscription",
+          placeholder: "Choose Your Subscription",
+        },
+        {
+          key: "subscription_default_title_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip:
+            "Font for the Main Title for the payment screen for Android TV.",
+          initial_value: "Roboto-Medium",
+        },
+        {
+          key: "subscription_default_title_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip:
+            "Font for the Main Title for the payment screent for TvOS.",
+          initial_value: "Helvetica-Bold",
+        },
+        {
+          key: "subscription_default_title_text_fontsize",
+          type: "number_input",
+          label_tooltip: "Font Size Main Title for the payment screen.",
+          initial_value: "50",
+        },
+        {
+          key: "subscription_default_title_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color Main Title for the payment screen",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+
+        {
+          key: "event_schedule_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip: "Font for the Event Schedule for Android TV.",
+          initial_value: "Roboto-Medium",
+        },
+        {
+          key: "event_schedule_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip:
+            "Font for the Event Schedule for the payment screent for TvOS.",
+          initial_value: "Helvetica-Medium",
+        },
+        {
+          key: "event_schedule_text_fontsize",
+          type: "number_input",
+          label_tooltip: "Font for the Event Schedule for the payment screen.",
+          initial_value: "24",
+        },
+        {
+          key: "event_schedule_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip: "Font for the Event Schedule for the payment screen",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+
+        {
+          key: "subscription_default_description_text",
+          type: "text_input",
+          label: "Subscription Default Description Text",
+          label_tooltip: "Description text for the subscription.",
+          initial_value: "Enjoy premium content",
+          placeholder: "Enjoy premium content",
+        },
+        {
+          key: "subscription_default_description_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip:
+            "Font for the Description text for the subscription for Android TV.",
+          initial_value: "Roboto-Medium",
+        },
+        {
+          key: "subscription_default_description_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip:
+            "Font for the Description text for the subscription for TvOS.",
+          initial_value: "Helvetica-Dark",
+        },
+        {
+          key: "subscription_default_description_text_fontsize",
+          type: "number_input",
+          label_tooltip:
+            "Font size for the Description text for the subscription",
+          initial_value: "30",
+        },
+        {
+          key: "subscription_default_description_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip:
+            "Font Color for the Description text for the subscription",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+        {
+          key: "policy_agreement_text",
+          type: "text_input",
+          label: "Policy Agreement Text",
+          label_tooltip: "Text for the policy agreement.",
+          initial_value:
+            "By clicking “Subscribe” or “Buy” below, you also agree to the [Client’s App Name] Agreement and acknowledge that you have read our Privacy Policy",
+          placeholder: "Policy Agreement Text",
+        },
+        {
+          key: "subscription_default_description_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip: "Font for the policy agreement for Android TV.",
+          initial_value: "Roboto-Medium",
+        },
+        {
+          key: "subscription_default_description_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip: "Font for the policy agreement for TvOS.",
+          initial_value: "Helvetica-Medium",
+        },
+        {
+          key: "subscription_default_description_text_fontsize",
+          type: "number_input",
+          label_tooltip: "Font size for the policy agreement",
+          initial_value: "24",
+        },
+        {
+          key: "subscription_default_description_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for the policy agreement",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+        {
+          key: "payment_option_background_color",
+          type: "color_picker_rgba",
+          label_tooltip: "Background Color for the Payment Option.",
+          initial_value: "rgba(42, 45, 52, 1)",
+        },
+        {
+          key: "payment_option_active_background_color",
+          type: "color_picker_rgba",
+          label_tooltip: "Background Color for the Active Payment Option.",
+          initial_value: "rgba(42, 45, 52, 1)",
+        },
+        {
+          key: "payment_option_corner_radius",
+          type: "number_input",
+          label: "Payment Option Corner Radius",
+          label_tooltip: "Corner Radius for the Payment Option.",
+          initial_value: "10",
+        },
+        {
+          key: "payment_option_active_border_color",
+          type: "color_picker_rgba",
+          label_tooltip: "BColor for the Active Payment Option.",
+          initial_value: "rgba(42, 45, 52, 1)",
+        },
+        {
+          key: "payment_option_active_border_width",
+          type: "number_input",
+          label: "Payment Option Corner Radius",
+          label_tooltip: "Width for the Active Payment Option.",
+          initial_value: "3",
+        },
+        {
+          key: "payment_option_default_action_background_color",
+          type: "color_picker_rgba",
+          label_tooltip:
+            "Default Background Color for the Payment Option Action.",
+          initial_value: "rgba(39, 218, 134, 1)",
+        },
+        {
+          key: "payment_option_active_default_action_background_color",
+          type: "color_picker_rgba",
+          label_tooltip:
+            "Default Background Color for the Payment Option Action.",
+          initial_value: "rgba(39, 218, 134, 1)",
+        },
+
+        {
+          key: "payment_option_title_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip: "Font for the payment option title for Android TV.",
+          initial_value: "Roboto-Dark",
+        },
+        {
+          key: "payment_option_title_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip: "Font for the payment option title for TvOS.",
+          initial_value: "Helvetica-Bold",
+        },
+        {
+          key: "payment_option_title_text_fontsize",
+          type: "number_input",
+          label_tooltip: "Font size for the payment option title",
+          initial_value: "18",
+        },
+        {
+          key: "payment_option_title_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for the payment option title",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+
+        {
+          key: "payment_option_fee_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip: "Font for the payment option fee for Android TV.",
+          initial_value: "Roboto-Dark",
+        },
+        {
+          key: "payment_option_fee_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip: "Font for the payment option fee for TvOS.",
+          initial_value: "Helvetica-Bold",
+        },
+        {
+          key: "payment_option_fee_text_fontsize",
+          type: "number_input",
+          label_tooltip: "Font size for the payment option fee",
+          initial_value: "36",
+        },
+        {
+          key: "payment_option_fee_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for the payment option fee",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+
+        {
+          key: "payment_option_action_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip:
+            "Font for the payment option action button for Android TV.",
+          initial_value: "Roboto-Regular",
+        },
+        {
+          key: "payment_option_action_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip: "Font for the payment option action button for TvOS.",
+          initial_value: "Helvetica",
+        },
+        {
+          key: "payment_option_action_text_fontsize",
+          type: "number_input",
+          label_tooltip: "Font size for the payment option action button",
+          initial_value: "36",
+        },
+        {
+          key: "payment_option_action_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for the payment option action button",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+        {
+          key: "restore_purchase_action_button_text",
+          type: "text_input",
+          label: "Restore Purchases Action Button Text",
+          label_tooltip: "Text for the restore purchases button.",
+          initial_value: "Restore",
+          placeholder: "Restore purchase",
+        },
+        {
+          key: "restore_purchase_action_button_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip:
+            "Font for the Main Title for the restore purchases button for Android TV.",
+          initial_value: "Roboto-Medium",
+        },
+        {
+          key: "restore_purchase_action_button_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip:
+            "Font for the Main Title for the restore purchases button for TvOS.",
+          initial_value: "Helvetica-Bold",
+        },
+        {
+          key: "restore_purchase_action_button_text_fontsize",
+          type: "number_input",
+          label_tooltip:
+            "Font Size Main Title for the restore purchases button.",
+          initial_value: "50",
+        },
+        {
+          key: "restore_purchase_action_button_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip:
+            "Font Color Main Title for the restore purchases button",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+        {
+          key: "restore_purchase_action_button_background_color",
+          type: "color_picker_rgba",
+          label_tooltip:
+            "Default Background Color for the Restore Purchases Button.",
+          initial_value: "rgba(70, 79, 97, 1)",
+        },
+        {
+          key: "restore_purchase_active_action_button_background_color",
+          type: "color_picker_rgba",
+          label_tooltip:
+            "Default Background Color for the Active Restore Purchases Button.",
+          initial_value: "rgba(39, 218, 134, 1)",
+        },
+        {
+          key: "subscriber_agreement_and_privacy_policy_text",
+          type: "text_input",
+          label: "Subscriber Agreement and Privacy Policy Link Text",
+          label_tooltip: "Text for the Agreement and Privacy Policy Link.",
+          initial_value:
+            "[Clien’s Name App] Subscriber Agreement and Privacy Policy",
+          placeholder: "Agreement policy",
+        },
+        {
+          key: "subscriber_agreement_and_privacy_policy_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip:
+            "Font for the Subscriber Agreement and Privacy Policy Link for Android TV.",
+          initial_value: "Roboto-Medium",
+        },
+        {
+          key: "subscriber_agreement_and_privacy_policy_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip:
+            "Font for the Subscriber Agreement and Privacy Policy Link for TvOS.",
+          initial_value: "Helvetica",
+        },
+        {
+          key: "subscriber_agreement_and_privacy_policy_text_fontsize",
+          type: "number_input",
+          label_tooltip:
+            "Font Size Subscriber Agreement and Privacy Policy Link.",
+          initial_value: "24",
+        },
+        {
+          key: "subscriber_agreement_and_privacy_policy_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip:
+            "Font Color Subscriber Agreement and Privacy Policy Link",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+        {
+          key: "subscriber_agreement_and_privacy_policy_text_active_color",
+          type: "color_picker_rgba",
+          label_tooltip:
+            "Color for the Active Subscriber Agreement and Privacy Policy Link ",
+          initial_value: "rgba(39, 218, 134, 1)",
+        },
+      ],
+    },
+    {
+      group: true,
+      label: "Account Design and Text",
+      tooltip: "These fields affect the design of the screen plugin.",
       folded: true,
       fields: [
         {
