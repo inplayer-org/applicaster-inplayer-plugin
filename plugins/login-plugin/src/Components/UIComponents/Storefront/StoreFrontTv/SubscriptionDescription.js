@@ -1,13 +1,8 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import Label from "./Label";
+import Label from "../../Label";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 import PropTypes from "prop-types";
-
-// SubscriptionDescription.propTypes = {
-//   screenStyles: {},
-//   payload: { extensions: {} },
-// };
 
 const SubscriptionDescription = (props) => {
   const {
@@ -17,13 +12,14 @@ const SubscriptionDescription = (props) => {
 
   const location = extensions?.event_location;
   const description = extensions?.event_description;
+  const title = location || description;
 
-  if (!location && !description) {
+  if (!title) {
     return null;
   }
 
   const fontStyles = mapKeyToStyle(
-    "store_front_event_subscription_description_text",
+    "subscription_default_description_text",
     screenStyles
   );
 
@@ -38,8 +34,12 @@ const SubscriptionDescription = (props) => {
     },
   });
 
-  const title = location || description;
   return title ? <Label styles={styles} title={title} /> : null;
+};
+
+SubscriptionDescription.propTypes = {
+  screenStyles: PropTypes.object,
+  payload: PropTypes.object,
 };
 
 export default SubscriptionDescription;

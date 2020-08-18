@@ -7,7 +7,7 @@ import LoginControls from "./LoginControls";
 import Title from "./Title";
 import Subtitle from "./Subtitle";
 import Paragraph from "./Paragraph";
-import ClientLogo from "./ClientLogo";
+import ClientLogo from "../../UIComponents/ClientLogo";
 import SignUpControls from "./SignUpControls";
 
 const styles = StyleSheet.create({
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     marginRight: 168,
   },
   clientLogoView: {
-    height: 100,
-    width: 350,
+    height: 58,
+    width: 204,
     position: "absolute",
     top: 0,
     left: 58,

@@ -5,9 +5,14 @@ import { populateConfigurationValues } from "@applicaster/zapp-react-native-util
 import MESSAGES from "../../Components/AssetFlow/Config";
 
 const manifestJson = platformSelect({
-  ios: require("../../../manifests/ios.json"),
+  ios: require("../../../manifests/ios_for_quickbrick.json"),
+  tvos: require("../../../manifests/tvos_for_quickbrick.json"),
   android: require("../../../manifests/android.json"),
-  default: require("../../../manifests/android.json"),
+  android_tv: require("../../../manifests/android_tv_for_quickbrick.json"),
+  // web: require("../../../manifests/web.json"),
+  // samsung_tv: require("../../../manifests/samsung_tv.json"),
+  // lg_tv: require("../../../manifests/lg_tv.json"),
+  // default: require("../../../manifests/android.json"),
 });
 
 export function pluginIdentifier() {
@@ -20,12 +25,18 @@ export function getStyles(screenStyles) {
 }
 
 export function prepareStyles(screenStyles) {
+  console.log("prepareStyles", {
+    screenStyles,
+    filds: manifestJson.styles.fields,
+  });
   styles = populateConfigurationValues(manifestJson.styles.fields)(
     screenStyles
   );
   styles.import_parent_lock = screenStyles.import_parent_lock
     ? screenStyles.import_parent_lock
     : false;
+  console.log("broken_prepareStyles", { styles });
+
   return styles;
 }
 

@@ -1,36 +1,26 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import Label from "./Label";
+import Label from "../../Label";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 import PropTypes from "prop-types";
 
-// SubscriptionTitle.propTypes = {
-//   screenStyles: PropTypes.object,
-//   payload: { extensions: PropTypes.object },
-// };
-
 const SubscriptionTitle = (props) => {
-  const subscriptionFontStyles = mapKeyToStyle(
-    "store_front_event_subscription_text",
-    screenStyles
-  );
-
+  console.log({ props });
   const {
     screenStyles,
     payload: { extensions = {} },
   } = props;
-  const {
-    store_front_event_subscription_text = "Demo fallback text",
-  } = screenStyles;
+  const { subscription_default_title_text } = screenStyles;
+  const subscriptionFontStyles = mapKeyToStyle(
+    "subscription_default_title_text",
+    screenStyles
+  );
+  console.log({ subscriptionFontStyles, screenStyles });
 
-  const title = extensions.event_title
-    ? extensions.eventTitle
-    : store_front_event_subscription_text;
-
+  const title = extensions.event_title || subscription_default_title_text;
+  console.log({ title });
   const styles = StyleSheet.create({
-    container: {
-      marginTop: 150,
-    },
+    container: {},
     text: {
       ...subscriptionFontStyles,
       alignSelf: "center",
@@ -42,3 +32,8 @@ const SubscriptionTitle = (props) => {
 };
 
 export default SubscriptionTitle;
+
+SubscriptionTitle.propTypes = {
+  screenStyles: PropTypes.object,
+  payload: PropTypes.object,
+};

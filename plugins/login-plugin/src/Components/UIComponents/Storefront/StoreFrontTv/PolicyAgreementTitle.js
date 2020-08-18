@@ -1,26 +1,24 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import Label from "./Label";
+import Label from "../../Label";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 import PropTypes from "prop-types";
 
-const QuickTermTitle = (props) => {
+const PolicyAgreementTitle = (props) => {
   const {
     screenStyles,
     payload: { extensions = {} },
   } = props;
 
-  const title = extensions?.storefront_quick_terms_text;
+  const title = screenStyles?.policy_agreement_text;
 
-  if (!title) {
-    return null;
-  }
-
-  const fontStyles = mapKeyToStyle("storefront_quick_terms_text", screenStyles);
+  const fontStyles = mapKeyToStyle("policy_agreement_text", screenStyles);
 
   const styles = StyleSheet.create({
     container: {
       marginTop: 30,
+      marginLeft: 281,
+      marginRight: 281,
     },
     text: {
       ...fontStyles,
@@ -32,8 +30,9 @@ const QuickTermTitle = (props) => {
   return title ? <Label styles={styles} title={title} /> : null;
 };
 
-// QuickTermTitle.propTypes = {
-//   screenStyles: {},
-//   payload: { extensions: {} },
-// };
-export default QuickTermTitle;
+PolicyAgreementTitle.propTypes = {
+  screenStyles: PropTypes.object,
+  payload: PropTypes.object,
+};
+
+export default PolicyAgreementTitle;

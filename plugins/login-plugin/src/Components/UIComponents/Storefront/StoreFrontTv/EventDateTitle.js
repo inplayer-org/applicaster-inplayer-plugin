@@ -1,13 +1,8 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import Label from "./Label";
+import Label from "../../Label";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 import PropTypes from "prop-types";
-
-// EventDateTitle.propTypes = {
-//   screenStyles: {},
-//   payload: { extensions: {} },
-// };
 
 const EventDateTitle = (props) => {
   const {
@@ -20,10 +15,7 @@ const EventDateTitle = (props) => {
     return null;
   }
 
-  const fontStyles = mapKeyToStyle(
-    "store_front_event_schedule_text",
-    screenStyles
-  );
+  const fontStyles = mapKeyToStyle("event_schedule_text", screenStyles);
 
   const styles = StyleSheet.create({
     container: {
@@ -40,6 +32,11 @@ const EventDateTitle = (props) => {
   const title = date.toISOString();
 
   return title ? <Label styles={styles} title={title} /> : null;
+};
+
+EventDateTitle.propTypes = {
+  screenStyles: PropTypes.object,
+  payload: PropTypes.object,
 };
 
 export default EventDateTitle;

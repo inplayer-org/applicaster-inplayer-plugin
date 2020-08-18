@@ -2,11 +2,6 @@ import React from "react";
 import { Text, View } from "react-native";
 import PropTypes from "prop-types";
 
-// Label.propTypes = {
-//   title: String,
-//   styles: { container: {}, text: {} },
-// };
-
 const Label = (props) => {
   const { styles, title } = props;
 
@@ -17,4 +12,8 @@ const Label = (props) => {
   );
 };
 
+Label.propTypes = {
+  title: PropTypes.string,
+  styles: PropTypes.object,
+};
 export default Label;
