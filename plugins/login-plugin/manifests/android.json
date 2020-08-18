@@ -17,7 +17,6 @@
   "unsupported_since_zapp_sdk": "",
   "preload": true,
   "npm_dependencies": [
-    "@react-native-community/async-storage@1.9.0",
     "@applicaster/applicaster-iap@0.2.15",
     "@react-native-community/blur@3.4.1"
   ],
@@ -115,21 +114,17 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.7.0-beta.10",
-  "manifest_version": "0.7.0-beta.10",
+  "dependency_version": "0.7.0-beta.11",
+  "manifest_version": "0.7.0-beta.11",
   "api": {
-    "class_name": "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
+    "class_name": "",
     "react_packages": [
-      "com.reactnativecommunity.asyncstorage.AsyncStoragePackage",
       "com.applicaster.iap.reactnative.IAPPackage",
       "com.cmcewen.blurview.BlurViewPackage"
     ],
-    "proguard_rules": "-keep public class com.reactnativecommunity.asyncstorage.** {*;} -keep public class * extends com.facebook.react.ReactPackage {*;} -keepclasseswithmembers,includedescriptorclasses class * { @com.facebook.react.bridge.ReactMethod <methods>;} -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; } -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }"
+    "proguard_rules": "-keep public class * extends com.facebook.react.ReactPackage {*;} -keepclasseswithmembers,includedescriptorclasses class * { @com.facebook.react.bridge.ReactMethod <methods>;} -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; } -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }"
   },
   "project_dependencies": [
-    {
-      "react-native-community_async-storage": "node_modules/@react-native-community/async-storage/android"
-    },
     {
       "ApplicasterIAP": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap"
     },
