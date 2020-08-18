@@ -12,8 +12,9 @@ export function initFromNativeLocalStorage() {
     initPromise = localStorage
       .getItem("base", IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY)
       .then((json) => {
-        console.debug("AsyncStorage.getItem returned:", json);
-        inMemoryStore = new Map(JSON.parse(json));
+        const base = json ? JSON.parse(json) : null;
+        console.debug("AsyncStorage.getItem returned:", base);
+        inMemoryStore = new Map(base);
         console.debug("inMemoryStore is invitialized:", inMemoryStore);
         return inMemoryStore;
       })
