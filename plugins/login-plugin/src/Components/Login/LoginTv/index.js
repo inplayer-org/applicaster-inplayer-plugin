@@ -8,6 +8,7 @@ import Title from "./Title";
 import Subtitle from "./Subtitle";
 import Paragraph from "./Paragraph";
 import ClientLogo from "./ClientLogo";
+import SignUpControls from "./SignUpControls";
 
 const styles = StyleSheet.create({
   container: {
@@ -20,6 +21,10 @@ const styles = StyleSheet.create({
     width: 556,
     marginTop: 232,
     marginRight: 250,
+  },
+  singUpControls: {
+    marginTop: 232,
+    width: 556,
   },
   contentWrapper: {
     width: 687,
@@ -40,6 +45,7 @@ const LoginInterface = (props) => {
   const {
     login: onLogin,
     errorMessage,
+    signUp: onSignup,
     screenStyles: { client_logo } = {},
   } = props;
 
@@ -53,21 +59,26 @@ const LoginInterface = (props) => {
         <Subtitle />
         <Paragraph />
       </View>
-      <LoginControls
-        {...{ style: styles.loginControls, onLogin, errorMessage }}
-      />
+      <View>
+        <LoginControls
+          {...{ style: styles.loginControls, onLogin, errorMessage }}
+        />
+        <SignUpControls style={styles.singUpControls} onPress={onSignup} />
+      </View>
     </View>
   );
 };
 
 LoginInterface.propTypes = {
   login: PropTypes.func,
+  signUp: PropTypes.func,
   errorMessage: PropTypes.string,
   screenStyles: PropTypes.object,
 };
 
 LoginInterface.defaultProps = {
   login: identity,
+  signUp: identity,
   screenStyles: {},
 };
 
