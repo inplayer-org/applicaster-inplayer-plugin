@@ -7,13 +7,18 @@ import LoginControls from "./LoginControls";
 import Title from "./Title";
 import Subtitle from "./Subtitle";
 import Paragraph from "./Paragraph";
+import ClientLogo from "./ClientLogo";
 
 const styles = StyleSheet.create({
-  container: { flex: 1, flexDirection: "row", width: "100%" },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
+  },
   loginControls: {
     position: "relative",
     width: 556,
-    marginTop: 384,
+    marginTop: 232,
     marginRight: 250,
   },
   contentWrapper: {
@@ -22,13 +27,27 @@ const styles = StyleSheet.create({
     marginLeft: 259,
     marginRight: 168,
   },
+  clientLogoView: {
+    height: 100,
+    width: 350,
+    position: "absolute",
+    top: 0,
+    left: 58,
+  },
 });
 
 const LoginInterface = (props) => {
-  const { login: onLogin, errorMessage } = props;
+  const {
+    login: onLogin,
+    errorMessage,
+    screenStyles: { client_logo } = {},
+  } = props;
 
   return (
     <View style={styles.container}>
+      <View style={styles.clientLogoView}>
+        <ClientLogo imageSrc={client_logo} />
+      </View>
       <View style={styles.contentWrapper}>
         <Title />
         <Subtitle />
@@ -44,10 +63,12 @@ const LoginInterface = (props) => {
 LoginInterface.propTypes = {
   login: PropTypes.func,
   errorMessage: PropTypes.string,
+  screenStyles: PropTypes.object,
 };
 
 LoginInterface.defaultProps = {
   login: identity,
+  screenStyles: {},
 };
 
 export default LoginInterface;

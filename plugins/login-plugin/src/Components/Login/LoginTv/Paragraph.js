@@ -18,17 +18,6 @@ const styles = StyleSheet.create({
 const Paragraph = () => (
   <View>
     <Text style={styles.text}>
-      If you don't own an account please fo to
-      <Text
-        style={[styles.text, styles.textLink]}
-        onPress={() => Linking.openURL("http://www.clipmyhorse.tv")}
-      >
-        {" "}
-        https://yourdomain.com/signup{" "}
-      </Text>
-    </Text>
-    <Text style={styles.text}>
-      {"\n"}
       Forgot your password? {"\n"} Go to https://yourdomain.com/forgotpassword{" "}
     </Text>
   </View>
