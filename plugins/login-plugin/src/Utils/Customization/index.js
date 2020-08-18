@@ -23,7 +23,9 @@ export function prepareStyles(screenStyles) {
   styles = populateConfigurationValues(manifestJson.styles.fields)(
     screenStyles
   );
-  styles.import_parent_lock = screenStyles.import_parent_lock ? screenStyles.import_parent_lock : false;
+  styles.import_parent_lock = screenStyles.import_parent_lock
+    ? screenStyles.import_parent_lock
+    : false;
   return styles;
 }
 
@@ -36,6 +38,11 @@ export const mapKeyToStyle = (key, obj) => {
     fontFamily: platformSelect({
       ios: obj?.[`${key}_font_ios`],
       android: obj?.[`${key}_font_android`],
+      tvos: obj?.[`${key}_font_tvos`],
+      android_tv: obj?.[`${key}_font_android_tv`],
+      web: obj?.[`${key}_font_web`],
+      samsung_tv: obj?.[`${key}_font_samsung_tv`],
+      lg_tv: obj?.[`${key}_font_lg_tv`],
     }),
     fontSize: obj?.[`${key}_fontsize`],
     color: obj?.[`${key}_fontcolor`],
@@ -83,7 +90,7 @@ function isStreamExceptionError(message, screenStyles) {
 
 function findInObject(obj, condition) {
   return Object.values(obj).some((value) => {
-    if (Array.isArray(value) || (typeof value === 'object' && value !== null)) {
+    if (Array.isArray(value) || (typeof value === "object" && value !== null)) {
       return findInObject(value, condition);
     }
     return value === condition;
