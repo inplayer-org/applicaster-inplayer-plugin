@@ -42,12 +42,12 @@ const LoginInterface = (props) => {
 };
 
 LoginInterface.propTypes = {
-  onLogin: PropTypes.func,
+  login: PropTypes.func,
   errorMessage: PropTypes.string,
 };
 
 LoginInterface.defaultProps = {
-  onLogin: identity,
+  login: identity,
 };
 
 export default LoginInterface;
