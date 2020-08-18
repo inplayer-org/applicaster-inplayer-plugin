@@ -751,14 +751,14 @@ const stylesTv = {
           type: "android_font_selector",
           label_tooltip:
             "Font for the Main Title for the payment screen for Android TV.",
-          initial_value: "Roboto-Medium",
+          initial_value: "Roboto-Dark",
         },
         {
           key: "subscription_default_title_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Main Title for the payment screent for TvOS.",
-          initial_value: "Helvetica-Bold",
+          initial_value: "SFProDisplay-Bold",
         },
         {
           key: "subscription_default_title_text_fontsize",
@@ -784,7 +784,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Event Schedule for the payment screent for TvOS.",
-          initial_value: "Helvetica-Medium",
+          initial_value: "SFProDisplay-Medium",
         },
         {
           key: "event_schedule_text_fontsize",
@@ -812,14 +812,14 @@ const stylesTv = {
           type: "android_font_selector",
           label_tooltip:
             "Font for the Description text for the subscription for Android TV.",
-          initial_value: "Roboto-Medium",
+          initial_value: "Roboto-Dark",
         },
         {
           key: "subscription_default_description_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Description text for the subscription for TvOS.",
-          initial_value: "Helvetica-Dark",
+          initial_value: "SFProDisplay-Bold",
         },
         {
           key: "subscription_default_description_text_fontsize",
@@ -854,7 +854,7 @@ const stylesTv = {
           key: "subscription_default_description_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the policy agreement for TvOS.",
-          initial_value: "Helvetica-Medium",
+          initial_value: "SFProDisplay-Medium",
         },
         {
           key: "subscription_default_description_text_fontsize",
@@ -925,7 +925,7 @@ const stylesTv = {
           key: "payment_option_title_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the payment option title for TvOS.",
-          initial_value: "Helvetica-Bold",
+          initial_value: "SFProDisplay-Bold",
         },
         {
           key: "payment_option_title_text_fontsize",
@@ -941,6 +941,32 @@ const stylesTv = {
         },
 
         {
+          key: "payment_option_description_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip:
+            "Font for the payment option description for Android TV.",
+          initial_value: "Roboto-Dark",
+        },
+        {
+          key: "payment_option_description_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip: "Font for the payment option description for TvOS.",
+          initial_value: "SFProDisplay-Bold",
+        },
+        {
+          key: "payment_option_description_text_fontsize",
+          type: "number_input",
+          label_tooltip: "Font size for the payment option description",
+          initial_value: "18",
+        },
+        {
+          key: "payment_option_description_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for the payment option description",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+
+        {
           key: "payment_option_fee_text_font_android_tv",
           type: "android_font_selector",
           label_tooltip: "Font for the payment option fee for Android TV.",
@@ -950,7 +976,7 @@ const stylesTv = {
           key: "payment_option_fee_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the payment option fee for TvOS.",
-          initial_value: "Helvetica-Bold",
+          initial_value: "SFProDisplay-Bold",
         },
         {
           key: "payment_option_fee_text_fontsize",
@@ -976,13 +1002,13 @@ const stylesTv = {
           key: "payment_option_action_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the payment option action button for TvOS.",
-          initial_value: "Helvetica",
+          initial_value: "SFProDisplay-Bold",
         },
         {
           key: "payment_option_action_text_fontsize",
           type: "number_input",
           label_tooltip: "Font size for the payment option action button",
-          initial_value: "36",
+          initial_value: "30",
         },
         {
           key: "payment_option_action_text_fontcolor",
@@ -1003,21 +1029,21 @@ const stylesTv = {
           type: "android_font_selector",
           label_tooltip:
             "Font for the Main Title for the restore purchases button for Android TV.",
-          initial_value: "Roboto-Medium",
+          initial_value: "Roboto-Regular",
         },
         {
           key: "restore_purchase_action_button_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Main Title for the restore purchases button for TvOS.",
-          initial_value: "Helvetica-Bold",
+          initial_value: "SFProDisplay-Regular",
         },
         {
           key: "restore_purchase_action_button_text_fontsize",
           type: "number_input",
           label_tooltip:
             "Font Size Main Title for the restore purchases button.",
-          initial_value: "50",
+          initial_value: "30",
         },
         {
           key: "restore_purchase_action_button_text_fontcolor",
@@ -1061,7 +1087,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Subscriber Agreement and Privacy Policy Link for TvOS.",
-          initial_value: "Helvetica",
+          initial_value: "SFProDisplay-Medium",
         },
         {
           key: "subscriber_agreement_and_privacy_policy_text_fontsize",
