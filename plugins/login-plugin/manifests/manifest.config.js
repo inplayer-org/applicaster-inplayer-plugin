@@ -441,6 +441,13 @@ const stylesMobile = {
           placeholder: "W 45px x H 45px",
         },
         {
+          key: "client_logo",
+          type: "uploader",
+          label: "Client Logo",
+          label_tooltip: "Client logo image. Dimension 200 x44.",
+          placeholder: "W 200px x H 44px",
+        },
+        {
           key: "payment_screen_title_text",
           type: "text_input",
           label: "Payment Screen Title Text",
