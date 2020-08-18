@@ -17,7 +17,6 @@
   "unsupported_since_zapp_sdk": "",
   "preload": true,
   "npm_dependencies": [
-    "@react-native-community/async-storage@1.9.0",
     "@applicaster/applicaster-iap@0.2.15",
     "@react-native-community/blur@3.4.1"
   ],
@@ -115,16 +114,13 @@
     "quickbrick"
   ],
   "platform": "tvos_for_quickbrick",
-  "dependency_version": "0.7.0-beta.10",
-  "manifest_version": "0.7.0-beta.10",
+  "dependency_version": "0.7.0-beta.11",
+  "manifest_version": "0.7.0-beta.11",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
     {
       "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'"
-    },
-    {
-      "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
     },
     {
       "react-native-blur": ":path => 'node_modules/@react-native-community/blur/react-native-blur.podspec'"
