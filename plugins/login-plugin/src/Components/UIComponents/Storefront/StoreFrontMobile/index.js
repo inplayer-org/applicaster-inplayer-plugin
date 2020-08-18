@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
 import StoreFrontContainer from "./StoreFrontContainer";
 import NavbarComponent from "../../../UIComponents/NavbarComponent";
