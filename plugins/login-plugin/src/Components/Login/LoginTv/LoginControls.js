@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as R from "ramda";
 import { View, ViewPropTypes, StyleSheet, Text, Platform } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
@@ -8,7 +9,10 @@ import { focusManager } from "@applicaster/zapp-react-native-utils/appUtils";
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
 import Button from "../../UIComponents/Buttons/FocusableButton";
 import colors from "../../../colors";
-import { mapKeyToStyle } from "../../../Utils/Customization";
+import {
+  mapKeyToStyle,
+  splitInputTypeStyles,
+} from "../../../Utils/Customization";
 
 const styles = StyleSheet.create({
   errorMessage: {
@@ -80,6 +84,24 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
     []
   );
 
+  const loginInputStyles = React.useMemo(
+    () =>
+      R.compose(
+        splitInputTypeStyles,
+        mapKeyToStyle("email_input", screenStyles)
+      ),
+    []
+  );
+
+  const passwordInputStyles = React.useMemo(
+    () =>
+      R.compose(
+        splitInputTypeStyles,
+        mapKeyToStyle("password_input", screenStyles)
+      ),
+    []
+  );
+
   return (
     <View style={style}>
       <Text style={styles.errorMessage}>{errorMessage}</Text>
@@ -92,6 +114,7 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
           label="login-input"
           onEndEditing={handleEditingEnd("login-input")}
           preferredFocus
+          textInputStyles={loginInputStyles}
         />
         <FocusableTextInput
           groupId={groupId}
@@ -101,6 +124,7 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
           onChangeText={handleInputChange(setPassword)}
           onEndEditing={handleEditingEnd("password-input")}
           label="password-input"
+          textInputStyles={passwordInputStyles}
         />
         <Button
           {...{
@@ -113,6 +137,7 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
             textColorFocused:
               screenStyles.login_action_button_fontcolor_focused,
             textStyles: buttonTextStyles,
+            borderRadius: screenStyles.login_action_button_border_radius,
           }}
         />
       </FocusableGroup>

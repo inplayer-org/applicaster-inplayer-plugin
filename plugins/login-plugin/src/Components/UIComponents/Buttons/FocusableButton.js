@@ -33,6 +33,7 @@ const Button = ({
   backgroundColorFocused,
   textColorFocused,
   textStyles,
+  borderRadius,
 }) => {
   const getBackgroundColor = React.useCallback(
     (focused) => ({
@@ -51,7 +52,13 @@ const Button = ({
   return (
     <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
       {(focused) => (
-        <View style={[localStyles.button, getBackgroundColor(focused)]}>
+        <View
+          style={[
+            localStyles.button,
+            getBackgroundColor(focused),
+            { borderRadius },
+          ]}
+        >
           <Text style={[textStyles, getTextColor(focused)]}>{label}</Text>
         </View>
       )}
@@ -68,6 +75,7 @@ Button.propTypes = {
   textColor: PropTypes.string,
   textColorFocused: PropTypes.string,
   textStyles: PropTypes.object,
+  borderRadius: PropTypes.number,
 };
 
 Button.defaultProps = {
@@ -77,6 +85,7 @@ Button.defaultProps = {
   textColor: colors.white,
   textColorFocused: colors.white,
   textStyles: {},
+  borderRadius: 5,
 };
 
 export default Button;
