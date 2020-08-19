@@ -44,7 +44,6 @@ const InPlayer = (props) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const { callback, payload } = props;
   const screenStyles = getStyles(getScreenStyles(props));
-  console.log({ screenStyles });
   const { import_parent_lock: showParentLock } = screenStyles;
   let stillMounted = true;
 
