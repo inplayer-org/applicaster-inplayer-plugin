@@ -1354,6 +1354,13 @@ const stylesTv = {
           initial_value: "rgba(39, 218, 134, 1)",
         },
         {
+          key: "login_action_button_background_focused",
+          type: "color_picker_rgba",
+          label: "Login Action Button Focused Background Color",
+          label_tooltip: "Background Color for the Login Action Button",
+          initial_value: "rgba(93, 2, 13, 1)",
+        },
+        {
           key: "login_action_button_text",
           type: "text_input",
           label: "Login Action Button Text",
@@ -1383,6 +1390,12 @@ const stylesTv = {
           key: "login_action_button_fontcolor",
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Login Action Button Text.",
+          initial_value: "#545A5C",
+        },
+        {
+          key: "login_action_button_fontcolor_focused",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for Focused Login Action Button Text.",
           initial_value: "#545A5C",
         },
         {

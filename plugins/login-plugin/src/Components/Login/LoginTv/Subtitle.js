@@ -5,9 +5,6 @@ import PropTypes from "prop-types";
 import colors from "../../../colors";
 
 const localStyles = StyleSheet.create({
-  container: {
-    marginBottom: 58,
-  },
   text: {
     fontSize: 32,
     color: colors.grayLighter,

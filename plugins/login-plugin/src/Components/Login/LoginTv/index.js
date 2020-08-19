@@ -1,5 +1,4 @@
 import React from "react";
-import * as R from "ramda";
 import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
@@ -42,6 +41,9 @@ const styles = StyleSheet.create({
     top: 0,
     left: 58,
   },
+  paragraphContainer: {
+    marginTop: 56,
+  },
 });
 
 const LoginInterface = (props) => {
@@ -50,7 +52,13 @@ const LoginInterface = (props) => {
     errorMessage,
     signUp: onSignup,
     screenStyles,
-    screenStyles: { client_logo, login_title_text, main_description_text },
+    screenStyles: {
+      client_logo,
+      login_title_text,
+      main_description_text,
+      optional_instructions_1_text,
+      optional_instructions_2_text,
+    },
   } = props;
 
   console.log({ props });
@@ -65,6 +73,19 @@ const LoginInterface = (props) => {
     []
   );
 
+  const paragraphOneStyles = React.useMemo(
+    () => mapKeyToStyle("optional_instructions_1", screenStyles),
+    []
+  );
+
+  const paragraphTwoStyles = React.useMemo(
+    () => ({
+      ...mapKeyToStyle("optional_instructions_2", screenStyles),
+      marginTop: 26,
+    }),
+    []
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.clientLogoView}>
@@ -73,11 +94,25 @@ const LoginInterface = (props) => {
       <View style={styles.contentWrapper}>
         <Title label={login_title_text} styles={titleStyles} />
         <Subtitle label={main_description_text} styles={subtitleStyles} />
-        <Paragraph />
+        <View style={styles.paragraphContainer}>
+          <Paragraph
+            label={optional_instructions_1_text}
+            styles={paragraphOneStyles}
+          />
+          <Paragraph
+            label={optional_instructions_2_text}
+            styles={paragraphTwoStyles}
+          />
+        </View>
       </View>
       <View>
         <LoginControls
-          {...{ style: styles.loginControls, onLogin, errorMessage }}
+          {...{
+            style: styles.loginControls,
+            onLogin,
+            errorMessage,
+            screenStyles,
+          }}
         />
         <SignUpControls style={styles.singUpControls} onPress={onSignup} />
       </View>
