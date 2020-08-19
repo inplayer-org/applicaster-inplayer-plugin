@@ -114,8 +114,8 @@
     "quickbrick"
   ],
   "platform": "amazon_fire_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.13",
-  "manifest_version": "0.7.0-beta.13",
+  "dependency_version": "0.7.0-beta.14",
+  "manifest_version": "0.7.0-beta.14",
   "api": {
     "class_name": "",
     "react_packages": [
@@ -274,7 +274,7 @@
             "initial_value": "24"
           },
           {
-            "key": "policy_agreement_text _fontcolor",
+            "key": "policy_agreement_text_fontcolor",
             "type": "color_picker_rgba",
             "label_tooltip": "Font Color for the policy agreement",
             "initial_value": "rgba(255, 255, 255, 1)"
