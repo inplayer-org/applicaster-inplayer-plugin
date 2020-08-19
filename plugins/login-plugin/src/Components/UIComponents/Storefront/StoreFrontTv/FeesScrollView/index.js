@@ -1,13 +1,4 @@
 import React from "react";
-// import {
-//   SafeAreaView,
-//   View,
-//   FlatList,
-//   StyleSheet,
-//   Text,
-//   StatusBar,
-// } from "react-native";
-
 import { StyleSheet, ScrollView } from "react-native";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 import FeeCard from "./FeeCard";
