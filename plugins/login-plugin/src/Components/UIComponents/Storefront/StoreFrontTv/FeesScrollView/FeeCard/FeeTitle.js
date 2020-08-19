@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   text: {
-    ...titleStyles,
     alignSelf: "center",
     textAlign: "center",
   },
