@@ -7,7 +7,7 @@ import LoginControls from "./LoginControls";
 import Title from "./Title";
 import Subtitle from "./Subtitle";
 import Paragraph from "./Paragraph";
-import ClientLogo from "./ClientLogo";
+import ClientLogo from "../../UIComponents/ClientLogo";
 import SignUpControls from "./SignUpControls";
 
 const styles = StyleSheet.create({

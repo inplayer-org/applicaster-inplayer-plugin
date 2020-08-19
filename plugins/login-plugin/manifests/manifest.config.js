@@ -852,25 +852,25 @@ const stylesTv = {
           placeholder: "Policy Agreement Text",
         },
         {
-          key: "subscription_default_description_text_font_android_tv",
+          key: "policy_agreement_text_font_android_tv",
           type: "android_font_selector",
           label_tooltip: "Font for the policy agreement for Android TV.",
           initial_value: "Roboto-Medium",
         },
         {
-          key: "subscription_default_description_text_font_tvos",
+          key: "policy_agreement_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the policy agreement for TvOS.",
           initial_value: "SFProDisplay-Medium",
         },
         {
-          key: "subscription_default_description_text_fontsize",
+          key: "policy_agreement_text_fontsize",
           type: "number_input",
           label_tooltip: "Font size for the policy agreement",
           initial_value: "24",
         },
         {
-          key: "subscription_default_description_text_fontcolor",
+          key: "policy_agreement_text _fontcolor",
           type: "color_picker_rgba",
           label_tooltip: "Font Color for the policy agreement",
           initial_value: "rgba(255, 255, 255, 1)",
@@ -903,7 +903,7 @@ const stylesTv = {
         {
           key: "payment_option_active_border_width",
           type: "number_input",
-          label: "Payment Option Corner Radius",
+          label: "Payment Option active border width",
           label_tooltip: "Width for the Active Payment Option.",
           initial_value: "3",
         },
