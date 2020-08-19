@@ -4,6 +4,14 @@ import Label from "../../Label";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 import PropTypes from "prop-types";
 
+const styles = StyleSheet.create({
+  container: {},
+  text: {
+    alignSelf: "center",
+    textAlign: "center",
+  },
+});
+
 const SubscriptionTitle = (props) => {
   console.log({ props });
   const {
@@ -11,29 +19,26 @@ const SubscriptionTitle = (props) => {
     payload: { extensions = {} },
   } = props;
   const { subscription_default_title_text } = screenStyles;
-  const subscriptionFontStyles = mapKeyToStyle(
-    "subscription_default_title_text",
-    screenStyles
+
+  const subscriptionFontStyles = React.useMemo(
+    () => mapKeyToStyle("subscription_default_title_text", screenStyles),
+    [screenStyles]
   );
-  console.log({ subscriptionFontStyles, screenStyles });
+  styles.text = React.useMemo(() => [styles.text, subscriptionFontStyles], []);
 
   const title = extensions.event_title || subscription_default_title_text;
-  console.log({ title });
-  const styles = StyleSheet.create({
-    container: {},
-    text: {
-      ...subscriptionFontStyles,
-      alignSelf: "center",
-      textAlign: "center",
-    },
-  });
 
   return <Label styles={styles} title={title} />;
 };
-
-export default SubscriptionTitle;
 
 SubscriptionTitle.propTypes = {
   screenStyles: PropTypes.object,
   payload: PropTypes.object,
 };
+
+SubscriptionTitle.defaultProps = {
+  payload: {},
+  screenStyles: {},
+};
+
+export default SubscriptionTitle;

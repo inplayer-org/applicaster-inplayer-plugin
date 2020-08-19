@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Image } from "react-native";
+import { StyleSheet, Image } from "react-native";
 
-const ClientLogo = ({ imageSrc }) => {
-  const [size, setSize] = useState({ width: 0, height: 0 });
+const styles = StyleSheet.create({ image: { width: 350, height: 100 } });
 
-  useEffect(() => {
-    Image.getSize(imageSrc, (width, height) => {
-      setSize({ width, height });
-    });
-  }, []);
-
-  return <Image style={size} source={{ uri: imageSrc }} />;
-};
+const ClientLogo = ({ imageSrc }) => (
+  <Image style={styles.image} source={{ src: imageSrc }} />
+);
 
 ClientLogo.propTypes = { imageSrc: PropTypes.string };
 

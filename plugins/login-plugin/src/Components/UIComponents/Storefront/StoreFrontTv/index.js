@@ -12,33 +12,34 @@ import { identity } from "ramda";
 
 const StoreFrontTv = (props) => {
   const { completeAssetFlow, screenStyles } = props;
-  console.log("StoreFrontTv", { props, screenStyles });
 
   const {
     storefront_screen_background_color: screenBackground = null,
     client_logo: logoUrl = "",
   } = screenStyles;
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      width: "100%",
-      alignContent: "center",
-      backgroundColor: screenBackground,
-    },
-    contentWrapper: {
-      flex: 1,
-      marginTop: 150,
-      marginLeft: 182,
-      marginRight: 182,
-    },
-    clientLogoView: {
-      position: "absolute",
-      top: 58,
-      left: 58,
-    },
-  });
-  console.log({ logoUrl, ClientLogo });
+  const styles = React.useMemo(() =>
+    StyleSheet.create({
+      container: {
+        flex: 1,
+        width: "100%",
+        alignContent: "center",
+        backgroundColor: screenBackground,
+      },
+      contentWrapper: {
+        flex: 1,
+        marginTop: 150,
+        marginLeft: 182,
+        marginRight: 182,
+      },
+      clientLogoView: {
+        position: "absolute",
+        top: 58,
+        left: 58,
+      },
+    })
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.clientLogoView}>

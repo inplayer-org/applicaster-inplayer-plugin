@@ -11,10 +11,7 @@ import React from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 import FeeCard from "./FeeCard";
-FeesScrollView.propTypes = {
-  screenStyles: {},
-  payload: { extensions: {} },
-};
+import PropTypes from "prop-types";
 
 const Item = ({ title }) => (
   <View style={styles.item}>
@@ -28,7 +25,10 @@ const FeesScrollView = (props) => {
     payload: { extensions = {} },
   } = props;
 
-  const renderItem = ({ item }) => <Item title={item.title} />;
+  const renderItem = React.useCallback(
+    ({ item }) => <Item title={item.title} />,
+    [item.title]
+  );
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -42,6 +42,16 @@ const FeesScrollView = (props) => {
       ))}
     </ScrollView>
   );
+};
+
+FeesScrollView.propTypes = {
+  screenStyles: PropTypes.object,
+  payload: PropTypes.object,
+};
+
+FeesScrollView.defaultProps = {
+  payload: {},
+  screenStyles: {},
 };
 
 export default FeesScrollView;

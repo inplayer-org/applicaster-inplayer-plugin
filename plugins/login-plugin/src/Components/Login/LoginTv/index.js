@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     marginRight: 168,
   },
   clientLogoView: {
-    height: 58,
-    width: 204,
+    height: 100,
+    width: 350,
     position: "absolute",
     top: 0,
     left: 58,

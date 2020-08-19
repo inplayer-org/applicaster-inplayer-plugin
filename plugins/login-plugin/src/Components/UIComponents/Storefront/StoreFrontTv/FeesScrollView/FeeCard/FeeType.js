@@ -2,11 +2,17 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import Label from "./Label";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
+import PropTypes from "prop-types";
 
-FeeType.propTypes = {
-  screenStyles: {},
-  payload: { extensions: {} },
-};
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 10,
+  },
+  text: {
+    alignSelf: "center",
+    textAlign: "center",
+  },
+});
 
 const FeeType = (props) => {
   const {
@@ -15,24 +21,23 @@ const FeeType = (props) => {
   } = props;
 
   const title = "test";
-
-  const titleStyles = mapKeyToStyle(
-    "storefront_payment_option_title_text",
-    screenStyles
+  const titleStyles = React.useMemo(
+    () => mapKeyToStyle("event_schedule_text", screenStyles),
+    [screenStyles]
   );
-
-  const styles = StyleSheet.create({
-    container: {
-      marginTop: 10,
-    },
-    text: {
-      ...titleStyles,
-      alignSelf: "center",
-      textAlign: "center",
-    },
-  });
+  styles.text = React.useMemo(() => [styles.text, titleStyles], []);
 
   return <Label styles={styles} title={title} />;
+};
+
+FeeType.propTypes = {
+  screenStyles: PropTypes.object,
+  payload: PropTypes.object,
+};
+
+FeeType.defaultProps = {
+  payload: {},
+  screenStyles: {},
 };
 
 export default FeeType;

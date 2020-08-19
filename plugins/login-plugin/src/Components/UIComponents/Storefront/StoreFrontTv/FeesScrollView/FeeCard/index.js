@@ -3,11 +3,18 @@ import { StyleSheet, View } from "react-native";
 import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
 import Label from "./Label";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
+import PropTypes from "prop-types";
 
-FeeCard.propTypes = {
-  screenStyles: {},
-  payload: { extensions: {} },
-};
+const styles = StyleSheet.create({
+  container: {
+    width: 500,
+    height: 260,
+  },
+  text: {
+    alignSelf: "center",
+    textAlign: "center",
+  },
+});
 
 const FeeCard = (props) => {
   const {
@@ -35,18 +42,6 @@ const FeeCard = (props) => {
     screenStyles
   );
 
-  const styles = StyleSheet.create({
-    container: {
-      width: 500,
-      height: 260,
-    },
-    text: {
-      ...fontStyles,
-      alignSelf: "center",
-      textAlign: "center",
-    },
-  });
-
   return (
     <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
       {(focused) => (
@@ -61,6 +56,16 @@ const FeeCard = (props) => {
       )}
     </Focusable>
   );
+};
+
+FeeCard.propTypes = {
+  screenStyles: PropTypes.object,
+  payload: PropTypes.object,
+};
+
+FeeCard.defaultProps = {
+  payload: {},
+  screenStyles: {},
 };
 
 export default FeeCard;
