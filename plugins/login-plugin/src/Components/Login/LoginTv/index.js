@@ -1,4 +1,5 @@
 import React from "react";
+import * as R from "ramda";
 import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
@@ -46,8 +47,14 @@ const LoginInterface = (props) => {
     login: onLogin,
     errorMessage,
     signUp: onSignup,
-    screenStyles: { client_logo } = {},
+    screenStyles,
+    screenStyles: { client_logo, login_title_text },
   } = props;
+
+  const titleStyles = React.useMemo(
+    () => R.pickBy((__, key) => R.includes("login_title_", key), screenStyles),
+    []
+  );
 
   return (
     <View style={styles.container}>
@@ -55,7 +62,7 @@ const LoginInterface = (props) => {
         <ClientLogo imageSrc={client_logo} />
       </View>
       <View style={styles.contentWrapper}>
-        <Title />
+        <Title label={login_title_text} styles={titleStyles} />
         <Subtitle />
         <Paragraph />
       </View>
