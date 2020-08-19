@@ -870,7 +870,7 @@ const stylesTv = {
           initial_value: "24",
         },
         {
-          key: "policy_agreement_text _fontcolor",
+          key: "policy_agreement_text_fontcolor",
           type: "color_picker_rgba",
           label_tooltip: "Font Color for the policy agreement",
           initial_value: "rgba(255, 255, 255, 1)",
