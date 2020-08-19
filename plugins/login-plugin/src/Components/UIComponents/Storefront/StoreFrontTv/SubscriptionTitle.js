@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
 });
 
 const SubscriptionTitle = (props) => {
-  console.log({ props });
   const {
     screenStyles,
     payload: { extensions = {} },
