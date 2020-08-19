@@ -45,6 +45,7 @@ const FocusableTextInput = ({
   secureTextEntry,
   preferredFocus,
   groupId,
+  textInputStyles,
 }) => {
   const inputRef = useRef();
   const isSamsung = Platform.OS === "samsung_tv";
@@ -92,9 +93,9 @@ const FocusableTextInput = ({
 
   const getTextInputStyles = (focused) => {
     return [
-      styles.textInput,
-      value && styles.inputNotEmpty,
-      focused && styles.inputFocused,
+      { ...styles.textInput, ...textInputStyles.default },
+      value && { ...styles.inputNotEmpty, ...textInputStyles.filled },
+      focused && { ...styles.inputFocused, ...textInputStyles.focused },
       isSamsung && {
         outlineWidth: 0,
         boxSizing: "border-box",
@@ -147,10 +148,20 @@ FocusableTextInput.propTypes = {
   preferredFocus: PropTypes.bool,
   groupId: PropTypes.string.isRequired,
   onEndEditing: PropTypes.func,
+  textInputStyles: PropTypes.shape({
+    default: PropTypes.object,
+    focused: PropTypes.object,
+    filled: PropTypes.object,
+  }),
 };
 
 FocusableTextInput.defaultProps = {
   secureTextEntry: false,
+  textInputStyles: {
+    default: {},
+    focused: {},
+    filled: {},
+  },
 };
 
 export default FocusableTextInput;
