@@ -50,11 +50,18 @@ const LoginInterface = (props) => {
     errorMessage,
     signUp: onSignup,
     screenStyles,
-    screenStyles: { client_logo, login_title_text },
+    screenStyles: { client_logo, login_title_text, main_description_text },
   } = props;
+
+  console.log({ props });
 
   const titleStyles = React.useMemo(
     () => mapKeyToStyle("login_title", screenStyles),
+    []
+  );
+
+  const subtitleStyles = React.useMemo(
+    () => mapKeyToStyle("main_description", screenStyles),
     []
   );
 
@@ -65,7 +72,7 @@ const LoginInterface = (props) => {
       </View>
       <View style={styles.contentWrapper}>
         <Title label={login_title_text} styles={titleStyles} />
-        <Subtitle />
+        <Subtitle label={main_description_text} styles={subtitleStyles} />
         <Paragraph />
       </View>
       <View>
