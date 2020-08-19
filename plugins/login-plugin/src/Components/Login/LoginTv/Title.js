@@ -13,7 +13,6 @@ const localStyles = StyleSheet.create({
   },
   text: {
     fontSize: 60,
-    lineHeight: 72,
     color: colors.white,
     fontWeight: "bold",
   },
