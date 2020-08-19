@@ -4,6 +4,8 @@ import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
 
+import { mapKeyToStyle } from "../../../Utils/Customization";
+
 import LoginControls from "./LoginControls";
 import Title from "./Title";
 import Subtitle from "./Subtitle";
@@ -52,7 +54,7 @@ const LoginInterface = (props) => {
   } = props;
 
   const titleStyles = React.useMemo(
-    () => R.pickBy((__, key) => R.includes("login_title_", key), screenStyles),
+    () => mapKeyToStyle("login_title", screenStyles),
     []
   );
 

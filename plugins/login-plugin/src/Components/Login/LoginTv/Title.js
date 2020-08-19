@@ -1,11 +1,8 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
-import { mapKeyToStyle } from "../../../Utils/Customization";
 
 import colors from "../../../colors";
-
-const COMPONENT_KEY = "login_title";
 
 const localStyles = StyleSheet.create({
   container: {
@@ -21,10 +18,7 @@ const localStyles = StyleSheet.create({
 console.disableYellowBox = true;
 
 const Title = ({ label, styles }) => {
-  const textStyles = React.useMemo(
-    () => [localStyles.text, mapKeyToStyle(COMPONENT_KEY, styles)],
-    []
-  );
+  const textStyles = React.useMemo(() => [localStyles.text, styles], []);
 
   return (
     <View style={localStyles.container}>
