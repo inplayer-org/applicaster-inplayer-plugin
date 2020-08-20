@@ -114,8 +114,8 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.15",
-  "manifest_version": "0.7.0-beta.15",
+  "dependency_version": "0.7.0-beta.16",
+  "manifest_version": "0.7.0-beta.16",
   "api": {
     "class_name": "",
     "react_packages": [
@@ -190,6 +190,14 @@
             "type": "color_picker_rgba",
             "label_tooltip": "Font Color Main Title for the payment screen",
             "initial_value": "rgba(255, 255, 255, 1)"
+          },
+          {
+            "key": "event_schedule_text_date_format",
+            "type": "text_input",
+            "label": "Event Schedule ISO date format",
+            "label_tooltip": "Event Schedule ISO date format.",
+            "initial_value": "Choose Your Subscription",
+            "placeholder": "Choose Your Subscription"
           },
           {
             "key": "event_schedule_text_font_android_tv",
@@ -396,6 +404,22 @@
             "initial_value": "rgba(255, 255, 255, 1)"
           },
           {
+            "key": "payment_option_action_text_type_buy",
+            "type": "text_input",
+            "label": "Text for the payment option action button type 'Buy'",
+            "label_tooltip": "Text for the payment option action button type 'Buy'",
+            "initial_value": "Buy",
+            "placeholder": "Action button 'Buy' type"
+          },
+          {
+            "key": "payment_option_action_text_type_subscribe",
+            "type": "text_input",
+            "label": "Text for the payment option action button type 'Subscribe'",
+            "label_tooltip": "Text for the payment option action button type 'Subscribe'",
+            "initial_value": "Subscribe",
+            "placeholder": "Action button 'Subscribe' type"
+          },
+          {
             "key": "payment_option_action_text_font_android_tv",
             "type": "android_font_selector",
             "label_tooltip": "Font for the payment option action button for Android TV.",
@@ -468,7 +492,7 @@
             "type": "text_input",
             "label": "Subscriber Agreement and Privacy Policy Link Text",
             "label_tooltip": "Text for the Agreement and Privacy Policy Link.",
-            "initial_value": "[Clien’s Name App] Subscriber Agreement and Privacy Policy",
+            "initial_value": "[Client’s Name App] Subscriber Agreement and Privacy Policy",
             "placeholder": "Agreement policy"
           },
           {
