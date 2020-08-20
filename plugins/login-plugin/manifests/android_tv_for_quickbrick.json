@@ -114,8 +114,8 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.14",
-  "manifest_version": "0.7.0-beta.14",
+  "dependency_version": "0.7.0-beta.15",
+  "manifest_version": "0.7.0-beta.15",
   "api": {
     "class_name": "",
     "react_packages": [
@@ -652,6 +652,41 @@
             "initial_value": "rgba(39, 218, 134, 1)"
           },
           {
+            "key": "email_input_background_focused",
+            "type": "color_picker_rgba",
+            "label": "Email Input Background Color (focused)",
+            "label_tooltip": "Background Color for the Focused Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "email_input_background_filled",
+            "type": "color_picker_rgba",
+            "label": "Email Input Background Color (filled)",
+            "label_tooltip": "Background Color for the Filled Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "email_input_border_color",
+            "type": "color_picker_rgba",
+            "label": "Email Input Border Color",
+            "label_tooltip": "Border Color for the Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "email_input_border_color_focused",
+            "type": "color_picker_rgba",
+            "label": "Email Input Border Color (focused)",
+            "label_tooltip": "Border Color for the Focused Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "email_input_border_color_filled",
+            "type": "color_picker_rgba",
+            "label": "Email Input Border Color (filled)",
+            "label_tooltip": "Border Color for the Filled Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
             "key": "email_input_placeholder",
             "type": "text_input",
             "label": "Email Input placeholder",
@@ -730,6 +765,13 @@
             "initial_value": "rgba(39, 218, 134, 1)"
           },
           {
+            "key": "login_action_button_background_focused",
+            "type": "color_picker_rgba",
+            "label": "Login Action Button Focused Background Color",
+            "label_tooltip": "Background Color for the Login Action Button",
+            "initial_value": "rgba(93, 2, 13, 1)"
+          },
+          {
             "key": "login_action_button_text",
             "type": "text_input",
             "label": "Login Action Button Text",
@@ -756,9 +798,81 @@
             "initial_value": "40"
           },
           {
+            "key": "login_action_button_border_radius",
+            "type": "number_input",
+            "label": "Login Action Button Corner Radius",
+            "label_tooltip": "Corner radius for a login button.",
+            "initial_value": "5"
+          },
+          {
             "key": "login_action_button_fontcolor",
             "type": "color_picker_rgba",
             "label_tooltip": "Font Color for Login Action Button Text.",
+            "initial_value": "#545A5C"
+          },
+          {
+            "key": "login_action_button_fontcolor_focused",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Focused Login Action Button Text.",
+            "initial_value": "#545A5C"
+          },
+          {
+            "key": "signup_action_button_background",
+            "type": "color_picker_rgba",
+            "label": "Sign Up Action Button Background Color",
+            "label_tooltip": "Background Color for the Sign Up Action Button.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_action_button_background_focused",
+            "type": "color_picker_rgba",
+            "label": "Sign Up Action Button Focused Background Color",
+            "label_tooltip": "Background Color for the Sign Up Action Button",
+            "initial_value": "rgba(93, 2, 13, 1)"
+          },
+          {
+            "key": "signup_action_button_text",
+            "type": "text_input",
+            "label": "Sign Up Action Button Text",
+            "label_tooltip": "Text for the Sign Up Button.",
+            "initial_value": "SIGN UP",
+            "placeholder": "SIGN UP"
+          },
+          {
+            "key": "signup_action_button_font_tvos",
+            "type": "tvos_font_selector",
+            "label_tooltip": "Font for Sign Up Action Button Text for TvOS.",
+            "initial_value": "Helvetica-Bold"
+          },
+          {
+            "key": "signup_action_button_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for Sign Up Action Button Text for Android TV.",
+            "initial_value": "Roboto-Bold"
+          },
+          {
+            "key": "signup_action_button_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Sign Up Action Button Text.",
+            "initial_value": "40"
+          },
+          {
+            "key": "signup_action_button_border_radius",
+            "type": "number_input",
+            "label": "Sign Up Action Button Corner Radius",
+            "label_tooltip": "Corner radius for a Sign Up button.",
+            "initial_value": "5"
+          },
+          {
+            "key": "signup_action_button_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Sign Up Action Button Text.",
+            "initial_value": "#545A5C"
+          },
+          {
+            "key": "signup_action_button_fontcolor_focused",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Focused Sign Up Action Button Text.",
             "initial_value": "#545A5C"
           },
           {
