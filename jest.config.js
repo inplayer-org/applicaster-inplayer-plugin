@@ -1,0 +1,42 @@
+module.exports = {
+  testRegex: "/__tests__/.*(\\.test.js|\\test.jsx|\\.test.ts|\\.test.tsx)$",
+  moduleFileExtensions: [
+    "ts",
+    "tsx",
+    "ios.ts",
+    "android.ts",
+    "web.ts",
+    "ios.tsx",
+    "android.tsx",
+    "web.tsx",
+    "js",
+    "json",
+    "jsx",
+    "web.js",
+    "ios.js",
+    "android.js",
+  ],
+  modulePaths: ["<rootDir>/packages", "<rootDir>/plugins", "<rootDir>/scripts"],
+  modulePathIgnorePatterns: ["<rootDir>/quick_brick/"],
+  collectCoverageFrom: ["packages/**/*.js", "plugins/**/*.js"],
+  coveragePathIgnorePatterns: [
+    "__tests__",
+    "__mocks__",
+    "node_modules",
+    "test_helpers",
+    "flow-types.js",
+    "zapp-react-native-ui-components/index.js",
+    "Components/index.js",
+    "zapp-react-native-development-app",
+    "zapp-react-native-flow-types",
+  ],
+  transformIgnorePatterns: [
+    "node_modules/(?!(react-native|react-native-status-bar-height|react-router-native|@applicaster/zapp-react-(.*)|@applicaster/quick-brick-core)/)", // eslint-disable-line
+  ],
+  transform: {
+    "^.+\\.(js|ts|tsx)$": require.resolve("react-native/jest/preprocessor.js"),
+  },
+  testEnvironment: "node",
+  preset: "react-native",
+  verbose: true,
+};
