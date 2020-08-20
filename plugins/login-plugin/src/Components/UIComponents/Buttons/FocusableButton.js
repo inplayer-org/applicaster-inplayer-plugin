@@ -6,7 +6,7 @@ import { Focusable } from "@applicaster/zapp-react-native-ui-components/Componen
 
 import colors from "../../../colors";
 
-const styles = StyleSheet.create({
+const localStyles = StyleSheet.create({
   button: {
     width: 556,
     height: 88,
@@ -25,24 +25,67 @@ const styles = StyleSheet.create({
   },
 });
 
-const Button = ({ onPress, label, groupId }) => (
-  <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
-    {(focused) => (
-      <View style={[styles.button, focused && styles.buttonActive]}>
-        <Text style={styles.buttonText}>{label}</Text>
-      </View>
-    )}
-  </Focusable>
-);
+const Button = ({
+  onPress,
+  label,
+  groupId,
+  backgroundColor,
+  backgroundColorFocused,
+  textColorFocused,
+  textStyles,
+  borderRadius,
+}) => {
+  const getBackgroundColor = React.useCallback(
+    (focused) => ({
+      backgroundColor: focused ? backgroundColorFocused : backgroundColor,
+    }),
+    []
+  );
+
+  const getTextColor = React.useCallback(
+    (focused) => ({
+      color: focused ? textColorFocused : textStyles.color,
+    }),
+    []
+  );
+
+  return (
+    <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
+      {(focused) => (
+        <View
+          style={[
+            localStyles.button,
+            getBackgroundColor(focused),
+            { borderRadius },
+          ]}
+        >
+          <Text style={[textStyles, getTextColor(focused)]}>{label}</Text>
+        </View>
+      )}
+    </Focusable>
+  );
+};
 
 Button.propTypes = {
   onPress: PropTypes.func,
   label: PropTypes.string,
   groupId: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  backgroundColorFocused: PropTypes.string,
+  textColor: PropTypes.string,
+  textColorFocused: PropTypes.string,
+  textStyles: PropTypes.object,
+  borderRadius: PropTypes.number,
 };
 
 Button.defaultProps = {
   onPress: identity,
+  backgroundColor: colors.grayDark,
+  backgroundColorFocused: colors.buttonActive,
+  textColor: colors.white,
+  textColorFocused: colors.white,
+  textStyles: {},
+  borderRadius: 5,
 };
 
 export default Button;

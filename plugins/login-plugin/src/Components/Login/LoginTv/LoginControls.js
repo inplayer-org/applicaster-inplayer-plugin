@@ -1,12 +1,18 @@
 import React, { useState } from "react";
+import * as R from "ramda";
 import { View, ViewPropTypes, StyleSheet, Text, Platform } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
 import { focusManager } from "@applicaster/zapp-react-native-utils/appUtils";
+
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
 import Button from "../../UIComponents/Buttons/FocusableButton";
 import colors from "../../../colors";
+import {
+  mapKeyToStyle,
+  splitInputTypeStyles,
+} from "../../../Utils/Customization";
 
 const styles = StyleSheet.create({
   errorMessage: {
@@ -22,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginControls = ({ style, errorMessage, onLogin }) => {
+const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
   const [usernameValue, setUsername] = useState("");
   const [passwordValue, setPassword] = useState("");
 
@@ -73,29 +79,67 @@ const LoginControls = ({ style, errorMessage, onLogin }) => {
     }, 1000);
   };
 
+  const buttonTextStyles = React.useMemo(
+    () => mapKeyToStyle("login_action_button", screenStyles),
+    []
+  );
+
+  const loginInputStyles = React.useMemo(
+    () =>
+      R.compose(
+        splitInputTypeStyles,
+        mapKeyToStyle("email_input")
+      )(screenStyles),
+    []
+  );
+
+  const passwordInputStyles = React.useMemo(
+    () =>
+      R.compose(
+        splitInputTypeStyles,
+        mapKeyToStyle("password_input")
+      )(screenStyles),
+    []
+  );
+
   return (
     <View style={style}>
       <Text style={styles.errorMessage}>{errorMessage}</Text>
       <FocusableGroup id={groupId} shouldUsePreferredFocus isParallaxDisabled>
         <FocusableTextInput
           groupId={groupId}
-          placeholder="Email"
+          placeholder={screenStyles.email_input_placeholder}
           value={usernameValue}
           onChangeText={handleInputChange(setUsername)}
           label="login-input"
           onEndEditing={handleEditingEnd("login-input")}
           preferredFocus
+          textInputStyles={loginInputStyles}
         />
         <FocusableTextInput
           groupId={groupId}
-          placeholder="Password"
+          placeholder={screenStyles.password_input_placeholder}
           secureTextEntry={true}
           value={passwordValue}
           onChangeText={handleInputChange(setPassword)}
           onEndEditing={handleEditingEnd("password-input")}
           label="password-input"
+          textInputStyles={passwordInputStyles}
         />
-        <Button {...{ label: "LOGIN", onPress, groupId }} />
+        <Button
+          {...{
+            label: screenStyles.login_action_button_text,
+            onPress,
+            groupId,
+            backgroundColor: screenStyles.login_action_button_background,
+            backgroundColorFocused:
+              screenStyles.login_action_button_background_focused,
+            textColorFocused:
+              screenStyles.login_action_button_fontcolor_focused,
+            textStyles: buttonTextStyles,
+            borderRadius: screenStyles.login_action_button_border_radius,
+          }}
+        />
       </FocusableGroup>
     </View>
   );
@@ -105,10 +149,12 @@ LoginControls.propTypes = {
   style: ViewPropTypes.style,
   onLogin: PropTypes.func,
   errorMessage: PropTypes.string,
+  screenStyles: PropTypes.object,
 };
 
 LoginControls.defaultProps = {
   onLogin: identity,
+  screenStyles: {},
 };
 
 export default LoginControls;
