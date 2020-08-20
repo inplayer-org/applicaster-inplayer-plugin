@@ -1,5 +1,6 @@
 module.exports = {
   testRegex: "/__tests__/.*(\\.test.js|\\test.jsx|\\.test.ts|\\.test.tsx)$",
+  testResultsProcessor: "./node_modules/jest-html-reporter",
   moduleFileExtensions: [
     "ts",
     "tsx",
@@ -16,9 +17,9 @@ module.exports = {
     "ios.js",
     "android.js",
   ],
-  modulePaths: ["<rootDir>/packages", "<rootDir>/plugins", "<rootDir>/scripts"],
+  modulePaths: ["<rootDir>/plugins", "<rootDir>/scripts"],
   modulePathIgnorePatterns: ["<rootDir>/quick_brick/"],
-  collectCoverageFrom: ["packages/**/*.js", "plugins/**/*.js"],
+  collectCoverageFrom: ["plugins/**/*.js"],
   coveragePathIgnorePatterns: [
     "__tests__",
     "__mocks__",
@@ -39,4 +40,8 @@ module.exports = {
   testEnvironment: "node",
   preset: "react-native",
   verbose: true,
+  watchPlugins: [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname",
+  ],
 };
