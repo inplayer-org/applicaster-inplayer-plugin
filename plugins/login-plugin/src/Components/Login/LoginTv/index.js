@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
+import { NativeModules } from "react-native";
 
 import { mapKeyToStyle } from "../../../Utils/Customization";
 
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
 });
 
 const LoginInterface = (props) => {
+  NativeModules.DevSettings.setIsDebuggingRemotely(true);
   const {
     login: onLogin,
     errorMessage,

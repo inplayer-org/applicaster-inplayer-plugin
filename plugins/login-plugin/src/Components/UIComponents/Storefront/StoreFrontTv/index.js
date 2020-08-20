@@ -7,6 +7,7 @@ import PolicyAgreementTitle from "./PolicyAgreementTitle";
 import FeesScrollView from "./FeesScrollView";
 import ClientLogo from "../../ClientLogo";
 import Button from "../../Buttons/FocusableButton";
+import ButtonUderline from "../../Buttons/FocusableButtonUnderline";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 
 import PropTypes from "prop-types";
@@ -51,31 +52,18 @@ const StoreFrontTv = (props) => {
         alignSelf: "center",
       },
       subscriberAgreementWrapperView: {
-        height: 88,
-        width: 556,
         bottom: 60,
         position: "absolute",
         alignSelf: "center",
+        left: 177,
+        right: 177,
       },
-      subscriberAgreementButton: {
-        backgroundColor: "transparent",
-      },
-      subscriberAgreementButtonActive: {
-        backgroundColor: "transparent",
-      },
-      subscriberAgreementText: { textDecorationLine: "underline" },
     })
   );
-  const restoreButtonStyles = React.useMemo(
+  const restoreButtonTextStyle = React.useMemo(
     () => mapKeyToStyle("restore_purchase_action_button_text", screenStyles),
     [screenStyles]
   );
-  const restoreButtonStyle = {
-    backgroundColor: restore_purchase_action_button_background_color,
-  };
-  const restoreButtonActiveStyle = {
-    backgroundColor: restore_purchase_active_action_button_background_color,
-  };
 
   const subscriberAgreementStyles = React.useMemo(
     () =>
@@ -102,26 +90,22 @@ const StoreFrontTv = (props) => {
       <FeesScrollView {...props} />
       <View style={styles.restoreButtonWrapperView}>
         <Button
-          textStyle={restoreButtonStyles}
-          containerStyle={restoreButtonStyle}
-          containerStyleActive={restoreButtonActiveStyle}
           label={restore_purchase_action_button_text}
+          textStyles={restoreButtonTextStyle}
+          textColorFocused={restoreButtonTextStyle.color}
           onPress={onPressRestore}
+          backgroundColor={restore_purchase_action_button_background_color}
+          backgroundColorFocused={
+            restore_purchase_active_action_button_background_color
+          }
         />
       </View>
       <View style={styles.subscriberAgreementWrapperView}>
-        <Button
-          textStyle={[
-            styles.subscriberAgreementText,
-            subscriberAgreementStyles,
-          ]}
-          textStyleActive={[
-            subscriberAgreementStyles,
-            styles.subscriberAgreementText,
-            {
-              color: subscriber_agreement_and_privacy_policy_text_active_color,
-            },
-          ]}
+        <ButtonUderline
+          textStyles={subscriberAgreementStyles}
+          textColorFocused={
+            subscriber_agreement_and_privacy_policy_text_active_color
+          }
           containerStyle={styles.subscriberAgreementButton}
           containerStyleActive={styles.subscriberAgreementButtonActive}
           label={subscriber_agreement_and_privacy_policy_text}

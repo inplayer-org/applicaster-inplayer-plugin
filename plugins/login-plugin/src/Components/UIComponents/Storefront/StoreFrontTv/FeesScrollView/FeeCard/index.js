@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
-import Label from "../../../../Label";
 import { mapKeyToStyle } from "../../../../../../Utils/Customization";
 import FeeTitle from "./FeeTitle";
 import FeeDescription from "./FeeDescription";
@@ -43,7 +42,7 @@ const FeeCard = (props) => {
     screenStyles,
     payload: { extensions = {} },
     onPress,
-    label,
+    key,
     groupId,
   } = props;
   const {
@@ -89,7 +88,7 @@ const FeeCard = (props) => {
     []
   );
   return (
-    <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
+    <Focusable id={`${groupId}-${key}`} groupId={groupId} onPress={onPress}>
       {(focused) => (
         <View
           style={[

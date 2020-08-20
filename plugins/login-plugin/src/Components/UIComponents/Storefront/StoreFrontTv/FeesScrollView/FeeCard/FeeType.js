@@ -4,11 +4,6 @@ import Label from "../../../../Label";
 import { mapKeyToStyle } from "../../../../../../Utils/Customization";
 import PropTypes from "prop-types";
 
-const paymentActions = {
-  subscribe: "Subscribe",
-  buy: "Buy",
-};
-
 const styles = StyleSheet.create({
   container: {},
   text: {
@@ -18,18 +13,17 @@ const styles = StyleSheet.create({
 });
 
 const FeeType = (props) => {
-  const {
-    paymentOptionItem,
-    screenStyles,
-    payload: { extensions = {} },
-  } = props;
+  const { paymentOptionItem, screenStyles } = props;
 
   const { productType } = paymentOptionItem;
-
+  const {
+    payment_option_action_text_type_buy = "Buy",
+    payment_option_action_text_type_subscribe = "Subscribe",
+  } = screenStyles;
   const title =
     productType === "subscription"
-      ? paymentActions.subscribe
-      : paymentActions.buy;
+      ? payment_option_action_text_type_subscribe
+      : payment_option_action_text_type_buy;
   const titleStyles = React.useMemo(
     () => mapKeyToStyle("payment_option_action_text", screenStyles),
     [screenStyles]
@@ -40,12 +34,12 @@ const FeeType = (props) => {
 };
 
 FeeType.propTypes = {
+  paymentOptionItem: PropTypes.object,
   screenStyles: PropTypes.object,
-  payload: PropTypes.object,
 };
 
 FeeType.defaultProps = {
-  payload: {},
+  paymentOptionItem: {},
   screenStyles: {},
 };
 

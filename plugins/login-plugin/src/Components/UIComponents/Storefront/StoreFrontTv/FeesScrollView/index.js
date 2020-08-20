@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
+import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
 
 import { mapKeyToStyle } from "../../../../../Utils/Customization";
 import FeeCard from "./FeeCard";
@@ -23,18 +24,27 @@ const FeesScrollView = (props) => {
     onPressPaymentOption,
   } = props;
   console.log({ container: styles.container, dataSource });
+  const groupId = "fee-scroll-view";
 
   return (
-    <ScrollView style={styles.container} horizontal={true}>
-      {dataSource.map((item, index) => (
-        <FeeCard
-          screenStyles={screenStyles}
-          paymentOptionItem={item}
-          key={item.productIdentifier}
-          onPress={() => onPressPaymentOption(index)}
-        />
-      ))}
-    </ScrollView>
+    <FocusableGroup
+      style={styles.container}
+      id={groupId}
+      shouldUsePreferredFocus
+      isParallaxDisabled
+    >
+      <ScrollView horizontal={true}>
+        {dataSource.map((item, index) => (
+          <FeeCard
+            groupId={groupId}
+            screenStyles={screenStyles}
+            paymentOptionItem={item}
+            key={item.productIdentifier}
+            onPress={() => onPressPaymentOption(index)}
+          />
+        ))}
+      </ScrollView>
+    </FocusableGroup>
   );
 };
 

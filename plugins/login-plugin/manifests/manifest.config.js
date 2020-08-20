@@ -781,6 +781,14 @@ const stylesTv = {
         },
 
         {
+          key: "event_schedule_text_date_format",
+          type: "text_input",
+          label: "Event Schedule ISO date format",
+          label_tooltip: "Event Schedule ISO date format.",
+          initial_value: "Choose Your Subscription",
+          placeholder: "Choose Your Subscription",
+        },
+        {
           key: "event_schedule_text_font_android_tv",
           type: "android_font_selector",
           label_tooltip: "Font for the Event Schedule for Android TV.",
@@ -999,6 +1007,23 @@ const stylesTv = {
         },
 
         {
+          key: "payment_option_action_text_type_buy",
+          type: "text_input",
+          label: "Text for the payment option action button type 'Buy'",
+          label_tooltip: "Text for the payment option action button type 'Buy'",
+          initial_value: "Buy",
+          placeholder: "Action button 'Buy' type",
+        },
+        {
+          key: "payment_option_action_text_type_subscribe",
+          type: "text_input",
+          label: "Text for the payment option action button type 'Subscribe'",
+          label_tooltip:
+            "Text for the payment option action button type 'Subscribe'",
+          initial_value: "Subscribe",
+          placeholder: "Action button 'Subscribe' type",
+        },
+        {
           key: "payment_option_action_text_font_android_tv",
           type: "android_font_selector",
           label_tooltip:
@@ -1079,7 +1104,7 @@ const stylesTv = {
           label: "Subscriber Agreement and Privacy Policy Link Text",
           label_tooltip: "Text for the Agreement and Privacy Policy Link.",
           initial_value:
-            "[Clien’s Name App] Subscriber Agreement and Privacy Policy",
+            "[Client’s Name App] Subscriber Agreement and Privacy Policy",
           placeholder: "Agreement policy",
         },
         {
