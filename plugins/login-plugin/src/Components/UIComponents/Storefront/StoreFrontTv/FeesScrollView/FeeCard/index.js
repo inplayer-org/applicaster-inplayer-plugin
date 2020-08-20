@@ -1,18 +1,40 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
-import Label from "./Label";
-import { mapKeyToStyle } from "../../../../Utils/Customization";
+import Label from "../../../../Label";
+import { mapKeyToStyle } from "../../../../../../Utils/Customization";
+import FeeTitle from "./FeeTitle";
+import FeeDescription from "./FeeDescription";
+import FeeType from "./FeeType";
+import FeePrice from "./FeePrice";
+
 import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
   container: {
     width: 500,
     height: 260,
+    backgroundColor: "gray",
+    marginLeft: 11,
+    marginRight: 11,
+    overflow: "hidden",
   },
-  text: {
-    alignSelf: "center",
-    textAlign: "center",
+  contentView: {
+    width: 500,
+    height: 200,
+  },
+  actionView: {
+    width: 500,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  borderView: {
+    position: "absolute",
+    width: 500,
+    height: 260,
+    backgroundColor: "transparent",
+    zIndex: 1000,
   },
 });
 
@@ -24,33 +46,85 @@ const FeeCard = (props) => {
     label,
     groupId,
   } = props;
+  const {
+    payment_option_background_color,
+    payment_option_active_background_color,
+    payment_option_corner_radius,
+    payment_option_active_border_color,
+    payment_option_active_border_width,
+    payment_option_default_action_background_color,
+    payment_option_active_default_action_background_color,
+  } = screenStyles;
 
-  const titleStyles = mapKeyToStyle(
-    "storefront_payment_option_title_text",
-    screenStyles
-  );
-  const descriptionStyles = mapKeyToStyle(
-    "storefront_payment_option_description_text",
-    screenStyles
-  );
-  const priceStyles = mapKeyToStyle(
-    "storefront_payment_option_amount_text",
-    screenStyles
-  );
-  const feeTypeStyles = mapKeyToStyle(
-    "storefront_payment_option_action_text",
-    screenStyles
+  const userDefinedStyles = React.useMemo(
+    () => ({
+      backgroundColor: payment_option_background_color,
+      borderRadius: Number(payment_option_corner_radius),
+      borderWidth: 0,
+      borderColor: "transparent",
+    }),
+    []
   );
 
+  const userDefinedStylesActive = React.useMemo(
+    () => ({
+      backgroundColor: payment_option_active_background_color,
+      borderWidth: 0,
+      borderColor: payment_option_active_border_color,
+    }),
+    []
+  );
+
+  const activeViewUserDefinedStyles = React.useMemo(
+    () => ({
+      backgroundColor: payment_option_default_action_background_color,
+    }),
+    []
+  );
+
+  const activeViewUserDefinedStylesActive = React.useMemo(
+    () => ({
+      backgroundColor: payment_option_active_default_action_background_color,
+    }),
+    []
+  );
   return (
     <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
       {(focused) => (
-        <View style={[styles.button, focused && styles.buttonActive]}>
-          <Label styles={{ text: titleStyles }} title={title} />
-          <Label styles={{ text: descriptionStyles }} title={title} />
-          <Label styles={{ text: priceStyles }} title={title} />
-          <View>
-            <Label styles={feeTypeStyles} title={title} />
+        <View
+          style={[
+            styles.container,
+            userDefinedStyles,
+            focused && userDefinedStylesActive,
+          ]}
+        >
+          <View
+            style={[
+              styles.borderView,
+              {
+                borderRadius: Number(payment_option_corner_radius),
+                borderColor: focused
+                  ? payment_option_active_default_action_background_color
+                  : "transparent",
+                borderWidth: focused
+                  ? Number(payment_option_active_border_width)
+                  : 0,
+              },
+            ]}
+          ></View>
+          <View style={styles.contentView}>
+            <FeeTitle {...props} />
+            <FeeDescription {...props} />
+            <FeePrice {...props} />
+          </View>
+          <View
+            style={[
+              styles.actionView,
+              activeViewUserDefinedStyles,
+              focused && activeViewUserDefinedStylesActive,
+            ]}
+          >
+            <FeeType {...props} />
           </View>
         </View>
       )}

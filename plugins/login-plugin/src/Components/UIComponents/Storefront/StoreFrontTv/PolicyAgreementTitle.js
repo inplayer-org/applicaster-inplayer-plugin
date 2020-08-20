@@ -7,8 +7,8 @@ import PropTypes from "prop-types";
 const styles = StyleSheet.create({
   container: {
     marginTop: 30,
-    marginLeft: 281,
-    marginRight: 281,
+    marginLeft: 150,
+    marginRight: 150,
   },
   text: {
     alignSelf: "center",
@@ -29,7 +29,7 @@ const PolicyAgreementTitle = (props) => {
     [screenStyles]
   );
   styles.text = React.useMemo(() => [styles.text, fontStyles], []);
-
+  console.log({ styles: styles.text, screenStyles });
   return title ? <Label styles={styles} title={title} /> : null;
 };
 

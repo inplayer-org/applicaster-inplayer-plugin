@@ -1,28 +1,31 @@
 import React from "react";
-import { StyleSheet, ScrollView } from "react-native";
-import { mapKeyToStyle } from "../../../../Utils/Customization";
+import { StyleSheet, ScrollView, View } from "react-native";
+
+import { mapKeyToStyle } from "../../../../../Utils/Customization";
 import FeeCard from "./FeeCard";
 import PropTypes from "prop-types";
 
-const Item = ({ title }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+const styles = StyleSheet.create({
+  container: {
+    top: 500,
+    left: 177,
+    right: 177,
+    height: 260,
+    position: "absolute",
+  },
+});
 
 const FeesScrollView = (props) => {
   const {
     screenStyles,
     payload: { extensions = {} },
+    dataSource,
+    onPressPaymentOption,
   } = props;
-
-  const renderItem = React.useCallback(
-    ({ item }) => <Item title={item.title} />,
-    [item.title]
-  );
+  console.log({ container: styles.container, dataSource });
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={styles.container} horizontal={true}>
       {dataSource.map((item, index) => (
         <FeeCard
           screenStyles={screenStyles}

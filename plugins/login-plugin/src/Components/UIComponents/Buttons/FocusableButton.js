@@ -20,29 +20,62 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
+  buttonTextActive: {
+    color: colors.white,
+    fontSize: 24,
+    fontWeight: "bold",
+  },
   buttonActive: {
     backgroundColor: colors.buttonActive,
   },
 });
 
-const Button = ({ onPress, label, groupId }) => (
-  <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
-    {(focused) => (
-      <View style={[styles.button, focused && styles.buttonActive]}>
-        <Text style={styles.buttonText}>{label}</Text>
-      </View>
-    )}
-  </Focusable>
-);
+const Button = ({
+  onPress,
+  label,
+  groupId,
+  textStyle,
+  textStyleActive,
+  containerStyle,
+  containerStyleActive,
+}) => {
+  styles.buttonText = [styles.buttonText, textStyle];
+
+  styles.buttonTextActive = [styles.buttonTextActive, textStyleActive];
+
+  styles.button = [styles.button, containerStyle];
+
+  styles.buttonActive = [styles.buttonActive, containerStyleActive];
+
+  return (
+    <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
+      {(focused) => (
+        <View style={[styles.button, focused && styles.buttonActive]}>
+          <Text style={[styles.buttonText, focused && styles.buttonTextActive]}>
+            {label}
+          </Text>
+        </View>
+      )}
+    </Focusable>
+  );
+};
 
 Button.propTypes = {
   onPress: PropTypes.func,
   label: PropTypes.string,
   groupId: PropTypes.string,
+  textStyle: PropTypes.object,
+  textStyleActive: PropTypes.object,
+  containerStyle: PropTypes.object,
+  containerStyleActive: PropTypes.object,
 };
 
 Button.defaultProps = {
   onPress: identity,
+  textStyle: {},
+  textStyleActive: null,
+  containerStyle: {},
+  containerStyleActive: {},
 };
 
 export default Button;
