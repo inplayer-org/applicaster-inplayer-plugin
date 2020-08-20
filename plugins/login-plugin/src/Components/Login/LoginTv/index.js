@@ -114,7 +114,11 @@ const LoginInterface = (props) => {
             screenStyles,
           }}
         />
-        <SignUpControls style={styles.singUpControls} onPress={onSignup} />
+        <SignUpControls
+          style={styles.singUpControls}
+          onPress={onSignup}
+          screenStyles={screenStyles}
+        />
       </View>
     </View>
   );
