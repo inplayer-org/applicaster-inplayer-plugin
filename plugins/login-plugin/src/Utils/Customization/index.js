@@ -107,9 +107,9 @@ export const pickByKey = (key) =>
   R.pickBy((val, _key) => R.includes(key, _key));
 
 export const splitInputTypeStyles = (styles) => {
-  const focused = pickByKey("_focused", styles);
-  const filled = pickByKey("_filled", styles);
-  const _default = R.omit([R.keys(filled), R.keys(focused)])(styles);
+  const focused = pickByKey("_focused")(styles);
+  const filled = pickByKey("_filled")(styles);
+  const _default = R.omit([...R.keys(filled), ...R.keys(focused)])(styles);
 
   return {
     focused,
