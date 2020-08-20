@@ -39,7 +39,7 @@ export const isHomeScreen = (navigator) => {
   return R.pathOr(false, ["payload", "home"], navigator.routeData());
 };
 
-export const mapKeyToStyle = (key, obj) => {
+export const mapKeyToStyle = R.curry((key, obj) => {
   return {
     fontFamily: platformSelect({
       ios: obj?.[`${key}_font_ios`],
@@ -53,7 +53,7 @@ export const mapKeyToStyle = (key, obj) => {
     fontSize: obj?.[`${key}_fontsize`],
     color: obj?.[`${key}_fontcolor`],
   };
-};
+});
 
 export const withEndSpace = (str) => {
   return `${str}\xa0`; // explicitly add space after string
