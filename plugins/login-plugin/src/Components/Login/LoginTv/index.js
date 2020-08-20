@@ -3,6 +3,8 @@ import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
 
+import { mapKeyToStyle } from "../../../Utils/Customization";
+
 import LoginControls from "./LoginControls";
 import Title from "./Title";
 import Subtitle from "./Subtitle";
@@ -39,6 +41,9 @@ const styles = StyleSheet.create({
     top: 0,
     left: 58,
   },
+  paragraphContainer: {
+    marginTop: 56,
+  },
 });
 
 const LoginInterface = (props) => {
@@ -46,8 +51,40 @@ const LoginInterface = (props) => {
     login: onLogin,
     errorMessage,
     signUp: onSignup,
-    screenStyles: { client_logo } = {},
+    screenStyles,
+    screenStyles: {
+      client_logo,
+      login_title_text,
+      main_description_text,
+      optional_instructions_1_text,
+      optional_instructions_2_text,
+    },
   } = props;
+
+  console.log({ props });
+
+  const titleStyles = React.useMemo(
+    () => mapKeyToStyle("login_title", screenStyles),
+    []
+  );
+
+  const subtitleStyles = React.useMemo(
+    () => mapKeyToStyle("main_description", screenStyles),
+    []
+  );
+
+  const paragraphOneStyles = React.useMemo(
+    () => mapKeyToStyle("optional_instructions_1", screenStyles),
+    []
+  );
+
+  const paragraphTwoStyles = React.useMemo(
+    () => ({
+      ...mapKeyToStyle("optional_instructions_2", screenStyles),
+      marginTop: 26,
+    }),
+    []
+  );
 
   return (
     <View style={styles.container}>
@@ -55,15 +92,33 @@ const LoginInterface = (props) => {
         <ClientLogo imageSrc={client_logo} />
       </View>
       <View style={styles.contentWrapper}>
-        <Title />
-        <Subtitle />
-        <Paragraph />
+        <Title label={login_title_text} styles={titleStyles} />
+        <Subtitle label={main_description_text} styles={subtitleStyles} />
+        <View style={styles.paragraphContainer}>
+          <Paragraph
+            label={optional_instructions_1_text}
+            styles={paragraphOneStyles}
+          />
+          <Paragraph
+            label={optional_instructions_2_text}
+            styles={paragraphTwoStyles}
+          />
+        </View>
       </View>
       <View>
         <LoginControls
-          {...{ style: styles.loginControls, onLogin, errorMessage }}
+          {...{
+            style: styles.loginControls,
+            onLogin,
+            errorMessage,
+            screenStyles,
+          }}
         />
-        <SignUpControls style={styles.singUpControls} onPress={onSignup} />
+        <SignUpControls
+          style={styles.singUpControls}
+          onPress={onSignup}
+          screenStyles={screenStyles}
+        />
       </View>
     </View>
   );

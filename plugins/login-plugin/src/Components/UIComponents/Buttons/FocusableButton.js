@@ -6,7 +6,7 @@ import { Focusable } from "@applicaster/zapp-react-native-ui-components/Componen
 
 import colors from "../../../colors";
 
-const styles = StyleSheet.create({
+const localStyles = StyleSheet.create({
   button: {
     width: 556,
     height: 88,
@@ -20,11 +20,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-  buttonTextActive: {
-    color: colors.white,
-    fontSize: 24,
-    fontWeight: "bold",
-  },
   buttonActive: {
     backgroundColor: colors.buttonActive,
   },
@@ -34,26 +29,37 @@ const Button = ({
   onPress,
   label,
   groupId,
-  textStyle,
-  textStyleActive,
-  containerStyle,
-  containerStyleActive,
+  backgroundColor,
+  backgroundColorFocused,
+  textColorFocused,
+  textStyles,
+  borderRadius,
 }) => {
-  styles.buttonText = [styles.buttonText, textStyle];
+  const getBackgroundColor = React.useCallback(
+    (focused) => ({
+      backgroundColor: focused ? backgroundColorFocused : backgroundColor,
+    }),
+    []
+  );
 
-  styles.buttonTextActive = [styles.buttonTextActive, textStyleActive];
-
-  styles.button = [styles.button, containerStyle];
-
-  styles.buttonActive = [styles.buttonActive, containerStyleActive];
+  const getTextColor = React.useCallback(
+    (focused) => ({
+      color: focused ? textColorFocused : textStyles.color,
+    }),
+    []
+  );
 
   return (
     <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
       {(focused) => (
-        <View style={[styles.button, focused && styles.buttonActive]}>
-          <Text style={[styles.buttonText, focused && styles.buttonTextActive]}>
-            {label}
-          </Text>
+        <View
+          style={[
+            localStyles.button,
+            getBackgroundColor(focused),
+            { borderRadius },
+          ]}
+        >
+          <Text style={[textStyles, getTextColor(focused)]}>{label}</Text>
         </View>
       )}
     </Focusable>
@@ -64,18 +70,22 @@ Button.propTypes = {
   onPress: PropTypes.func,
   label: PropTypes.string,
   groupId: PropTypes.string,
-  textStyle: PropTypes.object,
-  textStyleActive: PropTypes.object,
-  containerStyle: PropTypes.object,
-  containerStyleActive: PropTypes.object,
+  backgroundColor: PropTypes.string,
+  backgroundColorFocused: PropTypes.string,
+  textColor: PropTypes.string,
+  textColorFocused: PropTypes.string,
+  textStyles: PropTypes.object,
+  borderRadius: PropTypes.number,
 };
 
 Button.defaultProps = {
   onPress: identity,
-  textStyle: {},
-  textStyleActive: null,
-  containerStyle: {},
-  containerStyleActive: {},
+  backgroundColor: colors.grayDark,
+  backgroundColorFocused: colors.buttonActive,
+  textColor: colors.white,
+  textColorFocused: colors.white,
+  textStyles: {},
+  borderRadius: 5,
 };
 
 export default Button;

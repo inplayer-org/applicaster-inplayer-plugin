@@ -114,8 +114,8 @@
     "quickbrick"
   ],
   "platform": "android",
-  "dependency_version": "0.7.0-beta.14",
-  "manifest_version": "0.7.0-beta.14",
+  "dependency_version": "0.7.0-beta.15",
+  "manifest_version": "0.7.0-beta.15",
   "api": {
     "class_name": "",
     "react_packages": [
