@@ -88,8 +88,8 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
     () =>
       R.compose(
         splitInputTypeStyles,
-        mapKeyToStyle("email_input", screenStyles)
-      ),
+        mapKeyToStyle("email_input")
+      )(screenStyles),
     []
   );
 
@@ -97,8 +97,8 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
     () =>
       R.compose(
         splitInputTypeStyles,
-        mapKeyToStyle("password_input", screenStyles)
-      ),
+        mapKeyToStyle("password_input")
+      )(screenStyles),
     []
   );
 
