@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 const PrivacyDescription = (props) => {
   const { screenStyles } = props;
   const { privacy_text } = screenStyles;
-  console.log({ privacy_text });
+
   const descriptionStyles = React.useMemo(
     () => mapKeyToStyle("privacy_text", screenStyles),
     [screenStyles]

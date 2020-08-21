@@ -26,11 +26,7 @@ const PrivacyPolicyTv = (props) => {
       backgroundColor: privacy_text_area_background_color,
     },
   }));
-  console.log({
-    screenStyles,
-    privacy_screen_background_color,
-    privacy_text_area_background_color,
-  });
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
