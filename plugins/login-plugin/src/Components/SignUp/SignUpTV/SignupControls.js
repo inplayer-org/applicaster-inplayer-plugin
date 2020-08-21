@@ -127,7 +127,9 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
       <FocusableGroup id={groupId} shouldUsePreferredFocus isParallaxDisabled>
         <FocusableTextInput
           groupId={groupId}
-          placeholder={screenStyles.email_input_placeholder}
+          placeholder={
+            screenStyles.signup_full_name_input_placeholder || "Full Name"
+          }
           value={fullNameValue}
           onChangeText={handleInputChange(setFullNameValue)}
           label="full-name-input"
@@ -137,7 +139,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         />
         <FocusableTextInput
           groupId={groupId}
-          placeholder={screenStyles.email_input_placeholder}
+          placeholder={screenStyles.signup_email_input_placeholder || "Email"}
           value={emailValue}
           onChangeText={handleInputChange(setEmailValue)}
           label="email-input"
@@ -147,7 +149,9 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         />
         <FocusableTextInput
           groupId={groupId}
-          placeholder={screenStyles.password_input_placeholder}
+          placeholder={
+            screenStyles.signup_password_input_placeholder || "Password"
+          }
           secureTextEntry={true}
           value={passwordValue}
           onChangeText={handleInputChange(setPassword)}

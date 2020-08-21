@@ -15,8 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     paddingTop: 214,
-    borderColor: "red",
-    borderWidth: 1,
   },
   title: {
     color: "rgba(33, 35, 36, 1)",
