@@ -823,7 +823,7 @@ const stylesTv = {
           initial_value: "30",
         },
         {
-          key: "privacy_text_text_fontcolor",
+          key: "privacy_text_fontcolor",
           type: "color_picker_rgba",
           label_tooltip: "Font Color text for the agreement and privacy screen",
           initial_value: "rgba(255, 255, 255, 1)",
