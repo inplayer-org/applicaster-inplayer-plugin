@@ -734,8 +734,107 @@ const stylesTv = {
     },
     {
       group: true,
+      label: "Subscriber Agreement Design and Text",
+      tooltip:
+        "These fields affect the design of the subscriber agreement screen.",
+      folded: true,
+      fields: [
+        {
+          key: "privacy_screen_background_color",
+          type: "color_picker_rgba",
+          label: "Background Color for the payment screen.",
+          label_tooltip: "Background Color for the payment screen.",
+          initial_value: "rgba(60, 65, 75, 1)",
+        },
+        {
+          key: "privacy_text_area_background_color",
+          type: "color_picker_rgba",
+          label:
+            "Background Color for the text area where the Agreement and Privacy are shown.",
+          label_tooltip:
+            "Background Color for the text area where the Agreement and Privacy are shown.",
+          initial_value: "rgba(54, 60, 71, 1)",
+        },
+
+        {
+          key: "privacy_main_title_text",
+          type: "text_input",
+          label: "Main Title for the agreement and privacy screen.",
+          label_tooltip: "Main Title for the agreement and privacy screen.",
+          initial_value: "Subscriber Ageement & Privacy Policy",
+          placeholder: "Subscriber Ageement & Privacy Policy",
+        },
+        {
+          key: "privacy_main_title_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip:
+            "Font for the Main Title for the agreement and privacy screen for Android TV.",
+          initial_value: "Roboto-Dark",
+        },
+        {
+          key: "privacy_main_title_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip:
+            "Font for the Main Title for the agreement and privacy screen for TvOS.",
+          initial_value: "SFProDisplay-Bold",
+        },
+        {
+          key: "privacy_main_title_text_fontsize",
+          type: "number_input",
+          label_tooltip:
+            "Font Size Main Title for the agreement and privacy screen.",
+          initial_value: "50",
+        },
+        {
+          key: "privacy_main_title_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip:
+            "Font Color Main Title for the agreement and privacy screen",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+
+        {
+          key: "privacy_text",
+          type: "text_input",
+          label: "Text for the agreement and privacy.",
+          label_tooltip: "Text for the agreement and privacy.",
+          initial_value:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet nunc dui. Sed nec dignissim erat. Praesent molestie, odio et lacinia dapibus, lacus felis interdum justo, a viverra eros mauris vel nibh. Nullam consequat urna at lorem interdum, non mattis elit interdum. Cras libero erat, mattis ut mattis in, ornare ut ante. Duis id mi condimentum elit sagittis scelerisque. Duis facilisis vel lectus eu fermentum. Etiam venenatis fermentum felis nec ornare. Nullam pretium iaculis ligula sed accumsan.\n\nDonec id libero sit amet ligula cursus tempor. Donec urna felis, vestibulum id fringilla in, elementum ac diam. Nunc pretium, ligula ac accumsan accumsan, ipsum ante tristique nisi, et dictum dui arcu eu ex. Duis vel lectus quis nisl fringilla dictum. Praesent vulputate justo ligula, at commodo lorem sodales sed. Cras quis rhoncus ante. Nunc ultricies orci eget purus elementum, eget posuere elit semper. Suspendisse quis dignissim elit, eget dictum sem. Sed in nisl dui. Curabitur at sapien consectetur, lacinia turpis vitae, pharetra nisl. Nullam accumsan odio orci, quis elementum ex luctus id. Cras nec eros orci. Vestibulum eget convallis lectus. Donec eu lorem at purus elementum tempor",
+          placeholder: "Subscriber Ageement & Privacy Policy Text",
+        },
+        {
+          key: "privacy_text_font_android_tv",
+          type: "android_font_selector",
+          label_tooltip:
+            "Font for the text for the agreement and privacy screen for Android TV.",
+          initial_value: "Roboto-Medium",
+        },
+        {
+          key: "privacy_text_font_tvos",
+          type: "tvos_font_selector",
+          label_tooltip:
+            "Font for the text for the agreement and privacy screen for TvOS.",
+          initial_value: "SFProDisplay-Medium",
+        },
+        {
+          key: "privacy_text_fontsize",
+          type: "number_input",
+          label_tooltip: "Font Size text for the agreement and privacy screen.",
+          initial_value: "30",
+        },
+        {
+          key: "privacy_text_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color text for the agreement and privacy screen",
+          initial_value: "rgba(255, 255, 255, 1)",
+        },
+      ],
+    },
+    {
+      group: true,
       label: "StoreFront Design and Text",
-      tooltip: "These fields affect the design of the main screen plugin.",
+      tooltip:
+        "These fields affect the design of the storefront screen plugin.",
       folded: true,
       fields: [
         {
