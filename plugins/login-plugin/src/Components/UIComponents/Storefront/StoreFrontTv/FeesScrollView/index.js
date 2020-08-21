@@ -23,7 +23,6 @@ const FeesScrollView = (props) => {
     dataSource,
     onPressPaymentOption,
   } = props;
-  console.log({ container: styles.container, dataSource });
   const groupId = "fee-scroll-view";
 
   return (
