@@ -817,7 +817,7 @@ const stylesTv = {
           initial_value: "SFProDisplay-Medium",
         },
         {
-          key: "privacy_text_text_fontsize",
+          key: "privacy_text_fontsize",
           type: "number_input",
           label_tooltip: "Font Size text for the agreement and privacy screen.",
           initial_value: "30",
