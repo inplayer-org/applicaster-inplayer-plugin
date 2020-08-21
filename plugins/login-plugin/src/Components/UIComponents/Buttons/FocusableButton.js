@@ -35,16 +35,6 @@ const Button = ({
   textStyles,
   borderRadius,
 }) => {
-  console.log({
-    onPress,
-    label,
-    groupId,
-    backgroundColor,
-    backgroundColorFocused,
-    textColorFocused,
-    textStyles,
-    borderRadius,
-  });
   const getBackgroundColor = React.useCallback(
     (focused) => ({
       backgroundColor: focused ? backgroundColorFocused : backgroundColor,

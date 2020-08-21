@@ -19,27 +19,13 @@ const localStyles = StyleSheet.create({
 });
 
 const Button = ({ onPress, label, groupId, textColorFocused, textStyles }) => {
-  console.log({
-    onPress,
-    label,
-    groupId,
-    textColorFocused,
-    textStyles,
-  });
-
   const getTextColor = React.useCallback(
     (focused) => ({
       color: focused ? textColorFocused : textStyles.color,
     }),
     []
   );
-  console.log({
-    onPress,
-    label,
-    groupId,
-    textColorFocused,
-    textStyles,
-  });
+
   return (
     <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
       {(focused) => (

@@ -29,7 +29,6 @@ const PolicyAgreementTitle = (props) => {
     [screenStyles]
   );
   styles.text = React.useMemo(() => [styles.text, fontStyles], []);
-  console.log({ styles: styles.text, screenStyles });
   return title ? <Label styles={styles} title={title} /> : null;
 };
 
