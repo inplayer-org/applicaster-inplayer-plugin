@@ -25,14 +25,15 @@ const EventDateTitle = (props) => {
   if (!timestamp) {
     return null;
   }
-
+  const {
+    event_schedule_text_date_format = "dddd, MMMM Do - hh:mm",
+  } = screenStyles;
   const fontStyles = React.useMemo(
     () => mapKeyToStyle("event_schedule_text", screenStyles),
     [screenStyles]
   );
   styles.text = React.useMemo(() => [styles.text, fontStyles], []);
-
-  const title = moment.unix(timestamp).format("dddd, MMMM Do - hh:mm");
+  const title = moment.unix(timestamp).format(event_schedule_text_date_format);
 
   return title ? <Label styles={styles} title={title} /> : null;
 };
