@@ -1,17 +1,12 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import Label from "./Label";
-import { mapKeyToStyle } from "../../../../Utils/Customization";
+import Label from "../../../../Label";
+import { mapKeyToStyle } from "../../../../../../Utils/Customization";
 import PropTypes from "prop-types";
-
-FeeDescription.propTypes = {
-  screenStyles: {},
-  payload: { extensions: {} },
-};
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 20,
   },
   text: {
     alignSelf: "center",
@@ -20,30 +15,27 @@ const styles = StyleSheet.create({
 });
 
 const FeeDescription = (props) => {
-  const {
-    screenStyles,
-    payload: { extensions = {} },
-  } = props;
+  const { paymentOptionItem, screenStyles } = props;
+  const { description } = paymentOptionItem;
 
-  const title = "test";
+  const title = description;
 
-  const descriptionStyles = React.useMemo(
-    () =>
-      mapKeyToStyle("storefront_payment_option_description_text", screenStyles),
+  const titleStyles = React.useMemo(
+    () => mapKeyToStyle("payment_option_description_text", screenStyles),
     [screenStyles]
   );
-  styles.text = React.useMemo(() => [styles.text, descriptionStyles], []);
+  styles.text = React.useMemo(() => [styles.text, titleStyles], []);
 
   return <Label styles={styles} title={title} />;
 };
 
 FeeDescription.propTypes = {
+  paymentOptionItem: PropTypes.object,
   screenStyles: PropTypes.object,
-  payload: PropTypes.object,
 };
 
 FeeDescription.defaultProps = {
-  payload: {},
+  paymentOptionItem: {},
   screenStyles: {},
 };
 

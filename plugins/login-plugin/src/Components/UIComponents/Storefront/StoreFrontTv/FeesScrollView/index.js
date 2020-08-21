@@ -1,37 +1,50 @@
 import React from "react";
-import { StyleSheet, ScrollView } from "react-native";
-import { mapKeyToStyle } from "../../../../Utils/Customization";
+import { StyleSheet, ScrollView, View } from "react-native";
+import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
+
+import { mapKeyToStyle } from "../../../../../Utils/Customization";
 import FeeCard from "./FeeCard";
 import PropTypes from "prop-types";
 
-const Item = ({ title }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+const styles = StyleSheet.create({
+  container: {
+    top: 500,
+    left: 177,
+    right: 177,
+    height: 260,
+    position: "absolute",
+  },
+});
 
 const FeesScrollView = (props) => {
   const {
     screenStyles,
     payload: { extensions = {} },
+    dataSource,
+    onPressPaymentOption,
   } = props;
-
-  const renderItem = React.useCallback(
-    ({ item }) => <Item title={item.title} />,
-    [item.title]
-  );
+  const groupId = "fee-scroll-view";
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      {dataSource.map((item, index) => (
-        <FeeCard
-          screenStyles={screenStyles}
-          paymentOptionItem={item}
-          key={item.productIdentifier}
-          onPress={() => onPressPaymentOption(index)}
-        />
-      ))}
-    </ScrollView>
+    <FocusableGroup
+      style={styles.container}
+      id={groupId}
+      shouldUsePreferredFocus
+      isParallaxDisabled
+    >
+      <ScrollView horizontal={true}>
+        {dataSource.map((item, index) => (
+          <FeeCard
+            groupId={groupId}
+            screenStyles={screenStyles}
+            paymentOptionItem={item}
+            key={item.productIdentifier}
+            identifier={item.productIdentifier}
+            onPress={() => onPressPaymentOption(index)}
+          />
+        ))}
+      </ScrollView>
+    </FocusableGroup>
   );
 };
 
