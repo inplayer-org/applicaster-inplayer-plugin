@@ -40,6 +40,7 @@ const FeesScrollView = (props) => {
             screenStyles={screenStyles}
             paymentOptionItem={item}
             key={item.productIdentifier}
+            identifier={item.productIdentifier}
             onPress={() => onPressPaymentOption(index)}
           />
         ))}

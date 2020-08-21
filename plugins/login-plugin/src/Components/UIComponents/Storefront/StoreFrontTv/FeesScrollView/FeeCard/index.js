@@ -42,7 +42,7 @@ const FeeCard = (props) => {
     screenStyles,
     payload: { extensions = {} },
     onPress,
-    key,
+    identifier,
     groupId,
   } = props;
   const {
@@ -88,7 +88,11 @@ const FeeCard = (props) => {
     []
   );
   return (
-    <Focusable id={`${groupId}-${key}`} groupId={groupId} onPress={onPress}>
+    <Focusable
+      id={`${groupId}-${identifier}`}
+      groupId={groupId}
+      onPress={onPress}
+    >
       {(focused) => (
         <View
           style={[
