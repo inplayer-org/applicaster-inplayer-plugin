@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
+import PrivacyPolicy from "../UIComponents/PrivacyPolicy";
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
 import {
   getAssetByExternalId,
@@ -32,6 +33,7 @@ const AssetFlow = (props) => {
     EMPTY: "Empty",
     STOREFRONT: "Storefront",
     PARENT_LOCK: "ParentLock",
+    PRIVACY_POLICY: "PrivacyPolicy",
   };
 
   const [screen, setScreen] = useState(ScreensData.EMPTY);
@@ -265,6 +267,10 @@ const AssetFlow = (props) => {
       });
   };
 
+  const onPressPrivacyPolicy = () => {
+    setScreen(ScreensData.PRIVACY_POLICY);
+  };
+
   const render = () => {
     if (!dataSource || assetLoading) {
       return <LoadingScreen />;
@@ -280,8 +286,11 @@ const AssetFlow = (props) => {
             dataSource={dataSource}
             onPressPaymentOption={onPressPaymentOption}
             onPressRestore={onPressRestore}
+            onPressPrivacyPolicy={onPressPrivacyPolicy}
           />
         );
+      case ScreensData.PRIVACY_POLICY:
+        return <PrivacyPolicy {...props} />;
     }
   };
 
