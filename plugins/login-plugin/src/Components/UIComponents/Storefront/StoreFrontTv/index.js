@@ -14,7 +14,12 @@ import PropTypes from "prop-types";
 import { identity } from "ramda";
 
 const StoreFrontTv = (props) => {
-  const { completeAssetFlow, screenStyles, onPressRestore } = props;
+  const {
+    completeAssetFlow,
+    screenStyles,
+    onPressRestore,
+    onPressPrivacyPolicy,
+  } = props;
 
   const {
     storefront_screen_background_color: screenBackground = null,
@@ -74,8 +79,6 @@ const StoreFrontTv = (props) => {
     [screenStyles]
   );
 
-  function onPresentSubscriberAgreement() {}
-
   return (
     <View style={styles.container}>
       <View style={styles.clientLogoView}>
@@ -109,7 +112,7 @@ const StoreFrontTv = (props) => {
           containerStyle={styles.subscriberAgreementButton}
           containerStyleActive={styles.subscriberAgreementButtonActive}
           label={subscriber_agreement_and_privacy_policy_text}
-          onPress={onPresentSubscriberAgreement}
+          onPress={onPressPrivacyPolicy}
         />
       </View>
     </View>
