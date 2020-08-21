@@ -13,7 +13,6 @@ export function pluginIdentifier() {
 
 export let styles = null;
 export function getStyles(screenStyles) {
-  console.log({ screenStyles });
   return styles ? styles : prepareStyles(screenStyles);
 }
 

@@ -61,8 +61,6 @@ const LoginInterface = (props) => {
     },
   } = props;
 
-  console.log({ props });
-
   const titleStyles = React.useMemo(
     () => mapKeyToStyle("login_title", screenStyles),
     []

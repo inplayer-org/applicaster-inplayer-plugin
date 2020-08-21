@@ -265,6 +265,7 @@ const AccountFlow = (props) => {
   if (screen === ScreensData.PARENT_LOCK) {
     return <ParentLockPlugin.Component callback={parentLockCallback} />;
   }
+
   return (
     <View style={containerStyle(screenStyles)}>
       <SafeAreaView style={container}>
