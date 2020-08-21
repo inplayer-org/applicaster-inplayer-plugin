@@ -114,7 +114,7 @@ const FeeCard = (props) => {
                   : 0,
               },
             ]}
-          ></View>
+          />
           <View style={styles.contentView}>
             <FeeTitle {...props} />
             <FeeDescription {...props} />
