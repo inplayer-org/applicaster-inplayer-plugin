@@ -8,7 +8,6 @@ import ClientLogo from "../../UIComponents/ClientLogo";
 import { mapKeyToStyle } from "../../../Utils/Customization";
 import SignupControls from "./SignupControls";
 import { validateSignUpData } from "../../../Utils/Account";
-import BackButton from "../../UIComponents/Buttons/BackButton";
 
 const styles = StyleSheet.create({
   container: {
@@ -87,7 +86,6 @@ const SignUpMobile = (props) => {
       <Text style={[styles.title, signupTextStyles]}>
         {screenStyles.signup_title_text || "Registration"}
       </Text>
-      <BackButton screenStyles={screenStyles} onPress={props?.onBackButton} />
       <SignupControls
         {...{
           screenStyles,
