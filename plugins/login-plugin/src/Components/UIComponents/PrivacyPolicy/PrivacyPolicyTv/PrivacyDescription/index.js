@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 66,
     marginLeft: 100,
     marginRight: 100,
   },
