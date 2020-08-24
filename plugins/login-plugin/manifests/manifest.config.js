@@ -776,7 +776,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Main Title for the agreement and privacy screen for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "HelveticaNeue-Bold",
         },
         {
           key: "privacy_main_title_text_fontsize",
@@ -813,7 +813,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the text for the agreement and privacy screen for TvOS.",
-          initial_value: "SFProDisplay-Medium",
+          initial_value: "HelveticaNeue-Medium",
         },
         {
           key: "privacy_text_fontsize",
@@ -863,7 +863,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Main Title for the payment screent for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "HelveticaNeue-Bold",
         },
         {
           key: "subscription_default_title_text_fontsize",
@@ -883,7 +883,7 @@ const stylesTv = {
           type: "text_input",
           label: "Event Schedule ISO date format",
           label_tooltip: "Event Schedule ISO date format.",
-          initial_value: "Choose Your Subscription",
+          initial_value: "dddd, MMMM Do - hh:mm",
           placeholder: "Choose Your Subscription",
         },
         {
@@ -897,7 +897,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Event Schedule for the payment screent for TvOS.",
-          initial_value: "SFProDisplay-Medium",
+          initial_value: "HelveticaNeue-Medium",
         },
         {
           key: "event_schedule_text_fontsize",
@@ -932,7 +932,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Description text for the subscription for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "HelveticaNeue-Bold",
         },
         {
           key: "subscription_default_description_text_fontsize",
@@ -967,7 +967,7 @@ const stylesTv = {
           key: "policy_agreement_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the policy agreement for TvOS.",
-          initial_value: "SFProDisplay-Medium",
+          initial_value: "HelveticaNeue",
         },
         {
           key: "policy_agreement_text_fontsize",
@@ -1003,7 +1003,7 @@ const stylesTv = {
         {
           key: "payment_option_active_border_color",
           type: "color_picker_rgba",
-          label_tooltip: "BColor for the Active Payment Option.",
+          label_tooltip: "Boreder Color for the Active Payment Option.",
           initial_value: "rgba(42, 45, 52, 1)",
         },
         {
@@ -1038,7 +1038,7 @@ const stylesTv = {
           key: "payment_option_title_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the payment option title for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "HelveticaNeue-Bold",
         },
         {
           key: "payment_option_title_text_fontsize",
@@ -1064,7 +1064,7 @@ const stylesTv = {
           key: "payment_option_description_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the payment option description for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "HelveticaNeue-Bold",
         },
         {
           key: "payment_option_description_text_fontsize",
@@ -1089,7 +1089,7 @@ const stylesTv = {
           key: "payment_option_fee_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the payment option fee for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "HelveticaNeue-Bold",
         },
         {
           key: "payment_option_fee_text_fontsize",
@@ -1132,7 +1132,7 @@ const stylesTv = {
           key: "payment_option_action_text_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for the payment option action button for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "HelveticaNeue-Bold",
         },
         {
           key: "payment_option_action_text_fontsize",
@@ -1166,7 +1166,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Main Title for the restore purchases button for TvOS.",
-          initial_value: "SFProDisplay-Regular",
+          initial_value: "HelveticaNeue",
         },
         {
           key: "restore_purchase_action_button_text_fontsize",
@@ -1217,7 +1217,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Subscriber Agreement and Privacy Policy Link for TvOS.",
-          initial_value: "SFProDisplay-Medium",
+          initial_value: "HelveticaNeue-Medium Underline",
         },
         {
           key: "subscriber_agreement_and_privacy_policy_text_fontsize",
