@@ -11,6 +11,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "jest",
+    "reload_app": "node_modules/.bin/zapplicaster-cli reload_config -d ./development-app",
     "prepare_app_tvos": "yarn add react-native@npm:react-native-tvos@0.62.2-0 -W && node_modules/.bin/zapplicaster-cli prepare --yarn -d ./development-app",
     "prepare_app": "yarn add react-native@0.62.2 -W && node_modules/.bin/zapplicaster-cli prepare --yarn -d ./development-app",
     "reload": "node_modules/.bin/zapplicaster-cli reload_config -d ./development-app",
