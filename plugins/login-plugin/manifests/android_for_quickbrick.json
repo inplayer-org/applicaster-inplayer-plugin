@@ -107,8 +107,8 @@
   "targets": ["mobile", "tv"],
   "ui_frameworks": ["quickbrick"],
   "platform": "android_for_quickbrick",
-  "dependency_version": "0.7.0-beta.21",
-  "manifest_version": "0.7.0-beta.21",
+  "dependency_version": "0.7.0-beta.22",
+  "manifest_version": "0.7.0-beta.22",
   "api": {
     "class_name": "",
     "react_packages": [
