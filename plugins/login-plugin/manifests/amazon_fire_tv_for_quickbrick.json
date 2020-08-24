@@ -114,8 +114,8 @@
     "quickbrick"
   ],
   "platform": "amazon_fire_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.24",
-  "manifest_version": "0.7.0-beta.24",
+  "dependency_version": "0.7.0-beta.25",
+  "manifest_version": "0.7.0-beta.25",
   "api": {
     "class_name": "",
     "react_packages": [
