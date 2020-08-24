@@ -11,10 +11,14 @@
   "react_native": true,
   "identifier": "quick-brick-inplayer-logout",
   "ui_builder_support": true,
-  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
+  "whitelisted_account_ids": [
+    "5c9ce7917b225c000f02dfbc"
+  ],
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
-  "npm_dependencies": ["@applicaster/quick-brick-inplayer"],
+  "npm_dependencies": [
+    "@applicaster/quick-brick-inplayer"
+  ],
   "preload": true,
   "custom_configuration_fields": [
     {
@@ -34,8 +38,12 @@
       "initial_value": "go_back"
     }
   ],
-  "targets": ["mobile"],
-  "ui_frameworks": ["quickbrick"],
+  "targets": [
+    "mobile"
+  ],
+  "ui_frameworks": [
+    "quickbrick"
+  ],
   "styles": {
     "fields": [
       {
@@ -83,7 +91,7 @@
     ]
   },
   "platform": "ios_for_quickbrick",
-  "dependency_version": "0.0.28-beta.1",
-  "manifest_version": "0.0.28-beta.1",
+  "dependency_version": "0.0.28-beta.2",
+  "manifest_version": "0.0.28-beta.2",
   "min_zapp_sdk": "0.1.0-alpha1"
 }
