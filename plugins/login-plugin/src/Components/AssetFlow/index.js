@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { Platform } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
 import PrivacyPolicy from "../UIComponents/PrivacyPolicy";
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
+import { TVEventHandlerComponent } from "@applicaster/zapp-react-native-tvos-ui-components/Components/TVEventHandlerComponent";
+import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
+
 import {
   getAssetByExternalId,
   checkAccessForAsset,
@@ -27,6 +31,24 @@ import {
 import MESSAGES from "./Config";
 
 const AssetFlow = (props) => {
+  const memoizedOnChange = useCallback(tvosRemoteHandler, []);
+
+  const tvosRemoteHandler = (component, event) => {
+    const { eventType } = event;
+    console.log("tvosRemoteHandler", {
+      eventType,
+      screen,
+      component,
+    });
+    if (eventType === "menu") {
+      if (screen === ScreensData.PRIVACY_POLICY) {
+        setScreen(ScreensData.STOREFRONT);
+      } else if (screen === ScreensData.STOREFRONT) {
+        completeAssetFlow({ success: false });
+      }
+    }
+  };
+
   const { screenStyles } = props;
 
   const ScreensData = {
@@ -37,6 +59,7 @@ const AssetFlow = (props) => {
   };
 
   const [screen, setScreen] = useState(ScreensData.EMPTY);
+
   const { shouldShowParentLock, onParentLockAppeared } = props;
 
   const [dataSource, setDataSource] = useState(null);
@@ -251,6 +274,9 @@ const AssetFlow = (props) => {
     loadAsset({ startPurchaseFlow: false });
   };
 
+  const onPressPrivacyPolicy = () => {
+    setScreen(ScreensData.PRIVACY_POLICY);
+  };
   const onPressRestore = () => {
     setAssetLoading(true);
 
@@ -267,8 +293,12 @@ const AssetFlow = (props) => {
       });
   };
 
-  const onPressPrivacyPolicy = () => {
-    setScreen(ScreensData.PRIVACY_POLICY);
+  const renderTvos = () => {
+    return (
+      <TVEventHandlerComponent tvEventHandler={memoizedOnChange}>
+        {render()}
+      </TVEventHandlerComponent>
+    );
   };
 
   const render = () => {
@@ -293,8 +323,11 @@ const AssetFlow = (props) => {
         return <PrivacyPolicy {...props} />;
     }
   };
-
-  return render();
+  console.log({ screen });
+  return platformSelect({
+    tvos: renderTvos(),
+    default: render(),
+  });
 };
 
 export default AssetFlow;
