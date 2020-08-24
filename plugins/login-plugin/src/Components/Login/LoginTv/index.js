@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, BackHandler } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
 
@@ -51,6 +51,7 @@ const LoginInterface = (props) => {
     login: onLogin,
     errorMessage,
     signUp: onSignup,
+    accountFlowCallback,
     screenStyles,
     screenStyles: {
       client_logo,
@@ -60,6 +61,17 @@ const LoginInterface = (props) => {
       optional_instructions_2_text,
     },
   } = props;
+
+  React.useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
+    };
+  }, []);
+
+  const hardwareBack = () => {
+    accountFlowCallback(false);
+  };
 
   const titleStyles = React.useMemo(
     () => mapKeyToStyle("login_title", screenStyles),
@@ -125,6 +137,7 @@ const LoginInterface = (props) => {
 LoginInterface.propTypes = {
   login: PropTypes.func,
   signUp: PropTypes.func,
+  accountFlowCallback: PropTypes.func,
   errorMessage: PropTypes.string,
   screenStyles: PropTypes.object,
 };
@@ -132,6 +145,7 @@ LoginInterface.propTypes = {
 LoginInterface.defaultProps = {
   login: identity,
   signUp: identity,
+  accountFlowCallback: identity,
   screenStyles: {},
 };
 
