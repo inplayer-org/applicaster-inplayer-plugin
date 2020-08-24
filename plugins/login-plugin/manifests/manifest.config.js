@@ -1003,7 +1003,7 @@ const stylesTv = {
         {
           key: "payment_option_active_border_color",
           type: "color_picker_rgba",
-          label_tooltip: "Boreder Color for the Active Payment Option.",
+          label_tooltip: "Border Color for the Active Payment Option.",
           initial_value: "rgba(42, 45, 52, 1)",
         },
         {
@@ -1217,7 +1217,7 @@ const stylesTv = {
           type: "tvos_font_selector",
           label_tooltip:
             "Font for the Subscriber Agreement and Privacy Policy Link for TvOS.",
-          initial_value: "HelveticaNeue-Medium Underline",
+          initial_value: "HelveticaNeue-Medium",
         },
         {
           key: "subscriber_agreement_and_privacy_policy_text_fontsize",
