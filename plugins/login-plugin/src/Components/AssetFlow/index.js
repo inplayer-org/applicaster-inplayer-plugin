@@ -4,8 +4,6 @@ import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
 import PrivacyPolicy from "../UIComponents/PrivacyPolicy";
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
-import { TVEventHandlerComponent } from "@applicaster/zapp-react-native-tvos-ui-components/Components/TVEventHandlerComponent";
-import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
 import {
   getAssetByExternalId,
@@ -307,7 +305,7 @@ const AssetFlow = (props) => {
         return <PrivacyPolicy {...props} onHandleBack={onHandleBack} />;
     }
   };
-  console.log({ screen });
+
   return render();
 };
 
