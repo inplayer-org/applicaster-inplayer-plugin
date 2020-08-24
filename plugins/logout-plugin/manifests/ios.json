@@ -83,7 +83,7 @@
     ]
   },
   "platform": "ios",
-  "dependency_version": "0.0.28-beta.0",
-  "manifest_version": "0.0.28-beta.0",
+  "dependency_version": "0.0.28-beta.1",
+  "manifest_version": "0.0.28-beta.1",
   "min_zapp_sdk": "20.2.0-Dev"
 }
