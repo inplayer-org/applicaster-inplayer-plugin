@@ -114,8 +114,8 @@
     "quickbrick"
   ],
   "platform": "tvos_for_quickbrick",
-  "dependency_version": "0.7.0-beta.25",
-  "manifest_version": "0.7.0-beta.25",
+  "dependency_version": "0.7.0-beta.26",
+  "manifest_version": "0.7.0-beta.26",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
