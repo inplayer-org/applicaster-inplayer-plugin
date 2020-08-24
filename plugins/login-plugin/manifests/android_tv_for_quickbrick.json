@@ -114,8 +114,8 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.29",
-  "manifest_version": "0.7.0-beta.29",
+  "dependency_version": "0.7.0-beta.30",
+  "manifest_version": "0.7.0-beta.30",
   "api": {
     "class_name": "",
     "react_packages": [
