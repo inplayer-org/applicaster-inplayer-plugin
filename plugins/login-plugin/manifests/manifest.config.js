@@ -734,6 +734,56 @@ const stylesTv = {
     },
     {
       group: true,
+      label: "Logout Screen Design and Text",
+      tooltip: "This fields affect logout screen.",
+      folded: true,
+      fields: [
+        {
+          key: "logout_background_color",
+          type: "color_picker",
+          label: "Logout background font color",
+          initial_value: "#161b29ff",
+        },
+        {
+          key: "logout_title_font_tvos",
+          type: "tvos_font_selector",
+          label: "Logout tvOS title font",
+          initial_value: "Helvetica-Bold",
+        },
+        {
+          key: "logout_title_font_android_tv",
+          type: "android_font_selector",
+          label: "Logout Android title font",
+          initial_value: "Roboto-Bold",
+        },
+        {
+          key: "logout_title_font_size",
+          type: "number_input",
+          label: "Logout title font size",
+          initial_value: 15,
+        },
+        {
+          key: "logout_title_font_color",
+          type: "color_picker",
+          label: "Logout title font color",
+          initial_value: "#ffffffff",
+        },
+        {
+          key: "logout_title_succeed_text",
+          type: "text_input",
+          label: "Logout text succeed title",
+          initial_value: "Successfully Logged Out",
+        },
+        {
+          key: "logout_title_fail_text",
+          type: "text_input",
+          label: "Logout text failed title",
+          initial_value: "Logout Failed",
+        },
+      ],
+    },
+    {
+      group: true,
       label: "Subscriber Agreement Design and Text",
       tooltip:
         "These fields affect the design of the subscriber agreement screen.",

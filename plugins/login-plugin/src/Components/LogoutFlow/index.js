@@ -5,6 +5,7 @@ import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils"
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { signOut } from "../../Services/inPlayerService";
 import { removeFromLocalStorage } from "../../Utils/UserAccount";
+import PropTypes from "prop-types";
 
 const LogoutFlow = (props) => {
   const [loading, setLoading] = useState(true);
@@ -22,9 +23,13 @@ const LogoutFlow = (props) => {
       navigator.goBack();
     }
   };
+
   useEffect(() => {
     navigator.hideNavBar();
     performSignOut();
+    return () => {
+      navigator.showNavBar();
+    };
   }, []);
 
   const removeIdToken = async () => {
@@ -38,7 +43,7 @@ const LogoutFlow = (props) => {
           await removeIdToken();
           setTimeout(() => {
             invokeCompleteAction();
-          }, 2000);
+          }, 1000);
         } else {
           navigator.goBack();
         }
@@ -55,6 +60,8 @@ const LogoutFlow = (props) => {
     fontFamily: platformSelect({
       ios: screenStyles?.logout_title_font_ios,
       android: screenStyles?.logout_title_font_android,
+      tvos: screenStyles?.logout_title_font_tvos,
+      android_tv: screenStyles?.logout_title_font_android_tv,
     }),
     fontSize: screenStyles?.logout_title_font_size,
     color: screenStyles?.logout_title_font_color,
@@ -80,3 +87,13 @@ const LogoutFlow = (props) => {
 };
 
 export default LogoutFlow;
+
+LogoutFlow.propTypes = {
+  configuration: PropTypes.object,
+  screenStyles: PropTypes.object,
+};
+
+LogoutFlow.defaultProps = {
+  configuration: {},
+  screenStyles: {},
+};
