@@ -1,16 +1,28 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, BackHandler } from "react-native";
+import * as R from "ramda";
 import PrivacyTitle from "./PrivacyTitle";
 import PrivacyDescription from "./PrivacyDescription";
 import PropTypes from "prop-types";
 
 const PrivacyPolicyTv = (props) => {
-  const { screenStyles } = props;
+  const { screenStyles, onHandleBack } = props;
 
   const {
     privacy_screen_background_color,
     privacy_text_area_background_color,
   } = screenStyles;
+
+  React.useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
+    };
+  }, []);
+
+  const hardwareBack = () => {
+    onHandleBack();
+  };
 
   const styles = React.useMemo(() => ({
     container: {
@@ -39,10 +51,12 @@ const PrivacyPolicyTv = (props) => {
 
 PrivacyPolicyTv.propTypes = {
   screenStyles: PropTypes.object,
+  onHandleBack: PropTypes.func,
 };
 
 PrivacyPolicyTv.defaultProps = {
   screenStyles: {},
+  onHandleBack: R.identity,
 };
 
 export default PrivacyPolicyTv;

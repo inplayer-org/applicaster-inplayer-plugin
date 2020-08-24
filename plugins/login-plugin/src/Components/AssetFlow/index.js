@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { Platform } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
 import PrivacyPolicy from "../UIComponents/PrivacyPolicy";
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
+
 import {
   getAssetByExternalId,
   checkAccessForAsset,
@@ -37,6 +39,7 @@ const AssetFlow = (props) => {
   };
 
   const [screen, setScreen] = useState(ScreensData.EMPTY);
+
   const { shouldShowParentLock, onParentLockAppeared } = props;
 
   const [dataSource, setDataSource] = useState(null);
@@ -251,6 +254,10 @@ const AssetFlow = (props) => {
     loadAsset({ startPurchaseFlow: false });
   };
 
+  const onPressPrivacyPolicy = () => {
+    setScreen(ScreensData.PRIVACY_POLICY);
+  };
+
   const onPressRestore = () => {
     setAssetLoading(true);
 
@@ -267,8 +274,12 @@ const AssetFlow = (props) => {
       });
   };
 
-  const onPressPrivacyPolicy = () => {
-    setScreen(ScreensData.PRIVACY_POLICY);
+  const onHandleBack = () => {
+    if (screen === ScreensData.PRIVACY_POLICY) {
+      setScreen(ScreensData.STOREFRONT);
+    } else if (screen === ScreensData.STOREFRONT) {
+      completeAssetFlow({ success: false });
+    }
   };
 
   const render = () => {
@@ -282,6 +293,7 @@ const AssetFlow = (props) => {
         return (
           <Storefront
             {...props}
+            onHandleBack={onHandleBack}
             completeAssetFlow={completeAssetFlow}
             dataSource={dataSource}
             onPressPaymentOption={onPressPaymentOption}
@@ -290,7 +302,7 @@ const AssetFlow = (props) => {
           />
         );
       case ScreensData.PRIVACY_POLICY:
-        return <PrivacyPolicy {...props} />;
+        return <PrivacyPolicy {...props} onHandleBack={onHandleBack} />;
     }
   };
 
