@@ -10,7 +10,9 @@
   "react_native": true,
   "identifier": "quick-brick-inplayer",
   "ui_builder_support": true,
-  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
+  "whitelisted_account_ids": [
+    "5c9ce7917b225c000f02dfbc"
+  ],
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "preload": true,
@@ -104,11 +106,16 @@
       }
     ]
   },
-  "targets": ["mobile", "tv"],
-  "ui_frameworks": ["quickbrick"],
+  "targets": [
+    "mobile",
+    "tv"
+  ],
+  "ui_frameworks": [
+    "quickbrick"
+  ],
   "platform": "amazon_fire_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.23",
-  "manifest_version": "0.7.0-beta.23",
+  "dependency_version": "0.7.0-beta.24",
+  "manifest_version": "0.7.0-beta.24",
   "api": {
     "class_name": "",
     "react_packages": [
@@ -164,8 +171,8 @@
             "type": "text_input",
             "label": "Main Title for the agreement and privacy screen.",
             "label_tooltip": "Main Title for the agreement and privacy screen.",
-            "initial_value": "Subscriber Ageement & Privacy Policy",
-            "placeholder": "Subscriber Ageement & Privacy Policy"
+            "initial_value": "Subscriber Agreement & Privacy Policy",
+            "placeholder": "Subscriber Agreement & Privacy Policy"
           },
           {
             "key": "privacy_main_title_text_font_android_tv",
@@ -920,65 +927,6 @@
             "initial_value": "#545A5C"
           },
           {
-            "key": "signup_action_button_background",
-            "type": "color_picker_rgba",
-            "label": "Sign Up Action Button Background Color",
-            "label_tooltip": "Background Color for the Sign Up Action Button.",
-            "initial_value": "rgba(39, 218, 134, 1)"
-          },
-          {
-            "key": "signup_action_button_background_focused",
-            "type": "color_picker_rgba",
-            "label": "Sign Up Action Button Focused Background Color",
-            "label_tooltip": "Background Color for the Sign Up Action Button",
-            "initial_value": "rgba(93, 2, 13, 1)"
-          },
-          {
-            "key": "signup_action_button_text",
-            "type": "text_input",
-            "label": "Sign Up Action Button Text",
-            "label_tooltip": "Text for the Sign Up Button.",
-            "initial_value": "SIGN UP",
-            "placeholder": "SIGN UP"
-          },
-          {
-            "key": "signup_action_button_font_tvos",
-            "type": "tvos_font_selector",
-            "label_tooltip": "Font for Sign Up Action Button Text for TvOS.",
-            "initial_value": "Helvetica-Bold"
-          },
-          {
-            "key": "signup_action_button_font_android",
-            "type": "android_font_selector",
-            "label_tooltip": "Font for Sign Up Action Button Text for Android TV.",
-            "initial_value": "Roboto-Bold"
-          },
-          {
-            "key": "signup_action_button_fontsize",
-            "type": "number_input",
-            "label_tooltip": "Font Size for Sign Up Action Button Text.",
-            "initial_value": "40"
-          },
-          {
-            "key": "signup_action_button_border_radius",
-            "type": "number_input",
-            "label": "Sign Up Action Button Corner Radius",
-            "label_tooltip": "Corner radius for a Sign Up button.",
-            "initial_value": "5"
-          },
-          {
-            "key": "signup_action_button_fontcolor",
-            "type": "color_picker_rgba",
-            "label_tooltip": "Font Color for Sign Up Action Button Text.",
-            "initial_value": "#545A5C"
-          },
-          {
-            "key": "signup_action_button_fontcolor_focused",
-            "type": "color_picker_rgba",
-            "label_tooltip": "Font Color for Focused Sign Up Action Button Text.",
-            "initial_value": "#545A5C"
-          },
-          {
             "key": "enable_skip_functionality",
             "type": "switch",
             "label": "Enable Skip Functionality",
@@ -993,7 +941,9 @@
             "initial_value": "rgba(39, 218, 134, 1)",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1007,7 +957,9 @@
             "placeholder": "Skip",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1019,7 +971,9 @@
             "initial_value": "Helvetica-Bold",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1031,7 +985,9 @@
             "initial_value": "Roboto-Bold",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1043,7 +999,9 @@
             "initial_value": "40",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1055,7 +1013,9 @@
             "initial_value": "#545A5C",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1261,6 +1221,222 @@
             "type": "color_picker_rgba",
             "label_tooltip": "Font Color for Alert “OK” Action Button Text.",
             "initial_value": "rgba(84, 90, 92, 1)"
+          }
+        ]
+      },
+      {
+        "group": true,
+        "label": "Signup screen designs",
+        "tooltip": "These fields affect the design of the signup screen",
+        "folded": true,
+        "fields": [
+          {
+            "key": "signup_title_text",
+            "type": "text_input",
+            "label": "Signup Title Text",
+            "label_tooltip": "Title text for the registration screen",
+            "initial_value": "Registration",
+            "placeholder": "Registration"
+          },
+          {
+            "key": "signup_title_font_tvos",
+            "type": "tvos_font_selector",
+            "label_tooltip": "Font for Signup Title Text for TvOS.",
+            "initial_value": "Helvetica-Bold"
+          },
+          {
+            "key": "signup_title_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for Signup Title Text for Android TV.",
+            "initial_value": "Roboto-Bold"
+          },
+          {
+            "key": "signup_title_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Signup Title Text.",
+            "initial_value": "60"
+          },
+          {
+            "key": "signup_title_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Signup Title Text.",
+            "initial_value": "rgba(33, 35, 36, 1)"
+          },
+          {
+            "key": "signup_action_button_background",
+            "type": "color_picker_rgba",
+            "label": "Sign Up Action Button Background Color",
+            "label_tooltip": "Background Color for the Sign Up Action Button.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_action_button_background_focused",
+            "type": "color_picker_rgba",
+            "label": "Sign Up Action Button Focused Background Color",
+            "label_tooltip": "Background Color for the Sign Up Action Button",
+            "initial_value": "rgba(93, 2, 13, 1)"
+          },
+          {
+            "key": "signup_action_button_text",
+            "type": "text_input",
+            "label": "Sign Up Action Button Text",
+            "label_tooltip": "Text for the Sign Up Button.",
+            "initial_value": "SIGN UP",
+            "placeholder": "SIGN UP"
+          },
+          {
+            "key": "signup_action_button_font_tvos",
+            "type": "tvos_font_selector",
+            "label_tooltip": "Font for Sign Up Action Button Text for TvOS.",
+            "initial_value": "Helvetica-Bold"
+          },
+          {
+            "key": "signup_action_button_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for Sign Up Action Button Text for Android TV.",
+            "initial_value": "Roboto-Bold"
+          },
+          {
+            "key": "signup_action_button_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Sign Up Action Button Text.",
+            "initial_value": "40"
+          },
+          {
+            "key": "signup_action_button_border_radius",
+            "type": "number_input",
+            "label": "Sign Up Action Button Corner Radius",
+            "label_tooltip": "Corner radius for a Sign Up button.",
+            "initial_value": "5"
+          },
+          {
+            "key": "signup_action_button_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Sign Up Action Button Text.",
+            "initial_value": "#545A5C"
+          },
+          {
+            "key": "signup_action_button_fontcolor_focused",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Focused Sign Up Action Button Text.",
+            "initial_value": "#545A5C"
+          },
+          {
+            "key": "signup_password_input_background",
+            "type": "color_picker_rgba",
+            "label": "Password Input Background Color",
+            "label_tooltip": "Background Color for the Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_password_input_placeholder",
+            "type": "text_input",
+            "label": "Password Input placeholder",
+            "label_tooltip": "Placeholder to show for the Password Input Field.",
+            "initial_value": "Password",
+            "placeholder": "Password"
+          },
+          {
+            "key": "signup_password_input_font_tvos",
+            "type": "tvos_font_selector",
+            "label_tooltip": "Font for Password Input Text for TvOS.",
+            "initial_value": "SFProDisplay-Bold"
+          },
+          {
+            "key": "signup_password_input_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for Password Input Text for Android TV.",
+            "initial_value": "Roboto-Bold"
+          },
+          {
+            "key": "signup_password_input_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Password Input Field.",
+            "initial_value": "30"
+          },
+          {
+            "key": "signup_password_input_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Password Input Field.",
+            "initial_value": "#9B9B9B"
+          },
+          {
+            "key": "signup_full_name_input_background",
+            "type": "color_picker_rgba",
+            "label": "Full Name Input Background Color",
+            "label_tooltip": "Background Color for the Full Name Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_full_name_input_placeholder",
+            "type": "text_input",
+            "label": "Full Name Input placeholder",
+            "label_tooltip": "Placeholder to show for the Full Name Input Field.",
+            "initial_value": "Full Name",
+            "placeholder": "Full Name"
+          },
+          {
+            "key": "signup_full_name_input_font_tvos",
+            "type": "tvos_font_selector",
+            "label_tooltip": "Font for Full Name Input Text for TvOS.",
+            "initial_value": "SFProDisplay-Bold"
+          },
+          {
+            "key": "signup_full_name_input_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for Full Name Input Text for Android TV.",
+            "initial_value": "Roboto-Bold"
+          },
+          {
+            "key": "signup_full_name_input_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Full Name Input Field.",
+            "initial_value": "30"
+          },
+          {
+            "key": "signup_full_name_input_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Full Name Input Field.",
+            "initial_value": "#9B9B9B"
+          },
+          {
+            "key": "signup_email_input_background",
+            "type": "color_picker_rgba",
+            "label": "Email Input Background Color",
+            "label_tooltip": "Background Color for the Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_email_input_placeholder",
+            "type": "text_input",
+            "label": "Email Input placeholder",
+            "label_tooltip": "Placeholder to show for the Email Input Field.",
+            "initial_value": "Email",
+            "placeholder": "Email"
+          },
+          {
+            "key": "signup_email_input_font_tvos",
+            "type": "tvos_font_selector",
+            "label_tooltip": "Font for Email Input Text for TvOS.",
+            "initial_value": "SFProDisplay-Bold"
+          },
+          {
+            "key": "signup_email_input_font_android",
+            "type": "android_font_selector",
+            "label_tooltip": "Font for Email Input Text for Android TV.",
+            "initial_value": "Roboto-Bold"
+          },
+          {
+            "key": "signup_email_input_fontsize",
+            "type": "number_input",
+            "label_tooltip": "Font Size for Email Input Field.",
+            "initial_value": "30"
+          },
+          {
+            "key": "signup_email_input_fontcolor",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Email Input Field.",
+            "initial_value": "#9B9B9B"
           }
         ]
       }
