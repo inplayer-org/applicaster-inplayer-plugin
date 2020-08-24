@@ -16,14 +16,6 @@ const LogoutFlow = (props) => {
   const { screenStyles } = props;
   var infoText = screenStyles?.logout_title_succeed_text;
 
-  const invokeCompleteAction = () => {
-    if (logout_completion_action === "go_home") {
-      navigator.goHome();
-    } else {
-      navigator.goBack();
-    }
-  };
-
   useEffect(() => {
     navigator.hideNavBar();
     performSignOut();
@@ -31,6 +23,14 @@ const LogoutFlow = (props) => {
       navigator.showNavBar();
     };
   }, []);
+
+  const invokeCompleteAction = () => {
+    if (logout_completion_action === "go_home") {
+      navigator.goHome();
+    } else {
+      navigator.goBack();
+    }
+  };
 
   const removeIdToken = async () => {
     await removeFromLocalStorage("idToken");
@@ -41,9 +41,6 @@ const LogoutFlow = (props) => {
       .then(async (didLogout) => {
         if (didLogout) {
           await removeIdToken();
-          setTimeout(() => {
-            invokeCompleteAction();
-          }, 1000);
         } else {
           navigator.goBack();
         }
@@ -53,6 +50,9 @@ const LogoutFlow = (props) => {
       })
       .finally(() => {
         setLoading(false);
+        setTimeout(() => {
+          invokeCompleteAction();
+        }, 1000);
       });
   };
 
