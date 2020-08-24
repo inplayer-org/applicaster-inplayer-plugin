@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, BackHandler } from "react-native";
+import * as R from "ramda";
 import SubscriptionTitle from "./SubscriptionTitle";
 import SubscriptionDescription from "./SubscriptionDescription";
 import EventDateTitle from "./EventDateTitle";
@@ -11,14 +12,13 @@ import ButtonUderline from "../../Buttons/FocusableButtonUnderline";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 
 import PropTypes from "prop-types";
-import { identity } from "ramda";
 
 const StoreFrontTv = (props) => {
   const {
-    completeAssetFlow,
     screenStyles,
     onPressRestore,
     onPressPrivacyPolicy,
+    onHandleBack,
   } = props;
 
   const {
@@ -30,6 +30,17 @@ const StoreFrontTv = (props) => {
     subscriber_agreement_and_privacy_policy_text,
     subscriber_agreement_and_privacy_policy_text_active_color,
   } = screenStyles;
+
+  React.useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
+    };
+  }, []);
+
+  const hardwareBack = () => {
+    onHandleBack();
+  };
 
   const styles = React.useMemo(() =>
     StyleSheet.create({
@@ -120,3 +131,17 @@ const StoreFrontTv = (props) => {
 };
 
 export default StoreFrontTv;
+
+StoreFrontTv.propTypes = {
+  screenStyles: PropTypes.object,
+  onHandleBack: PropTypes.func,
+  onPressRestore: PropTypes.func,
+  onPressPrivacyPolicy: PropTypes.func,
+};
+
+StoreFrontTv.defaultProps = {
+  screenStyles: {},
+  onHandleBack: R.identity,
+  onPressRestore: R.identity,
+  onPressPrivacyPolicy: R.identity,
+};

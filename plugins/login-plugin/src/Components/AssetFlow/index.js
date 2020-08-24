@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Platform } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
@@ -31,24 +31,6 @@ import {
 import MESSAGES from "./Config";
 
 const AssetFlow = (props) => {
-  const memoizedOnChange = useCallback(tvosRemoteHandler, []);
-
-  const tvosRemoteHandler = (component, event) => {
-    const { eventType } = event;
-    console.log("tvosRemoteHandler", {
-      eventType,
-      screen,
-      component,
-    });
-    if (eventType === "menu") {
-      if (screen === ScreensData.PRIVACY_POLICY) {
-        setScreen(ScreensData.STOREFRONT);
-      } else if (screen === ScreensData.STOREFRONT) {
-        completeAssetFlow({ success: false });
-      }
-    }
-  };
-
   const { screenStyles } = props;
 
   const ScreensData = {
@@ -277,6 +259,7 @@ const AssetFlow = (props) => {
   const onPressPrivacyPolicy = () => {
     setScreen(ScreensData.PRIVACY_POLICY);
   };
+
   const onPressRestore = () => {
     setAssetLoading(true);
 
@@ -293,12 +276,12 @@ const AssetFlow = (props) => {
       });
   };
 
-  const renderTvos = () => {
-    return (
-      <TVEventHandlerComponent tvEventHandler={memoizedOnChange}>
-        {render()}
-      </TVEventHandlerComponent>
-    );
+  const onHandleBack = () => {
+    if (screen === ScreensData.PRIVACY_POLICY) {
+      setScreen(ScreensData.STOREFRONT);
+    } else if (screen === ScreensData.STOREFRONT) {
+      completeAssetFlow({ success: false });
+    }
   };
 
   const render = () => {
@@ -312,6 +295,7 @@ const AssetFlow = (props) => {
         return (
           <Storefront
             {...props}
+            onHandleBack={onHandleBack}
             completeAssetFlow={completeAssetFlow}
             dataSource={dataSource}
             onPressPaymentOption={onPressPaymentOption}
@@ -320,14 +304,11 @@ const AssetFlow = (props) => {
           />
         );
       case ScreensData.PRIVACY_POLICY:
-        return <PrivacyPolicy {...props} />;
+        return <PrivacyPolicy {...props} onHandleBack={onHandleBack} />;
     }
   };
   console.log({ screen });
-  return platformSelect({
-    tvos: renderTvos(),
-    default: render(),
-  });
+  return render();
 };
 
 export default AssetFlow;
