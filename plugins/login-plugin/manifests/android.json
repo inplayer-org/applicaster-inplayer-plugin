@@ -10,9 +10,7 @@
   "react_native": true,
   "identifier": "quick-brick-inplayer",
   "ui_builder_support": true,
-  "whitelisted_account_ids": [
-    "5c9ce7917b225c000f02dfbc"
-  ],
+  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "preload": true,
@@ -106,16 +104,11 @@
       }
     ]
   },
-  "targets": [
-    "mobile",
-    "tv"
-  ],
-  "ui_frameworks": [
-    "quickbrick"
-  ],
+  "targets": ["mobile", "tv"],
+  "ui_frameworks": ["quickbrick"],
   "platform": "android",
-  "dependency_version": "0.7.0-beta.19",
-  "manifest_version": "0.7.0-beta.19",
+  "dependency_version": "0.7.0-beta.20",
+  "manifest_version": "0.7.0-beta.20",
   "api": {
     "class_name": "",
     "react_packages": [
