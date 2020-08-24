@@ -761,8 +761,8 @@ const stylesTv = {
           type: "text_input",
           label: "Main Title for the agreement and privacy screen.",
           label_tooltip: "Main Title for the agreement and privacy screen.",
-          initial_value: "Subscriber Ageement & Privacy Policy",
-          placeholder: "Subscriber Ageement & Privacy Policy",
+          initial_value: "Subscriber Agreement & Privacy Policy",
+          placeholder: "Subscriber Agreement & Privacy Policy",
         },
         {
           key: "privacy_main_title_text_font_android_tv",
@@ -792,7 +792,6 @@ const stylesTv = {
             "Font Color Main Title for the agreement and privacy screen",
           initial_value: "rgba(255, 255, 255, 1)",
         },
-
         {
           key: "privacy_text",
           type: "text_input",
@@ -1865,8 +1864,7 @@ const stylesTv = {
           key: "signup_title_text",
           type: "text_input",
           label: "Signup Title Text",
-          label_tooltip:
-            "Title text for the registration screen",
+          label_tooltip: "Title text for the registration screen",
           initial_value: "Registration",
           placeholder: "Registration",
         },
@@ -1991,7 +1989,7 @@ const stylesTv = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Password Input Field.",
           initial_value: "#9B9B9B",
-        }
+        },
         {
           key: "signup_full_name_input_background",
           type: "color_picker_rgba",
@@ -2069,7 +2067,7 @@ const stylesTv = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Email Input Field.",
           initial_value: "#9B9B9B",
-        }
+        },
       ],
     },
   ],
