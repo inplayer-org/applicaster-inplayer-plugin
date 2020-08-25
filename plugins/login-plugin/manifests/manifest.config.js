@@ -760,7 +760,7 @@ const stylesTv = {
           key: "logout_title_font_size",
           type: "number_input",
           label: "Logout title font size",
-          initial_value: 15,
+          initial_value: 30,
         },
         {
           key: "logout_title_font_color",
