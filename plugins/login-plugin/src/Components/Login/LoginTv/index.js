@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, View, BackHandler } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
 
 import { mapKeyToStyle } from "../../../Utils/Customization";
+import { useBackHandler } from "../../../Utils/hooks";
 
 import LoginControls from "./LoginControls";
 import Title from "./Title";
@@ -62,12 +63,7 @@ const LoginInterface = (props) => {
     },
   } = props;
 
-  React.useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
-    };
-  }, []);
+  useBackHandler(hardwareBack);
 
   const hardwareBack = () => {
     accountFlowCallback(false);

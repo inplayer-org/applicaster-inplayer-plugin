@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, BackHandler } from "react-native";
+import { StyleSheet, View } from "react-native";
 import * as R from "ramda";
 import SubscriptionTitle from "./SubscriptionTitle";
 import SubscriptionDescription from "./SubscriptionDescription";
@@ -10,6 +10,7 @@ import ClientLogo from "../../ClientLogo";
 import Button from "../../Buttons/FocusableButton";
 import ButtonUderline from "../../Buttons/FocusableButtonUnderline";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
+import { useBackHandler } from "../../../../Utils/hooks";
 
 import PropTypes from "prop-types";
 
@@ -31,12 +32,7 @@ const StoreFrontTv = (props) => {
     subscriber_agreement_and_privacy_policy_text_active_color,
   } = screenStyles;
 
-  React.useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
-    };
-  }, []);
+  useBackHandler(hardwareBack);
 
   const hardwareBack = () => {
     onHandleBack();

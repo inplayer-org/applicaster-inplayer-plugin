@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   findNodeHandle,
   Keyboard,
-  BackHandler,
 } from "react-native";
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { inputFieldStyle } from "../../../Utils/Customization";
+import { useBackHandler } from "../../../Utils/hooks";
 import { validateEmail } from "../../../Utils/Account";
 import { container } from "../../Styles";
 import ActionButton from "../../UIComponents/Buttons/ActionButton.js";
@@ -26,13 +26,7 @@ const ForgotPasswordMobile = (props) => {
   const { width: screenWidth } = useDimensions("window");
   let stillMounted = true;
 
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
-    return () => {
-      stillMounted = false;
-      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
-    };
-  }, []);
+  useBackHandler(hardwareBack);
 
   const hardwareBack = () => {
     props?.onBackButton();

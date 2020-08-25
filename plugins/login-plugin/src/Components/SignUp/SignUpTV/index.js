@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import * as R from "ramda";
 import PropTypes from "prop-types";
-import { View, BackHandler, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 
 import ClientLogo from "../../UIComponents/ClientLogo";
 import { mapKeyToStyle } from "../../../Utils/Customization";
+import { useBackHandler } from "../../../Utils/hooks";
 import SignupControls from "./SignupControls";
 import { validateSignUpData } from "../../../Utils/Account";
 
@@ -45,12 +46,7 @@ const SignUpMobile = (props) => {
     }
   };
 
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
-    };
-  }, []);
+  useBackHandler(hardwareBack);
 
   const hardwareBack = () => {
     props?.onBackButton();

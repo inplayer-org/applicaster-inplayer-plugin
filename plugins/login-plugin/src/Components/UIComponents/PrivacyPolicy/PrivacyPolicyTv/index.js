@@ -1,9 +1,10 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
-import { View, ScrollView, BackHandler } from "react-native";
+import React, { useRef, useMemo, useState } from "react";
+import { View, ScrollView } from "react-native";
 import PropTypes from "prop-types";
 import * as R from "ramda";
 import PrivacyTitle from "./PrivacyTitle";
 import PrivacyDescription from "./PrivacyDescription";
+import { useBackHandler } from "../../../../Utils/hooks";
 import { TVEventHandlerComponent } from "@applicaster/zapp-react-native-tvos-ui-components/Components/TVEventHandlerComponent";
 
 const PrivacyPolicyTv = (props) => {
@@ -19,12 +20,7 @@ const PrivacyPolicyTv = (props) => {
     privacy_text_area_background_color,
   } = screenStyles;
 
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
-    };
-  }, []);
+  useBackHandler(hardwareBack);
 
   const hardwareBack = () => {
     onHandleBack();
