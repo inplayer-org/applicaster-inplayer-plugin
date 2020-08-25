@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as R from "ramda";
 import PropTypes from "prop-types";
 import { View, BackHandler, Text, StyleSheet } from "react-native";
@@ -30,10 +30,6 @@ const styles = StyleSheet.create({
 });
 
 const SignUpMobile = (props) => {
-  const [fullName, setFullName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-
   const { width: screenWidth } = useDimensions("window");
   const { screenStyles } = props;
 
@@ -45,7 +41,7 @@ const SignUpMobile = (props) => {
     if (errorData) {
       onSignUpError(errorData);
     } else {
-      createAccount({ fullName, email, password });
+      createAccount(registrationData);
     }
   };
 
@@ -89,9 +85,6 @@ const SignUpMobile = (props) => {
       <SignupControls
         {...{
           screenStyles,
-          setFullName,
-          setPassword,
-          setEmail,
           onSignup: signUp,
         }}
       />
