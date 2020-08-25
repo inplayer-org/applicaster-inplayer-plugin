@@ -11,6 +11,7 @@ import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";
 import * as InPlayerService from "../../Services/inPlayerService";
+import { showAlert } from "../../Utils/Account";
 
 const containerStyle = (screenStyles) => {
   return {
@@ -88,7 +89,9 @@ const AccountFlow = (props) => {
   };
 
   const showAlertToUser = ({ title, message, type = "warn" }) => {
-    !Platform.isTV && this.dropDownAlertRef.alertWithType(type, title, message);
+    Platform.isTV
+      ? showAlert(title, message)
+      : this.dropDownAlertRef.alertWithType(type, title, message);
   };
 
   const maybeShowAlertToUser = (title) => async (error) => {
