@@ -6,12 +6,11 @@ import { identity } from "ramda";
 import { mapKeyToStyle } from "../../../Utils/Customization";
 import { useBackHandler } from "../../../Utils/hooks";
 
-import LoginControls from "./LoginControls";
+import FocusableElements from "./FocusableElements";
 import Title from "./Title";
 import Subtitle from "./Subtitle";
 import Paragraph from "./Paragraph";
 import ClientLogo from "../../UIComponents/ClientLogo";
-import SignUpControls from "./SignUpControls";
 
 const styles = StyleSheet.create({
   container: {
@@ -111,21 +110,16 @@ const LoginInterface = (props) => {
           />
         </View>
       </View>
-      <View>
-        <LoginControls
-          {...{
-            style: styles.loginControls,
-            onLogin,
-            errorMessage,
-            screenStyles,
-          }}
-        />
-        <SignUpControls
-          style={styles.singUpControls}
-          onPress={onSignup}
-          screenStyles={screenStyles}
-        />
-      </View>
+      <FocusableElements
+        {...{
+          onLogin,
+          errorMessage,
+          onSignup,
+          screenStyles,
+          loginStyles: styles.loginControls,
+          signupStyles: styles.singUpControls,
+        }}
+      />
     </View>
   );
 };
