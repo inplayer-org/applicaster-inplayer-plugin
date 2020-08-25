@@ -36,7 +36,7 @@ export function prepareStyles(screenStyles) {
 }
 
 export const isHomeScreen = (navigator) => {
-  return R.pathOr(false, ["payload", "home"], navigator.routeData());
+  return R.pathOr(false, ["payload", "home"], navigator.screenData);
 };
 
 export const mapKeyToStyle = R.curry((key, obj) => {

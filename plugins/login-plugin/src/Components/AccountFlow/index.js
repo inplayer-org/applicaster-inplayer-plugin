@@ -12,6 +12,15 @@ import SignUp from "../SignUp";
 import { container } from "../Styles";
 import * as InPlayerService from "../../Services/inPlayerService";
 import { showAlert } from "../../Utils/Account";
+import { createLogger, Subsystems } from "../../Services/LoggerService";
+import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
+import { logger as rootLogger } from "../../Components/InPlayer";
+
+export const logger = createLogger({
+  subsystem: Subsystems.ACCOUNT,
+  category: "",
+  parent: rootLogger,
+});
 
 const containerStyle = (screenStyles) => {
   return {
@@ -47,20 +56,30 @@ const AccountFlow = (props) => {
   useEffect(() => {
     InPlayerService.isAuthenticated(clientId)
       .then(async (isAuthenticated) => {
+        let eventMessage = "Account flow invokation";
+        const event = logger
+          .createEvent()
+          .setLevel(XRayLogLevel.debug)
+          .addData({ is_authenticated: isAuthenticated });
+
         if (stillMounted) {
           if (isAuthenticated) {
+            eventMessage = `${eventMessage}, access provided finishing Account flow`;
             accountFlowCallback({ success: true });
           } else {
             if (
               shouldShowParentLock &&
               shouldShowParentLock(props.parentLockWasPresented)
             ) {
+              eventMessage = `${eventMessage}, no access presenting parent lock`;
               presentParentLock();
             } else {
+              eventMessage = `${eventMessage}, no access presenting login screen`;
               await authenticateUser();
             }
           }
         }
+        event.setMessage(eventMessage).send();
       })
       .finally(() => {
         stillMounted && setLoading(false);
@@ -81,14 +100,29 @@ const AccountFlow = (props) => {
   };
 
   const parentLockCallback = async (result) => {
-    if (result.success) {
+    const success = result.success;
+    let eventMessage = "Parent lock finished";
+
+    logger.createEvent().setLevel(XRayLogLevel.debug).addData({ success });
+
+    if (success) {
+      eventMessage = `${eventMessage}, no access presenting login screen`;
       await authenticateUser();
     } else {
       accountFlowCallback({ success: false });
     }
+    event.setMessage(eventMessage).send();
   };
 
   const showAlertToUser = ({ title, message, type = "warn" }) => {
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.info)
+      .setMessage(
+        `Aller will be presented for user title: ${title}, message: ${message}, type: ${type}`
+      )
+      .addData({ title, message, type })
+      .send();
     Platform.isTV
       ? showAlert(title, message)
       : this.dropDownAlertRef.alertWithType(type, title, message);
@@ -101,6 +135,12 @@ const AccountFlow = (props) => {
       showAlertToUser({ title, message: json.message });
       stillMounted && setLoading(false);
     } else {
+      logger
+        .createEvent()
+        .setLevel(XRayLogLevel.info)
+        .setMessage(`Error: ${error}`)
+        .attachError(error)
+        .send();
       throw error;
     }
   };
@@ -108,6 +148,15 @@ const AccountFlow = (props) => {
   const login = ({ email, password } = params) => {
     Keyboard.dismiss();
     stillMounted && setLoading(true);
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(
+        `Perform Login In task, email: ${email}, password: ${password}`
+      )
+      .addData({ email, password })
+      .send();
+
     InPlayerService.login({
       email,
       password,
@@ -115,18 +164,40 @@ const AccountFlow = (props) => {
       referrer,
     })
       .then(() => {
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.debug)
+          .setMessage(`Login succeed, email: ${email}, password: ${password}`)
+          .addData({ email, password })
+          .send();
         accountFlowCallback({ success: true });
       })
       .catch(maybeShowAlertToUser("Login failed"))
       .catch((error) => {
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.error)
+          .setMessage(`Login failed, email: ${email}, password: ${password}`)
+          .attachError(error)
+          .addData({ email, password })
+          .send();
         stillMounted && setLoading(false);
-        console.error(error);
       });
   };
 
   const createAccount = ({ fullName, email, password } = params) => {
     Keyboard.dismiss();
     stillMounted && setLoading(true);
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(
+        `Perform Create Account task, email: ${email}, password: ${password}`
+      )
+      .addData({ email, password })
+      .send();
+
     InPlayerService.signUp({
       fullName,
       email,
@@ -135,17 +206,43 @@ const AccountFlow = (props) => {
       referrer,
     })
       .then(() => {
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.debug)
+          .setMessage(
+            `Account Creation succeed, fullName: ${fullName}, email: ${email}, password: ${password}`
+          )
+          .addData({ email, password, fullName })
+          .send();
         accountFlowCallback({ success: true });
       })
       .catch(maybeShowAlertToUser("Sign-up failed"))
       .catch((error) => {
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.error)
+          .setMessage(
+            `Account Creation failed, fullName: ${fullName}, email: ${email}, password: ${password}`
+          )
+          .attachError(error)
+          .addData({ email, password, fullName })
+          .send();
         stillMounted && setLoading(false);
-        console.error(error);
       });
   };
 
   const setNewPasswordCallback = ({ password, token }) => {
     Keyboard.dismiss();
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(
+        `Set new password task, password: ${password}, token: ${token}`
+      )
+      .addData({ token, password })
+      .send();
+
     if (token && password) {
       stillMounted && setLoading(true);
       InPlayerService.setNewPassword({
@@ -153,6 +250,14 @@ const AccountFlow = (props) => {
         token,
       })
         .then(() => {
+          logger
+            .createEvent()
+            .setLevel(XRayLogLevel.debug)
+            .setMessage(
+              `Set new password task succeed, password: ${password}, token: ${token}`
+            )
+            .addData({ password, token })
+            .send();
           showAlertToUser({
             title: "Set New Password Success",
             message: "Your password was successfully updated",
@@ -162,6 +267,16 @@ const AccountFlow = (props) => {
           stillMounted && setScreen(ScreensData.LOGIN);
         })
         .catch((error) => {
+          logger
+            .createEvent()
+            .setLevel(XRayLogLevel.error)
+            .setMessage(
+              `Set new password task failed, password: ${password}, token: ${token}`
+            )
+            .attachError(error)
+            .addData({ password, token })
+            .send();
+
           stillMounted && setLoading(false);
 
           showAlertToUser({
@@ -179,11 +294,25 @@ const AccountFlow = (props) => {
     const {
       configuration: { in_player_client_id },
     } = props;
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(`Request password change task, email: ${email}`)
+      .addData({ email })
+      .send();
+
     if (email) {
       stillMounted && setLoading(true);
       InPlayerService.requestPassword({ email, clientId: in_player_client_id })
         .then((result) => {
           const { message } = result;
+          logger
+            .createEvent()
+            .setLevel(XRayLogLevel.debug)
+            .setMessage(`Request password change task, email: ${email}`)
+            .addData({ email })
+            .send();
           showAlertToUser({
             title: "Request Password Success",
             message,
@@ -193,12 +322,18 @@ const AccountFlow = (props) => {
           stillMounted && setScreen(ScreensData.SET_NEW_PASSWORD);
         })
         .catch((error) => {
+          logger
+            .createEvent()
+            .setLevel(XRayLogLevel.error)
+            .setMessage(`Request password change task failed, email: ${email}`)
+            .attachError(error)
+            .addData({ email })
+            .send();
           stillMounted && setLoading(false);
           showAlertToUser({
             title: "Request Password Fail",
             message: "Can not request password",
           });
-          console.error(error);
           stillMounted && setScreen(ScreensData.LOGIN);
         });
     } else {
