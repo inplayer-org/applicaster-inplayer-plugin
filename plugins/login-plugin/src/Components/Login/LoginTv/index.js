@@ -21,16 +21,16 @@ const styles = StyleSheet.create({
   loginControls: {
     position: "relative",
     width: 556,
-    marginTop: 232,
+    marginTop: 300,
     marginRight: 250,
   },
   singUpControls: {
-    marginTop: 232,
+    marginTop: 270,
     width: 556,
   },
   contentWrapper: {
     width: 687,
-    marginTop: 232,
+    marginTop: 310,
     marginLeft: 259,
     marginRight: 168,
   },
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 350,
     position: "absolute",
-    top: 0,
+    top: 58,
     left: 58,
   },
   paragraphContainer: {
