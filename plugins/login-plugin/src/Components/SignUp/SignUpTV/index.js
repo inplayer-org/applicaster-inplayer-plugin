@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 350,
     position: "absolute",
-    top: 0,
+    top: 58,
     left: 58,
   },
 });
@@ -71,7 +71,7 @@ const SignUpMobile = (props) => {
   );
 
   return (
-    <View style={[styles.container, { width: screenWidth }]}>
+    <View style={[styles.container, { width: screenWidth || 1920 }]}>
       <View style={styles.clientLogoView}>
         <ClientLogo imageSrc={screenStyles.client_logo} />
       </View>
