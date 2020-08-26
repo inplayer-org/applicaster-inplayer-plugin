@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as R from "ramda";
-import { View, ViewPropTypes, StyleSheet, Text, Platform } from "react-native";
+import { View, ViewPropTypes, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
-import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
-import { focusManager } from "@applicaster/zapp-react-native-utils/appUtils";
+import { useFocusManager } from "@applicaster/zapp-react-native-utils/focusManager";
 
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
 import { findNextEmptyLabel } from "../../../Utils/Forms";
@@ -30,9 +29,20 @@ const styles = StyleSheet.create({
 });
 
 const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
-  const [emailValue, setEmailValue] = useState("");
   const [fullNameValue, setFullNameValue] = useState("");
+  const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPassword] = useState("");
+
+  const fullNameInputRef = useRef(null);
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+  const signupButtonRef = useRef(null);
+
+  const { setFocus } = useFocusManager();
+
+  useEffect(() => {
+    setFocus(fullNameInputRef);
+  }, []);
 
   const groupId = "signup-form";
 
@@ -50,7 +60,6 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
 
   const handleEditingEnd = (label) => () => {
     // TODO: implement focus switching on Samsung TV
-    if (Platform.OS === "samsung_tv") return null;
     const labels = [
       { label: "full-name-input", value: fullNameValue },
       { label: "email-input", value: emailValue },
@@ -60,19 +69,22 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
      * Wait for the focus manager to finish previous focusing job
      * (Bit of the hack but it works well from the UX point of view)
      */
-    setTimeout(() => {
-      const signupButtonId = `${groupId}-${screenStyles.signup_action_button_text}`;
-      const focusOnItem = (item) =>
-        focusManager.forceFocusOnFocusable({ itemId: item });
 
-      const nextEmpty = findNextEmptyLabel(label, labels);
+    const nextEmpty = findNextEmptyLabel(label, labels);
 
-      if (nextEmpty) {
-        focusOnItem(nextEmpty);
-      } else {
-        focusOnItem(signupButtonId);
-      }
-    }, 1000);
+    switch (nextEmpty) {
+      case "full-name-input":
+        setFocus(fullNameInputRef);
+        break;
+      case "email-input":
+        setFocus(emailInputRef);
+        break;
+      case "password-input":
+        setFocus(passwordInputRef);
+        break;
+      default:
+        setFocus(signupButtonRef);
+    }
   };
 
   const buttonTextStyles = React.useMemo(
@@ -110,69 +122,76 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
   return (
     <View style={style}>
       <Text style={styles.errorMessage}>{errorMessage}</Text>
-      <FocusableGroup id={groupId} shouldUsePreferredFocus isParallaxDisabled>
-        <FocusableTextInput
-          groupId={groupId}
-          placeholder={
-            screenStyles.signup_full_name_input_placeholder || "Full Name"
-          }
-          value={fullNameValue}
-          onChangeText={handleInputChange(setFullNameValue)}
-          label="full-name-input"
-          onEndEditing={handleEditingEnd("full-name-input")}
-          preferredFocus
-          textInputStyles={fullNameInputStyles}
-        />
-        <FocusableTextInput
-          groupId={groupId}
-          placeholder={screenStyles.signup_email_input_placeholder || "Email"}
-          value={emailValue}
-          onChangeText={handleInputChange(setEmailValue)}
-          label="email-input"
-          onEndEditing={handleEditingEnd("email-input")}
-          preferredFocus
-          textInputStyles={emailInputStyles}
-        />
-        <FocusableTextInput
-          groupId={groupId}
-          placeholder={
-            screenStyles.signup_password_input_placeholder || "Password"
-          }
-          secureTextEntry={true}
-          value={passwordValue}
-          onChangeText={handleInputChange(setPassword)}
-          onEndEditing={handleEditingEnd("password-input")}
-          label="password-input"
-          textInputStyles={passwordInputStyles}
-        />
-        <Button
-          {...{
-            label: screenStyles.signup_action_button_text,
-            onPress,
-            groupId,
-            backgroundColor: screenStyles.signup_action_button_background,
-            backgroundColorFocused:
-              screenStyles.signup_action_button_background_focused,
-            textColorFocused:
-              screenStyles.signup_action_button_fontcolor_focused,
-            textStyles: buttonTextStyles,
-            borderRadius: screenStyles.signup_action_button_border_radius,
-          }}
-        />
-      </FocusableGroup>
+      <FocusableTextInput
+        ref={fullNameInputRef}
+        nextFocusDown={emailInputRef}
+        groupId={groupId}
+        placeholder={
+          screenStyles.signup_full_name_input_placeholder || "Full Name"
+        }
+        value={fullNameValue}
+        onChangeText={handleInputChange(setFullNameValue)}
+        label="full-name-input"
+        onEndEditing={handleEditingEnd("full-name-input")}
+        preferredFocus
+        textInputStyles={fullNameInputStyles}
+      />
+      <FocusableTextInput
+        ref={emailInputRef}
+        nextFocusUp={fullNameInputRef}
+        nextFocusDown={passwordInputRef}
+        groupId={groupId}
+        placeholder={screenStyles.signup_email_input_placeholder || "Email"}
+        value={emailValue}
+        onChangeText={handleInputChange(setEmailValue)}
+        label="email-input"
+        onEndEditing={handleEditingEnd("email-input")}
+        preferredFocus
+        textInputStyles={emailInputStyles}
+      />
+      <FocusableTextInput
+        ref={passwordInputRef}
+        nextFocusUp={emailInputRef}
+        nextFocusDown={signupButtonRef}
+        groupId={groupId}
+        placeholder={
+          screenStyles.signup_password_input_placeholder || "Password"
+        }
+        secureTextEntry={true}
+        value={passwordValue}
+        onChangeText={handleInputChange(setPassword)}
+        onEndEditing={handleEditingEnd("password-input")}
+        label="password-input"
+        textInputStyles={passwordInputStyles}
+      />
+      <Button
+        ref={signupButtonRef}
+        {...{
+          nextFocusUp: passwordInputRef,
+          label: screenStyles.signup_action_button_text,
+          onPress,
+          groupId,
+          backgroundColor: screenStyles.signup_action_button_background,
+          backgroundColorFocused:
+            screenStyles.signup_action_button_background_focused,
+          textColorFocused: screenStyles.signup_action_button_fontcolor_focused,
+          textStyles: buttonTextStyles,
+          borderRadius: screenStyles.signup_action_button_border_radius,
+        }}
+      />
     </View>
   );
 };
 
 SignupControls.propTypes = {
   style: ViewPropTypes.style,
-  onLogin: PropTypes.func,
+  onSignup: PropTypes.func,
   errorMessage: PropTypes.string,
   screenStyles: PropTypes.object,
 };
 
 SignupControls.defaultProps = {
-  onLogin: identity,
+  onSignup: identity,
   screenStyles: {},
 };
 
