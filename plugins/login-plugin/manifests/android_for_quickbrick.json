@@ -114,10 +114,10 @@
     "quickbrick"
   ],
   "platform": "android_for_quickbrick",
-  "dependency_version": "0.7.0-beta.33",
-  "manifest_version": "0.7.0-beta.33",
+  "dependency_version": "0.7.0-beta.34",
+  "manifest_version": "0.7.0-beta.34",
   "api": {
-    "class_name": "",
+    "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
       "com.applicaster.iap.reactnative.IAPPackage",
       "com.cmcewen.blurview.BlurViewPackage"
