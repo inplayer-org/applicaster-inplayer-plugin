@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { identity } from "ramda";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
 import { focusManager } from "@applicaster/zapp-react-native-utils/appUtils";
-import { findNextEmptyLabel } from "../../../Utils/Forms";
 
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
 import Button from "../../UIComponents/Buttons/FocusableButton";
@@ -29,14 +28,19 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
-  const [usernameValue, setUsername] = useState("");
+const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
+  const [emailValue, setEmailValue] = useState("");
+  const [fullNameValue, setFullNameValue] = useState("");
   const [passwordValue, setPassword] = useState("");
 
-  const groupId = "login-form";
+  const groupId = "signup-form";
 
   const onPress = () => {
-    onLogin({ email: usernameValue, password: passwordValue });
+    onSignup({
+      email: emailValue,
+      password: passwordValue,
+      fullName: fullNameValue,
+    });
   };
 
   const handleInputChange = (setter) => (text) => {
@@ -51,42 +55,59 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
      * (Bit of the hack but it works well from the UX point of view)
      */
     setTimeout(() => {
-      const usernameInputId = "login-input";
-      const passwordInputId = "password-input";
-      const loginButtonId = `${groupId}-LOGIN`;
+      const signupButtonId = `${groupId}-${screenStyles.signup_action_button_text}`;
       const focusOnItem = (item) =>
         focusManager.forceFocusOnFocusable({ itemId: item });
 
-      const labels = [
-        { label: "login-input", value: usernameValue },
-        { label: "password-input", value: passwordValue },
-      ];
+      const nextEmpty = findNextEmptyLabel(label);
 
-      const nextEmptyLabel = findNextEmptyLabel(label, labels);
-
-      switch (nextEmptyLabel) {
-        case "login-input":
-          focusOnItem(usernameInputId);
-          break;
-        case "password-input":
-          focusOnItem(passwordInputId);
-          break;
-        default:
-          focusOnItem(loginButtonId);
+      if (nextEmpty) {
+        focusOnItem(nextEmpty);
+      } else {
+        focusOnItem(signupButtonId);
       }
     }, 1000);
   };
 
+  const findNextEmptyLabel = (label) => {
+    const labels = [
+      { label: "full-name-input", value: fullNameValue },
+      { label: "email-input", value: emailValue },
+      { label: "password-input", value: passwordValue },
+    ];
+    const currentLabelIndex = R.findIndex(R.propEq("label", label), labels);
+
+    const nextLabels = R.compose(
+      R.drop(1),
+      R.flatten,
+      R.reverse,
+      R.splitAt(currentLabelIndex)
+    )(labels);
+
+    const nextEmpty = R.find(R.propEq("value", ""))(nextLabels);
+
+    return R.prop("label")(nextEmpty);
+  };
+
   const buttonTextStyles = React.useMemo(
-    () => mapKeyToStyle("login_action_button", screenStyles),
+    () => mapKeyToStyle("signup_action_button", screenStyles),
     []
   );
 
-  const loginInputStyles = React.useMemo(
+  const fullNameInputStyles = React.useMemo(
     () =>
       R.compose(
         splitInputTypeStyles,
-        mapKeyToStyle("email_input")
+        mapKeyToStyle("signup_full_name_input")
+      )(screenStyles),
+    []
+  );
+
+  const emailInputStyles = React.useMemo(
+    () =>
+      R.compose(
+        splitInputTypeStyles,
+        mapKeyToStyle("signup_email_input")
       )(screenStyles),
     []
   );
@@ -95,7 +116,7 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
     () =>
       R.compose(
         splitInputTypeStyles,
-        mapKeyToStyle("password_input")
+        mapKeyToStyle("signup_password_input")
       )(screenStyles),
     []
   );
@@ -106,17 +127,31 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
       <FocusableGroup id={groupId} shouldUsePreferredFocus isParallaxDisabled>
         <FocusableTextInput
           groupId={groupId}
-          placeholder={screenStyles.email_input_placeholder}
-          value={usernameValue}
-          onChangeText={handleInputChange(setUsername)}
-          label="login-input"
-          onEndEditing={handleEditingEnd("login-input")}
+          placeholder={
+            screenStyles.signup_full_name_input_placeholder || "Full Name"
+          }
+          value={fullNameValue}
+          onChangeText={handleInputChange(setFullNameValue)}
+          label="full-name-input"
+          onEndEditing={handleEditingEnd("full-name-input")}
           preferredFocus
-          textInputStyles={loginInputStyles}
+          textInputStyles={fullNameInputStyles}
         />
         <FocusableTextInput
           groupId={groupId}
-          placeholder={screenStyles.password_input_placeholder}
+          placeholder={screenStyles.signup_email_input_placeholder || "Email"}
+          value={emailValue}
+          onChangeText={handleInputChange(setEmailValue)}
+          label="email-input"
+          onEndEditing={handleEditingEnd("email-input")}
+          preferredFocus
+          textInputStyles={emailInputStyles}
+        />
+        <FocusableTextInput
+          groupId={groupId}
+          placeholder={
+            screenStyles.signup_password_input_placeholder || "Password"
+          }
           secureTextEntry={true}
           value={passwordValue}
           onChangeText={handleInputChange(setPassword)}
@@ -126,16 +161,16 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
         />
         <Button
           {...{
-            label: screenStyles.login_action_button_text,
+            label: screenStyles.signup_action_button_text,
             onPress,
             groupId,
-            backgroundColor: screenStyles.login_action_button_background,
+            backgroundColor: screenStyles.signup_action_button_background,
             backgroundColorFocused:
-              screenStyles.login_action_button_background_focused,
+              screenStyles.signup_action_button_background_focused,
             textColorFocused:
-              screenStyles.login_action_button_fontcolor_focused,
+              screenStyles.signup_action_button_fontcolor_focused,
             textStyles: buttonTextStyles,
-            borderRadius: screenStyles.login_action_button_border_radius,
+            borderRadius: screenStyles.signup_action_button_border_radius,
           }}
         />
       </FocusableGroup>
@@ -143,16 +178,16 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
   );
 };
 
-LoginControls.propTypes = {
+SignupControls.propTypes = {
   style: ViewPropTypes.style,
   onLogin: PropTypes.func,
   errorMessage: PropTypes.string,
   screenStyles: PropTypes.object,
 };
 
-LoginControls.defaultProps = {
+SignupControls.defaultProps = {
   onLogin: identity,
   screenStyles: {},
 };
 
-export default LoginControls;
+export default SignupControls;

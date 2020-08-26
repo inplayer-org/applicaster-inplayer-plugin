@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as R from "ramda";
-import { View, ViewPropTypes, StyleSheet, Text, Platform } from "react-native";
+import { View, ViewPropTypes, StyleSheet, Text } from "react-native";
 
 import PropTypes from "prop-types";
 import { identity } from "ramda";
@@ -11,6 +11,8 @@ import {
 
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
 import Button from "../../UIComponents/Buttons/FocusableButton";
+import { findNextEmptyLabel } from "../../../Utils/Forms";
+
 import colors from "../../../colors";
 import {
   mapKeyToStyle,
@@ -64,25 +66,22 @@ const LoginControls = ({
   };
 
   const handleEditingEnd = (label) => () => {
-    if (label === "login-input") {
-      if (passwordValue === "") {
-        setFocus(passwordInputRef);
-      } else {
-        if (usernameValue !== "") {
-          setFocus(loginInputRef);
-        }
-        // else, stay on username field
-      }
-    }
-    if (label === "password-input") {
-      if (usernameValue === "") {
+    const labels = [
+      { label: "login-input", value: usernameValue },
+      { label: "password-input", value: passwordValue },
+    ];
+
+    const nextEmptyLabel = findNextEmptyLabel(label, labels);
+
+    switch (nextEmptyLabel) {
+      case "login-input":
         setFocus(loginInputRef);
-      } else {
-        if (passwordValue !== "") {
-          setFocus(loginButtonRef);
-        }
-        // else stay on password field
-      }
+        break;
+      case "password-input":
+        setFocus(passwordInputRef);
+        break;
+      default:
+        setFocus(loginButtonRef);
     }
   };
 

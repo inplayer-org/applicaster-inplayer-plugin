@@ -7,6 +7,7 @@ import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Com
 import { focusManager } from "@applicaster/zapp-react-native-utils/appUtils";
 
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
+import { findNextEmptyLabel } from "../../../Utils/Forms";
 import Button from "../../UIComponents/Buttons/FocusableButton";
 import colors from "../../../colors";
 import {
@@ -50,6 +51,11 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
   const handleEditingEnd = (label) => () => {
     // TODO: implement focus switching on Samsung TV
     if (Platform.OS === "samsung_tv") return null;
+    const labels = [
+      { label: "full-name-input", value: fullNameValue },
+      { label: "email-input", value: emailValue },
+      { label: "password-input", value: passwordValue },
+    ];
     /**
      * Wait for the focus manager to finish previous focusing job
      * (Bit of the hack but it works well from the UX point of view)
@@ -59,7 +65,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
       const focusOnItem = (item) =>
         focusManager.forceFocusOnFocusable({ itemId: item });
 
-      const nextEmpty = findNextEmptyLabel(label);
+      const nextEmpty = findNextEmptyLabel(label, labels);
 
       if (nextEmpty) {
         focusOnItem(nextEmpty);
@@ -67,26 +73,6 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         focusOnItem(signupButtonId);
       }
     }, 1000);
-  };
-
-  const findNextEmptyLabel = (label) => {
-    const labels = [
-      { label: "full-name-input", value: fullNameValue },
-      { label: "email-input", value: emailValue },
-      { label: "password-input", value: passwordValue },
-    ];
-    const currentLabelIndex = R.findIndex(R.propEq("label", label), labels);
-
-    const nextLabels = R.compose(
-      R.drop(1),
-      R.flatten,
-      R.reverse,
-      R.splitAt(currentLabelIndex)
-    )(labels);
-
-    const nextEmpty = R.find(R.propEq("value", ""))(nextLabels);
-
-    return R.prop("label")(nextEmpty);
   };
 
   const buttonTextStyles = React.useMemo(
