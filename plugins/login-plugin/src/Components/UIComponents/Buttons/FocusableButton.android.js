@@ -36,7 +36,6 @@ const Button = React.forwardRef(
       textColorFocused,
       textStyles,
       borderRadius,
-      focused,
       nextFocusUp,
       nextFocusDown,
     },
@@ -91,6 +90,8 @@ Button.propTypes = {
   textColorFocused: PropTypes.string,
   textStyles: PropTypes.object,
   borderRadius: PropTypes.number,
+  nextFocusUp: PropTypes.object,
+  nextFocusDown: PropTypes.object,
 };
 
 Button.defaultProps = {
