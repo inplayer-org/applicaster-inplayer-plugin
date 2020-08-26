@@ -8,7 +8,7 @@ import PolicyAgreementTitle from "./PolicyAgreementTitle";
 import FeesScrollView from "./FeesScrollView";
 import ClientLogo from "../../ClientLogo";
 import Button from "../../Buttons/FocusableButton";
-import ButtonUderline from "../../Buttons/FocusableButtonUnderline";
+import ButtonUnderline from "../../Buttons/FocusableButtonUnderline";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
 import { useBackHandler } from "../../../../Utils/hooks";
 
@@ -111,7 +111,7 @@ const StoreFrontTv = (props) => {
         />
       </View>
       <View style={styles.subscriberAgreementWrapperView}>
-        <ButtonUderline
+        <ButtonUnderline
           textStyles={subscriberAgreementStyles}
           textColorFocused={
             subscriber_agreement_and_privacy_policy_text_active_color
