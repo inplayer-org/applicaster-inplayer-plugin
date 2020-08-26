@@ -10,7 +10,6 @@ import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
 const IN_PLAYER_LAST_EMAIL_USED_KEY = "com.inplayer.lastEmailUsed";
 
 export async function setConfig(environment = "prod") {
-  console.log(`InPlayer.setConfig(${environment})`);
   InPlayer.setConfig(environment);
 }
 

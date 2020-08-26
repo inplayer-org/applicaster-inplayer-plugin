@@ -1,4 +1,15 @@
 import { localStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
+import {
+  createLogger,
+  BaseSubsystem,
+  BaseCategories,
+} from "../Services/LoggerService";
+import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
+
+export const logger = createLogger({
+  subsystem: BaseSubsystem,
+  category: BaseCategories.LOCAL_STORAGE,
+});
 
 const IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY = "com.inplayer.localStorage";
 let inMemoryStore = null;
@@ -7,19 +18,35 @@ let isInitialized = false;
 
 export function initFromNativeLocalStorage() {
   if (!initPromise) {
-    console.debug("InPlayerLocalStorageHack: calling AsyncStorage.getItem");
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.info)
+      .setMessage("InPlayerLocalStorageHack: calling AsyncStorage.getItem")
+      .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
+      .send();
 
     initPromise = localStorage
       .getItem("base", IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY)
       .then((json) => {
         const base = json ? JSON.parse(json) : null;
-        console.debug("AsyncStorage.getItem returned:", base);
         inMemoryStore = new Map(base);
-        console.debug("inMemoryStore is invitialized:", inMemoryStore);
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.info)
+          .setMessage(`Local Storage Initialized: ${base}`)
+          .addData({ base, in_memory_store: inMemoryStore })
+          .send();
+
         return inMemoryStore;
       })
       .catch((error) => {
-        console.error(error);
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.error)
+          .setMessage(`Local Storage initialization error: ${error}`)
+          .attachError(error)
+          .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
+          .send();
       })
       .finally(() => {
         isInitialized = true;
@@ -34,13 +61,23 @@ function persistInMemoryStoreInBackground() {
     .setItem("base", serializedStore, IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY)
     .then(
       () => {
-        console.debug(
-          "localStorage persisted to AsyncStorage",
-          serializedStore
-        );
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.info)
+          .setMessage(
+            `LocalStorage persisted to AsyncStorage ${serializedStore}`
+          )
+          .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
+          .send();
       },
       (error) => {
-        console.error("error persisting to AsyncStorage", error);
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.error)
+          .setMessage(`Error persisting to AsyncStorage: ${error}`)
+          .attachError(error)
+          .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
+          .send();
       }
     );
 }
@@ -78,6 +115,17 @@ export class InPlayerLocalStorageHack {
   }
 
   setItem(key, val) {
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.info)
+      .setMessage(`Local Storage setItem: ${(key, val)}`)
+      .addData({
+        key,
+        val,
+        stringify: JSON.stringify(val),
+        in_memory_store: inMemoryStore,
+      })
+      .send();
     console.log("SetItem", { key, val, stringify: JSON.stringify(val) });
     if (safeMemoryStore().get(String(key)) !== String(val)) {
       safeMemoryStore().set(String(key), String(val));
@@ -98,16 +146,5 @@ export class InPlayerLocalStorageHack {
   clear() {
     safeMemoryStore().clear();
     return persistInMemoryStoreInBackground();
-  }
-
-  key(keyIndex) {
-    if (!Number.isInteger(keyIndex)) {
-      throw new TypeError(
-        `argument 1 to InPlayerLocalStorageHack.key must be integer but got ${keyIndex}`
-      );
-    }
-    var orderedKeys = Array.from(safeMemoryStore().keys());
-
-    return orderedKeys[i];
   }
 }
