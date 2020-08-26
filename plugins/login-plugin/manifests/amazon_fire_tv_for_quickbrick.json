@@ -114,8 +114,8 @@
     "quickbrick"
   ],
   "platform": "amazon_fire_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.32",
-  "manifest_version": "0.7.0-beta.32",
+  "dependency_version": "0.7.0-beta.33",
+  "manifest_version": "0.7.0-beta.33",
   "api": {
     "class_name": "",
     "react_packages": [
@@ -174,7 +174,7 @@
             "key": "logout_title_font_size",
             "type": "number_input",
             "label": "Logout title font size",
-            "initial_value": 15
+            "initial_value": 30
           },
           {
             "key": "logout_title_font_color",
