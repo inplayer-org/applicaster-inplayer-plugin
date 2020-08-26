@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import * as R from "ramda";
 import { View, ViewPropTypes, StyleSheet, Text, Platform } from "react-native";
-import { usePrevious } from "@applicaster/zapp-react-native-utils/reactHooks/utils";
 
 import PropTypes from "prop-types";
 import { identity } from "ramda";
 import {
   useInitialFocus,
   useFocusManager,
-  useFocusRefs,
 } from "@applicaster/zapp-react-native-utils/focusManager";
 
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
@@ -49,6 +47,7 @@ const LoginControls = ({
   const passwordInputRef = React.useRef(null);
   const loginButtonRef = React.useRef(null);
   const [initialFocusable, setInitialFocusable] = useState(loginInputRef);
+  const { setFocus } = useFocusManager();
 
   React.useEffect(() => {
     focused && setInitialFocusable(loginButtonRef);
@@ -65,39 +64,26 @@ const LoginControls = ({
   };
 
   const handleEditingEnd = (label) => () => {
-    console.log("handleEditingEnd", { label });
-    /**
-     * Wait for the focus manager to finish previous focusing job
-     * (Bit of the hack but it works well from the UX point of view)
-     */
-    // setTimeout(() => {
-    //   const usernameInputId = "login-input";
-    //   const passwordInputId = "password-input";
-    //   const loginButtonId = `${groupId}-LOGIN`;
-    //   const focusOnItem = (item) =>
-    //     focusManager.forceFocusOnFocusable({ itemId: item });
-
-    //   if (label === "login-input") {
-    //     if (passwordValue === "") {
-    //       focusOnItem(passwordInputId);
-    //     } else {
-    //       if (usernameValue !== "") {
-    //         focusOnItem(loginButtonId);
-    //       }
-    //       // else, stay on username field
-    //     }
-    //   }
-    //   if (label === "password-input") {
-    //     if (usernameValue === "") {
-    //       focusOnItem(usernameInputId);
-    //     } else {
-    //       if (passwordValue !== "") {
-    //         focusOnItem(loginButtonId);
-    //       }
-    //       // else stay on password field
-    //     }
-    //   }
-    // }, 1000);
+    if (label === "login-input") {
+      if (passwordValue === "") {
+        setFocus(passwordInputRef);
+      } else {
+        if (usernameValue !== "") {
+          setFocus(loginInputRef);
+        }
+        // else, stay on username field
+      }
+    }
+    if (label === "password-input") {
+      if (usernameValue === "") {
+        setFocus(loginInputRef);
+      } else {
+        if (passwordValue !== "") {
+          setFocus(loginButtonRef);
+        }
+        // else stay on password field
+      }
+    }
   };
 
   const buttonTextStyles = React.useMemo(
@@ -176,6 +162,8 @@ LoginControls.propTypes = {
   onLogin: PropTypes.func,
   errorMessage: PropTypes.string,
   screenStyles: PropTypes.object,
+  parentFocus: PropTypes.object,
+  focused: PropTypes.bool,
 };
 
 LoginControls.defaultProps = {
