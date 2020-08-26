@@ -2139,7 +2139,7 @@ const tvPlatforms = [
 const api = {
   apple: {},
   android: {
-    class_name: "",
+    class_name: "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     react_packages: [
       "com.applicaster.iap.reactnative.IAPPackage",
       "com.cmcewen.blurview.BlurViewPackage",
