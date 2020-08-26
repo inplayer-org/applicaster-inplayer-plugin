@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
-import * as R from "ramda";
 
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
 import { TextInputTv } from "@applicaster/zapp-react-native-ui-components/Components/TextInputTv";
-import { useInitialFocus } from "@applicaster/zapp-react-native-utils/focusManager";
 
 import colors from "../../../colors";
 
@@ -46,7 +44,6 @@ const FocusableTextInput = React.forwardRef(
       label,
       placeholder,
       secureTextEntry,
-      focused,
       nextFocusUp,
       nextFocusDown,
       textInputStyles,
@@ -56,7 +53,6 @@ const FocusableTextInput = React.forwardRef(
     const inputRef = useRef(null);
 
     const focusablePressHandler = () => {
-      console.log("pressed email");
       inputRef.current.focus();
     };
 
@@ -116,6 +112,9 @@ FocusableTextInput.propTypes = {
     focused: PropTypes.object,
     filled: PropTypes.object,
   }),
+  focused: PropTypes.bool,
+  nextFocusUp: PropTypes.object,
+  nextFocusDown: PropTypes.object,
 };
 
 FocusableTextInput.defaultProps = {
