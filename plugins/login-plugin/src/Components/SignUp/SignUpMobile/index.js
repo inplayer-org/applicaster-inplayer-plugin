@@ -8,7 +8,7 @@ import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils"
 
 import { container } from "../../Styles";
 import { validateSignUpData } from "../../../Utils/Account";
-import { useBackHandler } from "../../../Utils/hooks";
+import { useBackHandler } from "../../../Utils/Hooks";
 import ActionButton from "../../UIComponents/Buttons/ActionButton.js";
 import TitleLabel from "../../UIComponents/TitleLabel";
 import BackButton from "../../UIComponents/Buttons/BackButton";

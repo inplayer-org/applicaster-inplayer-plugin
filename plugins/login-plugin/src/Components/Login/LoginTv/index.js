@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { identity } from "ramda";
 
 import { mapKeyToStyle } from "../../../Utils/Customization";
-import { useBackHandler } from "../../../Utils/hooks";
+import { useBackHandler } from "../../../Utils/Hooks";
 
 import FocusableElements from "./FocusableElements";
 import Title from "./Title";

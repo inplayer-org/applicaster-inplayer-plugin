@@ -12,7 +12,7 @@ import {
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { inputFieldStyle } from "../../../Utils/Customization";
-import { useBackHandler } from "../../../Utils/hooks";
+import { useBackHandler } from "../../../Utils/Hooks";
 import { validateEmail } from "../../../Utils/Account";
 import { container } from "../../Styles";
 import ActionButton from "../../UIComponents/Buttons/ActionButton.js";
