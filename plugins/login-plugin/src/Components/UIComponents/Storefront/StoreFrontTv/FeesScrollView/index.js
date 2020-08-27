@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, ScrollView, View } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
+import { useFocusRefs } from "@applicaster/zapp-react-native-utils/focusManager";
 
-import { mapKeyToStyle } from "../../../../../Utils/Customization";
+import { useInitialFocusAndroidOnly } from "../../../../../Utils/Hooks";
 import FeeCard from "./FeeCard";
 import PropTypes from "prop-types";
 
@@ -17,12 +18,14 @@ const styles = StyleSheet.create({
 });
 
 const FeesScrollView = (props) => {
-  const {
-    screenStyles,
-    payload: { extensions = {} },
-    dataSource,
-    onPressPaymentOption,
-  } = props;
+  const { screenStyles, dataSource, onPressPaymentOption } = props;
+  const listRefs = useFocusRefs();
+
+  useInitialFocusAndroidOnly(props.focused, listRefs[0], {
+    refsList: listRefs,
+    withStateMemory: true,
+  });
+
   const groupId = "fee-scroll-view";
 
   return (
@@ -35,6 +38,9 @@ const FeesScrollView = (props) => {
       <ScrollView horizontal={true}>
         {dataSource.map((item, index) => (
           <FeeCard
+            ref={listRefs[index]}
+            nextFocusUp={listRefs[index - 1] || props.nextFocusUp}
+            nextFocusDown={listRefs?.[index + 1] || props.nextFocusDown}
             groupId={groupId}
             screenStyles={screenStyles}
             paymentOptionItem={item}
@@ -51,11 +57,18 @@ const FeesScrollView = (props) => {
 FeesScrollView.propTypes = {
   screenStyles: PropTypes.object,
   payload: PropTypes.object,
+  dataSource: PropTypes.array,
+  onPressPaymentOption: PropTypes.func,
+  nextFocusUp: PropTypes.object,
+  nextFocusDown: PropTypes.object,
+  focused: PropTypes.bool,
 };
 
 FeesScrollView.defaultProps = {
   payload: {},
   screenStyles: {},
+  dataSource: [],
+  onPressPaymentOption: () => {},
 };
 
 export default FeesScrollView;

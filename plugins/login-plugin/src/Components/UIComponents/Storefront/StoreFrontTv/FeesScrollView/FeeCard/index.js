@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const FeeCard = (props) => {
+const FeeCard = React.forwardRef((props, ref) => {
   const {
     screenStyles,
     payload: { extensions = {} },
@@ -89,9 +89,12 @@ const FeeCard = (props) => {
   );
   return (
     <Focusable
+      ref={ref}
       id={`${groupId}-${identifier}`}
       groupId={groupId}
       onPress={onPress}
+      nextFocusUp={props.nextFocusUp}
+      nextFocusDown={props.nextFocusDown}
     >
       {(focused) => (
         <View
@@ -133,7 +136,7 @@ const FeeCard = (props) => {
       )}
     </Focusable>
   );
-};
+});
 
 FeeCard.propTypes = {
   screenStyles: PropTypes.object,
@@ -144,5 +147,7 @@ FeeCard.defaultProps = {
   payload: {},
   screenStyles: {},
 };
+
+FeeCard.displayName = "FeeCard";
 
 export default FeeCard;
