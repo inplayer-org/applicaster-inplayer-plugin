@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Platform } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
@@ -47,14 +47,14 @@ const AssetFlow = (props) => {
   const [assetId, setAssetId] = useState(null);
   let stillMounted = true;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     prepareAssetId();
     return () => {
       stillMounted = false;
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (assetId) {
       loadAsset({ startPurchaseFlow: true });
     }

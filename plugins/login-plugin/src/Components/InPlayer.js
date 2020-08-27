@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
@@ -58,7 +58,7 @@ const InPlayer = (props) => {
   const { import_parent_lock: showParentLock } = screenStyles;
   let stillMounted = true;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setupEnviroment();
   }, []);
 
