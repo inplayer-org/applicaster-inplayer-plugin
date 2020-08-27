@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { View, SafeAreaView, Keyboard, Platform } from "react-native";
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
@@ -53,7 +53,7 @@ const AccountFlow = (props) => {
   const [screen, setScreen] = useState(ScreensData.EMPTY);
   const [lastEmailUsed, setLastEmailUsed] = useState(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     InPlayerService.isAuthenticated(clientId)
       .then(async (isAuthenticated) => {
         let eventMessage = "Account flow invokation";
