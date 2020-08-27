@@ -18,28 +18,52 @@ const localStyles = StyleSheet.create({
   },
 });
 
-const Button = ({ onPress, label, groupId, textColorFocused, textStyles }) => {
-  const getTextColor = React.useCallback(
-    (focused) => ({
-      color: focused ? textColorFocused : textStyles.color,
-    }),
-    []
-  );
+const Button = React.useRef(
+  (
+    {
+      onPress,
+      label,
+      groupId,
+      textColorFocused,
+      textStyles,
+      nextFocusUp,
+      nextFocusDown,
+    },
+    ref
+  ) => {
+    const getTextColor = React.useCallback(
+      (focused) => ({
+        color: focused ? textColorFocused : textStyles.color,
+      }),
+      []
+    );
 
-  return (
-    <Focusable id={`${groupId}-${label}`} groupId={groupId} onPress={onPress}>
-      {(focused) => (
-        <View style={localStyles.button}>
-          <Text
-            style={[localStyles.buttonText, textStyles, getTextColor(focused)]}
-          >
-            {label}
-          </Text>
-        </View>
-      )}
-    </Focusable>
-  );
-};
+    return (
+      <Focusable
+        ref={ref}
+        id={`${groupId}-${label}`}
+        groupId={groupId}
+        onPress={onPress}
+        nextFocusUp={nextFocusUp}
+        nextFocusDown={nextFocusDown}
+      >
+        {(focused) => (
+          <View style={localStyles.button}>
+            <Text
+              style={[
+                localStyles.buttonText,
+                textStyles,
+                getTextColor(focused),
+              ]}
+            >
+              {label}
+            </Text>
+          </View>
+        )}
+      </Focusable>
+    );
+  }
+);
 
 Button.propTypes = {
   onPress: PropTypes.func,
@@ -48,6 +72,8 @@ Button.propTypes = {
   textColor: PropTypes.string,
   textColorFocused: PropTypes.string,
   textStyles: PropTypes.object,
+  nextFocusUp: PropTypes.object,
+  nextFocusDown: PropTypes.object,
 };
 
 Button.defaultProps = {
@@ -56,5 +82,7 @@ Button.defaultProps = {
   textColorFocused: colors.white,
   textStyles: {},
 };
+
+Button.displayName = "Button";
 
 export default Button;
