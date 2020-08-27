@@ -55,31 +55,32 @@ export function initFromNativeLocalStorage() {
   return initPromise;
 }
 
-function persistInMemoryStoreInBackground() {
-  const serializedStore = JSON.stringify(Array.from(inMemoryStore.entries()));
-  return localStorage
-    .setItem("base", serializedStore, IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY)
-    .then(
-      () => {
-        logger
-          .createEvent()
-          .setLevel(XRayLogLevel.info)
-          .setMessage(
-            `LocalStorage persisted to AsyncStorage ${serializedStore}`
-          )
-          .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
-          .send();
-      },
-      (error) => {
-        logger
-          .createEvent()
-          .setLevel(XRayLogLevel.error)
-          .setMessage(`Error persisting to AsyncStorage: ${error}`)
-          .attachError(error)
-          .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
-          .send();
-      }
+async function persistInMemoryStoreInBackground() {
+  try {
+    const serializedStore = JSON.stringify(Array.from(inMemoryStore.entries()));
+    const result = await localStorage.setItem(
+      "base",
+      serializedStore,
+      IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY
     );
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.info)
+      .setMessage(`LocalStorage persisted to AsyncStorage ${serializedStore}`)
+      .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
+      .send();
+
+    return result;
+  } catch (error) {
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.error)
+      .setMessage(`Error persisting to AsyncStorage: ${error}`)
+      .attachError(error)
+      .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
+      .send();
+  }
 }
 
 function assertInitialized() {
