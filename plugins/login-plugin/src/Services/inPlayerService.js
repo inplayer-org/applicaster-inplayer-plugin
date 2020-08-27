@@ -2,38 +2,89 @@ import InPlayer from "@inplayer-org/inplayer.js";
 import { checkStatus, params, errorResponse } from "./InPlayerUtils";
 import { getSrcFromAsset } from "../Utils/OVPProvidersMapper";
 import { initFromNativeLocalStorage, localStorage } from "../LocalStorageHack";
-import { withTimeout, DEFAULT_NETWORK_TIMEOUT } from "../Utils";
-
 import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
+
+import { logger as rootLogger } from "../Components/InPlayer";
+import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
+import {
+  createLogger,
+  BaseSubsystem,
+  BaseCategories,
+} from "../Services/LoggerService";
+
+export const logger = createLogger({
+  subsystem: BaseSubsystem,
+  category: BaseCategories.INPLAYER_SERVICE,
+  parent: rootLogger,
+});
 
 const IN_PLAYER_LAST_EMAIL_USED_KEY = "com.inplayer.lastEmailUsed";
 
 export async function setConfig(environment = "prod") {
+  logger
+    .createEvent()
+    .setLevel(XRayLogLevel.debug)
+    .addData({
+      environment: environment,
+    })
+    .setMessage(`Set InPlayer environment: ${environment}`)
+    .send();
+
   InPlayer.setConfig(environment);
 }
 
-export async function checkAccessForAsset2(assetId) {
-  const assetData = await withTimeout(
-    InPlayer.Asset.checkAccessForAsset(assetId),
-    DEFAULT_NETWORK_TIMEOUT,
-    "InPlayer.Asset.checkAccessForAsset"
-  );
-  return assetData;
-}
 export async function getAssetByExternalId(payload) {
   const assetData = externalAssetData({ payload });
+  const errorEvent = logger
+    .createEvent()
+    .setMessage(
+      `InPlayer.Asset.getExternalAsset: Can not retrieve external_asset_id`
+    )
+    .setLevel(XRayLogLevel.warning);
+
   if (assetData) {
     const { externalAssetId, inplayerAssetType } = assetData;
     const result = await InPlayer.Asset.getExternalAsset(
       inplayerAssetType,
       externalAssetId
     );
-    return result?.id || null;
+
+    const retVal = result?.id;
+    if (retVal) {
+      logger
+        .createEvent()
+        .setMessage(
+          `InPlayer.Asset.getExternalAsset >> Retrieved external_asset_id: ${retVal}`
+        )
+        .setLevel(XRayLogLevel.debug)
+        .addData({
+          inplayer_asset_id: retVal,
+          external_asset: result,
+          external_asset_data: {
+            external_asset_id: externalAssetId,
+            inplayer_asset_type: inplayerAssetType,
+          },
+        })
+        .send();
+      return retVal;
+    } else {
+      errorEvent
+        .addData({
+          external_asset_data: {
+            external_asset_id: externalAssetId,
+            inplayer_asset_type: inplayerAssetType,
+          },
+        })
+        .send();
+      return null;
+    }
   } else {
+    errorEvent.send();
     return null;
   }
 }
+
 export async function checkAccessForAsset({
   assetId,
   retryInCaseFail = false,
@@ -41,9 +92,24 @@ export async function checkAccessForAsset({
   tries = 5,
 }) {
   try {
-    const asset = await checkAccessForAsset2(assetId);
-    return { asset, src: getSrcFromAsset(asset) };
+    const asset = await InPlayer.Asset.checkAccessForAsset(assetId);
+    const src = getSrcFromAsset(asset);
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Asset.checkAccessForAsset >> inplayer_asset_id:${assetId}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        inplayer_asset_id: assetId,
+        inplayer_asset: asset,
+        src,
+      })
+      .send();
+
+    return { asset, src };
   } catch (error) {
+    //TODO: GO BACK NOT FINISHED
     if (retryInCaseFail && tries > 0) {
       await new Promise((r) => setTimeout(r, interval));
 
@@ -63,11 +129,32 @@ export async function checkAccessForAsset({
 }
 
 export function getAccessFees(assetId) {
-  return InPlayer.Asset.getAssetAccessFees(assetId);
+  const retVal = InPlayer.Asset.getAssetAccessFees(assetId);
+  logger
+    .createEvent()
+    .setMessage(
+      `InPlayer.Asset.getAssetAccessFees(assetId) >> inplayer_asset_id:${assetId}`
+    )
+    .setLevel(XRayLogLevel.debug)
+    .addData({
+      inplayer_asset_access_fees: retVal,
+      inplayer_asset_id: assetId,
+    })
+    .send();
+  return retVal;
 }
 
-export function getAllPackages({ clientId, purchaseKeysMapping }) {
-  console.log({ clientId, purchaseKeysMapping });
+export function getAllPackages({ clientId }) {
+  logger
+    .createEvent()
+    .setMessage(
+      `getAllPackages >> InPlayer.Asset.getPackage >> inplayer_asset_id:${clientId}`
+    )
+    .setLevel(XRayLogLevel.debug)
+    .addData({
+      inplayer_asset_id: clientId,
+    })
+    .send();
   return InPlayer.Asset.getPackage(clientId)
     .then((packagesList) => {
       return packagesList.collection;

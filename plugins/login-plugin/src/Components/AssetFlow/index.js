@@ -27,6 +27,19 @@ import {
   showAlert,
 } from "./Helper";
 import MESSAGES from "./Config";
+import {
+  createLogger,
+  Subsystems,
+  AssetCategories,
+} from "../../Services/LoggerService";
+import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
+import { logger as rootLogger } from "../../Components/InPlayer";
+
+export const logger = createLogger({
+  subsystem: Subsystems.AssetFlow,
+  category: AssetCategories.GENERAL,
+  parent: rootLogger,
+});
 
 const AssetFlow = (props) => {
   const { screenStyles } = props;
@@ -67,13 +80,32 @@ const AssetFlow = (props) => {
       payload,
       configuration,
     });
+
+    let eventMessage = "Asset flow invokation";
+    const event = logger.createEvent().setLevel(XRayLogLevel.debug);
+
     if (newAssetId) {
+      event
+        .addData({ inplayer_asset_id: newAssetId })
+        .setMessage(`${eventMessage} inplayer_asset_id:${newAssetId}`)
+        .send();
+
       setAssetId(newAssetId);
     } else {
       newAssetId = await getAssetByExternalId(payload);
       if (newAssetId && stillMounted) {
+        event
+          .addData({ inplayer_asset_id: newAssetId })
+          .setMessage(`${eventMessage} inplayer_asset_id:${newAssetId}`)
+          .send();
+
         setAssetId(newAssetId);
       } else {
+        event
+          .addData({ inplayer_asset_id: newAssetId })
+          .setMessage(`${eventMessage} failed, inplayer_asset_id is empty`)
+          .send();
+        event.addData({ success: false }).setMessage(eventMessage).send();
         completeAssetFlow({
           success: false,
           error: { message: MESSAGES.asset.fail },
@@ -120,7 +152,6 @@ const AssetFlow = (props) => {
         getAccessFees(assetId),
         getAllPackages({
           clientId: in_player_client_id,
-          purchaseKeysMapping,
         }),
       ]);
       if (resultPurchaseData.length === 0) {

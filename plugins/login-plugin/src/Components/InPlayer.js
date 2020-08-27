@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
 import LogoutFlow from "./LogoutFlow";
-import R from "ramda";
+import R, { prop } from "ramda";
 
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
@@ -79,13 +79,12 @@ const InPlayer = (props) => {
     const {
       configuration: { in_player_environment },
     } = props;
+    logger.addContext({ configuration: props.configuration, payload });
 
     logger
       .createEvent()
       .setLevel(XRayLogLevel.debug)
-      .setMessage(
-        `Starting InPlayer Plugin. Setup InPlayer environment: ${in_player_environment}`
-      )
+      .setMessage(`Starting InPlayer Plugin`)
       .addData({ in_player_environment })
       .send();
 
@@ -112,7 +111,10 @@ const InPlayer = (props) => {
         .createEvent()
         .setLevel(XRayLogLevel.debug)
         .setMessage(`Plugin invoked as a player hook`)
-        .addData({ authenticationRequired, inplayer_asset_id: assetId })
+        .addData({
+          authentication_required: authenticationRequired,
+          inplayer_asset_id: assetId,
+        })
         .send();
 
       if (authenticationRequired || assetId) {
