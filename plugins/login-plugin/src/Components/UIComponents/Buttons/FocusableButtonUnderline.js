@@ -18,7 +18,7 @@ const localStyles = StyleSheet.create({
   },
 });
 
-const Button = React.useRef(
+const Button = React.forwardRef(
   (
     {
       onPress,
