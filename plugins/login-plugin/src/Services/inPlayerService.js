@@ -1,39 +1,91 @@
+import R from "ramda";
 import InPlayer from "@inplayer-org/inplayer.js";
 import { checkStatus, params, errorResponse } from "./InPlayerUtils";
 import { getSrcFromAsset } from "../Utils/OVPProvidersMapper";
-import { initFromNativeLocalStorage, localStorage } from "../LocalStorageHack";
-import { withTimeout, DEFAULT_NETWORK_TIMEOUT } from "../Utils";
-
+import { localStorage } from "../LocalStorageHack";
 import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
+
+import { logger as rootLogger } from "../Components/InPlayer";
+import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
+import {
+  createLogger,
+  BaseSubsystem,
+  BaseCategories,
+} from "../Services/LoggerService";
+
+export const logger = createLogger({
+  subsystem: BaseSubsystem,
+  category: BaseCategories.INPLAYER_SERVICE,
+  parent: rootLogger,
+});
 
 const IN_PLAYER_LAST_EMAIL_USED_KEY = "com.inplayer.lastEmailUsed";
 
 export async function setConfig(environment = "prod") {
+  logger
+    .createEvent()
+    .setLevel(XRayLogLevel.debug)
+    .addData({
+      environment: environment,
+    })
+    .setMessage(`Set InPlayer environment: ${environment}`)
+    .send();
+
   InPlayer.setConfig(environment);
 }
 
-export async function checkAccessForAsset2(assetId) {
-  const assetData = await withTimeout(
-    InPlayer.Asset.checkAccessForAsset(assetId),
-    DEFAULT_NETWORK_TIMEOUT,
-    "InPlayer.Asset.checkAccessForAsset"
-  );
-  return assetData;
-}
 export async function getAssetByExternalId(payload) {
   const assetData = externalAssetData({ payload });
+  const errorEvent = logger
+    .createEvent()
+    .setMessage(
+      `InPlayer.Asset.getExternalAsset >> Can not retrieve external_asset_id`
+    )
+    .setLevel(XRayLogLevel.warning);
+
   if (assetData) {
     const { externalAssetId, inplayerAssetType } = assetData;
     const result = await InPlayer.Asset.getExternalAsset(
       inplayerAssetType,
       externalAssetId
     );
-    return result?.id || null;
+
+    const retVal = result?.id;
+    if (retVal) {
+      logger
+        .createEvent()
+        .setMessage(
+          `InPlayer.Asset.getExternalAsset >> external_asset_id: ${externalAssetId}, inplayer_asset_type: ${inplayerAssetType} >> inplayer_asset_id: ${retVal}, title: ${result?.title}`
+        )
+        .setLevel(XRayLogLevel.debug)
+        .addData({
+          inplayer_asset_id: retVal,
+          external_asset: result,
+          external_asset_data: {
+            external_asset_id: externalAssetId,
+            inplayer_asset_type: inplayerAssetType,
+          },
+        })
+        .send();
+      return retVal;
+    } else {
+      errorEvent
+        .addData({
+          external_asset_data: {
+            external_asset_id: externalAssetId,
+            inplayer_asset_type: inplayerAssetType,
+          },
+        })
+        .send();
+      return null;
+    }
   } else {
+    errorEvent.send();
     return null;
   }
 }
+
 export async function checkAccessForAsset({
   assetId,
   retryInCaseFail = false,
@@ -41,144 +93,475 @@ export async function checkAccessForAsset({
   tries = 5,
 }) {
   try {
-    const asset = await checkAccessForAsset2(assetId);
-    return { asset, src: getSrcFromAsset(asset) };
+    const asset = await InPlayer.Asset.checkAccessForAsset(assetId);
+    const src = getSrcFromAsset(asset);
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Asset.checkAccessForAsset >> inplayer_asset_id: ${assetId}, title: ${asset?.title}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        inplayer_asset_id: assetId,
+        inplayer_asset: asset,
+        src,
+      })
+      .send();
+
+    return { asset, src };
   } catch (error) {
+    const event = logger
+      .createEvent()
+      .addData({
+        response: error?.response,
+        is_purchase_required: false,
+      })
+      .attachError(error);
+
     if (retryInCaseFail && tries > 0) {
       await new Promise((r) => setTimeout(r, interval));
+      const newInterval = interval * 2;
+      const tries = tries - 1;
+      event
+        .setMessage(
+          `InPlayer.Asset.checkAccessForAsset >> status: ${error?.response?.status}, url: ${error?.response?.url} >> retry to load`
+        )
+        .setLevel(XRayLogLevel.debug)
+        .addData({
+          inplayer_asset_id: assetId,
+          interval: newInterval,
+          tries,
+        })
+        .send();
 
       return await checkAccessForAsset({
         assetId,
         retryInCaseFail: true,
-        interval: interval * 2,
-        tries: tries - 1,
+        interval,
+        tries,
       });
     } else {
-      if (assetPaymentRequired(error)) {
-        throw { ...error, requestedToPurchase: assetPaymentRequired(error) };
+      const isPurchaseRequired = assetPaymentRequired(error);
+
+      if (isPurchaseRequired) {
+        event
+          .addData({
+            is_purchase_required: isPurchaseRequired,
+          })
+          .setMessage(
+            `InPlayer.Asset.checkAccessForAsset >> status: ${error?.response?.status}, url: ${error?.response?.url}, is_purchase_required: ${isPurchaseRequired}`
+          )
+          .setLevel(XRayLogLevel.debug)
+          .send();
+
+        throw { ...error, requestedToPurchase: isPurchaseRequired };
       }
+      event
+        .setMessage(
+          `InPlayer.Asset.checkAccessForAsset >> status: ${error?.response?.status}, url: ${error?.response?.url}`
+        )
+        .setLevel(XRayLogLevel.error)
+        .send();
       throw error;
     }
   }
 }
 
-export function getAccessFees(assetId) {
-  return InPlayer.Asset.getAssetAccessFees(assetId);
+export async function getAccessFees(assetId) {
+  try {
+    const retVal = await InPlayer.Asset.getAssetAccessFees(assetId);
+    const descriptions = R.map(R.prop("description"))(retVal);
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Asset.getAssetAccessFees >> inplayer_asset_id: ${assetId}, fees_count: ${retVal.length}, fee_descriptions: ${descriptions}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        inplayer_asset_access_fees: retVal,
+        inplayer_asset_id: assetId,
+      })
+      .send();
+    return retVal;
+  } catch (error) {
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Asset.getAssetAccessFees >> status: ${error?.response?.status}, url: ${error?.response?.url}, inplayer_asset_id: ${assetId}`
+      )
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        inplayer_asset_id: assetId,
+      })
+      .attachError(error)
+      .send();
+    throw error;
+  }
 }
 
-export function getAllPackages({ clientId, purchaseKeysMapping }) {
-  console.log({ clientId, purchaseKeysMapping });
-  return InPlayer.Asset.getPackage(clientId)
+export function getAllPackages({ in_player_client_id }) {
+  return InPlayer.Asset.getPackage(in_player_client_id)
     .then((packagesList) => {
-      return packagesList.collection;
+      const collection = packagesList.collection;
+      const titles = R.map(R.prop("title"))(collection);
+      logger
+        .createEvent()
+        .setMessage(
+          `InPlayer.Asset.getPackage >> inplayer_asset_id: ${in_player_client_id}, packages_count: ${collection.length}, titles: ${titles}`
+        )
+        .setLevel(XRayLogLevel.debug)
+        .addData({
+          in_player_client_id,
+          collection,
+          packages_list: packagesList,
+        })
+        .send();
+
+      return collection;
     })
     .then(loadAllPackages)
     .catch((error) => {
-      console.log({ error });
+      logger
+        .createEvent()
+        .setMessage(
+          `InPlayer.Asset.getPackage >> status: ${error?.response?.status}, url: ${error?.response?.url}, inplayer_asset_id: ${in_player_client_id}`
+        )
+        .setLevel(XRayLogLevel.error)
+        .addData({
+          in_player_client_id,
+        })
+        .attachError(error)
+        .send();
+      throw error;
     });
 }
 
-export function loadAllPackages(collection) {
+export async function loadAllPackages(collection) {
+  const titles = R.map(R.prop("title"))(collection);
+
+  logger
+    .createEvent()
+    .setMessage(
+      `loadAllPackages >> packages_count: ${collection.length}, packages_titles: ${titles}`
+    )
+    .setLevel(XRayLogLevel.debug)
+    .addData({
+      collection,
+    })
+    .send();
+
   const promises = collection.map((item) => {
     return InPlayer.Asset.getPackage(item.id);
   });
-
-  return Promise.all(promises);
+  try {
+    const retVal = await Promise.all(promises);
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Asset.getPackage >> All Package Loaded >> packages_count: ${retVal.length}, packages_titles: ${titles}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        collection,
+      })
+      .send();
+    return retVal;
+  } catch (error) {
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Asset.getPackage >> status: ${error?.response?.status}, url: ${error?.response?.url}, packages_count: ${titles.length}, packages_titles: ${titles}`
+      )
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        collection,
+      })
+      .attachError(error)
+      .send();
+    throw error;
+  }
 }
 
-export async function isAuthenticated(clientId) {
+export async function isAuthenticated(in_player_client_id) {
   try {
-    await initFromNativeLocalStorage();
     // InPlayer.Account.isAuthenticated() returns true even if token expired
     // To handle this case InPlayer.Account.getAccount() was used
     await InPlayer.Account.getAccount();
+    logger
+      .createEvent()
+      .setMessage(`InPlayer.Account.getAccount >> isAuthenticated: true`)
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        in_player_client_id,
+        is_authenticated: true,
+      })
+      .send();
     return true;
-  } catch (err) {
-    const res = await err.response.json();
+  } catch (error) {
+    const res = await error.response.json();
+
     if (res?.code === 403) {
-      await InPlayer.Account.refreshToken(clientId);
+      await InPlayer.Account.refreshToken(in_player_client_id);
+      logger
+        .createEvent()
+        .setMessage(
+          `InPlayer.Account.getAccount >> status: ${res?.code}, is_authenticated: true`
+        )
+        .setLevel(XRayLogLevel.debug)
+        .addData({
+          in_player_client_id,
+          is_authenticated: true,
+        })
+        .attachError(error)
+        .send();
       return true;
     }
+
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Account.getAccount >> status: ${res?.code}, is_authenticated: false`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        in_player_client_id,
+        is_authenticated: false,
+      })
+      .attachError(error)
+      .send();
     return false;
   }
 }
 
 export async function login({ email, password, clientId, referrer }) {
-  console.log("InPlayerService.login");
-  await initFromNativeLocalStorage();
   email && (await localStorage.setItem(IN_PLAYER_LAST_EMAIL_USED_KEY, email));
   try {
-    return await InPlayer.Account.authenticate({
+    const retVal = await InPlayer.Account.authenticate({
       email,
       password,
       clientId,
       referrer,
     });
-  } catch (e) {
-    const { response } = e;
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Account.authenticate >> succeed: true, email: ${email}, password: ${password}, in_player_client_id:${clientId}, referrer: ${referrer}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        email,
+        password,
+        in_player_client_id: clientId,
+        referrer,
+        succeed: true,
+      })
+      .send();
+    return retVal;
+  } catch (error) {
+    const { response } = error;
     if (response && response.status == 403) {
-      console.log("Fetching with refreshToken");
       const refreshToken = response.headers.get("x-inplayer-token");
-      console.log("Fetching with refreshToken", refreshToken);
-      return await InPlayer.Account.authenticate({
+      const retVal = await InPlayer.Account.authenticate({
         refreshToken,
         clientId,
         referrer,
       });
+
+      logger
+        .createEvent()
+        .setMessage(
+          `InPlayer.Account.authenticate with refresh_token >> succeed: true, email: ${email}, password: ${password}, in_player_client_id:${clientId}, referrer: ${referrer}`
+        )
+        .setLevel(XRayLogLevel.debug)
+        .addData({
+          email,
+          password,
+          in_player_client_id: clientId,
+          referrer,
+          refreshToken,
+          succeed: true,
+        })
+        .send();
+
+      return retVal;
     } else {
-      throw e;
+      logger
+        .createEvent()
+        .setMessage(
+          `InPlayer.Account.authenticate >> status: ${response?.status}, url: ${response?.url}, isAuthenticated: true, email: ${email}, password: ${password}, in_player_client_id:${clientId}, referrer: ${referrer} `
+        )
+        .setLevel(XRayLogLevel.error)
+        .addData({
+          email,
+          password,
+          in_player_client_id: clientId,
+          referrer,
+          is_authenticated: false,
+        })
+        .attachError(error)
+        .send();
+      throw error;
     }
   }
 }
 
 export async function signUp(params) {
   const { fullName, email, password, clientId, referrer } = params;
-  await initFromNativeLocalStorage();
 
-  console.log({ clientId });
-  return await InPlayer.Account.signUp({
-    fullName,
-    email,
-    password,
-    passwordConfirmation: password,
-    clientId,
-    referrer,
-    metadata: ["Dummy"],
-    type: "consumer",
-  });
+  try {
+    const retVal = await InPlayer.Account.signUp({
+      fullName,
+      email,
+      password,
+      passwordConfirmation: password,
+      clientId,
+      referrer,
+      metadata: ["Dummy"],
+      type: "consumer",
+    });
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Account.signUp >> succeed: true, fullName:${fullName}, email: ${email}, password: ${password}, password_confirmation: ${password}, in_player_client_id:${clientId}, referrer: ${referrer}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        fullName,
+        email,
+        password,
+        password_confirmation: password,
+        in_player_client_id: clientId,
+        referrer,
+        metadata: ["Dummy"],
+        type: "consumer",
+        succeed: true,
+      })
+      .send();
+    return retVal;
+  } catch (error) {
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Account.authenticate >> status: ${error?.response?.status}, url: ${error?.response?.url}, succeed: false, fullName:${fullName}, email: ${email}, password: ${password}, password_confirmation: ${password}, in_player_client_id:${clientId}, referrer: ${referrer}`
+      )
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        fullName,
+        email,
+        password,
+        password_confirmation: password,
+        in_player_client_id: clientId,
+        referrer,
+        metadata: ["Dummy"],
+        type: "consumer",
+        succeed: false,
+      })
+      .attachError(error)
+      .send();
+    throw error;
+  }
 }
 
 export async function requestPassword({ email, clientId }) {
-  const result = await InPlayer.Account.requestNewPassword({
-    email,
-    merchantUuid: clientId,
-    branding_id: null,
-  });
-  return result;
+  try {
+    const retVal = await InPlayer.Account.requestNewPassword({
+      email,
+      merchantUuid: clientId,
+      branding_id: null,
+    });
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Account.requestNewPassword >> succeed: true, email: ${email}, in_player_client_id:${clientId}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({ email, in_player_client_id: clientId, succeed: true })
+      .send();
+    return retVal;
+  } catch (error) {
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Account.requestNewPassword >> status: ${error?.response?.status}, url: ${error?.response?.url}, succeed: false, email: ${email}, in_player_client_id:${clientId}`
+      )
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        email,
+        in_player_client_id: clientId,
+        metadata: ["Dummy"],
+        type: "consumer",
+        succeed: false,
+      })
+      .attachError(error)
+      .send();
+    throw error;
+  }
 }
 
 export async function setNewPassword({ password, token }) {
-  await InPlayer.Account.setNewPassword(
-    {
-      password,
-      passwordConfirmation: password,
-    },
-    token
-  );
+  try {
+    await InPlayer.Account.setNewPassword(
+      {
+        password,
+        passwordConfirmation: password,
+      },
+      token
+    );
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Account.setNewPassword >> succeed: true, password: ${password}, password_confirmation:${password}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({ password, password_confirmation: password, succeed: true })
+      .send();
+  } catch (error) {
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Account.setNewPassword >> status: ${error?.response?.status}, url: ${error?.response?.url}, succeed: false, password: ${password}, password_confirmation:${password}`
+      )
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        password,
+        password_confirmation: password,
+        succeed: false,
+      })
+      .attachError(error)
+      .send();
+    throw error;
+  }
 }
 
 export async function signOut() {
-  await initFromNativeLocalStorage();
   if (!InPlayer.Account.isAuthenticated()) {
     return false;
   } else {
-    const result = await InPlayer.Account.signOut();
-    return true;
+    try {
+      const retVal = await InPlayer.Account.signOut();
+      logger
+        .createEvent()
+        .setMessage(`InPlayer.Account.signOut >> succeed: true`)
+        .setLevel(XRayLogLevel.debug)
+        .addData({ succeed: true })
+        .send();
+      return retVal;
+    } catch (error) {
+      logger
+        .createEvent()
+        .setMessage(`InPlayer.Account.signOut >> succeed: false`)
+        .setLevel(XRayLogLevel.error)
+        .addData({
+          succeed: false,
+        })
+        .attachError(error)
+        .send();
+      throw error;
+    }
   }
 }
 
 export async function getLastEmailUsed() {
-  await initFromNativeLocalStorage();
   return localStorage.getItem(IN_PLAYER_LAST_EMAIL_USED_KEY);
 }
 
@@ -188,40 +571,40 @@ export async function validateExternalPayment({
   item_id,
   access_fee_id,
 }) {
-  if (!InPlayer.Account.isAuthenticated()) {
-    errorResponse(401, {
-      code: 401,
-      message: "User is not authenticated",
-    });
-  }
-
-  if (!receipt) {
-    throw new Error("Payment receipt is a required parameter!");
-  }
-  if (!item_id) {
-    throw new Error("Payment item_id is a required parameter!");
-  }
-  if (!access_fee_id) {
-    throw new Error("Payment access_fee_id is a required parameter!");
-  }
-
-  let body = {
+  let event = logger.createEvent().setLevel(XRayLogLevel.debug).addData({
     receipt,
     item_id,
     access_fee_id,
-  };
-  console.log({ receipt });
-  const response = await fetch(externalPurchaseValidationURL(), {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${InPlayer.Account.getToken().token}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-      Accept: "application/json",
-    },
-    body: params(body),
   });
-  console.log({
-    request: {
+  try {
+    if (!InPlayer.Account.isAuthenticated()) {
+      errorResponse(401, {
+        code: 401,
+        message: "User is not authenticated",
+      });
+    }
+
+    if (!receipt) {
+      throw new Error("Payment receipt is a required parameter!");
+    }
+    if (!item_id) {
+      throw new Error("Payment item_id is a required parameter!");
+    }
+    if (!access_fee_id) {
+      throw new Error("Payment access_fee_id is a required parameter!");
+    }
+
+    let body = {
+      receipt,
+      item_id,
+      access_fee_id,
+    };
+
+    event.addData({
+      validation_url: externalPurchaseValidationURL(),
+    });
+
+    const response = await fetch(externalPurchaseValidationURL(), {
       method: "POST",
       headers: {
         Authorization: `Bearer ${InPlayer.Account.getToken().token}`,
@@ -229,11 +612,33 @@ export async function validateExternalPayment({
         Accept: "application/json",
       },
       body: params(body),
-    },
-  });
-  checkStatus(response);
+    });
+    event.addData({
+      response,
+    });
 
-  return await response.json();
+    checkStatus(response);
+    const retVal = await response.json();
+    event
+      .addData({
+        parsed_response: retVal,
+      })
+      .setMessage(
+        `InPlayer validate external payment >> succeed: true, url:${externalPurchaseValidationURL()}`
+      )
+      .send();
+
+    return retVal;
+  } catch (error) {
+    event
+      .setMessage(
+        `InPlayer validate external payment >> succeed: false, url:${externalPurchaseValidationURL()}`
+      )
+      .setLevel(XRayLogLevel.error)
+      .attachError(error)
+      .send();
+    throw error;
+  }
 }
 
 // Currently is not working
@@ -243,7 +648,6 @@ export function unsubscribeNotifications() {
 
 // Currently is not working
 export async function subscribeNotifications({ clientId, callbacks }) {
-  console.log({ clientId: clientId });
   const iotData = await InPlayer.Notifications.getIotToken();
 
   return await InPlayer.Notifications.handleSubscribe(

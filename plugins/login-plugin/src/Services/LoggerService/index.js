@@ -4,6 +4,8 @@ export const BaseSubsystem = "plugins/quick-brick-inplayer";
 export const BaseCategories = {
   GENERAL: "general",
   LOCAL_STORAGE: "local_storage_wrapper",
+  PAYLOAD_HELPER: "payload_helper",
+  INPLAYER_SERVICE: "inplayer_service",
 };
 
 export const Subsystems = {
@@ -21,10 +23,14 @@ export const AccountSubsystems = {
 
 export const AssetSubsystems = {
   STOREFRONT: `${Subsystems.ASSET}/storefront`,
-  POLICY: `${Subsystems.ASSET}licence_policy`,
+  POLICY: `${Subsystems.ASSET}/licence_policy`,
+};
+export const AssetCategories = {
+  GENERAL: "general",
 };
 
 export function createLogger({ category = "", subsystem, parent = null }) {
+  console.log("createLogger", { category, subsystem, parent });
   if (!subsystem) {
     return null;
   }

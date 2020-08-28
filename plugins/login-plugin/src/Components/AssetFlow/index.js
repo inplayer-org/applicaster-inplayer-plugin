@@ -27,6 +27,19 @@ import {
   showAlert,
 } from "./Helper";
 import MESSAGES from "./Config";
+import {
+  createLogger,
+  Subsystems,
+  AssetCategories,
+} from "../../Services/LoggerService";
+import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
+import { logger as rootLogger } from "../../Components/InPlayer";
+
+export const logger = createLogger({
+  subsystem: Subsystems.ASSET,
+  category: AssetCategories.GENERAL,
+  parent: rootLogger,
+});
 
 const AssetFlow = (props) => {
   const { screenStyles } = props;
@@ -67,13 +80,32 @@ const AssetFlow = (props) => {
       payload,
       configuration,
     });
+
+    let eventMessage = "Asset Flow:";
+    const event = logger.createEvent().setLevel(XRayLogLevel.debug);
+
     if (newAssetId) {
+      event
+        .addData({ inplayer_asset_id: newAssetId })
+        .setMessage(`${eventMessage} inplayer_asset_id: ${newAssetId}`)
+        .send();
+
       setAssetId(newAssetId);
     } else {
       newAssetId = await getAssetByExternalId(payload);
       if (newAssetId && stillMounted) {
+        event
+          .addData({ inplayer_asset_id: newAssetId })
+          .setMessage(`${eventMessage} inplayer_asset_id: ${newAssetId}`)
+          .send();
+
         setAssetId(newAssetId);
       } else {
+        event
+          .addData({ inplayer_asset_id: newAssetId })
+          .setMessage(`${eventMessage} failed, inplayer_asset_id is empty`)
+          .send();
+        event.addData({ success: false }).setMessage(eventMessage).send();
         completeAssetFlow({
           success: false,
           error: { message: MESSAGES.asset.fail },
@@ -119,10 +151,10 @@ const AssetFlow = (props) => {
       const resultPurchaseData = await Promise.all([
         getAccessFees(assetId),
         getAllPackages({
-          clientId: in_player_client_id,
-          purchaseKeysMapping,
+          in_player_client_id,
         }),
       ]);
+
       if (resultPurchaseData.length === 0) {
         throw new Error(MESSAGES.validation.noFees);
       }
@@ -161,19 +193,15 @@ const AssetFlow = (props) => {
   };
 
   const loadAsset = ({ startPurchaseFlow = false }) => {
-    console.log("LoadAsset");
     const { payload } = props;
 
     const retryInCaseFail = !startPurchaseFlow;
 
     checkAccessForAsset({ assetId, retryInCaseFail })
       .then((data) => {
-        console.log("LoadAsset2", { data });
-
         const src = data?.src;
 
         if (data && src) {
-          console.log({ src, data });
           const newPayload = src && {
             ...payload,
             content: { src },
