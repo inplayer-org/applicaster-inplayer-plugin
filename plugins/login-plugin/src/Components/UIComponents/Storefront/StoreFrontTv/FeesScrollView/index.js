@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, Platform } from "react-native";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
-import { useFocusRefs } from "@applicaster/zapp-react-native-utils/focusManager";
+import { Focusable as AndroidFocusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
 
-import { useInitialFocusAndroidOnly } from "../../../../../Utils/Hooks";
+import { useFocusManager } from "@applicaster/zapp-react-native-utils/focusManager";
+
 import FeeCard from "./FeeCard";
 import PropTypes from "prop-types";
 
@@ -17,14 +18,32 @@ const styles = StyleSheet.create({
   },
 });
 
-const FeesScrollView = (props) => {
-  const { screenStyles, dataSource, onPressPaymentOption } = props;
-  const listRefs = useFocusRefs();
+const Focusable =
+  Platform.OS === "android"
+    ? AndroidFocusable
+    : ({ children }) => children(false, {});
 
-  useInitialFocusAndroidOnly(props.focused, listRefs[0], {
-    refsList: listRefs,
-    withStateMemory: true,
-  });
+const FeesScrollView = React.forwardRef((props, ref) => {
+  const { screenStyles, dataSource, onPressPaymentOption } = props;
+  const [elRefs, setElRefs] = React.useState([]);
+  const { isFocused, setFocus } = useFocusManager();
+  const isScrollViewFocused = isFocused("fees-scroll-view");
+
+  const dataSourceLength = dataSource.length;
+
+  React.useEffect(() => {
+    setElRefs((elRefs) =>
+      Array(dataSourceLength)
+        .fill()
+        .map((_, i) => elRefs[i] || React.createRef())
+    );
+  }, [dataSourceLength]);
+
+  React.useLayoutEffect(() => {
+    if (isScrollViewFocused) {
+      setFocus(elRefs[0]);
+    }
+  }, [isScrollViewFocused, elRefs]);
 
   const groupId = "fee-scroll-view";
 
@@ -35,24 +54,35 @@ const FeesScrollView = (props) => {
       shouldUsePreferredFocus
       isParallaxDisabled
     >
-      <ScrollView horizontal={true}>
-        {dataSource.map((item, index) => (
-          <FeeCard
-            ref={listRefs[index]}
-            nextFocusUp={listRefs[index - 1] || props.nextFocusUp}
-            nextFocusDown={listRefs?.[index + 1] || props.nextFocusDown}
-            groupId={groupId}
-            screenStyles={screenStyles}
-            paymentOptionItem={item}
-            key={item.productIdentifier}
-            identifier={item.productIdentifier}
-            onPress={() => onPressPaymentOption(index)}
-          />
-        ))}
-      </ScrollView>
+      <Focusable
+        ref={ref}
+        id="fees-scroll-view"
+        nextFocusDown={props.nextFocusDown}
+        nextFocusUp={props.nextFocusUp}
+      >
+        {(focused, parentFocus) => (
+          <ScrollView horizontal={true}>
+            {dataSource.map((item, index) => (
+              <FeeCard
+                ref={elRefs[index]}
+                nextFocusUp={parentFocus.nextFocusUp}
+                nextFocusDown={parentFocus.nextFocusDown}
+                nextFocusRight={elRefs?.[index + 1]}
+                nextFocusLeft={elRefs?.[index - 1]}
+                groupId={groupId}
+                screenStyles={screenStyles}
+                paymentOptionItem={item}
+                key={item.productIdentifier}
+                identifier={item.productIdentifier}
+                onPress={() => onPressPaymentOption(index)}
+              />
+            ))}
+          </ScrollView>
+        )}
+      </Focusable>
     </FocusableGroup>
   );
-};
+});
 
 FeesScrollView.propTypes = {
   screenStyles: PropTypes.object,
@@ -70,5 +100,7 @@ FeesScrollView.defaultProps = {
   dataSource: [],
   onPressPaymentOption: () => {},
 };
+
+FeesScrollView.displayName = "FeesScrollView";
 
 export default FeesScrollView;
