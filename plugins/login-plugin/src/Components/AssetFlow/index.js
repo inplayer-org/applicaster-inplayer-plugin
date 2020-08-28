@@ -155,22 +155,6 @@ const AssetFlow = (props) => {
         }),
       ]);
 
-      // logger
-      // .createEvent()
-      // .setMessage(
-      //   `InPlayer.Asset.getExternalAsset: external_asset_id: ${externalAssetId}, inplayer_asset_type: ${inplayerAssetType} >> inplayer_asset_id: ${retVal}, title: ${result?.title}`
-      // )
-      // .setLevel(XRayLogLevel.debug)
-      // .addData({
-      //   inplayer_asset_id: retVal,
-      //   external_asset: result,
-      //   external_asset_data: {
-      //     external_asset_id: externalAssetId,
-      //     inplayer_asset_type: inplayerAssetType,
-      //   },
-      // })
-      // .send();
-
       if (resultPurchaseData.length === 0) {
         throw new Error(MESSAGES.validation.noFees);
       }
