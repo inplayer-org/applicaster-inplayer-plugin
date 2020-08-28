@@ -4,7 +4,9 @@ import { validateExternalPayment } from "./inPlayerService";
 import { findAsync } from "./InPlayerUtils";
 import * as R from "ramda";
 import MESSAGES from "../Components/AssetFlow/Config";
-ApplicasterIAPModule.init("play");
+if (Platform.isTV && Platform.OS === "android") {
+  ApplicasterIAPModule.init("play");
+}
 
 export async function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   if (!purchaseID) throw new Error(MESSAGES.validation.productId);
