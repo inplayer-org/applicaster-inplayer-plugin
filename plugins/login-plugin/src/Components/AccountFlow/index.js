@@ -56,7 +56,7 @@ const AccountFlow = (props) => {
   useLayoutEffect(() => {
     InPlayerService.isAuthenticated(clientId)
       .then(async (isAuthenticated) => {
-        let eventMessage = "Account flow invokation";
+        let eventMessage = "Account Flow:";
         const event = logger
           .createEvent()
           .setLevel(XRayLogLevel.debug)
@@ -64,17 +64,17 @@ const AccountFlow = (props) => {
 
         if (stillMounted) {
           if (isAuthenticated) {
-            eventMessage = `${eventMessage}, access provided finishing Account flow`;
+            eventMessage = `${eventMessage} access granted, flow completed`;
             accountFlowCallback({ success: true });
           } else {
             if (
               shouldShowParentLock &&
               shouldShowParentLock(props.parentLockWasPresented)
             ) {
-              eventMessage = `${eventMessage}, no access presenting parent lock`;
+              eventMessage = `${eventMessage} not granted, present parent lock`;
               presentParentLock();
             } else {
-              eventMessage = `${eventMessage}, no access presenting login screen`;
+              eventMessage = `${eventMessage} not granted, present login screen`;
               await authenticateUser();
             }
           }

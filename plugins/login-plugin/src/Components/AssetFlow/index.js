@@ -36,7 +36,7 @@ import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
 import { logger as rootLogger } from "../../Components/InPlayer";
 
 export const logger = createLogger({
-  subsystem: Subsystems.AssetFlow,
+  subsystem: Subsystems.ASSET,
   category: AssetCategories.GENERAL,
   parent: rootLogger,
 });
@@ -81,13 +81,13 @@ const AssetFlow = (props) => {
       configuration,
     });
 
-    let eventMessage = "Asset flow invokation";
+    let eventMessage = "Asset Flow:";
     const event = logger.createEvent().setLevel(XRayLogLevel.debug);
 
     if (newAssetId) {
       event
         .addData({ inplayer_asset_id: newAssetId })
-        .setMessage(`${eventMessage} inplayer_asset_id:${newAssetId}`)
+        .setMessage(`${eventMessage} inplayer_asset_id: ${newAssetId}`)
         .send();
 
       setAssetId(newAssetId);
@@ -96,7 +96,7 @@ const AssetFlow = (props) => {
       if (newAssetId && stillMounted) {
         event
           .addData({ inplayer_asset_id: newAssetId })
-          .setMessage(`${eventMessage} inplayer_asset_id:${newAssetId}`)
+          .setMessage(`${eventMessage} inplayer_asset_id: ${newAssetId}`)
           .send();
 
         setAssetId(newAssetId);
@@ -151,9 +151,26 @@ const AssetFlow = (props) => {
       const resultPurchaseData = await Promise.all([
         getAccessFees(assetId),
         getAllPackages({
-          clientId: in_player_client_id,
+          in_player_client_id,
         }),
       ]);
+
+      // logger
+      // .createEvent()
+      // .setMessage(
+      //   `InPlayer.Asset.getExternalAsset: external_asset_id: ${externalAssetId}, inplayer_asset_type: ${inplayerAssetType} >> inplayer_asset_id: ${retVal}, title: ${result?.title}`
+      // )
+      // .setLevel(XRayLogLevel.debug)
+      // .addData({
+      //   inplayer_asset_id: retVal,
+      //   external_asset: result,
+      //   external_asset_data: {
+      //     external_asset_id: externalAssetId,
+      //     inplayer_asset_type: inplayerAssetType,
+      //   },
+      // })
+      // .send();
+
       if (resultPurchaseData.length === 0) {
         throw new Error(MESSAGES.validation.noFees);
       }
@@ -192,19 +209,15 @@ const AssetFlow = (props) => {
   };
 
   const loadAsset = ({ startPurchaseFlow = false }) => {
-    console.log("LoadAsset");
     const { payload } = props;
 
     const retryInCaseFail = !startPurchaseFlow;
 
     checkAccessForAsset({ assetId, retryInCaseFail })
       .then((data) => {
-        console.log("LoadAsset2", { data });
-
         const src = data?.src;
 
         if (data && src) {
-          console.log({ src, data });
           const newPayload = src && {
             ...payload,
             content: { src },

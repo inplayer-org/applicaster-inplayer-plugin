@@ -63,6 +63,7 @@ const InPlayer = (props) => {
   }, []);
 
   const checkIdToken = async () => {
+    await initFromNativeLocalStorage();
     const token = await isTokenInStorage("idToken");
 
     logger
@@ -89,40 +90,34 @@ const InPlayer = (props) => {
       .send();
 
     await checkIdToken();
-    initFromNativeLocalStorage();
 
     setConfig(in_player_environment);
 
     const videoEntry = isVideoEntry(payload);
+    let event = logger.createEvent().setLevel(XRayLogLevel.debug);
+
     if (videoEntry) {
-      logger
-        .createEvent()
-        .setLevel(XRayLogLevel.debug)
-        .setMessage(`Plugin invoked as a player hook`)
-        .addData({ isVideoEntry: videoEntry })
-        .send();
       const authenticationRequired = isAuthenticationRequired({ payload });
       const assetId = inPlayerAssetId({
         payload,
         configuration: props.configuration,
       });
 
-      logger
-        .createEvent()
-        .setLevel(XRayLogLevel.debug)
-        .setMessage(`Plugin invoked as a player hook`)
-        .addData({
-          authentication_required: authenticationRequired,
-          inplayer_asset_id: assetId,
-        })
-        .send();
-
+      event.addData({
+        authentication_required: authenticationRequired,
+        inplayer_asset_id: assetId,
+        is_video_entry: videoEntry,
+      });
       if (authenticationRequired || assetId) {
+        event
+          .setMessage(`Plugin hook_type: ${HookTypeData.PLAYER_HOOK}`)
+          .addData({
+            hook_type: HookTypeData.PLAYER_HOOK,
+          })
+          .send();
         stillMounted && setHookType(HookTypeData.PLAYER_HOOK);
       } else {
-        logger
-          .createEvent()
-          .setLevel(XRayLogLevel.debug)
+        event
           .setMessage(
             "Data source not support InPlayer plugin invocation, finishing hook with: success"
           )
@@ -131,19 +126,19 @@ const InPlayer = (props) => {
       }
     } else {
       if (!isHook(navigator)) {
-        logger
-          .createEvent()
-          .setLevel(XRayLogLevel.debug)
-          .setMessage("Plugin invoked from User Account Plugin")
+        event
+          .setMessage(`Plugin hook_type: ${HookTypeData.USER_ACCOUNT}`)
+          .addData({
+            hook_type: HookTypeData.USER_ACCOUNT,
+          })
           .send();
         stillMounted && setHookType(HookTypeData.USER_ACCOUNT);
       } else {
-        logger
-          .createEvent()
-          .setLevel(XRayLogLevel.debug)
-          .setMessage(
-            "Plugin invoked as screen hook data source not exist or not video entry"
-          )
+        event
+          .setMessage(`Plugin hook_type: ${HookTypeData.SCREEN_HOOK}`)
+          .addData({
+            hook_type: HookTypeData.SCREEN_HOOK,
+          })
           .send();
         stillMounted && setHookType(HookTypeData.SCREEN_HOOK);
       }
@@ -154,7 +149,7 @@ const InPlayer = (props) => {
   };
 
   const assetFlowCallback = ({ success, payload, error }) => {
-    let eventMessage = `Asset flow completed success:${success}`;
+    let eventMessage = `Asset Flow completion: success ${success}`;
     const event = logger
       .createEvent()
       .setLevel(XRayLogLevel.debug)
@@ -181,12 +176,12 @@ const InPlayer = (props) => {
   };
 
   const accountFlowCallback = async ({ success }) => {
-    let eventMessage = `Account flow completed success: ${success}, hook_type: ${hookType}`;
+    let eventMessage = `Account Flow completion: success ${success}, hook_type: ${hookType}`;
 
     const event = logger
       .createEvent()
       .setLevel(XRayLogLevel.debug)
-      .addData({ success, payload, hookType });
+      .addData({ success, payload, hook_type: hookType });
 
     if (success) {
       const token = localStorage.getItem("inplayer_token");
@@ -196,24 +191,24 @@ const InPlayer = (props) => {
 
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
-      eventMessage = `${eventMessage}, hook task finished`;
+      event.setMessage(`${eventMessage}, plugin finished task`).send();
       callback && callback({ success, error: null, payload: payload });
     } else if (hookType === HookTypeData.PLAYER_HOOK) {
       if (success) {
-        eventMessage = `${eventMessage}, account flow completed. Will start invocation of Asset flow`;
+        event.setMessage(`${eventMessage}, next: Asset Flow`).send();
         stillMounted && setIsUserAuthenticated(true);
       } else {
+        event.setMessage(`${eventMessage}, plugin finished task`).send();
         callback && callback({ success, error: null, payload: payload });
-        eventMessage = `${eventMessage}, task finished`;
       }
     } else if (hookType === HookTypeData.USER_ACCOUNT) {
-      eventMessage = `${eventMessage}, task finished going back to previous screen`;
+      event.setMessage(`${eventMessage}, plugin finished task: go back`).send();
       navigator.goBack();
     } else {
+      event.setMessage(`${eventMessage}, plugin finished task`).send();
+
       callback && callback({ success: success, error: null, payload: payload });
     }
-
-    event.setMessage(eventMessage).send();
   };
 
   const renderPlayerHook = () => {

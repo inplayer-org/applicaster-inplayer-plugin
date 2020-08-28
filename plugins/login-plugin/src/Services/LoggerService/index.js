@@ -30,6 +30,7 @@ export const AssetCategories = {
 };
 
 export function createLogger({ category = "", subsystem, parent = null }) {
+  console.log("createLogger", { category, subsystem, parent });
   if (!subsystem) {
     return null;
   }

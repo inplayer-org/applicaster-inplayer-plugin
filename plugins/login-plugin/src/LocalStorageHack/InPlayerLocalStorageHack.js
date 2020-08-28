@@ -21,7 +21,7 @@ export function initFromNativeLocalStorage() {
     logger
       .createEvent()
       .setLevel(XRayLogLevel.info)
-      .setMessage("InPlayerLocalStorageHack: calling AsyncStorage.getItem")
+      .setMessage("InPlayerLocalStoragePolyfill: AsyncStorage.getItem")
       .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
       .send();
 
@@ -33,8 +33,8 @@ export function initFromNativeLocalStorage() {
         logger
           .createEvent()
           .setLevel(XRayLogLevel.info)
-          .setMessage(`Local Storage Initialized: ${base}`)
-          .addData({ base, in_memory_store: inMemoryStore })
+          .setMessage(`Local Storage Initialized`)
+          .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
           .send();
 
         return inMemoryStore;
@@ -86,7 +86,7 @@ async function persistInMemoryStoreInBackground() {
 function assertInitialized() {
   if (!isInitialized) {
     throw new Error(
-      "Trying to use InPlayerLocalStorageHack before it was initialized"
+      "Trying to use InPlayerLocalStoragePolyfill before it was initialized"
     );
   }
 }
