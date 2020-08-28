@@ -1,16 +1,16 @@
 import React from "react";
-import { StyleSheet, View, BackHandler } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
 
 import { mapKeyToStyle } from "../../../Utils/Customization";
+import { useBackHandler } from "../../../Utils/Hooks";
 
-import LoginControls from "./LoginControls";
+import FocusableElements from "./FocusableElements";
 import Title from "./Title";
 import Subtitle from "./Subtitle";
 import Paragraph from "./Paragraph";
 import ClientLogo from "../../UIComponents/ClientLogo";
-import SignUpControls from "./SignUpControls";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,16 +21,16 @@ const styles = StyleSheet.create({
   loginControls: {
     position: "relative",
     width: 556,
-    marginTop: 232,
+    marginTop: 300,
     marginRight: 250,
   },
   singUpControls: {
-    marginTop: 232,
+    marginTop: 270,
     width: 556,
   },
   contentWrapper: {
     width: 687,
-    marginTop: 232,
+    marginTop: 310,
     marginLeft: 259,
     marginRight: 168,
   },
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 350,
     position: "absolute",
-    top: 0,
+    top: 58,
     left: 58,
   },
   paragraphContainer: {
@@ -62,12 +62,7 @@ const LoginInterface = (props) => {
     },
   } = props;
 
-  React.useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
-    };
-  }, []);
+  useBackHandler(hardwareBack);
 
   const hardwareBack = () => {
     accountFlowCallback(false);
@@ -115,21 +110,16 @@ const LoginInterface = (props) => {
           />
         </View>
       </View>
-      <View>
-        <LoginControls
-          {...{
-            style: styles.loginControls,
-            onLogin,
-            errorMessage,
-            screenStyles,
-          }}
-        />
-        <SignUpControls
-          style={styles.singUpControls}
-          onPress={onSignup}
-          screenStyles={screenStyles}
-        />
-      </View>
+      <FocusableElements
+        {...{
+          onLogin,
+          errorMessage,
+          onSignup,
+          screenStyles,
+          loginStyles: styles.loginControls,
+          signupStyles: styles.singUpControls,
+        }}
+      />
     </View>
   );
 };

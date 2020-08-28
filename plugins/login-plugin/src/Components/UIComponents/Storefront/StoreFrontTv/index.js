@@ -1,6 +1,8 @@
 import React from "react";
-import { StyleSheet, View, BackHandler } from "react-native";
+import { StyleSheet, View } from "react-native";
 import * as R from "ramda";
+import PropTypes from "prop-types";
+
 import SubscriptionTitle from "./SubscriptionTitle";
 import SubscriptionDescription from "./SubscriptionDescription";
 import EventDateTitle from "./EventDateTitle";
@@ -8,10 +10,12 @@ import PolicyAgreementTitle from "./PolicyAgreementTitle";
 import FeesScrollView from "./FeesScrollView";
 import ClientLogo from "../../ClientLogo";
 import Button from "../../Buttons/FocusableButton";
-import ButtonUderline from "../../Buttons/FocusableButtonUnderline";
+import ButtonUnderline from "../../Buttons/FocusableButtonUnderline";
 import { mapKeyToStyle } from "../../../../Utils/Customization";
-
-import PropTypes from "prop-types";
+import {
+  useBackHandler,
+  androidOnlySetInitialFocus,
+} from "../../../../Utils/Hooks";
 
 const StoreFrontTv = (props) => {
   const {
@@ -31,12 +35,13 @@ const StoreFrontTv = (props) => {
     subscriber_agreement_and_privacy_policy_text_active_color,
   } = screenStyles;
 
-  React.useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
-    };
-  }, []);
+  const subscriptionsListRef = React.useRef(null);
+  const restorePurchaseButtonRef = React.useRef(null);
+  const agreementButtonRef = React.useRef(null);
+
+  useBackHandler(hardwareBack);
+
+  androidOnlySetInitialFocus(subscriptionsListRef);
 
   const hardwareBack = () => {
     onHandleBack();
@@ -101,9 +106,16 @@ const StoreFrontTv = (props) => {
         <SubscriptionDescription {...props} />
         <PolicyAgreementTitle {...props} />
       </View>
-      <FeesScrollView {...props} />
+      <FeesScrollView
+        ref={subscriptionsListRef}
+        nextFocusDown={restorePurchaseButtonRef}
+        {...props}
+      />
       <View style={styles.restoreButtonWrapperView}>
         <Button
+          ref={restorePurchaseButtonRef}
+          nextFocusUp={subscriptionsListRef}
+          nextFocusDown={agreementButtonRef}
           label={restore_purchase_action_button_text}
           textStyles={restoreButtonTextStyle}
           textColorFocused={restoreButtonTextStyle.color}
@@ -115,7 +127,9 @@ const StoreFrontTv = (props) => {
         />
       </View>
       <View style={styles.subscriberAgreementWrapperView}>
-        <ButtonUderline
+        <ButtonUnderline
+          ref={agreementButtonRef}
+          nextFocusUp={restorePurchaseButtonRef}
           textStyles={subscriberAgreementStyles}
           textColorFocused={
             subscriber_agreement_and_privacy_policy_text_active_color

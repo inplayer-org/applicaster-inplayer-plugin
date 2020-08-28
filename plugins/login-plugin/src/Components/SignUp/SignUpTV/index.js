@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import * as R from "ramda";
 import PropTypes from "prop-types";
-import { View, BackHandler, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 
 import ClientLogo from "../../UIComponents/ClientLogo";
 import { mapKeyToStyle } from "../../../Utils/Customization";
+import { useBackHandler } from "../../../Utils/Hooks";
 import SignupControls from "./SignupControls";
 import { validateSignUpData } from "../../../Utils/Account";
 
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 350,
     position: "absolute",
-    top: 0,
+    top: 58,
     left: 58,
   },
 });
@@ -45,12 +46,7 @@ const SignUpMobile = (props) => {
     }
   };
 
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
-    };
-  }, []);
+  useBackHandler(hardwareBack);
 
   const hardwareBack = () => {
     props?.onBackButton();
@@ -75,7 +71,7 @@ const SignUpMobile = (props) => {
   );
 
   return (
-    <View style={[styles.container, { width: screenWidth }]}>
+    <View style={[styles.container, { width: screenWidth || 1920 }]}>
       <View style={styles.clientLogoView}>
         <ClientLogo imageSrc={screenStyles.client_logo} />
       </View>

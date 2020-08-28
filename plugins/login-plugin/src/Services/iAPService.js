@@ -4,6 +4,9 @@ import { validateExternalPayment } from "./inPlayerService";
 import { findAsync } from "./InPlayerUtils";
 import * as R from "ramda";
 import MESSAGES from "../Components/AssetFlow/Config";
+if (Platform.isTV && Platform.OS === "android") {
+  ApplicasterIAPModule.init("play");
+}
 
 export async function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
   if (!purchaseID) throw new Error(MESSAGES.validation.productId);
@@ -35,7 +38,7 @@ export function retrieveProducts(purchasableItems) {
 
       return item;
     })(purchasableItems);
-    
+
     console.log({ mappedPurchasableItems });
 
     return ApplicasterIAPModule.products(mappedPurchasableItems).then(

@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import {
-  View,
-  TextInput,
-  findNodeHandle,
-  Keyboard,
-  BackHandler,
-} from "react-native";
+import { View, TextInput, findNodeHandle, Keyboard } from "react-native";
 import { inputFieldStyle } from "../../../Utils/Customization";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -14,6 +8,7 @@ import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils"
 
 import { container } from "../../Styles";
 import { validateSignUpData } from "../../../Utils/Account";
+import { useBackHandler } from "../../../Utils/Hooks";
 import ActionButton from "../../UIComponents/Buttons/ActionButton.js";
 import TitleLabel from "../../UIComponents/TitleLabel";
 import BackButton from "../../UIComponents/Buttons/BackButton";
@@ -38,12 +33,7 @@ const SignUpMobile = (props) => {
     }
   };
 
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", hardwareBack);
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", hardwareBack);
-    };
-  }, []);
+  useBackHandler(hardwareBack);
 
   const hardwareBack = () => {
     props?.onBackButton();

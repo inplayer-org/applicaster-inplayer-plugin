@@ -404,12 +404,14 @@ const AccountFlow = (props) => {
     return <ParentLockPlugin.Component callback={parentLockCallback} />;
   }
 
+  const SafeArea = !Platform.isTV ? View : SafeAreaView;
+
   return (
     <View style={containerStyle(screenStyles)}>
-      <SafeAreaView style={container}>
+      <SafeArea style={container}>
         {renderAuthenteficationScreen()}
         {loading && <LoadingScreen />}
-      </SafeAreaView>
+      </SafeArea>
       {!Platform.isTV && (
         <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
       )}

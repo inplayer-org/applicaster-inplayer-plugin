@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { identity } from "ramda";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
 import { focusManager } from "@applicaster/zapp-react-native-utils/appUtils";
+import { findNextEmptyLabel } from "../../../Utils/Forms";
 
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
 import Button from "../../UIComponents/Buttons/FocusableButton";
@@ -56,25 +57,22 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
       const focusOnItem = (item) =>
         focusManager.forceFocusOnFocusable({ itemId: item });
 
-      if (label === "login-input") {
-        if (passwordValue === "") {
-          focusOnItem(passwordInputId);
-        } else {
-          if (usernameValue !== "") {
-            focusOnItem(loginButtonId);
-          }
-          // else, stay on username field
-        }
-      }
-      if (label === "password-input") {
-        if (usernameValue === "") {
+      const labels = [
+        { label: "login-input", value: usernameValue },
+        { label: "password-input", value: passwordValue },
+      ];
+
+      const nextEmptyLabel = findNextEmptyLabel(label, labels);
+
+      switch (nextEmptyLabel) {
+        case "login-input":
           focusOnItem(usernameInputId);
-        } else {
-          if (passwordValue !== "") {
-            focusOnItem(loginButtonId);
-          }
-          // else stay on password field
-        }
+          break;
+        case "password-input":
+          focusOnItem(passwordInputId);
+          break;
+        default:
+          focusOnItem(loginButtonId);
       }
     }, 1000);
   };
