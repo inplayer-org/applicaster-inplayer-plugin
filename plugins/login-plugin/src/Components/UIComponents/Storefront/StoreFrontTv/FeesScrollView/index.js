@@ -26,7 +26,7 @@ const Focusable =
 const FeesScrollView = React.forwardRef((props, ref) => {
   const { screenStyles, dataSource, onPressPaymentOption } = props;
   const [elRefs, setElRefs] = React.useState([]);
-  const { isFocused, setFocus } = useFocusManager();
+  const { isFocused, setFocus } = useFocusManager() || {};
   const isScrollViewFocused = isFocused("fees-scroll-view");
 
   const dataSourceLength = dataSource.length;
