@@ -121,7 +121,7 @@ export async function checkAccessForAsset({
     if (retryInCaseFail && tries > 0) {
       await new Promise((r) => setTimeout(r, interval));
       const newInterval = interval * 2;
-      const tries = tries - 1;
+      const newTries = tries - 1;
       event
         .setMessage(
           `InPlayer.Asset.checkAccessForAsset >> status: ${error?.response?.status}, url: ${error?.response?.url} >> retry to load`
@@ -130,15 +130,15 @@ export async function checkAccessForAsset({
         .addData({
           inplayer_asset_id: assetId,
           interval: newInterval,
-          tries,
+          tries: newTries,
         })
         .send();
 
       return await checkAccessForAsset({
         assetId,
         retryInCaseFail: true,
-        interval,
-        tries,
+        interval: newInterval,
+        tries: newTries,
       });
     } else {
       const isPurchaseRequired = assetPaymentRequired(error);
