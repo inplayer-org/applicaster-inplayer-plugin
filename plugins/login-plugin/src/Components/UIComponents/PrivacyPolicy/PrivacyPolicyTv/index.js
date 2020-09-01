@@ -20,11 +20,11 @@ const PrivacyPolicyTv = (props) => {
     privacy_text_area_background_color,
   } = screenStyles;
 
-  useBackHandler(hardwareBack);
-
   const hardwareBack = () => {
     onHandleBack();
   };
+
+  useBackHandler(hardwareBack);
 
   const tvosRemoteHandler = (component, event) => {
     const { eventType } = event;

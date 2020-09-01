@@ -62,11 +62,11 @@ const LoginInterface = (props) => {
     },
   } = props;
 
-  useBackHandler(hardwareBack);
-
   const hardwareBack = () => {
     accountFlowCallback(false);
   };
+
+  useBackHandler(hardwareBack);
 
   const titleStyles = React.useMemo(
     () => mapKeyToStyle("login_title", screenStyles),
