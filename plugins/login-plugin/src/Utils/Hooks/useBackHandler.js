@@ -7,5 +7,5 @@ export const useBackHandler = (cb) => {
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", cb);
     };
-  }, []);
+  }, [cb]);
 };

@@ -39,13 +39,13 @@ const StoreFrontTv = (props) => {
   const restorePurchaseButtonRef = React.useRef(null);
   const agreementButtonRef = React.useRef(null);
 
-  useBackHandler(hardwareBack);
-
-  androidOnlySetInitialFocus(subscriptionsListRef);
-
   const hardwareBack = () => {
     onHandleBack();
   };
+
+  useBackHandler(hardwareBack);
+
+  androidOnlySetInitialFocus(subscriptionsListRef);
 
   const styles = React.useMemo(() =>
     StyleSheet.create({

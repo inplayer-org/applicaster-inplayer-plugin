@@ -46,12 +46,11 @@ const SignUpMobile = (props) => {
     }
   };
 
-  useBackHandler(hardwareBack);
-
   const hardwareBack = () => {
     props?.onBackButton();
-    return true;
   };
+
+  useBackHandler(hardwareBack);
 
   const validateData = ({ fullName, email, password }) => {
     const title = "Sign Up form issue";
