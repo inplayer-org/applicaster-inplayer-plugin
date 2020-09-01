@@ -107,8 +107,8 @@
   "targets": ["mobile", "tv"],
   "ui_frameworks": ["quickbrick"],
   "platform": "tvos_for_quickbrick",
-  "dependency_version": "0.7.0-beta.41",
-  "manifest_version": "0.7.0-beta.41",
+  "dependency_version": "0.7.0-beta.42",
+  "manifest_version": "0.7.0-beta.42",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
