@@ -2153,12 +2153,13 @@ const project_dependencies = {
   apple: [],
   android: [
     {
-      ApplicasterIAP:
-        "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap",
+      "iap": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap"
     },
     {
-      ApplicasterIAPRN:
-        "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-rn",
+      "iap-uni": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-uni"
+    },
+    {
+      "iap-rn": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-rn"
     },
     {
       "react-native-community_blur":
