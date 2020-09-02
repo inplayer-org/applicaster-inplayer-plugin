@@ -416,7 +416,7 @@ export async function signUp(params) {
       passwordConfirmation: password,
       clientId,
       referrer,
-      metadata: ["Dummy"],
+      metadata: {},
       type: "consumer",
     });
     logger
@@ -432,7 +432,7 @@ export async function signUp(params) {
         password_confirmation: password,
         in_player_client_id: clientId,
         referrer,
-        metadata: ["Dummy"],
+        metadata: {},
         type: "consumer",
         succeed: true,
       })
@@ -452,7 +452,7 @@ export async function signUp(params) {
         password_confirmation: password,
         in_player_client_id: clientId,
         referrer,
-        metadata: ["Dummy"],
+        metadata: {},
         type: "consumer",
         succeed: false,
       })
