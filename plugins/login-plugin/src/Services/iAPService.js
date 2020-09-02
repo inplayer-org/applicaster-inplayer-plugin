@@ -4,25 +4,38 @@ import { validateExternalPayment } from "./inPlayerService";
 import { findAsync } from "./InPlayerUtils";
 import * as R from "ramda";
 import MESSAGES from "../Components/AssetFlow/Config";
-if (Platform.isTV && Platform.OS === "android") {
+
+if (Platform.OS === "android") {
   ApplicasterIAPModule.init("play");
 }
 
-export async function purchaseAnItem({ purchaseID, item_id, access_fee_id }) {
+export async function purchaseAnItem({
+  purchaseID,
+  item_id,
+  access_fee_id,
+  productType,
+}) {
   if (!purchaseID) throw new Error(MESSAGES.validation.productId);
 
   const purchaseCompletion = await ApplicasterIAPModule.purchase({
     productIdentifier: purchaseID,
-    finishing: true,
+    finishing: false,
+    productType,
   });
 
-  console.log({ purchaseID, item_id, access_fee_id });
-
-  return externalPaymentValidation({
+  const result = await externalPaymentValidation({
     purchaseCompletion,
     item_id,
     access_fee_id,
   });
+
+  //TODO: When InPlayer will implement validation external transaction, should be called exectly when validation will send completion
+  await ApplicasterIAPModule.finishPurchasedTransaction({
+    ...purchaseCompletion,
+    productType,
+  });
+
+  return result;
 }
 
 export function retrieveProducts(purchasableItems) {

@@ -241,7 +241,11 @@ const AssetFlow = (props) => {
     invokeCallBack(props, completionObject);
   };
 
-  const buyItem = async ({ productIdentifier, inPlayerProductId }) => {
+  const buyItem = async ({
+    productIdentifier,
+    inPlayerProductId,
+    productType,
+  }) => {
     if (!productIdentifier || !inPlayerProductId) {
       const error = new Error(MESSAGES.validation.productId);
       return completeAssetFlow({ success: false, error });
@@ -258,6 +262,7 @@ const AssetFlow = (props) => {
         purchaseID: productIdentifier,
         item_id,
         access_fee_id,
+        productType,
       });
 
       setDataSource(null);

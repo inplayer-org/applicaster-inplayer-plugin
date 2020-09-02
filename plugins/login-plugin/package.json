@@ -12,7 +12,7 @@
   "dependencies": {
     "@applicaster/applicaster-iap": "0.3.0-alpha2",
     "@applicaster/quick-brick-parent-lock": "*",
-    "@inplayer-org/inplayer.js": "2.13.3",
+    "@inplayer-org/inplayer.js": "0.3.1-alpha.0",
     "@react-native-community/blur": "3.4.1",
     "axios": "^0.19.1",
     "moment": "^2.24.0",
