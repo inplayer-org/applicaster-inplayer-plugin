@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
-import { mapKeyToStyle } from "../../../../../../Utils/Customization";
 import FeeTitle from "./FeeTitle";
 import FeeDescription from "./FeeDescription";
 import FeeType from "./FeeType";
@@ -95,6 +94,8 @@ const FeeCard = React.forwardRef((props, ref) => {
       onPress={onPress}
       nextFocusUp={props.nextFocusUp}
       nextFocusDown={props.nextFocusDown}
+      nextFocusRight={props.nextFocusRight}
+      nextFocusLeft={props.nextFocusLeft}
     >
       {(focused) => (
         <View
@@ -141,6 +142,13 @@ const FeeCard = React.forwardRef((props, ref) => {
 FeeCard.propTypes = {
   screenStyles: PropTypes.object,
   payload: PropTypes.object,
+  nextFocusUp: PropTypes.object,
+  nextFocusDown: PropTypes.object,
+  nextFocusRight: PropTypes.object,
+  nextFocusLeft: PropTypes.object,
+  onPress: PropTypes.func,
+  identifier: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  groupId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 FeeCard.defaultProps = {
