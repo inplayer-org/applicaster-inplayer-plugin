@@ -6,7 +6,7 @@ import * as R from "ramda";
 import MESSAGES from "../Components/AssetFlow/Config";
 
 if (Platform.OS === "android") {
-  await ApplicasterIAPModule.init("play");
+  ApplicasterIAPModule.init("play");
 }
 
 export async function purchaseAnItem({
@@ -15,8 +15,6 @@ export async function purchaseAnItem({
   access_fee_id,
   productType,
 }) {
-  console.log({ productType });
-
   if (!purchaseID) throw new Error(MESSAGES.validation.productId);
 
   const purchaseCompletion = await ApplicasterIAPModule.purchase({
