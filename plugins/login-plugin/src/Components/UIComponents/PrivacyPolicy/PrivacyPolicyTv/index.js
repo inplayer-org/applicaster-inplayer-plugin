@@ -4,13 +4,16 @@ import PropTypes from "prop-types";
 import * as R from "ramda";
 import PrivacyTitle from "./PrivacyTitle";
 import PrivacyDescription from "./PrivacyDescription";
-import { useBackHandler } from "../../../../Utils/Hooks";
+import { useBackHandler, useDirectionalHandler } from "../../../../Utils/Hooks";
 import { TVEventHandlerComponent } from "@applicaster/zapp-react-native-tvos-ui-components/Components/TVEventHandlerComponent";
+
+const scrollInterval = 50;
 
 const PrivacyPolicyTv = (props) => {
   const { screenStyles, onHandleBack } = props;
   const [y, setY] = useState(0);
   const [yOffset, setyOffset] = useState(0);
+  const [maxYOffset, setMaxYOffset] = useState(0);
   const [scrollViewHeight, setScrollViewHeight] = useState();
   const [scrollViewContentHeight, setScrollViewContentHeight] = useState();
   const scrollViewRef = useRef(null);
@@ -26,13 +29,27 @@ const PrivacyPolicyTv = (props) => {
 
   useBackHandler(hardwareBack);
 
+  // Android Scrolling Handler
+  const onUp = React.useCallback(() => {
+    const newOffset = R.max(0, y - scrollInterval);
+    scrollViewRef.current.scrollTo({ y: newOffset });
+    setY(newOffset);
+  }, [y, maxYOffset]);
+
+  const onDown = React.useCallback(() => {
+    const newOffset = R.min(maxYOffset, y + scrollInterval);
+
+    scrollViewRef.current.scrollTo({ y: newOffset });
+    setY(newOffset);
+  }, [y, maxYOffset]);
+
+  useDirectionalHandler({ onUp, onDown });
+
+  // IOS Scrolling Handler
+
   const tvosRemoteHandler = (component, event) => {
     const { eventType } = event;
     if (eventType === "swipeDown" || eventType === "down") {
-      console.log({
-        newOffset: y + yOffset,
-        maxLimit: y + yOffset + scrollViewHeight > scrollViewContentHeight,
-      });
       if (y + yOffset + scrollViewHeight > scrollViewContentHeight) {
         setY(scrollViewContentHeight - scrollViewHeight);
         scrollViewRef.current.scrollTo({ y: scrollViewContentHeight });
@@ -67,11 +84,14 @@ const PrivacyPolicyTv = (props) => {
     },
     scrollView: {
       marginTop: 66,
+      flex: 1,
     },
   }));
 
   const onLayout = ({ nativeEvent }) => {
     const { height } = nativeEvent?.layout;
+
+    setMaxYOffset(nativeEvent?.target);
     setScrollViewHeight(height);
     const quaterOfTheScrollViewHeight = (height / 100) * 25;
     setyOffset(quaterOfTheScrollViewHeight);
@@ -82,7 +102,6 @@ const PrivacyPolicyTv = (props) => {
       <View style={styles.container}>
         <View style={styles.scrollViewWrapper}>
           <PrivacyTitle {...props} />
-
           <ScrollView
             style={styles.scrollView}
             persistentScrollbar={true}
