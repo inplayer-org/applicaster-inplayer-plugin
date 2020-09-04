@@ -16,10 +16,6 @@ const baseManifest = {
   deprecated_since_zapp_sdk: "",
   unsupported_since_zapp_sdk: "",
   preload: true,
-  npm_dependencies: [
-    "@applicaster/applicaster-iap@0.2.15",
-    "@react-native-community/blur@3.4.1",
-  ],
   custom_configuration_fields: [
     {
       type: "text",
@@ -2130,14 +2126,19 @@ const androidPlatforms = [
   "amazon_fire_tv_for_quickbrick",
 ];
 
+const webPlatforms = ["samsung_tv"];
+
+const applePlatforms = ["ios", "ios_for_quickbrick", "tvos_for_quickbrick"];
+
 const tvPlatforms = [
   "tvos_for_quickbrick",
   "android_tv_for_quickbrick",
   "amazon_fire_tv_for_quickbrick",
+  "samsung_tv",
 ];
 
 const api = {
-  apple: {},
+  default: {},
   android: {
     class_name: "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     react_packages: [
@@ -2150,16 +2151,19 @@ const api = {
 };
 
 const project_dependencies = {
-  apple: [],
+  default: [],
   android: [
     {
-      "iap": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap"
+      iap:
+        "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap",
     },
     {
-      "iap-uni": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-uni"
+      "iap-uni":
+        "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-uni",
     },
     {
-      "iap-rn": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-rn"
+      "iap-rn":
+        "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-rn",
     },
     {
       "react-native-community_blur":
@@ -2179,7 +2183,15 @@ const extra_dependencies = {
         ":path => 'node_modules/@react-native-community/blur/react-native-blur.podspec'",
     },
   ],
-  android: [],
+  default: [],
+};
+
+const npm_dependencies = {
+  default: [
+    "@applicaster/applicaster-iap@0.2.15",
+    "@react-native-community/blur@3.4.1",
+  ],
+  web: [],
 };
 
 const min_zapp_sdk = {
@@ -2190,12 +2202,21 @@ const min_zapp_sdk = {
   tvos_for_quickbrick: "0.1.0-alpha1",
   android_tv_for_quickbrick: "0.1.0-alpha1",
   amazon_fire_tv_for_quickbrick: "0.1.0-alpha1",
+  samsung_tv: "1.2.2",
 };
 
+const isApple = R.includes(R.__, applePlatforms);
+const iAndroid = R.includes(R.__, androidPlatforms);
+const isWeb = R.includes(R.__, webPlatforms);
+
+const withFallback = (obj, platform) => obj[platform] || obj["default"];
+
 function createManifest({ version, platform }) {
-  const basePlatform = R.includes(platform, androidPlatforms)
-    ? "android"
-    : "apple";
+  const basePlatform = R.cond([
+    [isApple, R.always("apple")],
+    [iAndroid, R.always("android")],
+    [isWeb, R.always("web")],
+  ])(platform);
 
   const isTV = R.includes(platform, tvPlatforms);
 
@@ -2204,10 +2225,11 @@ function createManifest({ version, platform }) {
     platform,
     dependency_version: version,
     manifest_version: version,
-    api: api[basePlatform],
-    project_dependencies: project_dependencies[basePlatform],
-    extra_dependencies: extra_dependencies[basePlatform],
-    min_zapp_sdk: min_zapp_sdk[platform],
+    api: withFallback(api, basePlatform),
+    project_dependencies: withFallback(project_dependencies, basePlatform),
+    extra_dependencies: withFallback(extra_dependencies, basePlatform),
+    min_zapp_sdk: withFallback(min_zapp_sdk, platform),
+    npm_dependencies: withFallback(npm_dependencies, basePlatform),
     styles: isTV ? stylesTv : stylesMobile,
   };
 
