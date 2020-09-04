@@ -110,8 +110,8 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.56",
-  "manifest_version": "0.7.0-beta.56",
+  "dependency_version": "0.7.0-beta.58",
+  "manifest_version": "0.7.0-beta.58",
   "api": {
     "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
@@ -122,13 +122,13 @@
   },
   "project_dependencies": [
     {
-      "iap": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap"
+      "iap": "node_modules/@applicaster/applicaster-iap/Android/iap"
     },
     {
-      "iap-uni": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-uni"
+      "iap-uni": "node_modules/@applicaster/applicaster-iap/Android/iap-uni"
     },
     {
-      "iap-rn": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-rn"
+      "iap-rn": "node_modules/@applicaster/applicaster-iap/Android/iap-rn"
     },
     {
       "react-native-community_blur": "node_modules/@react-native-community/blur/android"

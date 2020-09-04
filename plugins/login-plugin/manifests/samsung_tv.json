@@ -110,8 +110,8 @@
     "quickbrick"
   ],
   "platform": "samsung_tv",
-  "dependency_version": "0.7.0-beta.56",
-  "manifest_version": "0.7.0-beta.56",
+  "dependency_version": "0.7.0-beta.58",
+  "manifest_version": "0.7.0-beta.58",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [],
