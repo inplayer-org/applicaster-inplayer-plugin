@@ -16,10 +16,6 @@
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "preload": true,
-  "npm_dependencies": [
-    "@applicaster/applicaster-iap@0.2.15",
-    "@react-native-community/blur@3.4.1"
-  ],
   "custom_configuration_fields": [
     {
       "type": "text",
@@ -114,8 +110,8 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.7.0-beta.51",
-  "manifest_version": "0.7.0-beta.51",
+  "dependency_version": "0.7.0-beta.53",
+  "manifest_version": "0.7.0-beta.53",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
@@ -127,6 +123,10 @@
     }
   ],
   "min_zapp_sdk": "20.2.0-Dev",
+  "npm_dependencies": [
+    "@applicaster/applicaster-iap@0.2.15",
+    "@react-native-community/blur@3.4.1"
+  ],
   "styles": {
     "fields": [
       {

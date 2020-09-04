@@ -109,37 +109,14 @@
   "ui_frameworks": [
     "quickbrick"
   ],
-  "platform": "amazon_fire_tv_for_quickbrick",
+  "platform": "samsung_tv",
   "dependency_version": "0.7.0-beta.53",
   "manifest_version": "0.7.0-beta.53",
-  "api": {
-    "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
-    "react_packages": [
-      "com.applicaster.iap.reactnative.IAPPackage",
-      "com.cmcewen.blurview.BlurViewPackage"
-    ],
-    "proguard_rules": "-keep public class * extends com.facebook.react.ReactPackage {*;} -keepclasseswithmembers,includedescriptorclasses class * { @com.facebook.react.bridge.ReactMethod <methods>;} -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; } -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }"
-  },
-  "project_dependencies": [
-    {
-      "iap": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap"
-    },
-    {
-      "iap-uni": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-uni"
-    },
-    {
-      "iap-rn": "./quick_brick/node_modules/@applicaster/applicaster-iap/Android/iap-rn"
-    },
-    {
-      "react-native-community_blur": "node_modules/@react-native-community/blur/android"
-    }
-  ],
+  "api": {},
+  "project_dependencies": [],
   "extra_dependencies": [],
-  "min_zapp_sdk": "0.1.0-alpha1",
-  "npm_dependencies": [
-    "@applicaster/applicaster-iap@0.2.15",
-    "@react-native-community/blur@3.4.1"
-  ],
+  "min_zapp_sdk": "1.2.2",
+  "npm_dependencies": [],
   "styles": {
     "fields": [
       {
