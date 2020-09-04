@@ -16,6 +16,7 @@ import {
   purchaseAnItem,
   retrieveProducts,
   restore,
+  initialize,
 } from "../../Services/iAPService";
 
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
@@ -41,6 +42,8 @@ export const logger = createLogger({
   parent: rootLogger,
 });
 
+const isAndroid = Platform.OS === "android";
+
 const AssetFlow = (props) => {
   const { screenStyles } = props;
 
@@ -57,11 +60,15 @@ const AssetFlow = (props) => {
 
   const [dataSource, setDataSource] = useState(null);
   const [assetLoading, setAssetLoading] = useState(false);
+  const [iapInitialized, setIapInitialized] = useState(
+    isAndroid ? false : true
+  );
   const [assetId, setAssetId] = useState(null);
   let stillMounted = true;
 
   useLayoutEffect(() => {
     prepareAssetId();
+    initializeIap();
     return () => {
       stillMounted = false;
     };
@@ -72,6 +79,29 @@ const AssetFlow = (props) => {
       loadAsset({ startPurchaseFlow: true });
     }
   }, [assetId]);
+
+  const initializeIap = async () => {
+    try {
+      logger
+        .createEvent()
+        .setLevel(XRayLogLevel.debug)
+        .setMessage(`Initializing IAP plugin`)
+        .send();
+
+      const result = await initialize();
+      if (result) {
+        setIapInitialized(true);
+      }
+    } catch (err) {
+      logger
+        .createEvent()
+        .setLevel(XRayLogLevel.error)
+        .setMessage(`Failed to initialize IAP plugin`)
+        .attachError(err)
+        .send();
+      completeAssetFlow({ success: false });
+    }
+  };
 
   const prepareAssetId = async () => {
     const { payload, configuration } = props;
@@ -316,7 +346,7 @@ const AssetFlow = (props) => {
   };
 
   const render = () => {
-    if (!dataSource || assetLoading) {
+    if (!dataSource || assetLoading || !iapInitialized) {
       return <LoadingScreen />;
     }
     switch (screen) {

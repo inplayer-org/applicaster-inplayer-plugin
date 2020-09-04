@@ -4,9 +4,36 @@ import { validateExternalPayment } from "./inPlayerService";
 import { findAsync } from "./InPlayerUtils";
 import * as R from "ramda";
 import MESSAGES from "../Components/AssetFlow/Config";
+import { sessionStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/SessionStorage";
 
-if (Platform.OS === "android") {
-  ApplicasterIAPModule.init("play");
+const isAndroid = Platform.OS === "android";
+
+export async function initialize() {
+  const store = await sessionStorage.getItem("store");
+
+  if (!store) {
+    throw new Error(
+      `Failed to initialize In App purchases plugin. Couldn't find the store ${store}`
+    );
+  }
+
+  if (!isAndroid) {
+    return true;
+  }
+  const isInitialized = await ApplicasterIAPModule.isInitialized();
+  if (isInitialized) {
+    return true;
+  }
+
+  const initializationResult = await ApplicasterIAPModule.initialize(store);
+
+  if (!initializationResult) {
+    throw new Error(
+      `Failed to initialize In App purchases plugin, ${initializationResult}`
+    );
+  }
+
+  return true;
 }
 
 export async function purchaseAnItem({
@@ -123,10 +150,9 @@ async function restoreAnItem(
 ) {
   const purchaseIdStr = purchaseID.toString();
 
-  const itemFromStoreResult =
-    Platform.OS === "android"
-      ? await findItemInRestoreAndroid(purchaseIdStr, restoreResultFromStore)
-      : await findItemInRestoreIos(purchaseIdStr, restoreResultFromStore);
+  const itemFromStoreResult = isAndroid
+    ? await findItemInRestoreAndroid(purchaseIdStr, restoreResultFromStore)
+    : await findItemInRestoreIos(purchaseIdStr, restoreResultFromStore);
 
   if (!itemFromStoreResult) return false;
 
