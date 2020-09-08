@@ -286,8 +286,9 @@ const baseManifest = {
         key: "general_error_message",
         type: "text_input",
         label: "General error message",
-        tooltip: "A default error message that is shown in case something goes wrong in the flow",
-        initial_value: "Something went wrong. Please try again later"
+        tooltip:
+          "A default error message that is shown in case something goes wrong in the flow",
+        initial_value: "Something went wrong. Please try again later",
       },
       {
         key: "logout_background_color",
@@ -718,11 +719,11 @@ const baseManifest = {
           {
             key: "preload_plugins",
             type: "preload_plugins_selector",
-            label: "Select Plugins"
-          }
-        ]
-      }
-    ]
+            label: "Select Plugins",
+          },
+        ],
+      },
+    ],
   },
   targets: ["mobile"],
   ui_frameworks: ["quickbrick"],
@@ -780,7 +781,7 @@ const extra_dependencies = {
   ios: [
     {
       ApplicasterIAP:
-        ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
+        ":path => 'node_modules/@applicaster/applicaster-iap/apple/ApplicasterIAP.podspec'",
     },
     {
       RNCAsyncStorage:
