@@ -10,9 +10,7 @@
   "react_native": true,
   "identifier": "quick-brick-inplayer",
   "ui_builder_support": true,
-  "whitelisted_account_ids": [
-    "5c9ce7917b225c000f02dfbc"
-  ],
+  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "preload": true,
@@ -102,16 +100,11 @@
       }
     ]
   },
-  "targets": [
-    "mobile",
-    "tv"
-  ],
-  "ui_frameworks": [
-    "quickbrick"
-  ],
+  "targets": ["mobile", "tv"],
+  "ui_frameworks": ["quickbrick"],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.66",
-  "manifest_version": "0.7.0-beta.66",
+  "dependency_version": "0.7.0-beta.67",
+  "manifest_version": "0.7.0-beta.67",
   "api": {
     "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
@@ -994,9 +987,7 @@
             "initial_value": "rgba(39, 218, 134, 1)",
             "conditional_fields": [
               {
-                "condition_value": [
-                  true
-                ],
+                "condition_value": [true],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1010,9 +1001,7 @@
             "placeholder": "Skip",
             "conditional_fields": [
               {
-                "condition_value": [
-                  true
-                ],
+                "condition_value": [true],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1024,9 +1013,7 @@
             "initial_value": "Helvetica-Bold",
             "conditional_fields": [
               {
-                "condition_value": [
-                  true
-                ],
+                "condition_value": [true],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1038,9 +1025,7 @@
             "initial_value": "Roboto-Bold",
             "conditional_fields": [
               {
-                "condition_value": [
-                  true
-                ],
+                "condition_value": [true],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1052,9 +1037,7 @@
             "initial_value": "40",
             "conditional_fields": [
               {
-                "condition_value": [
-                  true
-                ],
+                "condition_value": [true],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1066,9 +1049,7 @@
             "initial_value": "#545A5C",
             "conditional_fields": [
               {
-                "condition_value": [
-                  true
-                ],
+                "condition_value": [true],
                 "key": "general/enable_skip_functionality"
               }
             ]
