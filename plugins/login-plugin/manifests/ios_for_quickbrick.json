@@ -722,13 +722,13 @@
     "quickbrick"
   ],
   "platform": "ios_for_quickbrick",
-  "dependency_version": "0.6.4",
-  "manifest_version": "0.6.4",
+  "dependency_version": "0.6.5",
+  "manifest_version": "0.6.5",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
     {
-      "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'"
+      "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/apple/ApplicasterIAP.podspec'"
     },
     {
       "RNCAsyncStorage": ":path => 'node_modules/@react-native-community/async-storage/RNCAsyncStorage.podspec'"
