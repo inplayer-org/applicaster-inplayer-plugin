@@ -110,8 +110,8 @@
     "quickbrick"
   ],
   "platform": "tvos_for_quickbrick",
-  "dependency_version": "0.7.0-beta.63",
-  "manifest_version": "0.7.0-beta.63",
+  "dependency_version": "0.7.0-beta.65",
+  "manifest_version": "0.7.0-beta.65",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
@@ -124,7 +124,7 @@
   ],
   "min_zapp_sdk": "0.1.0-alpha1",
   "npm_dependencies": [
-    "@applicaster/applicaster-iap@0.3.1-alpha.5",
+    "@applicaster/applicaster-iap@0.3.1-alpha.8",
     "@react-native-community/blur@3.4.1"
   ],
   "styles": {
