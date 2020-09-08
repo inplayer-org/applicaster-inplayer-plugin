@@ -110,9 +110,15 @@
     "quickbrick"
   ],
   "platform": "samsung_tv",
-  "dependency_version": "0.7.0-beta.63",
-  "manifest_version": "0.7.0-beta.63",
-  "api": {},
+  "dependency_version": "0.7.0-beta.66",
+  "manifest_version": "0.7.0-beta.66",
+  "api": {
+    "excludedNodeModules": [
+      "/@applicaster/applicaster-iap/",
+      "/react-native-dropdownalert/",
+      "/react-native-keyboard-aware-scroll-view/"
+    ]
+  },
   "project_dependencies": [],
   "extra_dependencies": [],
   "min_zapp_sdk": "1.2.2",
