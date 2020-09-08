@@ -2141,9 +2141,9 @@ const api = {
   default: {},
   web: {
     excludedNodeModules: [
-      "/@applicaster/applicaster-iap/",
-      "/react-native-dropdownalert/",
-      "/react-native-keyboard-aware-scroll-view/",
+      "@applicaster/applicaster-iap",
+      "react-native-dropdownalert",
+      "react-native-keyboard-aware-scroll-view",
     ],
   },
   android: {
