@@ -2155,15 +2155,15 @@ const project_dependencies = {
   android: [
     {
       iap:
-        "node_modules/@applicaster/applicaster-iap/Android/iap",
+        "node_modules/@applicaster/applicaster-iap/android/iap",
     },
     {
       "iap-uni":
-        "node_modules/@applicaster/applicaster-iap/Android/iap-uni",
+        "node_modules/@applicaster/applicaster-iap/android/iap-uni",
     },
     {
       "iap-rn":
-        "node_modules/@applicaster/applicaster-iap/Android/iap-rn",
+        "node_modules/@applicaster/applicaster-iap/android/iap-rn",
     },
     {
       "react-native-community_blur":
