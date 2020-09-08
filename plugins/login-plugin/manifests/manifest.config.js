@@ -781,7 +781,7 @@ const extra_dependencies = {
   ios: [
     {
       ApplicasterIAP:
-        ":path => 'node_modules/@applicaster/applicaster-iap/apple/ApplicasterIAP.podspec'",
+        ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
     },
     {
       RNCAsyncStorage:
