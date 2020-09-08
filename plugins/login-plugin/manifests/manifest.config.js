@@ -2154,16 +2154,13 @@ const project_dependencies = {
   default: [],
   android: [
     {
-      iap:
-        "node_modules/@applicaster/applicaster-iap/android/iap",
+      iap: "node_modules/@applicaster/applicaster-iap/android/iap",
     },
     {
-      "iap-uni":
-        "node_modules/@applicaster/applicaster-iap/android/iap-uni",
+      "iap-uni": "node_modules/@applicaster/applicaster-iap/android/iap-uni",
     },
     {
-      "iap-rn":
-        "node_modules/@applicaster/applicaster-iap/android/iap-rn",
+      "iap-rn": "node_modules/@applicaster/applicaster-iap/android/iap-rn",
     },
     {
       "react-native-community_blur":
@@ -2176,7 +2173,7 @@ const extra_dependencies = {
   apple: [
     {
       ApplicasterIAP:
-        ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'",
+        ":path => 'node_modules/@applicaster/applicaster-iap/apple/ApplicasterIAP.podspec'",
     },
     {
       "react-native-blur":
