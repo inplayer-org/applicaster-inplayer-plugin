@@ -110,13 +110,13 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.7.0-beta.62",
-  "manifest_version": "0.7.0-beta.62",
+  "dependency_version": "0.7.0-beta.63",
+  "manifest_version": "0.7.0-beta.63",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
     {
-      "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/iOS/ApplicasterIAP.podspec'"
+      "ApplicasterIAP": ":path => 'node_modules/@applicaster/applicaster-iap/apple/ApplicasterIAP.podspec'"
     },
     {
       "react-native-blur": ":path => 'node_modules/@react-native-community/blur/react-native-blur.podspec'"

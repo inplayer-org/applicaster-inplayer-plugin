@@ -110,8 +110,8 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.62",
-  "manifest_version": "0.7.0-beta.62",
+  "dependency_version": "0.7.0-beta.63",
+  "manifest_version": "0.7.0-beta.63",
   "api": {
     "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
