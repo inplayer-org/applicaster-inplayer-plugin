@@ -10,7 +10,9 @@
   "react_native": true,
   "identifier": "quick-brick-inplayer",
   "ui_builder_support": true,
-  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
+  "whitelisted_account_ids": [
+    "5c9ce7917b225c000f02dfbc"
+  ],
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "preload": true,
@@ -100,11 +102,16 @@
       }
     ]
   },
-  "targets": ["mobile", "tv"],
-  "ui_frameworks": ["quickbrick"],
+  "targets": [
+    "mobile",
+    "tv"
+  ],
+  "ui_frameworks": [
+    "quickbrick"
+  ],
   "platform": "android_for_quickbrick",
-  "dependency_version": "0.7.0-beta.67",
-  "manifest_version": "0.7.0-beta.67",
+  "dependency_version": "0.7.0-beta.68",
+  "manifest_version": "0.7.0-beta.68",
   "api": {
     "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
@@ -130,7 +137,7 @@
   "extra_dependencies": [],
   "min_zapp_sdk": "0.1.0-alpha1",
   "npm_dependencies": [
-    "@applicaster/applicaster-iap@0.3.1-alpha.8",
+    "@applicaster/applicaster-iap@0.3.1-alpha.9",
     "@react-native-community/blur@3.4.1"
   ],
   "styles": {
