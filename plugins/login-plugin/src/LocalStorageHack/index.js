@@ -1,7 +1,14 @@
+import {
+  InPlayerLocalStorageHack,
+  initFromNativeLocalStorage,
+} from "./InPlayerLocalStorageHack";
+import { Platform } from "react-native";
 
-import { InPlayerLocalStorageHack, initFromNativeLocalStorage } from "./InPlayerLocalStorageHack";
+console.log(Platform.OS);
 
 const localStorage = new InPlayerLocalStorageHack();
-global.localStorage = localStorage;
+if (Platform.OS !== "web") {
+  global.localStorage = localStorage;
+}
 
 export { initFromNativeLocalStorage, localStorage };
