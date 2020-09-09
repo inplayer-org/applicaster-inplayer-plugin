@@ -27,7 +27,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
   const { screenStyles, dataSource, onPressPaymentOption } = props;
   const [elRefs, setElRefs] = React.useState([]);
   const { isFocused, setFocus } = useFocusManager() || {};
-  const isScrollViewFocused = isFocused("fees-scroll-view");
+  const isScrollViewFocused = isFocused && isFocused("fees-scroll-view");
 
   const dataSourceLength = dataSource.length;
 
@@ -55,7 +55,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
       isParallaxDisabled
     >
       <Focusable
-        ref={ref}
+        // ref={ref}
         id="fees-scroll-view"
         nextFocusDown={props.nextFocusDown}
         nextFocusUp={props.nextFocusUp}
