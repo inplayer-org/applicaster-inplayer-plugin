@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 import { logger as rootLogger } from "../../Components/InPlayer";
 import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
 import {

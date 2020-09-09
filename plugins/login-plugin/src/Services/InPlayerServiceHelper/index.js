@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 import InPlayer from "@inplayer-org/inplayer.js";
-import R from "ramda";
+import * as R from "ramda";
 
 export function externalPurchaseValidationURL() {
   // URL Example: https://staging-v2.inplayer.com/v2/external-payments/apple/validate

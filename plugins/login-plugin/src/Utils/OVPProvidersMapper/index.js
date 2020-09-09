@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 import { getInPlayerContent, getInPlayerAssetType } from "../InPlayerResponse";
 import { getSrcForJWPlayer } from "./JWPlayerAsset";
 import { getSrcForHTML } from "./HTMLAsset";
