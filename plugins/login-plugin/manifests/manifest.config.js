@@ -2016,7 +2016,7 @@ const stylesTv = {
           key: "signup_password_input_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Password Input Text for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "Helvetica-Bold",
         },
         {
           key: "signup_password_input_font_android",
@@ -2055,7 +2055,7 @@ const stylesTv = {
           key: "signup_full_name_input_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Full Name Input Text for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "Helvetica-Bold",
         },
         {
           key: "signup_full_name_input_font_android",
@@ -2094,7 +2094,7 @@ const stylesTv = {
           key: "signup_email_input_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Email Input Text for TvOS.",
-          initial_value: "SFProDisplay-Bold",
+          initial_value: "Helvetica-Bold",
         },
         {
           key: "signup_email_input_font_android",
