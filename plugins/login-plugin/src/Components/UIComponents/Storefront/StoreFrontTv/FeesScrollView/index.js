@@ -8,6 +8,8 @@ import { useFocusManager } from "@applicaster/zapp-react-native-utils/focusManag
 import FeeCard from "./FeeCard";
 import PropTypes from "prop-types";
 
+const isAndroid = Platform.OS === "android";
+
 const styles = StyleSheet.create({
   container: {
     top: 500,
@@ -18,10 +20,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Focusable =
-  Platform.OS === "android"
-    ? AndroidFocusable
-    : ({ children }) => children(false, {});
+const Focusable = isAndroid
+  ? AndroidFocusable
+  : ({ children }) => children(false, {});
 
 const FeesScrollView = React.forwardRef((props, ref) => {
   const { screenStyles, dataSource, onPressPaymentOption } = props;
@@ -55,7 +56,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
       isParallaxDisabled
     >
       <Focusable
-        ref={ref}
+        ref={isAndroid ? ref : null}
         id="fees-scroll-view"
         nextFocusDown={props.nextFocusDown}
         nextFocusUp={props.nextFocusUp}
