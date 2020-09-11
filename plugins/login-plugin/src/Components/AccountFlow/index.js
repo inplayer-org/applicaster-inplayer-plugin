@@ -414,10 +414,9 @@ const AccountFlow = (props) => {
         {renderAuthenteficationScreen()}
         {loading && <LoadingScreen />}
       </SafeArea>
-      {!Platform.isTV &&
-        !isSamsung(
-          <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
-        )}
+      {!Platform.isTV && !isSamsung && (
+        <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
+      )}
     </View>
   );
 };
