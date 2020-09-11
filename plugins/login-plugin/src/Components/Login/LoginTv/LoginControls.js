@@ -15,6 +15,8 @@ import {
   splitInputTypeStyles,
 } from "../../../Utils/Customization";
 
+const isSamsung = Platform.OS === "web" || Platform.OS === "samsung_tv";
+
 const styles = StyleSheet.create({
   errorMessage: {
     position: "absolute",
@@ -45,7 +47,7 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
 
   const handleEditingEnd = (label) => () => {
     // TODO: implement focus switching on Samsung TV
-    if (Platform.OS === "samsung_tv") return null;
+    if (isSamsung) return null;
     /**
      * Wait for the focus manager to finish previous focusing job
      * (Bit of the hack but it works well from the UX point of view)
