@@ -112,7 +112,7 @@ export class InPlayerLocalStorageHack {
   }
 
   getItem(key) {
-    return safeMemoryStore().get(String(key));
+    return safeMemoryStore()?.get(String(key));
   }
 
   setItem(key, val) {
