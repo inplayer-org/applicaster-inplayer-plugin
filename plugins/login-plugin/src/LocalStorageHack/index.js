@@ -4,10 +4,9 @@ import {
 } from "./InPlayerLocalStorageHack";
 import { Platform } from "react-native";
 
-console.log(Platform.OS);
-
+const isSamsung = Platform.OS === "samsung_tv" || Platform.OS === "web";
 const localStorage = new InPlayerLocalStorageHack();
-if (Platform.OS !== "web") {
+if (!isSamsung) {
   global.localStorage = localStorage;
 }
 
