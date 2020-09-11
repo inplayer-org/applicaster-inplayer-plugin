@@ -124,7 +124,7 @@ const AccountFlow = (props) => {
       )
       .addData({ title, message, type })
       .send();
-    Platform.isTV
+    Platform.isTV || isWebBasedPlatform
       ? showAlert(title, message)
       : this.dropDownAlertRef.alertWithType(type, title, message);
   };
