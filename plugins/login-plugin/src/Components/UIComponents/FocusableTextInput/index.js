@@ -48,12 +48,13 @@ const FocusableTextInput = ({
   textInputStyles,
 }) => {
   const inputRef = useRef();
-  const isSamsung = Platform.OS === "samsung_tv";
+  const isSamsung = Platform.OS === "web" || Platform.OS === "samsung_tv";
 
   const handlePressDone = () => {
     inputRef.current.blur();
     onEndEditing();
   };
+
   const handlePressCancel = () => {
     inputRef.current.blur();
   };
@@ -93,9 +94,11 @@ const FocusableTextInput = ({
 
   const getTextInputStyles = (focused) => {
     return [
-      { ...styles.textInput, ...textInputStyles.default },
-      value && { ...styles.inputNotEmpty, ...textInputStyles.filled },
-      focused && { ...styles.inputFocused, ...textInputStyles.focused },
+      StyleSheet.compose([styles.textInput, textInputStyles.default]),
+      value &&
+        StyleSheet.compose([styles.inputNotEmpty, textInputStyles.filled]),
+      focused &&
+        StyleSheet.compose([styles.inputFocused, textInputStyles.focused]),
       isSamsung && {
         outlineWidth: 0,
         boxSizing: "border-box",
