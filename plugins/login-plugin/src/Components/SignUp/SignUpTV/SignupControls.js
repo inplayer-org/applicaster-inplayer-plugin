@@ -8,14 +8,13 @@ import { focusManager } from "@applicaster/zapp-react-native-utils/appUtils";
 
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
 import { findNextEmptyLabel } from "../../../Utils/Forms";
+import { isWebBasedPlatform } from "../../../Utils/Platform";
 import Button from "../../UIComponents/Buttons/FocusableButton";
 import colors from "../../../colors";
 import {
   mapKeyToStyle,
   splitInputTypeStyles,
 } from "../../../Utils/Customization";
-
-const isSamsung = Platform.OS === "samsung_tv" || Platform.OS === "web";
 
 const styles = StyleSheet.create({
   errorMessage: {
@@ -52,7 +51,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
 
   const handleEditingEnd = (label) => () => {
     // TODO: implement focus switching on Samsung TV
-    if (isSamsung) return null;
+    if (isWebBasedPlatform) return null;
     const labels = [
       { label: "full-name-input", value: fullNameValue },
       { label: "email-input", value: emailValue },
