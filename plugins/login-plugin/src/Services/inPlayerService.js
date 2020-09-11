@@ -141,7 +141,6 @@ export async function checkAccessForAsset({
         tries: newTries,
       });
     } else {
-      console.log({ error });
       const isPurchaseRequired = assetPaymentRequired(error);
 
       if (isPurchaseRequired) {
