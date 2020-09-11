@@ -59,7 +59,7 @@ async function getLatestVersionSha(pluginPath) {
 }
 
 async function getLatestTag() {
-  const latestTag = await git.raw(["describe", "--abbrev=0"]);
+  const latestTag = await git.raw(["describe", "--abbrev=0", "--tags"]);
   console.log({ latestTag });
   return R.replace("\n", "", latestTag);
 }
