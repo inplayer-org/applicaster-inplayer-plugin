@@ -15,6 +15,8 @@ import {
   splitInputTypeStyles,
 } from "../../../Utils/Customization";
 
+const isSamsung = Platform.OS === "samsung_tv" || Platform.OS === "web";
+
 const styles = StyleSheet.create({
   errorMessage: {
     position: "absolute",
@@ -50,7 +52,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
 
   const handleEditingEnd = (label) => () => {
     // TODO: implement focus switching on Samsung TV
-    if (Platform.OS === "samsung_tv") return null;
+    if (isSamsung) return null;
     const labels = [
       { label: "full-name-input", value: fullNameValue },
       { label: "email-input", value: emailValue },
