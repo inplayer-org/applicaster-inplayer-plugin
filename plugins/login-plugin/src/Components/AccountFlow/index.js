@@ -16,6 +16,8 @@ import { createLogger, Subsystems } from "../../Services/LoggerService";
 import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
 import { logger as rootLogger } from "../../Components/InPlayer";
 
+const isSamsung = Platform.OS === "samsung_tv" || Platform.OS === "web";
+
 export const logger = createLogger({
   subsystem: Subsystems.ACCOUNT,
   category: "",
@@ -412,9 +414,10 @@ const AccountFlow = (props) => {
         {renderAuthenteficationScreen()}
         {loading && <LoadingScreen />}
       </SafeArea>
-      {!Platform.isTV && (
-        <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
-      )}
+      {!Platform.isTV &&
+        !isSamsung(
+          <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
+        )}
     </View>
   );
 };
