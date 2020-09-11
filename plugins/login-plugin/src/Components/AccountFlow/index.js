@@ -15,6 +15,7 @@ import { showAlert } from "../../Utils/Account";
 import { createLogger, Subsystems } from "../../Services/LoggerService";
 import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
 import { logger as rootLogger } from "../../Components/InPlayer";
+import { isWebBasedPlatform } from "../../Utils/Platform";
 
 export const logger = createLogger({
   subsystem: Subsystems.ACCOUNT,
@@ -123,7 +124,7 @@ const AccountFlow = (props) => {
       )
       .addData({ title, message, type })
       .send();
-    Platform.isTV
+    Platform.isTV || isWebBasedPlatform
       ? showAlert(title, message)
       : this.dropDownAlertRef.alertWithType(type, title, message);
   };
@@ -412,7 +413,7 @@ const AccountFlow = (props) => {
         {renderAuthenteficationScreen()}
         {loading && <LoadingScreen />}
       </SafeArea>
-      {!Platform.isTV && (
+      {!Platform.isTV && !isWebBasedPlatform && (
         <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
       )}
     </View>

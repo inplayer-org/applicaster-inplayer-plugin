@@ -3,7 +3,7 @@ import React, { useState, useLayoutEffect } from "react";
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
 import LogoutFlow from "./LogoutFlow";
-import R, { prop } from "ramda";
+import * as R from "ramda";
 
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";

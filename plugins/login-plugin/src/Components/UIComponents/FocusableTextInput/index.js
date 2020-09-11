@@ -2,10 +2,11 @@ import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import * as R from "ramda";
 
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
 import { TextInputTv } from "@applicaster/zapp-react-native-ui-components/Components/TextInputTv";
 
+import { isWebBasedPlatform } from "../../../Utils/Platform";
 import colors from "../../../colors";
 
 const styles = StyleSheet.create({
@@ -48,12 +49,12 @@ const FocusableTextInput = ({
   textInputStyles,
 }) => {
   const inputRef = useRef();
-  const isSamsung = Platform.OS === "samsung_tv";
 
   const handlePressDone = () => {
     inputRef.current.blur();
     onEndEditing();
   };
+
   const handlePressCancel = () => {
     inputRef.current.blur();
   };
@@ -69,7 +70,7 @@ const FocusableTextInput = ({
   };
 
   useEffect(() => {
-    if (isSamsung) {
+    if (isWebBasedPlatform) {
       const focusableElement = document.getElementById(
         `focusable-${groupId}-${label}`
       );
@@ -86,17 +87,19 @@ const FocusableTextInput = ({
   };
 
   const focusableBlurHandler = () => {
-    if (isSamsung) {
+    if (isWebBasedPlatform) {
       inputRef.current.blur();
     }
   };
 
   const getTextInputStyles = (focused) => {
     return [
-      { ...styles.textInput, ...textInputStyles.default },
-      value && { ...styles.inputNotEmpty, ...textInputStyles.filled },
-      focused && { ...styles.inputFocused, ...textInputStyles.focused },
-      isSamsung && {
+      StyleSheet.compose([styles.textInput, textInputStyles.default]),
+      value &&
+        StyleSheet.compose([styles.inputNotEmpty, textInputStyles.filled]),
+      focused &&
+        StyleSheet.compose([styles.inputFocused, textInputStyles.focused]),
+      isWebBasedPlatform && {
         outlineWidth: 0,
         boxSizing: "border-box",
         placeholderTextColor: colors.gray,

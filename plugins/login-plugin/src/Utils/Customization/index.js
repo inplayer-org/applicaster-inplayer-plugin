@@ -9,8 +9,8 @@ const manifestJson = platformSelect({
   tvos: require("../../../manifests/tvos_for_quickbrick.json"),
   android: require("../../../manifests/android.json"),
   android_tv: require("../../../manifests/android_tv_for_quickbrick.json"),
-  // web: require("../../../manifests/web.json"),
-  // samsung_tv: require("../../../manifests/samsung_tv.json"),
+  web: require("../../../manifests/samsung_tv.json"),
+  samsung_tv: require("../../../manifests/samsung_tv.json"),
   // lg_tv: require("../../../manifests/lg_tv.json"),
   default: require("../../../manifests/android.json"),
 });

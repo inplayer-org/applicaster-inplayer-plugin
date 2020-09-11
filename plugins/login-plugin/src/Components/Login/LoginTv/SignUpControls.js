@@ -3,8 +3,12 @@ import * as R from "ramda";
 import { View } from "react-native";
 import PropTypes from "prop-types";
 
+import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
+
 import { mapKeyToStyle } from "../../../Utils/Customization";
 import Button from "../../UIComponents/Buttons/FocusableButton";
+
+const groupId = "signup-button";
 
 const SignUpControls = ({ screenStyles, onPress, style }) => {
   const buttonTextStyles = React.useMemo(
@@ -13,20 +17,24 @@ const SignUpControls = ({ screenStyles, onPress, style }) => {
   );
 
   return (
-    <View style={style}>
-      <Button
-        {...{
-          label: screenStyles.signup_action_button_text || "SIGN UP",
-          onPress,
-          backgroundColor: screenStyles.signup_action_button_background,
-          backgroundColorFocused:
-            screenStyles.signup_action_button_background_focused,
-          textColorFocused: screenStyles.signup_action_button_fontcolor_focused,
-          textStyles: buttonTextStyles,
-          borderRadius: screenStyles.signup_action_button_border_radius,
-        }}
-      />
-    </View>
+    <FocusableGroup id={groupId} shouldUsePreferredFocus isParallaxDisabled>
+      <View style={style}>
+        <Button
+          {...{
+            groupId,
+            label: screenStyles.signup_action_button_text || "SIGN UP",
+            onPress,
+            backgroundColor: screenStyles.signup_action_button_background,
+            backgroundColorFocused:
+              screenStyles.signup_action_button_background_focused,
+            textColorFocused:
+              screenStyles.signup_action_button_fontcolor_focused,
+            textStyles: buttonTextStyles,
+            borderRadius: screenStyles.signup_action_button_border_radius,
+          }}
+        />
+      </View>
+    </FocusableGroup>
   );
 };
 SignUpControls.propTypes = {

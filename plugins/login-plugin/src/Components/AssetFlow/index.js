@@ -20,6 +20,9 @@ import {
 } from "../../Services/iAPService";
 
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
+
+import { isWebBasedPlatform } from "../../Utils/Platform";
+
 import {
   invokeCallBack,
   addInPlayerProductId,
@@ -245,6 +248,14 @@ const AssetFlow = (props) => {
         }
       })
       .catch((error) => {
+        if (isWebBasedPlatform) {
+          //TODO:  Add handling of the redirection to the purchases website?
+          completeAssetFlow({
+            success: false,
+            error: { message: MESSAGES.asset.fail },
+          });
+        }
+
         if (error?.requestedToPurchase && startPurchaseFlow) {
           return preparePurchaseData();
         }

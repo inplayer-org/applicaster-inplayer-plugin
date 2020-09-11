@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 import { externalIdForPlatform } from "../../../Services/InPlayerServiceHelper";
 import { Alert } from "react-native";
 import MESSAGES from "../Config";

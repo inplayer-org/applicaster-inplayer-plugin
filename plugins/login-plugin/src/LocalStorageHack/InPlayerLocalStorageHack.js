@@ -112,7 +112,7 @@ export class InPlayerLocalStorageHack {
   }
 
   getItem(key) {
-    return safeMemoryStore().get(String(key));
+    return safeMemoryStore()?.get(String(key));
   }
 
   setItem(key, val) {
@@ -128,24 +128,24 @@ export class InPlayerLocalStorageHack {
       })
       .send();
     console.log("SetItem", { key, val, stringify: JSON.stringify(val) });
-    if (safeMemoryStore().get(String(key)) !== String(val)) {
-      safeMemoryStore().set(String(key), String(val));
+    if (safeMemoryStore()?.get(String(key)) !== String(val)) {
+      safeMemoryStore()?.set(String(key), String(val));
       return persistInMemoryStoreInBackground();
     }
     return Promise.resolve();
   }
 
   removeItem(key) {
-    safeMemoryStore().delete(key);
+    safeMemoryStore()?.delete(key);
     return persistInMemoryStoreInBackground();
   }
 
   getAll() {
-    return safeMemoryStore().entries();
+    return safeMemoryStore()?.entries();
   }
 
   clear() {
-    safeMemoryStore().clear();
+    safeMemoryStore()?.clear();
     return persistInMemoryStoreInBackground();
   }
 }

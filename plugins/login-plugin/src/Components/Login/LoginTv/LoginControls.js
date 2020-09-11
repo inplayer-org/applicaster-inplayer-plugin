@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import * as R from "ramda";
-import { View, ViewPropTypes, StyleSheet, Text, Platform } from "react-native";
+import { View, ViewPropTypes, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
 import { focusManager } from "@applicaster/zapp-react-native-utils/appUtils";
 import { findNextEmptyLabel } from "../../../Utils/Forms";
+import { isWebBasedPlatform } from "../../../Utils/Platform";
 
 import FocusableTextInput from "../../UIComponents/FocusableTextInput";
 import Button from "../../UIComponents/Buttons/FocusableButton";
@@ -45,7 +46,7 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles }) => {
 
   const handleEditingEnd = (label) => () => {
     // TODO: implement focus switching on Samsung TV
-    if (Platform.OS === "samsung_tv") return null;
+    if (isWebBasedPlatform) return null;
     /**
      * Wait for the focus manager to finish previous focusing job
      * (Bit of the hack but it works well from the UX point of view)

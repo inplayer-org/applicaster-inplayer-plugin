@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 import InPlayer from "@inplayer-org/inplayer.js";
 import { checkStatus, params, errorResponse } from "./InPlayerUtils";
 import { getSrcFromAsset } from "../Utils/OVPProvidersMapper";
