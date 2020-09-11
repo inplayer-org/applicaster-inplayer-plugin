@@ -2144,6 +2144,7 @@ const api = {
       "@applicaster/applicaster-iap",
       "react-native-dropdownalert",
       "react-native-keyboard-aware-scroll-view",
+      "react-native-qrcode-svg",
     ],
   },
   android: {
