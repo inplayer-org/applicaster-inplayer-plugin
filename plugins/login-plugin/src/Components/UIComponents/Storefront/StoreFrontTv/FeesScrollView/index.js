@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ScrollView, Platform } from "react-native";
+import { StyleSheet, ScrollView, Platform, View } from "react-native";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
 import { Focusable as AndroidFocusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
 
@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   container: {
     top: 500,
     left: 177,
+
     right: 177,
     height: 260,
     position: "absolute",
@@ -25,6 +26,7 @@ const Focusable = isAndroid
   ? AndroidFocusable
   : ({ children }) => children(false, {});
 
+const FocusableGroupWrapper = isAndroid ? View : FocusableGroup;
 const FeesScrollView = React.forwardRef((props, ref) => {
   const { screenStyles, dataSource, onPressPaymentOption } = props;
   const [elRefs, setElRefs] = React.useState([]);
@@ -49,7 +51,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
 
   const groupId = "fee-scroll-view";
   return (
-    <FocusableGroup
+    <FocusableGroupWrapper
       style={styles.container}
       id={groupId}
       shouldUsePreferredFocus
@@ -84,7 +86,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
           </ScrollView>
         )}
       </Focusable>
-    </FocusableGroup>
+    </FocusableGroupWrapper>
   );
 });
 
