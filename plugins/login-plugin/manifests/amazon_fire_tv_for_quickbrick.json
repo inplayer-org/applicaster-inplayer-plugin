@@ -110,8 +110,8 @@
     "quickbrick"
   ],
   "platform": "amazon_fire_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.76",
-  "manifest_version": "0.7.0-beta.76",
+  "dependency_version": "0.7.0-beta.77",
+  "manifest_version": "0.7.0-beta.77",
   "api": {
     "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
