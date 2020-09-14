@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     height: 260,
     position: "absolute",
   },
+  scrollViewContent: { flexGrow: 1, justifyContent: "center" },
 });
 
 const Focusable = isAndroid
@@ -47,7 +48,6 @@ const FeesScrollView = React.forwardRef((props, ref) => {
   }, [isScrollViewFocused, elRefs]);
 
   const groupId = "fee-scroll-view";
-
   return (
     <FocusableGroup
       style={styles.container}
@@ -62,7 +62,10 @@ const FeesScrollView = React.forwardRef((props, ref) => {
         nextFocusUp={props.nextFocusUp}
       >
         {(focused, parentFocus) => (
-          <ScrollView horizontal={true}>
+          <ScrollView
+            horizontal={true}
+            contentContainerStyle={styles.scrollViewContent}
+          >
             {dataSource.map((item, index) => (
               <FeeCard
                 ref={elRefs[index]}
