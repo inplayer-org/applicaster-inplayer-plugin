@@ -5,6 +5,7 @@ import { identity } from "ramda";
 
 import { mapKeyToStyle } from "../../../Utils/Customization";
 import { useBackHandler } from "../../../Utils/Hooks";
+import { useToggleNavBar } from "../../../Utils/Hooks";
 
 import FocusableElements from "./FocusableElements";
 import Title from "./Title";
@@ -67,6 +68,7 @@ const LoginInterface = (props) => {
   };
 
   useBackHandler(hardwareBack);
+  useToggleNavBar();
 
   const titleStyles = React.useMemo(
     () => mapKeyToStyle("login_title", screenStyles),
