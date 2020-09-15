@@ -647,7 +647,7 @@ const baseManifest = {
       default: "",
     },
     {
-      type: "text",
+      type: "number_input",
       key: "in_player_branding_id",
       tooltip_text: "In Player Branding ID",
       default: "",

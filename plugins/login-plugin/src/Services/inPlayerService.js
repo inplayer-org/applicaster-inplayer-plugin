@@ -133,7 +133,7 @@ export async function login({ email, password, clientId, referrer }) {
 }
 
 export async function signUp(params) {
-  const { fullName, email, password, clientId, referrer } = params;
+  const { fullName, email, password, clientId, referrer, brandingId } = params;
   await initFromNativeLocalStorage();
 
   console.log({ clientId });
@@ -146,23 +146,25 @@ export async function signUp(params) {
     referrer,
     metadata: ["Dummy"],
     type: "consumer",
+    brandingId,
   });
 }
 
-export async function requestPassword({ email, clientId }) {
+export async function requestPassword({ email, clientId, brandingId }) {
   const result = await InPlayer.Account.requestNewPassword({
     email,
     merchantUuid: clientId,
-    branding_id: null,
+    brandingId,
   });
   return result;
 }
 
-export async function setNewPassword({ password, token }) {
+export async function setNewPassword({ password, token, brandingId }) {
   await InPlayer.Account.setNewPassword(
     {
       password,
       passwordConfirmation: password,
+      brandingId,
     },
     token
   );
