@@ -25,8 +25,8 @@ import {
   createLogger,
   BaseSubsystem,
   BaseCategories,
+  XRayLogLevel
 } from "../Services/LoggerService";
-import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
 
 export const logger = createLogger({
   subsystem: BaseSubsystem,

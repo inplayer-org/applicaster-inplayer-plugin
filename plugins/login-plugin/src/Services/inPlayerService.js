@@ -7,11 +7,11 @@ import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
 
 import { logger as rootLogger } from "../Components/InPlayer";
-import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
 import {
   createLogger,
   BaseSubsystem,
   BaseCategories,
+  XRayLogLevel
 } from "../Services/LoggerService";
 
 export const logger = createLogger({

@@ -12,8 +12,11 @@ import SignUp from "../SignUp";
 import { container } from "../Styles";
 import * as InPlayerService from "../../Services/inPlayerService";
 import { showAlert } from "../../Utils/Account";
-import { createLogger, Subsystems } from "../../Services/LoggerService";
-import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
+import {
+  createLogger,
+  Subsystems,
+  XRayLogLevel,
+} from "../../Services/LoggerService";
 import { logger as rootLogger } from "../../Components/InPlayer";
 import { isWebBasedPlatform } from "../../Utils/Platform";
 

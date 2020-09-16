@@ -43,3 +43,5 @@ export function createLogger({ category = "", subsystem, parent = null }) {
 function getContext() {
   return { userName: "", email: "" };
 }
+
+export const XRayLogLevel = XRayLogger.XRayLogLevel;
