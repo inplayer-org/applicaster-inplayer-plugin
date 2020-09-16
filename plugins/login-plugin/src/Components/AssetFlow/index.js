@@ -38,6 +38,7 @@ import {
 } from "../../Services/LoggerService";
 import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
 import { logger as rootLogger } from "../../Components/InPlayer";
+import { useToggleNavBar } from "../../Utils/Hooks";
 
 export const logger = createLogger({
   subsystem: Subsystems.ASSET,
@@ -68,6 +69,8 @@ const AssetFlow = (props) => {
   );
   const [assetId, setAssetId] = useState(null);
   let stillMounted = true;
+
+  useToggleNavBar();
 
   useLayoutEffect(() => {
     prepareAssetId();
