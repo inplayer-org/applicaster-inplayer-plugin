@@ -35,10 +35,15 @@ const AccountFlow = (props) => {
     configuration: {
       in_player_client_id: clientId,
       in_player_referrer: referrer,
-      in_player_branding_id: brandingId,
+      in_player_branding_id,
     },
     accountFlowCallback,
   } = props;
+
+  const brandingId = React.useMemo(() => {
+    const parsedValue = parseInt(in_player_branding_id);
+    return isNaN(parsedValue) ? null : parsedValue;
+  }, []);
 
   const { shouldShowParentLock } = props;
   const [loading, setLoading] = useState(true);
