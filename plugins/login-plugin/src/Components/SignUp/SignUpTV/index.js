@@ -6,7 +6,7 @@ import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/l
 
 import ClientLogo from "../../UIComponents/ClientLogo";
 import { mapKeyToStyle } from "../../../Utils/Customization";
-import { useBackHandler } from "../../../Utils/Hooks";
+import { useBackHandler, useToggleNavBar } from "../../../Utils/Hooks";
 import SignupControls from "./SignupControls";
 import { validateSignUpData } from "../../../Utils/Account";
 
@@ -51,6 +51,7 @@ const SignUpMobile = (props) => {
   };
 
   useBackHandler(hardwareBack);
+  useToggleNavBar();
 
   const validateData = ({ fullName, email, password }) => {
     const title = "Sign Up form issue";
