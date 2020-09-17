@@ -32,6 +32,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
   const [elRefs, setElRefs] = React.useState([]);
   const { isFocused, setFocus } = useFocusManager() || {};
   const isScrollViewFocused = isFocused?.("fees-scroll-view");
+  const scrollRef = isAndroid && React.createRef();
 
   const dataSourceLength = dataSource.length;
 
@@ -48,6 +49,10 @@ const FeesScrollView = React.forwardRef((props, ref) => {
       setFocus(elRefs[0]);
     }
   }, [isScrollViewFocused, elRefs]);
+
+  const scrollToFocusedItem = ({ x, y }) => {
+    isAndroid && scrollRef.current.scrollTo({ x, y, animated: true })
+  }
 
   const groupId = "fee-scroll-view";
   return (
@@ -67,6 +72,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
           <ScrollView
             horizontal={true}
             contentContainerStyle={styles.scrollViewContent}
+            ref={scrollRef}
           >
             {dataSource.map((item, index) => (
               <FeeCard
@@ -76,6 +82,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
                 nextFocusRight={elRefs?.[index + 1]}
                 nextFocusLeft={elRefs?.[index - 1]}
                 groupId={groupId}
+                onFocus={scrollToFocusedItem}
                 screenStyles={screenStyles}
                 paymentOptionItem={item}
                 key={item.productIdentifier}

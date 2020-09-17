@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
 import FeeTitle from "./FeeTitle";
@@ -43,6 +43,7 @@ const FeeCard = React.forwardRef((props, ref) => {
     onPress,
     identifier,
     groupId,
+    onFocus,
   } = props;
   const {
     payment_option_background_color,
@@ -53,6 +54,13 @@ const FeeCard = React.forwardRef((props, ref) => {
     payment_option_default_action_background_color,
     payment_option_active_default_action_background_color,
   } = screenStyles;
+
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleLayoutChange = (e) => {
+    const { x, y } = e.nativeEvent.layout;
+    setPosition({ x, y });
+  }
 
   const userDefinedStyles = React.useMemo(
     () => ({
@@ -92,6 +100,7 @@ const FeeCard = React.forwardRef((props, ref) => {
       id={`${groupId}-${identifier}`}
       groupId={groupId}
       onPress={onPress}
+      onFocus={() => onFocus(position)}
       nextFocusUp={props.nextFocusUp}
       nextFocusDown={props.nextFocusDown}
       nextFocusRight={props.nextFocusRight}
@@ -104,6 +113,7 @@ const FeeCard = React.forwardRef((props, ref) => {
             userDefinedStyles,
             focused && userDefinedStylesActive,
           ]}
+          onLayout={handleLayoutChange}
         >
           <View
             style={[
@@ -147,6 +157,7 @@ FeeCard.propTypes = {
   nextFocusRight: PropTypes.object,
   nextFocusLeft: PropTypes.object,
   onPress: PropTypes.func,
+  onFocus: PropTypes.func,
   identifier: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   groupId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
