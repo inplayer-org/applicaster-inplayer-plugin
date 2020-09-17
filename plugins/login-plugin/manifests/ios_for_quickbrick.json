@@ -637,11 +637,6 @@
       "default": ""
     },
     {
-      "type": "number_input",
-      "key": "in_player_branding_id",
-      "tooltip_text": "In Player Branding ID"
-    },
-    {
       "type": "text",
       "key": "in_player_referrer",
       "tooltip_text": "In Player Referrer URL",
@@ -727,8 +722,8 @@
     "quickbrick"
   ],
   "platform": "ios_for_quickbrick",
-  "dependency_version": "0.6.13",
-  "manifest_version": "0.6.13",
+  "dependency_version": "0.6.14",
+  "manifest_version": "0.6.14",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
