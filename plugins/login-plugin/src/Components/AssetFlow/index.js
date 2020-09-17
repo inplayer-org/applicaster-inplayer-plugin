@@ -35,8 +35,8 @@ import {
   createLogger,
   Subsystems,
   AssetCategories,
+  XRayLogLevel
 } from "../../Services/LoggerService";
-import { XRayLogLevel } from "@applicaster/quick-brick-xray/src/logLevels";
 import { logger as rootLogger } from "../../Components/InPlayer";
 import { useToggleNavBar } from "../../Utils/Hooks";
 
