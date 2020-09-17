@@ -653,12 +653,6 @@ const baseManifest = {
     },
     {
       type: "text",
-      key: "in_player_branding_id",
-      tooltip_text: "In Player Branding ID",
-      default: "",
-    },
-    {
-      type: "text",
       key: "in_player_referrer",
       tooltip_text: "In Player Referrer URL",
       default: "",
