@@ -11,7 +11,7 @@ import {
   createLogger,
   BaseSubsystem,
   BaseCategories,
-  XRayLogLevel
+  XRayLogLevel,
 } from "../Services/LoggerService";
 
 export const logger = createLogger({
@@ -406,7 +406,7 @@ export async function login({ email, password, clientId, referrer }) {
 }
 
 export async function signUp(params) {
-  const { fullName, email, password, clientId, referrer } = params;
+  const { fullName, email, password, clientId, referrer, brandingId } = params;
 
   try {
     const retVal = await InPlayer.Account.signUp({
@@ -418,6 +418,7 @@ export async function signUp(params) {
       referrer,
       metadata: {},
       type: "consumer",
+      brandingId,
     });
     logger
       .createEvent()
@@ -462,12 +463,12 @@ export async function signUp(params) {
   }
 }
 
-export async function requestPassword({ email, clientId }) {
+export async function requestPassword({ email, clientId, brandingId }) {
   try {
     const retVal = await InPlayer.Account.requestNewPassword({
       email,
       merchantUuid: clientId,
-      branding_id: null,
+      brandingId,
     });
     logger
       .createEvent()
@@ -504,6 +505,7 @@ export async function setNewPassword({ password, token }) {
       {
         password,
         passwordConfirmation: password,
+        brandingId,
       },
       token
     );
