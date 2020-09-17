@@ -24,6 +24,11 @@
       "default": ""
     },
     {
+      "type": "number_input",
+      "key": "in_player_branding_id",
+      "tooltip_text": "In Player Branding ID"
+    },
+    {
       "type": "text",
       "key": "in_player_referrer",
       "tooltip_text": "In Player Referrer URL",
@@ -110,8 +115,8 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "0.7.0-beta.82",
-  "manifest_version": "0.7.0-beta.82",
+  "dependency_version": "0.7.0-beta.83",
+  "manifest_version": "0.7.0-beta.83",
   "api": {
     "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
