@@ -44,4 +44,4 @@ function getContext() {
   return { userName: "", email: "" };
 }
 
-export const XRayLogLevel = XRayLogger.XRayLogLevel;
+export const XRayLogLevel = XRayLogger.logLevels;
