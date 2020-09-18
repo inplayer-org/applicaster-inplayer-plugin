@@ -409,7 +409,7 @@ export async function signUp(params) {
   const { fullName, email, password, clientId, referrer, brandingId } = params;
 
   try {
-    const retVal = await InPlayer.Account.signUp({
+    const retVal = await InPlayer.Account.signUp({ 
       fullName,
       email,
       password,
@@ -499,7 +499,7 @@ export async function requestPassword({ email, clientId, brandingId }) {
   }
 }
 
-export async function setNewPassword({ password, token }) {
+export async function setNewPassword({ password, token, brandingId }) {
   try {
     await InPlayer.Account.setNewPassword(
       {
