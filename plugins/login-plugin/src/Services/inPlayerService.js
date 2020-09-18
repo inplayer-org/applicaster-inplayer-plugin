@@ -409,7 +409,7 @@ export async function signUp(params) {
   const { fullName, email, password, clientId, referrer, brandingId } = params;
 
   try {
-    const retVal = await InPlayer.Account.signUp({ 
+    const retVal = await InPlayer.Account.signUp({
       fullName,
       email,
       password,
