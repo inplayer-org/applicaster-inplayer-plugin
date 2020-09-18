@@ -35,7 +35,7 @@ import {
   createLogger,
   Subsystems,
   AssetCategories,
-  XRayLogLevel
+  XRayLogLevel,
 } from "../../Services/LoggerService";
 import { logger as rootLogger } from "../../Components/InPlayer";
 import { useToggleNavBar } from "../../Utils/Hooks";
