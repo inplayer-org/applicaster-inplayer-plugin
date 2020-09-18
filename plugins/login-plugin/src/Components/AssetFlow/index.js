@@ -168,7 +168,6 @@ const AssetFlow = (props) => {
   };
 
   const preparePurchaseData = async () => {
-    console.log("preparePurchaseData");
     const {
       configuration: {
         in_player_client_id,
@@ -195,7 +194,6 @@ const AssetFlow = (props) => {
       if (resultPurchaseData.length === 0) {
         throw new Error(MESSAGES.validation.noFees);
       }
-      console.log({ resultPurchaseData });
       const inPlayerFeesData = retrieveInPlayerFeesData({
         feesToSearch: resultPurchaseData[0],
         allPackagesData: resultPurchaseData[1],
@@ -204,10 +202,7 @@ const AssetFlow = (props) => {
         in_player_environment,
       });
 
-      console.log("retrieveProducts");
-
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
-      console.log({ storeFeesData });
 
       console.log({ inPlayerFeesData, storeFeesData });
       if (storeFeesData.length === 0) {
@@ -256,11 +251,6 @@ const AssetFlow = (props) => {
         }
       })
       .catch((error) => {
-        console.log({
-          error,
-          isWebBasedPlatform,
-          shouldPurchase: error?.requestedToPurchase && startPurchaseFlow,
-        });
         if (isWebBasedPlatform) {
           //TODO:  Add handling of the redirection to the purchases website?
           completeAssetFlow({

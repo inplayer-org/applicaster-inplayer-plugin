@@ -56,7 +56,7 @@ const AccountFlow = (props) => {
     const parsedValue = parseInt(in_player_branding_id);
     return isNaN(parsedValue) ? null : parsedValue;
   }, []);
-  console.log({ brandingId });
+
   const { shouldShowParentLock } = props;
   const [loading, setLoading] = useState(true);
   const [screen, setScreen] = useState(ScreensData.EMPTY);
