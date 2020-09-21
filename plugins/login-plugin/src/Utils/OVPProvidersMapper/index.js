@@ -7,6 +7,12 @@ const SUPPORTED_ASSET_TYPES = {
   HTML: "html_asset",
 };
 
+export const getCookiesFromAsset = (inPlayerItemAccess) => {
+  const { cookies = null } =
+    inPlayerItemAccess && getInPlayerContent(inPlayerItemAccess);
+  return cookies;
+};
+
 export const getSrcFromAsset = (inPlayerItemAccess) => {
   const inPlayerContent =
     inPlayerItemAccess && getInPlayerContent(inPlayerItemAccess);

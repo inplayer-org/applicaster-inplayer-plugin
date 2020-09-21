@@ -1,7 +1,10 @@
 import * as R from "ramda";
 import InPlayer from "@inplayer-org/inplayer.js";
 import { checkStatus, params, errorResponse } from "./InPlayerUtils";
-import { getSrcFromAsset } from "../Utils/OVPProvidersMapper";
+import {
+  getSrcFromAsset,
+  getCookiesFromAsset,
+} from "../Utils/OVPProvidersMapper";
 import { localStorage } from "../LocalStorageHack";
 import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
@@ -95,6 +98,7 @@ export async function checkAccessForAsset({
   try {
     const asset = await InPlayer.Asset.checkAccessForAsset(assetId);
     const src = getSrcFromAsset(asset);
+    const cookies = getCookiesFromAsset(asset);
     logger
       .createEvent()
       .setMessage(
@@ -105,10 +109,11 @@ export async function checkAccessForAsset({
         inplayer_asset_id: assetId,
         inplayer_asset: asset,
         src,
+        cookies,
       })
       .send();
 
-    return { asset, src };
+    return { asset, src, cookies };
   } catch (error) {
     const event = logger
       .createEvent()
