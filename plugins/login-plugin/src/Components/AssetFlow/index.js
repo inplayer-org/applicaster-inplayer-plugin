@@ -236,11 +236,12 @@ const AssetFlow = (props) => {
     checkAccessForAsset({ assetId, retryInCaseFail })
       .then((data) => {
         const src = data?.src;
+        const cookies = data?.cookies;
 
         if (data && src) {
           const newPayload = src && {
             ...payload,
-            content: { src },
+            content: { src, cookies },
           };
           completeAssetFlow({ newPayload });
         } else {
