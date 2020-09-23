@@ -1,5 +1,4 @@
 import { Platform } from "react-native";
-import * as R from "ramda";
 
 export const isWebBasedPlatform =
   Platform.OS === "web" ||

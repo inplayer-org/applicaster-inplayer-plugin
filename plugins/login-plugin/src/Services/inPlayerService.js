@@ -587,10 +587,15 @@ export async function validateExternalPayment({
 }) {
   let event = logger.createEvent().setLevel(XRayLogLevel.debug).addData({
     receipt,
-    user_id: userId,
     item_id,
     access_fee_id,
   });
+
+  if (isAmazonPlatform(store)) {
+    event.addData({
+      amazon_user_id: userId,
+    });
+  }
 
   const validationURL = store && externalPurchaseValidationURL(store);
 
