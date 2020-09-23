@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 import { ApplicasterIAPModule } from "@applicaster/applicaster-iap";
-import { sessionStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/SessionStorage";
 import { validateExternalPayment } from "./inPlayerService";
 import { findAsync } from "./InPlayerUtils";
 import * as R from "ramda";
@@ -8,12 +7,10 @@ import MESSAGES from "../Components/AssetFlow/Config";
 
 const isAndroid = Platform.OS === "android";
 
-export async function initialize() {
+export async function initialize(store) {
   if (!isAndroid) {
     return true;
   }
-
-  const store = await sessionStorage.getItem("store");
 
   if (!store) {
     throw new Error(

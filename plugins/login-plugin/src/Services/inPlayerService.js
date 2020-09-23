@@ -9,7 +9,6 @@ import { localStorage } from "../LocalStorageHack";
 import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
 import { isAmazonPlatform } from "./../Utils/Platform";
-import { sessionStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/SessionStorage";
 
 import { logger as rootLogger } from "../Components/InPlayer";
 import {

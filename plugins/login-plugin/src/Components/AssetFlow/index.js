@@ -77,7 +77,7 @@ const AssetFlow = (props) => {
 
   useLayoutEffect(() => {
     prepareAssetId();
-    initializeIap();
+    initializeIap(store);
     return () => {
       stillMounted = false;
     };
@@ -89,7 +89,7 @@ const AssetFlow = (props) => {
     }
   }, [assetId]);
 
-  const initializeIap = async () => {
+  const initializeIap = async (store) => {
     try {
       logger
         .createEvent()
@@ -97,7 +97,7 @@ const AssetFlow = (props) => {
         .setMessage(`Initializing IAP plugin`)
         .send();
 
-      const result = await initialize();
+      const result = await initialize(store);
       if (result) {
         setIapInitialized(true);
       }
