@@ -77,7 +77,7 @@ const AssetFlow = (props) => {
 
   useLayoutEffect(() => {
     prepareAssetId();
-    initializeIap(store);
+    initializeIap();
     return () => {
       stillMounted = false;
     };
@@ -89,7 +89,7 @@ const AssetFlow = (props) => {
     }
   }, [assetId]);
 
-  const initializeIap = async (store) => {
+  const initializeIap = async () => {
     try {
       logger
         .createEvent()
