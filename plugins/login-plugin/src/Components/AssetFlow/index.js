@@ -4,6 +4,8 @@ import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
 import PrivacyPolicy from "../UIComponents/PrivacyPolicy";
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
+import { useSelector } from "react-redux";
+import * as R from "ramda";
 
 import {
   getAssetByExternalId,
@@ -50,6 +52,7 @@ const isAndroid = Platform.OS === "android";
 
 const AssetFlow = (props) => {
   const { screenStyles } = props;
+  const { store } = useSelector(R.prop("appData"));
 
   const ScreensData = {
     EMPTY: "Empty",
@@ -304,6 +307,7 @@ const AssetFlow = (props) => {
         access_fee_id,
       });
       await purchaseAnItem({
+        store,
         purchaseID: productIdentifier,
         item_id,
         access_fee_id,

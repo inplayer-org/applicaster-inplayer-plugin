@@ -1,10 +1,14 @@
 import { Platform } from "react-native";
+import { isAmazonPlatform } from "../../Utils/Platform";
 import InPlayer from "@inplayer-org/inplayer.js";
 import * as R from "ramda";
 
-export function externalPurchaseValidationURL() {
+export function externalPurchaseValidationURL(store) {
   // URL Example: https://staging-v2.inplayer.com/v2/external-payments/apple/validate
-  const platform = Platform.OS === "ios" ? "apple" : "google-play";
+  let platform = Platform.OS === "ios" ? "apple" : "google-play";
+  if (store && isAmazonPlatform(store)) {
+    platform = store;
+  }
   return `${InPlayer.config.BASE_URL}/v2/external-payments/${platform}/validate`;
 }
 

@@ -8,6 +8,8 @@ import {
 import { localStorage } from "../LocalStorageHack";
 import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
+import { isAmazonPlatform } from "./../Utils/Platform";
+import { sessionStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/SessionStorage";
 
 import { logger as rootLogger } from "../Components/InPlayer";
 import {
@@ -572,18 +574,32 @@ export async function getLastEmailUsed() {
   return localStorage.getItem(IN_PLAYER_LAST_EMAIL_USED_KEY);
 }
 
+function extraValidationPaymentParams({ userId, store }) {
+  return isAmazonPlatform(store) ? { amazon_user_id: userId } : {};
+}
+
 //TODO: This func not working with Web, implement proper way in future
 export async function validateExternalPayment({
   receipt,
+  userId,
   item_id,
   access_fee_id,
+  store,
 }) {
   let event = logger.createEvent().setLevel(XRayLogLevel.debug).addData({
     receipt,
+    user_id: userId,
     item_id,
     access_fee_id,
   });
+
+  const validationURL = store && externalPurchaseValidationURL(store);
+
   try {
+    if (!validationURL) {
+      throw new Error("Can not retrieve validation url");
+    }
+
     if (!InPlayer.Account.isAuthenticated()) {
       errorResponse(401, {
         code: 401,
@@ -601,17 +617,20 @@ export async function validateExternalPayment({
       throw new Error("Payment access_fee_id is a required parameter!");
     }
 
-    let body = {
-      receipt,
-      item_id,
-      access_fee_id,
-    };
+    let body = [
+      {
+        receipt,
+        item_id,
+        access_fee_id,
+      },
+      extraValidationPaymentParams({ userId, store }),
+    ];
 
     event.addData({
-      validation_url: externalPurchaseValidationURL(),
+      validation_url: validationURL,
     });
 
-    const response = await fetch(externalPurchaseValidationURL(), {
+    const response = await fetch(validationURL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${InPlayer.Account.getToken().token}`,
@@ -631,7 +650,7 @@ export async function validateExternalPayment({
         parsed_response: retVal,
       })
       .setMessage(
-        `InPlayer validate external payment >> succeed: true, url:${externalPurchaseValidationURL()}`
+        `InPlayer validate external payment >> succeed: true, url:${validationURL}`
       )
       .send();
 
@@ -639,7 +658,7 @@ export async function validateExternalPayment({
   } catch (error) {
     event
       .setMessage(
-        `InPlayer validate external payment >> succeed: false, url:${externalPurchaseValidationURL()}`
+        `InPlayer validate external payment >> succeed: false, url:${validationURL}`
       )
       .setLevel(XRayLogLevel.error)
       .attachError(error)
