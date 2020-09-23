@@ -4,22 +4,20 @@ import { validateExternalPayment } from "./inPlayerService";
 import { findAsync } from "./InPlayerUtils";
 import * as R from "ramda";
 import MESSAGES from "../Components/AssetFlow/Config";
-import { sessionStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/SessionStorage";
 
 const isAndroid = Platform.OS === "android";
 
-export async function initialize() {
-  const store = await sessionStorage.getItem("store");
-
-  if (!store) {
-    throw new Error(
-      `Failed to initialize In App purchases plugin. Couldn't find the store ${store}`
-    );
-  }
-
+export async function initialize(store) {
   if (!isAndroid) {
     return true;
   }
+
+  if (!store) {
+    throw new Error(
+      `Failed to initialize In App purchases plugin. Couldn't find the store data`
+    );
+  }
+
   const isInitialized = await ApplicasterIAPModule.isInitialized();
   if (isInitialized) {
     return true;
@@ -41,6 +39,7 @@ export async function purchaseAnItem({
   item_id,
   access_fee_id,
   productType,
+  store,
 }) {
   if (!purchaseID) throw new Error(MESSAGES.validation.productId);
 
@@ -54,6 +53,7 @@ export async function purchaseAnItem({
     purchaseCompletion,
     item_id,
     access_fee_id,
+    store,
   });
 
   //TODO: When InPlayer will implement validation external transaction, should be called exectly when validation will send completion
@@ -93,16 +93,23 @@ async function externalPaymentValidation({
   purchaseCompletion,
   item_id,
   access_fee_id,
+  store,
 }) {
   const transactionIdentifier = purchaseCompletion?.transactionIdentifier;
   const productIdentifier = purchaseCompletion?.productIdentifier;
 
   const receipt = purchaseCompletion?.receipt;
+
+  // Currently only avail for amazon, rest platform currently does not support this key
+  const userId = purchaseCompletion?.userId;
   const result = await validateExternalPayment({
     receipt,
+    userId,
     item_id,
     access_fee_id,
+    store,
   });
+
   console.log("Verification Result:", { result });
   return { transactionIdentifier, productIdentifier };
 }
