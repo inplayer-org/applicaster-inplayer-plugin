@@ -9,7 +9,7 @@ import { localStorage } from "../LocalStorageHack";
 import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
 import { isAmazonPlatform } from "./../Utils/Platform";
-
+import { getInPlayerContent } from "../Utils/InPlayerResponse";
 import { logger as rootLogger } from "../Components/InPlayer";
 import {
   createLogger,
@@ -19,7 +19,7 @@ import {
 } from "../Services/LoggerService";
 
 export const logger = createLogger({
-  subsystem: BaseSubsystem,
+  subsystem: `${BaseSubsystem}/${BaseCategories.INPLAYER_SERVICE}`,
   category: BaseCategories.INPLAYER_SERVICE,
   parent: rootLogger,
 });
@@ -111,6 +111,7 @@ export async function checkAccessForAsset({
         inplayer_asset: asset,
         src,
         cookies,
+        inplayer_asset_content: getInPlayerContent(asset),
       })
       .send();
 
@@ -622,15 +623,15 @@ export async function validateExternalPayment({
     }
 
     let body = {
-        receipt,
-        item_id,
-        access_fee_id,
-        ...extraValidationPaymentParams({ userId, store })
-      };
+      receipt,
+      item_id,
+      access_fee_id,
+      ...extraValidationPaymentParams({ userId, store }),
+    };
 
     event.addData({
       validation_url: validationURL,
-      body
+      body,
     });
 
     const response = await fetch(validationURL, {

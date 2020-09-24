@@ -6,6 +6,7 @@ export const BaseCategories = {
   LOCAL_STORAGE: "local_storage_wrapper",
   PAYLOAD_HELPER: "payload_helper",
   INPLAYER_SERVICE: "inplayer_service",
+  IAP_SERVICE: "in_app_purchase_service",
 };
 
 export const Subsystems = {
