@@ -407,13 +407,12 @@ export async function restore(dataFromInPlayer) {
   const restoreResultFromStore = await ApplicasterIAPModule.restore();
 
   const promises = dataFromInPlayer.map(
-    async ({ productIdentifier, inPlayerProductId }) => {
+    async ({ productIdentifier, inPlayerProductId }) =>
       await restoreAnItem(
         productIdentifier,
         inPlayerProductId,
         restoreResultFromStore
-      );
-    }
+      )
   );
 
   const restoreCompletionsArr = await Promise.all(promises);
