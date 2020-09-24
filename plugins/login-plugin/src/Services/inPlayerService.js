@@ -621,17 +621,16 @@ export async function validateExternalPayment({
       throw new Error("Payment access_fee_id is a required parameter!");
     }
 
-    let body = [
-      {
+    let body = {
         receipt,
         item_id,
         access_fee_id,
-      },
-      extraValidationPaymentParams({ userId, store }),
-    ];
+        ...extraValidationPaymentParams({ userId, store })
+      };
 
     event.addData({
       validation_url: validationURL,
+      body
     });
 
     const response = await fetch(validationURL, {
