@@ -50,21 +50,14 @@ export async function getAssetByExternalId(payload) {
 
   if (assetData) {
     const { externalAssetId, inplayerAssetType } = assetData;
-    const result = await InPlayer.Asset.getExternalAsset(
-      inplayerAssetType,
-      externalAssetId
-    );
-
-    const retVal = result?.id;
-    if (retVal) {
+    try {
       logger
         .createEvent()
         .setMessage(
-          `InPlayer.Asset.getExternalAsset >> external_asset_id: ${externalAssetId}, inplayer_asset_type: ${inplayerAssetType} >> inplayer_asset_id: ${retVal}, title: ${result?.title}`
+          `InPlayer.Asset.getExternalAsset >> external_asset_id: ${externalAssetId}, inplayer_asset_type: ${inplayerAssetType}`
         )
         .setLevel(XRayLogLevel.debug)
         .addData({
-          inplayer_asset_id: retVal,
           external_asset: result,
           external_asset_data: {
             external_asset_id: externalAssetId,
@@ -72,17 +65,54 @@ export async function getAssetByExternalId(payload) {
           },
         })
         .send();
-      return retVal;
-    } else {
+
+      const result = await InPlayer.Asset.getExternalAsset(
+        inplayerAssetType,
+        externalAssetId
+      );
+
+      const retVal = result?.id;
+      if (retVal) {
+        logger
+          .createEvent()
+          .setMessage(
+            `InPlayer.Asset.getExternalAsset Completed >> external_asset_id: ${externalAssetId}, inplayer_asset_type: ${inplayerAssetType} >> Result: inplayer_asset_id: ${retVal}, title: ${result?.title}`
+          )
+          .setLevel(XRayLogLevel.debug)
+          .addData({
+            inplayer_asset_id: retVal,
+            external_asset: result,
+            external_asset_data: {
+              external_asset_id: externalAssetId,
+              inplayer_asset_type: inplayerAssetType,
+            },
+          })
+          .send();
+        return retVal;
+      } else {
+        errorEvent
+          .addData({
+            external_asset_data: {
+              external_asset_id: externalAssetId,
+              inplayer_asset_type: inplayerAssetType,
+            },
+          })
+          .send();
+        return null;
+      }
+    } catch (error) {
       errorEvent
         .addData({
           external_asset_data: {
             external_asset_id: externalAssetId,
             inplayer_asset_type: inplayerAssetType,
           },
+          error,
         })
+        .setMessage(
+          `InPlayer.Asset.getExternalAsset >> error message ${error.message}`
+        )
         .send();
-      return null;
     }
   } else {
     errorEvent.send();
@@ -97,13 +127,25 @@ export async function checkAccessForAsset({
   tries = 5,
 }) {
   try {
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Asset.checkAccessForAsset >> inplayer_asset_id: ${assetId}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        inplayer_asset_id: assetId,
+        inplayer_asset_content: getInPlayerContent(asset),
+      })
+      .send();
+
     const asset = await InPlayer.Asset.checkAccessForAsset(assetId);
     const src = getSrcFromAsset(asset);
     const cookies = getCookiesFromAsset(asset);
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Asset.checkAccessForAsset >> inplayer_asset_id: ${assetId}, title: ${asset?.title}`
+        `InPlayer.Asset.checkAccessForAsset Completed >> inplayer_asset_id: ${assetId} >> title: ${asset?.title} src: ${src}`
       )
       .setLevel(XRayLogLevel.debug)
       .addData({
@@ -131,7 +173,7 @@ export async function checkAccessForAsset({
       const newTries = tries - 1;
       event
         .setMessage(
-          `InPlayer.Asset.checkAccessForAsset >> status: ${error?.response?.status}, url: ${error?.response?.url} >> retry to load`
+          `InPlayer.Asset.checkAccessForAsset Failed >> status: ${error?.response?.status}, url: ${error?.response?.url} >> retry to load`
         )
         .setLevel(XRayLogLevel.debug)
         .addData({
@@ -165,7 +207,7 @@ export async function checkAccessForAsset({
       }
       event
         .setMessage(
-          `InPlayer.Asset.checkAccessForAsset >> status: ${error?.response?.status}, url: ${error?.response?.url}`
+          `InPlayer.Asset.checkAccessForAsset Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}`
         )
         .setLevel(XRayLogLevel.error)
         .send();
@@ -176,12 +218,23 @@ export async function checkAccessForAsset({
 
 export async function getAccessFees(assetId) {
   try {
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Asset.getAssetAccessFees >> inplayer_asset_id: ${assetId}`
+      )
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        inplayer_asset_id: assetId,
+      })
+      .send();
+
     const retVal = await InPlayer.Asset.getAssetAccessFees(assetId);
     const descriptions = R.map(R.prop("description"))(retVal);
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Asset.getAssetAccessFees >> inplayer_asset_id: ${assetId}, fees_count: ${retVal.length}, fee_descriptions: ${descriptions}`
+        `InPlayer.Asset.getAssetAccessFees Completed >> inplayer_asset_id: ${assetId} >> fees_count: ${retVal.length}, fee_descriptions: ${descriptions}`
       )
       .setLevel(XRayLogLevel.debug)
       .addData({
@@ -194,7 +247,7 @@ export async function getAccessFees(assetId) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Asset.getAssetAccessFees >> status: ${error?.response?.status}, url: ${error?.response?.url}, inplayer_asset_id: ${assetId}`
+        `InPlayer.Asset.getAssetAccessFees Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}, inplayer_asset_id: ${assetId}`
       )
       .setLevel(XRayLogLevel.error)
       .addData({
@@ -207,6 +260,17 @@ export async function getAccessFees(assetId) {
 }
 
 export function getAllPackages({ in_player_client_id }) {
+  logger
+    .createEvent()
+    .setMessage(
+      `InPlayer.Asset.getPackage >> inplayer_asset_id: ${in_player_client_id}`
+    )
+    .setLevel(XRayLogLevel.debug)
+    .addData({
+      in_player_client_id,
+    })
+    .send();
+
   return InPlayer.Asset.getPackage(in_player_client_id)
     .then((packagesList) => {
       const collection = packagesList.collection;
@@ -214,7 +278,7 @@ export function getAllPackages({ in_player_client_id }) {
       logger
         .createEvent()
         .setMessage(
-          `InPlayer.Asset.getPackage >> inplayer_asset_id: ${in_player_client_id}, packages_count: ${collection.length}, titles: ${titles}`
+          `InPlayer.Asset.getPackage Completed >> inplayer_asset_id: ${in_player_client_id} >> packages_count: ${collection.length}, titles: ${titles}`
         )
         .setLevel(XRayLogLevel.debug)
         .addData({
@@ -231,7 +295,7 @@ export function getAllPackages({ in_player_client_id }) {
       logger
         .createEvent()
         .setMessage(
-          `InPlayer.Asset.getPackage >> status: ${error?.response?.status}, url: ${error?.response?.url}, inplayer_asset_id: ${in_player_client_id}`
+          `InPlayer.Asset.getPackage Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}, inplayer_asset_id: ${in_player_client_id}`
         )
         .setLevel(XRayLogLevel.error)
         .addData({
@@ -265,7 +329,7 @@ export async function loadAllPackages(collection) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Asset.getPackage >> All Package Loaded >> packages_count: ${retVal.length}, packages_titles: ${titles}`
+        `InPlayer.Asset.getPackage Completed >> All Package Loaded >> packages_count: ${retVal.length}, packages_titles: ${titles}`
       )
       .setLevel(XRayLogLevel.debug)
       .addData({
@@ -277,7 +341,7 @@ export async function loadAllPackages(collection) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Asset.getPackage >> status: ${error?.response?.status}, url: ${error?.response?.url}, packages_count: ${titles.length}, packages_titles: ${titles}`
+        `InPlayer.Asset.getPackage Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}, packages_count: ${titles.length}, packages_titles: ${titles}`
       )
       .setLevel(XRayLogLevel.error)
       .addData({
@@ -329,7 +393,7 @@ export async function isAuthenticated(in_player_client_id) {
       .setMessage(
         `InPlayer.Account.getAccount >> status: ${res?.code}, is_authenticated: false`
       )
-      .setLevel(XRayLogLevel.debug)
+      .setLevel(XRayLogLevel.error)
       .addData({
         in_player_client_id,
         is_authenticated: false,
