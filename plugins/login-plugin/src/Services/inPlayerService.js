@@ -58,7 +58,6 @@ export async function getAssetByExternalId(payload) {
         )
         .setLevel(XRayLogLevel.debug)
         .addData({
-          external_asset: result,
           external_asset_data: {
             external_asset_id: externalAssetId,
             inplayer_asset_type: inplayerAssetType,
@@ -135,7 +134,6 @@ export async function checkAccessForAsset({
       .setLevel(XRayLogLevel.debug)
       .addData({
         inplayer_asset_id: assetId,
-        inplayer_asset_content: getInPlayerContent(asset),
       })
       .send();
 
@@ -164,6 +162,7 @@ export async function checkAccessForAsset({
       .addData({
         response: error?.response,
         is_purchase_required: false,
+        error,
       })
       .attachError(error);
 
@@ -209,7 +208,7 @@ export async function checkAccessForAsset({
         .setMessage(
           `InPlayer.Asset.checkAccessForAsset Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}`
         )
-        .setLevel(XRayLogLevel.error)
+        .setLevel(XRayLogLevel.debug)
         .send();
       throw error;
     }

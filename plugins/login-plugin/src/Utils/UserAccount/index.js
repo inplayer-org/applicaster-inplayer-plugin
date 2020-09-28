@@ -30,7 +30,6 @@ export async function isTokenInStorage(key, namespace) {
 
     return !!token;
   } catch (err) {
-    console.log(err);
     return false;
   }
 }

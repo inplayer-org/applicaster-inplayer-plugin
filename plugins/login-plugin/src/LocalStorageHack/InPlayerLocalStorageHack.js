@@ -3,7 +3,7 @@ import {
   createLogger,
   BaseSubsystem,
   BaseCategories,
-  XRayLogLevel
+  XRayLogLevel,
 } from "../Services/LoggerService";
 
 export const logger = createLogger({
@@ -127,7 +127,6 @@ export class InPlayerLocalStorageHack {
         in_memory_store: inMemoryStore,
       })
       .send();
-    console.log("SetItem", { key, val, stringify: JSON.stringify(val) });
     if (safeMemoryStore()?.get(String(key)) !== String(val)) {
       safeMemoryStore()?.set(String(key), String(val));
       return persistInMemoryStoreInBackground();

@@ -207,7 +207,6 @@ const AssetFlow = (props) => {
 
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
 
-      console.log({ inPlayerFeesData, storeFeesData });
       if (storeFeesData.length === 0) {
         throw new Error(MESSAGES.validation.emptyStore);
       }
@@ -267,7 +266,6 @@ const AssetFlow = (props) => {
           return preparePurchaseData();
         }
         let status = error?.response?.status;
-        console.log({ error, status });
 
         if (status) {
           const statusString = status.toString();
@@ -301,11 +299,7 @@ const AssetFlow = (props) => {
 
     try {
       const [item_id, access_fee_id] = inPlayerProductId.split("_");
-      console.log({
-        purchaseID: productIdentifier,
-        item_id,
-        access_fee_id,
-      });
+
       await purchaseAnItem({
         store,
         purchaseID: productIdentifier,
@@ -327,7 +321,6 @@ const AssetFlow = (props) => {
     Platform.OS === "ios" && setAssetLoading(true);
 
     const itemToPurchase = dataSource[index];
-    console.log({ itemToPurchase });
     return buyItem(itemToPurchase);
   };
 
@@ -350,7 +343,6 @@ const AssetFlow = (props) => {
         showAlert(alertTitle, alertMessage, onRestoreSuccess);
       })
       .catch((err) => {
-        console.log(err);
         const alertTitle = MESSAGES.restore.fail;
         showAlert(alertTitle, err.message, hideLoader);
       });

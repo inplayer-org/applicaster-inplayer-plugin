@@ -166,7 +166,7 @@ export async function purchaseAnItem({
   }
 }
 
-export function retrieveProducts(purchasableItems) {
+export async function retrieveProducts(purchasableItems) {
   if (purchasableItems) {
     let mappedPurchasableItems = null;
 
@@ -194,11 +194,9 @@ export function retrieveProducts(purchasableItems) {
           `ApplicasterIAPModule.products >> Retrive purchasable items`
         )
         .send();
-
-      let result = ApplicasterIAPModule.products(mappedPurchasableItems).then(
-        R.prop("products")
-      );
-
+      let result = await ApplicasterIAPModule.products(
+        mappedPurchasableItems
+      ).then(R.prop("products"));
       logger
         .createEvent()
         .setLevel(XRayLogLevel.debug)
@@ -224,7 +222,7 @@ export function retrieveProducts(purchasableItems) {
         })
         .attachError(error)
         .setMessage(
-          `ApplicasterIAPModule.products >> error message:${error.message}`
+          `ApplicasterIAPModule.products >> error message: ${error.message}`
         )
         .send();
       throw error;
