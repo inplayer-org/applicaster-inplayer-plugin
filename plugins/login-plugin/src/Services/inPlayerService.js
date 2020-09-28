@@ -36,7 +36,7 @@ export async function setConfig(environment = "prod") {
     .setMessage(`Set InPlayer environment: ${environment}`)
     .send();
 
-  InPlayer.setConfig(environment);
+  await InPlayer.setConfig(environment);
 }
 
 export async function getAssetByExternalId(payload) {
@@ -46,7 +46,7 @@ export async function getAssetByExternalId(payload) {
     .setMessage(
       `InPlayer.Asset.getExternalAsset >> Can not retrieve external_asset_id`
     )
-    .setLevel(XRayLogLevel.warning);
+    .setLevel(XRayLogLevel.error);
 
   if (assetData) {
     const { externalAssetId, inplayerAssetType } = assetData;
