@@ -67,21 +67,21 @@ export async function purchaseAnItem({
   store,
 }) {
   if (!purchaseID) throw new Error(MESSAGES.validation.productId);
-
+  let currentMessage = `ApplicasterIAPModule.purchase >> Purchasing purchase_id: ${purchaseID}`;
+  let currentLogData = {};
   try {
+    currentLogData = {
+      purchase_id: purchaseID,
+      item_id,
+      access_fee_id,
+      product_type: productType,
+      store,
+    };
     logger
       .createEvent()
       .setLevel(XRayLogLevel.debug)
-      .addData({
-        purchase_id: purchaseID,
-        item_id,
-        access_fee_id,
-        product_type: productType,
-        store,
-      })
-      .setMessage(
-        `ApplicasterIAPModule.purchase >> Purchasing purchase_id:${purchaseID}`
-      )
+      .addData(currentLogData)
+      .setMessage(currentMessage)
       .send();
 
     const purchaseCompletion = await ApplicasterIAPModule.purchase({
@@ -113,20 +113,20 @@ export async function purchaseAnItem({
       store,
     });
 
+    currentMessage = `ApplicasterIAPModule.finishPurchasedTransaction >> Finilizing transaction purchase_id:${purchaseID}`;
+    currentLogData = {
+      purchase_completion: purchaseCompletion,
+      purchase_id: purchaseID,
+      item_id,
+      access_fee_id,
+      product_type: productType,
+      store,
+    };
     logger
       .createEvent()
       .setLevel(XRayLogLevel.debug)
-      .addData({
-        purchase_completion: purchaseCompletion,
-        purchase_id: purchaseID,
-        item_id,
-        access_fee_id,
-        product_type: productType,
-        store,
-      })
-      .setMessage(
-        `ApplicasterIAPModule.finishPurchasedTransaction >> Finilizing transaction purchase_id:${purchaseID}`
-      )
+      .addData(currentLogData)
+      .setMessage(currentMessage)
       .send();
 
     //TODO: When InPlayer will implement validation external transaction, should be called exectly when validation will send completion
@@ -156,16 +156,11 @@ export async function purchaseAnItem({
       .createEvent()
       .setLevel(XRayLogLevel.error)
       .addData({
-        purchase_id: purchaseID,
-        item_id,
-        access_fee_id,
-        product_type: productType,
-        store,
+        ...currentLogData,
+        error,
       })
       .attachError(error)
-      .setMessage(
-        `Fail to purchase item purchase_id:${purchaseID} >> message:${error.message}`
-      )
+      .setMessage(`${currentMessage} >> error message:${error.message}`)
       .send();
     throw error;
   }
@@ -174,6 +169,7 @@ export async function purchaseAnItem({
 export function retrieveProducts(purchasableItems) {
   if (purchasableItems) {
     let mappedPurchasableItems = null;
+
     try {
       mappedPurchasableItems = R.map((item) => {
         const { externalFeeId } = item;
@@ -224,10 +220,11 @@ export function retrieveProducts(purchasableItems) {
         .addData({
           purchasable_items: purchasableItems,
           mapped_purchasable_items: mappedPurchasableItems,
+          error,
         })
         .attachError(error)
         .setMessage(
-          `ApplicasterIAPModule.products >> Fail, error message:${error.message}`
+          `ApplicasterIAPModule.products >> error message:${error.message}`
         )
         .send();
       throw error;
@@ -243,18 +240,18 @@ async function externalPaymentValidation({
   access_fee_id,
   store,
 }) {
-  const transactionIdentifier = purchaseCompletion?.transactionIdentifier;
-  const productIdentifier = purchaseCompletion?.productIdentifier;
+  let currentLogMessage = "";
+  let currentLogData = {};
+  try {
+    const transactionIdentifier = purchaseCompletion?.transactionIdentifier;
+    const productIdentifier = purchaseCompletion?.productIdentifier;
+    const receipt = purchaseCompletion?.receipt;
 
-  const receipt = purchaseCompletion?.receipt;
+    // Currently only avail for amazon, rest platform currently does not support this key
+    const userId = purchaseCompletion?.userId;
 
-  // Currently only avail for amazon, rest platform currently does not support this key
-  const userId = purchaseCompletion?.userId;
-
-  logger
-    .createEvent()
-    .setLevel(XRayLogLevel.debug)
-    .addData({
+    currentLogMessage = `Validating external payment - productIdentifier:${productIdentifier}, transactionIdentifier:${transactionIdentifier}`;
+    currentLogData = {
       purchaseCompletion,
       item_id,
       access_fee_id,
@@ -263,40 +260,55 @@ async function externalPaymentValidation({
       product_identifier: productIdentifier,
       receipt,
       userId,
-    })
-    .setMessage(
-      `Validating external payment - productIdentifier:${productIdentifier}, transactionIdentifier:${transactionIdentifier}`
-    )
-    .send();
+    };
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .addData(currentLogData)
+      .setMessage(currentLogMessage)
+      .send();
 
-  const result = await validateExternalPayment({
-    receipt,
-    userId,
-    item_id,
-    access_fee_id,
-    store,
-  });
-
-  logger
-    .createEvent()
-    .setLevel(XRayLogLevel.debug)
-    .addData({
-      purchaseCompletion,
+    const result = await validateExternalPayment({
+      receipt,
+      userId,
       item_id,
       access_fee_id,
       store,
-      transaction_identifier: transactionIdentifier,
-      product_identifier: productIdentifier,
-      receipt,
-      userId,
-      varification_result: result,
-    })
-    .setMessage(
-      `Validate finished of external payment - productIdentifier:${productIdentifier}, transactionIdentifier:${transactionIdentifier}`
-    )
-    .send();
+    });
 
-  return { transactionIdentifier, productIdentifier };
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        purchaseCompletion,
+        item_id,
+        access_fee_id,
+        store,
+        transaction_identifier: transactionIdentifier,
+        product_identifier: productIdentifier,
+        receipt,
+        userId,
+        varification_result: result,
+      })
+      .setMessage(
+        `Validate finished of external payment - productIdentifier:${productIdentifier}, transactionIdentifier:${transactionIdentifier}`
+      )
+      .send();
+
+    return { transactionIdentifier, productIdentifier };
+  } catch (error) {
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        ...currentLogData,
+        error: error,
+      })
+      .attachError(error)
+      .setMessage(`${currentLogMessage}, error message:${error.message}`)
+      .send();
+    throw error;
+  }
 }
 
 async function findItemInRestoreAndroid(
@@ -385,9 +397,24 @@ async function restoreAnItem(
       .send();
 
     return result;
-  } catch (err) {
+  } catch (error) {
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        purchase_id: purchaseID,
+        in_player_product_id: inPlayerProductId,
+        restore_result_from_store: restoreResultFromStore,
+        purchase_id_str: purchaseIdStr,
+        error,
+      })
+      .attachError(error)
+      .setMessage(
+        `Restore item - purchase_id:${purchaseID}, in_player_product_id:${inPlayerProductId}, purchase_id_str:${purchaseIdStr} >> error message:${error.message}`
+      )
+      .send();
     return {
-      code: err?.response?.status,
+      code: error?.response?.status,
       success: false,
       message: MESSAGES.restore.failInfo,
     };
@@ -395,44 +422,59 @@ async function restoreAnItem(
 }
 
 export async function restore(dataFromInPlayer) {
-  logger
-    .createEvent()
-    .setLevel(XRayLogLevel.debug)
-    .addData({
-      data_from_in_player: dataFromInPlayer,
-    })
-    .setMessage(`ApplicasterIAPModule.restore >> Restore purched items`)
-    .send();
+  try {
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        data_from_in_player: dataFromInPlayer,
+      })
+      .setMessage(`ApplicasterIAPModule.restore >> Restore purched items`)
+      .send();
 
-  const restoreResultFromStore = await ApplicasterIAPModule.restore();
+    const restoreResultFromStore = await ApplicasterIAPModule.restore();
 
-  const promises = dataFromInPlayer.map(
-    async ({ productIdentifier, inPlayerProductId }) =>
-      await restoreAnItem(
-        productIdentifier,
-        inPlayerProductId,
-        restoreResultFromStore
+    const promises = dataFromInPlayer.map(
+      async ({ productIdentifier, inPlayerProductId }) =>
+        await restoreAnItem(
+          productIdentifier,
+          inPlayerProductId,
+          restoreResultFromStore
+        )
+    );
+
+    const restoreCompletionsArr = await Promise.all(promises);
+
+    const restoreProcessedArr = restoreCompletionsArr.filter(Boolean);
+
+    const isRestoreFailed = R.isEmpty(restoreProcessedArr);
+    const isErrorOnAllRestores = restoreProcessedArr.every(
+      ({ success }) => success === false
+    );
+
+    if (isRestoreFailed) throw new Error(MESSAGES.restore.empty);
+    if (isErrorOnAllRestores) throw new Error(restoreProcessedArr[0].message);
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .addData({
+        data_from_in_player: dataFromInPlayer,
+      })
+      .setMessage(`ApplicasterIAPModule.restore >> Restore complete`)
+      .send();
+  } catch (error) {
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        data_from_in_player: dataFromInPlayer,
+        error,
+      })
+      .attachError(error)
+      .setMessage(
+        `ApplicasterIAPModule.restore >> Restore purched items >> error message:${error.message}`
       )
-  );
-
-  const restoreCompletionsArr = await Promise.all(promises);
-
-  const restoreProcessedArr = restoreCompletionsArr.filter(Boolean);
-
-  const isRestoreFailed = R.isEmpty(restoreProcessedArr);
-  const isErrorOnAllRestores = restoreProcessedArr.every(
-    ({ success }) => success === false
-  );
-
-  if (isRestoreFailed) throw new Error(MESSAGES.restore.empty);
-  if (isErrorOnAllRestores) throw new Error(restoreProcessedArr[0].message);
-
-  logger
-    .createEvent()
-    .setLevel(XRayLogLevel.debug)
-    .addData({
-      data_from_in_player: dataFromInPlayer,
-    })
-    .setMessage(`ApplicasterIAPModule.restore >> Restore complete`)
-    .send();
+      .send();
+  }
 }
