@@ -1,5 +1,4 @@
 import * as R from "ramda";
-import { logger as rootLogger } from "../../Components/InPlayer";
 import {
   createLogger,
   BaseSubsystem,
@@ -10,7 +9,6 @@ import {
 export const logger = createLogger({
   subsystem: BaseSubsystem,
   category: BaseCategories.PAYLOAD_HELPER,
-  parent: rootLogger,
 });
 
 export const externalAssetData = ({ payload }) => {

@@ -9,6 +9,7 @@ export const BaseCategories = {
   IAP_SERVICE: "in_app_purchase_service",
 };
 
+let loggers = {};
 export const Subsystems = {
   ACCOUNT: `${BaseSubsystem}/account_flow`,
   ASSET: `${BaseSubsystem}/asset_flow`,
@@ -30,18 +31,23 @@ export const AssetCategories = {
   GENERAL: "general",
 };
 
-export function createLogger({ category = "", subsystem, parent = null }) {
+export function createLogger({ category = "", subsystem }) {
   if (!subsystem) {
     return null;
   }
+  const logger = new XRayLogger(category, subsystem);
 
-  const logger = new XRayLogger(category, subsystem, parent);
-  logger.addContext(getContext());
+  loggers[subsystem] = logger;
   return logger;
 }
 
-function getContext() {
-  return { userName: "", email: "" };
+export function addContext(context) {
+  console.log({ loggers, context });
+  for (const logger of Object.values(loggers)) {
+    console.log({ logger });
+    logger.addContext(context);
+  }
+  console.log({ loggers, context });
 }
 
 export const XRayLogLevel = XRayLogger.logLevels;

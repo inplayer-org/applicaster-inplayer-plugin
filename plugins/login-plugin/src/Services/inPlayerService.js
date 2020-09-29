@@ -10,7 +10,6 @@ import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
 import { isAmazonPlatform } from "./../Utils/Platform";
 import { getInPlayerContent } from "../Utils/InPlayerResponse";
-import { logger as rootLogger } from "../Components/InPlayer";
 import {
   createLogger,
   BaseSubsystem,
@@ -21,7 +20,6 @@ import {
 export const logger = createLogger({
   subsystem: `${BaseSubsystem}/${BaseCategories.INPLAYER_SERVICE}`,
   category: BaseCategories.INPLAYER_SERVICE,
-  parent: rootLogger,
 });
 
 const IN_PLAYER_LAST_EMAIL_USED_KEY = "com.inplayer.lastEmailUsed";

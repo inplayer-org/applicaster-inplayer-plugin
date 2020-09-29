@@ -39,13 +39,11 @@ import {
   AssetCategories,
   XRayLogLevel,
 } from "../../Services/LoggerService";
-import { logger as rootLogger } from "../../Components/InPlayer";
 import { useToggleNavBar } from "../../Utils/Hooks";
 
 export const logger = createLogger({
   subsystem: Subsystems.ASSET,
   category: AssetCategories.GENERAL,
-  parent: rootLogger,
 });
 
 const isAndroid = Platform.OS === "android";

@@ -4,7 +4,6 @@ import { validateExternalPayment } from "./inPlayerService";
 import { findAsync } from "./InPlayerUtils";
 import * as R from "ramda";
 import MESSAGES from "../Components/AssetFlow/Config";
-import { logger as rootLogger } from "../Components/InPlayer";
 import {
   createLogger,
   BaseSubsystem,
@@ -15,7 +14,6 @@ import {
 export const logger = createLogger({
   subsystem: `${BaseSubsystem}/${BaseCategories.IAP_SERVICE}`,
   category: BaseCategories.IAP_SERVICE,
-  parent: rootLogger,
 });
 
 const isAndroid = Platform.OS === "android";
