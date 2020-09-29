@@ -375,7 +375,7 @@ export async function isAuthenticated(in_player_client_id) {
         .setMessage(
           `InPlayer.Account.getAccount >> status: ${res?.code}, is_authenticated: true`
         )
-        .setLevel(XRayLogLevel.debug)
+        .setLevel(XRayLogLevel.error)
         .addData({
           in_player_client_id,
           is_authenticated: true,

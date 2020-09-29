@@ -192,16 +192,16 @@ export async function retrieveProducts(purchasableItems) {
           `ApplicasterIAPModule.products >> Retrive purchasable items`
         )
         .send();
-      let result = await ApplicasterIAPModule.products(
-        mappedPurchasableItems
-      ).then(R.prop("products"));
+      let result = await ApplicasterIAPModule.products(mappedPurchasableItems);
+      result = R.prop("products")(result);
+
       logger
         .createEvent()
         .setLevel(XRayLogLevel.debug)
         .addData({
           purchasable_items: purchasableItems,
           mapped_purchasable_items: mappedPurchasableItems,
-          retreived_products: result,
+          retreived_products: Object.create(result),
         })
         .setMessage(
           `ApplicasterIAPModule.products >> Availible products to purchase recieved`
