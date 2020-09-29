@@ -206,7 +206,7 @@ export async function checkAccessForAsset({
         .setMessage(
           `InPlayer.Asset.checkAccessForAsset Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}`
         )
-        .setLevel(XRayLogLevel.debug)
+        .setLevel(XRayLogLevel.error)
         .send();
       throw error;
     }
