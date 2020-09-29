@@ -17,13 +17,11 @@ import {
   Subsystems,
   XRayLogLevel,
 } from "../../Services/LoggerService";
-import { logger as rootLogger } from "../../Components/InPlayer";
 import { isWebBasedPlatform } from "../../Utils/Platform";
 
 export const logger = createLogger({
   subsystem: Subsystems.ACCOUNT,
   category: "",
-  parent: rootLogger,
 });
 
 const containerStyle = (screenStyles) => {

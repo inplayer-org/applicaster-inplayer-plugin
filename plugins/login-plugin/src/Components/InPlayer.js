@@ -25,7 +25,8 @@ import {
   createLogger,
   BaseSubsystem,
   BaseCategories,
-  XRayLogLevel
+  XRayLogLevel,
+  addContext,
 } from "../Services/LoggerService";
 
 export const logger = createLogger({
@@ -80,7 +81,7 @@ const InPlayer = (props) => {
     const {
       configuration: { in_player_environment },
     } = props;
-    logger.addContext({ configuration: props.configuration, payload });
+    addContext({ configuration: props.configuration, payload });
 
     logger
       .createEvent()

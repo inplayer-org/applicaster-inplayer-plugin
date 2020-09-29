@@ -10,7 +10,6 @@ import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
 import { isAmazonPlatform } from "./../Utils/Platform";
 import { getInPlayerContent } from "../Utils/InPlayerResponse";
-import { logger as rootLogger } from "../Components/InPlayer";
 import {
   createLogger,
   BaseSubsystem,
@@ -21,7 +20,6 @@ import {
 export const logger = createLogger({
   subsystem: `${BaseSubsystem}/${BaseCategories.INPLAYER_SERVICE}`,
   category: BaseCategories.INPLAYER_SERVICE,
-  parent: rootLogger,
 });
 
 const IN_PLAYER_LAST_EMAIL_USED_KEY = "com.inplayer.lastEmailUsed";
@@ -36,7 +34,7 @@ export async function setConfig(environment = "prod") {
     .setMessage(`Set InPlayer environment: ${environment}`)
     .send();
 
-  InPlayer.setConfig(environment);
+  await InPlayer.setConfig(environment);
 }
 
 export async function getAssetByExternalId(payload) {
@@ -46,7 +44,7 @@ export async function getAssetByExternalId(payload) {
     .setMessage(
       `InPlayer.Asset.getExternalAsset >> Can not retrieve external_asset_id`
     )
-    .setLevel(XRayLogLevel.warning);
+    .setLevel(XRayLogLevel.error);
 
   if (assetData) {
     const { externalAssetId, inplayerAssetType } = assetData;
@@ -58,7 +56,6 @@ export async function getAssetByExternalId(payload) {
         )
         .setLevel(XRayLogLevel.debug)
         .addData({
-          external_asset: result,
           external_asset_data: {
             external_asset_id: externalAssetId,
             inplayer_asset_type: inplayerAssetType,
@@ -135,7 +132,6 @@ export async function checkAccessForAsset({
       .setLevel(XRayLogLevel.debug)
       .addData({
         inplayer_asset_id: assetId,
-        inplayer_asset_content: getInPlayerContent(asset),
       })
       .send();
 
@@ -164,6 +160,7 @@ export async function checkAccessForAsset({
       .addData({
         response: error?.response,
         is_purchase_required: false,
+        error,
       })
       .attachError(error);
 

@@ -36,19 +36,16 @@ export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
     const storeFee = storeFeesData[i];
 
     const inPlayerFee = findInPlayerFee(storeFee, inPlayerFeesData);
-    console.log({ inPlayerFeesData });
 
     storeFee.productType = inPlayerFee?.productType || "";
     storeFee.inPlayerProductId = inPlayerFee.productIdentifier;
     if (inPlayerFee?.title && !storeFee.title) {
       storeFee.title = inPlayerFee.title;
     }
-    console.log({ storeFee });
   }
 }
 
 function accessTypeToProducType({ fee, purchaseKeysMapping }) {
-  console.log({ purchaseKeysMapping });
   const {
     consumable_type_mapper,
     non_consumable_type_mapper,
@@ -77,7 +74,6 @@ function purchaseDataForFee({
   in_player_environment,
 }) {
   const { item_type } = fee;
-  console.log({ fee, in_player_environment });
   if (item_type === "package") {
     return purchaseDataForPackageFee({
       fee,
@@ -104,10 +100,6 @@ function purchaseDataForSingleFee({
   const { id, item_title, description } = fee;
   const externalFeeId = externalIdForPlatform({ fee, in_player_environment });
 
-  console.log({
-    productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
-    productIdentifier: `${assetId}_${id}`,
-  });
   return {
     productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
     productIdentifier: `${assetId}_${id}`,
@@ -130,10 +122,6 @@ function purchaseDataForPackageFee({
     const externalFeeId = externalIdForPlatform({ fee, in_player_environment });
 
     if (access_fees && packageId && R.find(R.propEq("id", id))(access_fees)) {
-      console.log({
-        productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
-        productIdentifier: `${packageId}_${id}`,
-      });
       return {
         productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
         productIdentifier: `${packageId}_${id}`,
@@ -164,11 +152,9 @@ export function retrieveInPlayerFeesData({
       in_player_environment,
     });
     if (purchaseData) {
-      console.log("Adding new Item:", { purchaseData });
       purchaseDataArray.push(purchaseData);
     }
   }
-  console.log({ purchaseDataArray });
   return purchaseDataArray;
 }
 
