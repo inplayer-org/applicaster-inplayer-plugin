@@ -42,12 +42,9 @@ export function createLogger({ category = "", subsystem }) {
 }
 
 export function addContext(context) {
-  console.log({ loggers, context });
   for (const logger of Object.values(loggers)) {
-    console.log({ logger });
     logger.addContext(context);
   }
-  console.log({ loggers, context });
 }
 
 export const XRayLogLevel = XRayLogger.logLevels;
