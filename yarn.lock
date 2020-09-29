@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@applicaster/applicaster-iap@0.3.1-alpha.13":
-  version "0.3.1-alpha.13"
-  resolved "https://registry.yarnpkg.com/@applicaster/applicaster-iap/-/applicaster-iap-0.3.1-alpha.13.tgz#49bd96ac7f47bc268ecdc523086d0bef709d49d8"
-  integrity sha512-7HYxYywCLURn1NyeOqEo4k3NNN0s+TDJTyF8z1hEaOE6+4er9AjKUtYKxLlH1/l+YDMM0DPNsfqA6uHQnQx9lg==
+"@applicaster/applicaster-iap@0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@applicaster/applicaster-iap/-/applicaster-iap-0.3.2.tgz#203838386dd9573e7ab6632777db3922756cba3e"
+  integrity sha512-0L81fs2G4x4L0bWoCAvi9SbDLf9zrjAXwlckBJXBAdk/K8DqNgeXWqUwlwz33l1O9nyde4rSGQ4bm56oaTcZWQ==
 
 "@applicaster/babel-preset-quick-brick@4.2.0-alpha.090c1f68":
   version "4.2.0-alpha.090c1f68"
@@ -171,12 +171,12 @@
   dependencies:
     ramda "^0.26.1"
 
-"@applicaster/quick-brick-inplayer@0.7.0-beta.90":
-  version "0.7.0-beta.90"
-  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.7.0-beta.90.tgz#1b3a2852afe6d76c8a7e25c6d1a446a1bbbad10e"
-  integrity sha512-PlTShDMeherKHAEaWSF8extQp3TdN7QKvMRrL8XsetPXRZD7TL1W5bZUtKKFyJl3RYVWwvRdO5Bc6UyJMIDVqg==
+"@applicaster/quick-brick-inplayer@0.7.0-beta.97":
+  version "0.7.0-beta.97"
+  resolved "https://registry.yarnpkg.com/@applicaster/quick-brick-inplayer/-/quick-brick-inplayer-0.7.0-beta.97.tgz#48311c0824a396a7381d85611244543e15f4339e"
+  integrity sha512-vpwZdFQHZjJ9TFzMZMOK72/yLqCpgSV1oheGJD2Uhs6ojOkzpbtrQpsNyiUakUCeuEZtRiopEyijrRFsl9Jjyg==
   dependencies:
-    "@applicaster/applicaster-iap" "0.3.1-alpha.13"
+    "@applicaster/applicaster-iap" "0.3.2"
     "@applicaster/quick-brick-parent-lock" "*"
     "@inplayer-org/inplayer.js" "2.13.3"
     "@react-native-community/blur" "3.4.1"
@@ -2346,9 +2346,9 @@
     is-function "^1.0.1"
 
 "@welldone-software/why-did-you-render@^4.2.2":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@welldone-software/why-did-you-render/-/why-did-you-render-4.3.1.tgz#f344647cf826117431da7ab4c70cf28a2cf578a3"
-  integrity sha512-1Axk7YWHbXlOgMJ1Wmal7Nmd8a7k+VLr7YFwQsY7CB4SsjJCOyyjbnLLZQ4t6ojw4Wn1suqhcj8leBPMwKjzmA==
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@welldone-software/why-did-you-render/-/why-did-you-render-4.3.2.tgz#db1c700df1729402f2ceacf05cebd72dca30f1af"
+  integrity sha512-pzaFmUUH+FjbsDgcMB1xNPncIaxibvo0FLbGySLIh+v+7Bp5pqSJFO6zlqo4orPLm3nAdYEgL2vrlj8befoypg==
   dependencies:
     lodash "^4"
 
@@ -3902,9 +3902,9 @@ domelementtype@1:
   integrity sha512-BSKB+TSpMpFI/HOxCNr1O8aMOTZ8hT3pM3GQ0w/mWRmkhEDSFJkkyzz4XQsBV44BChwGkrDfMyjVD0eA2aFV3w==
 
 domelementtype@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.0.1.tgz#1f8bdfe91f5a78063274e803b4bdcedf6e94f94d"
-  integrity sha512-5HOHUDsYZWV8FGWN0Njbr/Rn7f/eWSQi1v7+HsUVwXgn8nWWlL64zKDkS0n8ZmQ3mlWOMuXOnR+7Nx/5tMO5AQ==
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.0.2.tgz#f3b6e549201e46f588b59463dd77187131fe6971"
+  integrity sha512-wFwTwCVebUrMgGeAwRL/NhZtHAUyT9n9yg4IMDwf10+6iCMxSkVq9MGCVEH+QZWo1nNidy8kNvwmv4zWHDTqvA==
 
 domexception@^2.0.1:
   version "2.0.1"
@@ -7153,9 +7153,9 @@ mkdirp@^1.0.3:
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
 moment@^2.19.3, moment@^2.22.0, moment@^2.22.1:
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.28.0.tgz#cdfe73ce01327cee6537b0fafac2e0f21a237d75"
-  integrity sha512-Z5KOjYmnHyd/ukynmFd/WwyXHd7L4J9vTI/nn5Ap9AVUgaAE15VvQ9MOGmJJygEUklupqIrFnor/tjTwRU+tQw==
+  version "2.29.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.0.tgz#fcbef955844d91deb55438613ddcec56e86a3425"
+  integrity sha512-z6IJ5HXYiuxvFTI6eiQ9dm77uE0gyy1yXNApVHqTcnIKfY9tIwEjlzsZ6u1LQXvVgKeTnv9Xm7NDvJ7lso3MtA==
 
 moment@^2.24.0:
   version "2.27.0"
@@ -7988,9 +7988,9 @@ query-string@5.0.0:
     strict-uri-encode "^1.0.0"
 
 query-string@^6.0.0, query-string@^6.8.3:
-  version "6.13.2"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.13.2.tgz#3585aa9412c957cbd358fd5eaca7466f05586dda"
-  integrity sha512-BMmDaUiLDFU1hlM38jTFcRt7HYiGP/zt1sRzrIWm5zpeEuO1rkbPS0ELI3uehoLuuhHDCS8u8lhFN3fEN4JzPQ==
+  version "6.13.4"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.13.4.tgz#b35a9a3bd4955bce55f94feb0e819b3d0be6f66f"
+  integrity sha512-E2NPIeJoBEJGQNy3ib1k/Z/OkDBUKIo8IV2ZVwbKfoa65IS9unqWWUlLcbfU70Da0qNoxUZZA8CfKUjKLE641Q==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
