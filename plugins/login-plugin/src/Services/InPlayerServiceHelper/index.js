@@ -12,7 +12,8 @@ export function externalPurchaseValidationURL(store) {
   return `${InPlayer.config.BASE_URL}/v2/external-payments/${platform}/validate`;
 }
 
-export function externalIdProviderId({ in_player_environment }) {
+export function externalIdProviderId({ in_player_environment, store }) {
+  console.log({ store });
   if (Platform.OS === "ios") {
     if (in_player_environment == "prod") {
       return 13;
@@ -25,13 +26,18 @@ export function externalIdProviderId({ in_player_environment }) {
     } else if (in_player_environment == "develop") {
       return 14;
     }
+  } else if (isAmazonPlatform(store)) {
+    return 17;
   }
   return null;
 }
 
-export function externalIdForPlatform({ fee, in_player_environment }) {
+export function externalIdForPlatform({ fee, in_player_environment, store }) {
   const { external_fees } = fee;
-  const externalProviderID = externalIdProviderId({ in_player_environment });
+  const externalProviderID = externalIdProviderId({
+    in_player_environment,
+    store,
+  });
   if (!external_fees || externalProviderID === null) {
     return null;
   }

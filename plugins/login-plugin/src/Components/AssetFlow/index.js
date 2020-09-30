@@ -201,6 +201,7 @@ const AssetFlow = (props) => {
         assetId,
         purchaseKeysMapping,
         in_player_environment,
+        store,
       });
 
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
