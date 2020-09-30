@@ -13,7 +13,6 @@ export function externalPurchaseValidationURL(store) {
 }
 
 export function externalIdProviderId({ in_player_environment, store }) {
-  console.log({ store });
   if (Platform.OS === "ios") {
     if (in_player_environment == "prod") {
       return 13;
