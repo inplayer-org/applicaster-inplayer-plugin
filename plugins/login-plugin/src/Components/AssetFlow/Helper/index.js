@@ -72,6 +72,7 @@ function purchaseDataForFee({
   assetId,
   purchaseKeysMapping,
   in_player_environment,
+  store,
 }) {
   const { item_type } = fee;
   if (item_type === "package") {
@@ -80,6 +81,7 @@ function purchaseDataForFee({
       allPackagesData,
       purchaseKeysMapping,
       in_player_environment,
+      store,
     });
   } else {
     return purchaseDataForSingleFee({
@@ -87,6 +89,7 @@ function purchaseDataForFee({
       assetId,
       purchaseKeysMapping,
       in_player_environment,
+      store,
     });
   }
 }
@@ -96,9 +99,14 @@ function purchaseDataForSingleFee({
   assetId,
   purchaseKeysMapping,
   in_player_environment,
+  store,
 }) {
   const { id, item_title, description } = fee;
-  const externalFeeId = externalIdForPlatform({ fee, in_player_environment });
+  const externalFeeId = externalIdForPlatform({
+    fee,
+    in_player_environment,
+    store,
+  });
 
   return {
     productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
@@ -112,6 +120,7 @@ function purchaseDataForPackageFee({
   allPackagesData,
   purchaseKeysMapping,
   in_player_environment,
+  store,
 }) {
   const { id, item_title, description } = fee;
 
@@ -119,7 +128,11 @@ function purchaseDataForPackageFee({
     const packageItem = allPackagesData[i];
     const packageId = packageItem?.id;
     const access_fees = packageItem?.access_fees;
-    const externalFeeId = externalIdForPlatform({ fee, in_player_environment });
+    const externalFeeId = externalIdForPlatform({
+      fee,
+      in_player_environment,
+      store,
+    });
 
     if (access_fees && packageId && R.find(R.propEq("id", id))(access_fees)) {
       return {
@@ -139,6 +152,7 @@ export function retrieveInPlayerFeesData({
   assetId,
   purchaseKeysMapping,
   in_player_environment,
+  store,
 }) {
   let purchaseDataArray = [];
 
@@ -150,6 +164,7 @@ export function retrieveInPlayerFeesData({
       assetId,
       purchaseKeysMapping,
       in_player_environment,
+      store,
     });
     if (purchaseData) {
       purchaseDataArray.push(purchaseData);

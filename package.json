@@ -35,7 +35,7 @@
   "homepage": "https://github.com/applicaster/InPlayerPlugins#readme",
   "dependencies": {
     "@applicaster/quick-brick-parent-lock": "0.0.4",
-    "@applicaster/zapplicaster-cli": "next",
+    "@applicaster/zapplicaster-cli": "4.1.2-rc.6",
     "ramda": "^0.27.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
