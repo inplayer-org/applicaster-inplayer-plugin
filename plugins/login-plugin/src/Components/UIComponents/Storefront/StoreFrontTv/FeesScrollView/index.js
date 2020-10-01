@@ -32,7 +32,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
   const [elRefs, setElRefs] = React.useState([]);
   const { isFocused, setFocus } = useFocusManager() || {};
   const isScrollViewFocused = isFocused?.("fees-scroll-view");
-  const scrollRef = isAndroid && React.createRef();
+  const scrollRef = (isAndroid && React.createRef()) || null;
 
   const dataSourceLength = dataSource.length;
 
@@ -51,8 +51,8 @@ const FeesScrollView = React.forwardRef((props, ref) => {
   }, [isScrollViewFocused, elRefs]);
 
   const scrollToFocusedItem = ({ x, y }) => {
-    isAndroid && scrollRef.current.scrollTo({ x, y, animated: true })
-  }
+    isAndroid && scrollRef.current.scrollTo({ x, y, animated: true });
+  };
 
   const groupId = "fee-scroll-view";
   return (
