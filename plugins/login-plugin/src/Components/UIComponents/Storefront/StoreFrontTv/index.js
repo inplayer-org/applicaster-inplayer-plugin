@@ -20,6 +20,7 @@ import {
 const StoreFrontTv = (props) => {
   const {
     screenStyles,
+    screenLocalizations,
     onPressRestore,
     onPressPrivacyPolicy,
     onHandleBack,
@@ -28,12 +29,15 @@ const StoreFrontTv = (props) => {
   const {
     storefront_screen_background_color: screenBackground = null,
     client_logo: logoUrl = "",
-    restore_purchase_action_button_text,
     restore_purchase_action_button_background_color,
     restore_purchase_active_action_button_background_color,
-    subscriber_agreement_and_privacy_policy_text,
     subscriber_agreement_and_privacy_policy_text_active_color,
   } = screenStyles;
+
+  const {
+    restore_purchase_action_button_text,
+    subscriber_agreement_and_privacy_policy_text,
+  } = screenLocalizations;
 
   const subscriptionsListRef = React.useRef(null);
   const restorePurchaseButtonRef = React.useRef(null);
@@ -151,6 +155,10 @@ StoreFrontTv.propTypes = {
   onHandleBack: PropTypes.func,
   onPressRestore: PropTypes.func,
   onPressPrivacyPolicy: PropTypes.func,
+  screenLocalizations: PropTypes.shape({
+    restore_purchase_action_button_text: PropTypes.string,
+    subscriber_agreement_and_privacy_policy_text: PropTypes.string,
+  }),
 };
 
 StoreFrontTv.defaultProps = {
@@ -158,4 +166,5 @@ StoreFrontTv.defaultProps = {
   onHandleBack: R.identity,
   onPressRestore: R.identity,
   onPressPrivacyPolicy: R.identity,
+  screenLocalizations: {},
 };

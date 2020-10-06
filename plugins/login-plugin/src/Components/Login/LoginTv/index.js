@@ -54,13 +54,7 @@ const LoginInterface = (props) => {
     signUp: onSignup,
     accountFlowCallback,
     screenStyles,
-    screenStyles: {
-      client_logo,
-      login_title_text,
-      main_description_text,
-      optional_instructions_1_text,
-      optional_instructions_2_text,
-    },
+    screenLocalizations
   } = props;
 
   const hardwareBack = () => {
@@ -96,18 +90,18 @@ const LoginInterface = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.clientLogoView}>
-        <ClientLogo imageSrc={client_logo} />
+        <ClientLogo imageSrc={screenStyles.client_logo} />
       </View>
       <View style={styles.contentWrapper}>
-        <Title label={login_title_text} styles={titleStyles} />
-        <Subtitle label={main_description_text} styles={subtitleStyles} />
+        <Title label={screenLocalizations.login_title_text} styles={titleStyles} />
+        <Subtitle label={screenLocalizations.main_description_text} styles={subtitleStyles} />
         <View style={styles.paragraphContainer}>
           <Paragraph
-            label={optional_instructions_1_text}
+            label={screenLocalizations.optional_instructions_1_text}
             styles={paragraphOneStyles}
           />
           <Paragraph
-            label={optional_instructions_2_text}
+            label={screenLocalizations.optional_instructions_2_text}
             styles={paragraphTwoStyles}
           />
         </View>
@@ -120,6 +114,7 @@ const LoginInterface = (props) => {
           screenStyles,
           loginStyles: styles.loginControls,
           signupStyles: styles.singUpControls,
+          screenLocalizations
         }}
       />
     </View>
@@ -131,7 +126,15 @@ LoginInterface.propTypes = {
   signUp: PropTypes.func,
   accountFlowCallback: PropTypes.func,
   errorMessage: PropTypes.string,
-  screenStyles: PropTypes.object,
+  screenStyles: PropTypes.shape({
+    client_logo: PropTypes.string,
+  }),
+  screenLocalizations: PropTypes.shape({
+    login_title_text: PropTypes.string,
+    main_description_text: PropTypes.string,
+    optional_instructions_1_text: PropTypes.string,
+    optional_instructions_2_text: PropTypes.string,
+  }),
 };
 
 LoginInterface.defaultProps = {
@@ -139,6 +142,7 @@ LoginInterface.defaultProps = {
   signUp: identity,
   accountFlowCallback: identity,
   screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default LoginInterface;

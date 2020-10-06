@@ -15,9 +15,10 @@ const styles = StyleSheet.create({
 const SubscriptionTitle = (props) => {
   const {
     screenStyles,
+    screenLocalizations,
     payload: { extensions = {} },
   } = props;
-  const { subscription_default_title_text } = screenStyles;
+  const { subscription_default_title_text } = screenLocalizations;
 
   const subscriptionFontStyles = React.useMemo(
     () => mapKeyToStyle("subscription_default_title_text", screenStyles),
@@ -32,12 +33,14 @@ const SubscriptionTitle = (props) => {
 
 SubscriptionTitle.propTypes = {
   screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.object,
   payload: PropTypes.object,
 };
 
 SubscriptionTitle.defaultProps = {
   payload: {},
   screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default SubscriptionTitle;

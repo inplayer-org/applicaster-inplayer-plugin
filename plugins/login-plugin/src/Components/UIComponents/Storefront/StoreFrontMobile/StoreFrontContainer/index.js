@@ -1,5 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import PropTypes from "prop-types";
 import PaymentOptionView from "../../../PaymentOptionView";
 import { container } from "../../../../Styles";
 import {
@@ -15,17 +16,12 @@ const storefrontStyleKeys = [
 
 export default function StoreFrontContainer(props) {
   const {
-    screenStyles,
     dataSource,
     onPressPaymentOption,
     onPressRestore,
+    screenStyles,
+    screenLocalizations,
   } = props;
-
-  const {
-    payment_screen_title_text: paymentTitle,
-    restore_purchases_text: restoreText,
-    restore_purchases_link: restoreLink,
-  } = screenStyles;
 
   const [
     paymentTitleStyle,
@@ -36,7 +32,7 @@ export default function StoreFrontContainer(props) {
   return (
     <View style={[styles.container, { paddingHorizontal: 25 }]}>
       <Text style={paymentTitleStyle} numberOfLines={1} ellipsizeMode="tail">
-        {paymentTitle}
+        {screenLocalizations.payment_screen_title_text}
       </Text>
       <View style={styles.restoreContainer}>
         <Text
@@ -44,9 +40,9 @@ export default function StoreFrontContainer(props) {
           numberOfLines={2}
           ellipsizeMode="tail"
         >
-          {withEndSpace(restoreText)}
+          {withEndSpace(screenLocalizations.restore_purchases_text)}
           <Text style={restoreLinkStyle} onPress={onPressRestore}>
-            {restoreLink}
+            {screenLocalizations.restore_purchases_link}
           </Text>
         </Text>
       </View>
@@ -65,6 +61,23 @@ export default function StoreFrontContainer(props) {
     </View>
   );
 }
+
+StoreFrontContainer.propTypes = {
+  dataSource: PropTypes.array,
+  onPressPaymentOption: PropTypes.func,
+  onPressRestore: PropTypes.func,
+  screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.shape({
+    payment_screen_title_text: PropTypes.string,
+    restore_purchases_text: PropTypes.string,
+    restore_purchases_link: PropTypes.string,
+  }),
+};
+
+StoreFrontContainer.defaultProps = {
+  screenStyles: {},
+  screenLocalizations: {},
+};
 
 const styles = StyleSheet.create({
   container,

@@ -32,17 +32,23 @@ const styles = StyleSheet.create({
 
 const SignUpMobile = (props) => {
   const { width: screenWidth } = useDimensions("window");
-  const { screenStyles } = props;
+  const { screenStyles, screenLocalizations } = props;
 
-  const signUp = (registrationData) => {
+  const signUp = ({ fullName, email, password }) => {
     const { createAccount, onSignUpError } = props;
+    const validate = validateSignUpData({ fullName, email, password, passwordConfirmation: password }, screenLocalizations);
 
-    const errorData = validateData(registrationData);
-
-    if (errorData) {
-      onSignUpError(errorData);
+    if (validate instanceof Error) {
+      onSignUpError({
+        title: screenLocalizations.signup_title_validation_error,
+        message: validate.message
+      });
     } else {
-      createAccount(registrationData);
+      createAccount({
+        fullName,
+        email,
+        password
+      });
     }
   };
 
@@ -52,18 +58,6 @@ const SignUpMobile = (props) => {
 
   useBackHandler(hardwareBack);
   useToggleNavBar();
-
-  const validateData = ({ fullName, email, password }) => {
-    const title = "Sign Up form issue";
-    const signUpData = {
-      fullName: fullName,
-      email: email,
-      password: password,
-      passwordConfirmation: password,
-    };
-    const message = validateSignUpData(signUpData);
-    return message ? { title, message } : null;
-  };
 
   const signupTextStyles = React.useMemo(
     () => mapKeyToStyle("signup_title", screenStyles) || {},
@@ -76,11 +70,12 @@ const SignUpMobile = (props) => {
         <ClientLogo imageSrc={screenStyles.client_logo} />
       </View>
       <Text style={[styles.title, signupTextStyles]}>
-        {screenStyles.signup_title_text || "Registration"}
+        {screenLocalizations.signup_title_text}
       </Text>
       <SignupControls
         {...{
           screenStyles,
+          screenLocalizations,
           onSignup: signUp,
         }}
       />
@@ -91,8 +86,16 @@ const SignUpMobile = (props) => {
 SignUpMobile.propTypes = {
   createAccount: PropTypes.func,
   onSignUpError: PropTypes.func,
-  screenStyles: PropTypes.object,
   onBackButton: PropTypes.func,
+  screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.shape({
+    signup_title_text: PropTypes.string,
+    signup_title_validation_error: PropTypes.string,
+    login_email_validation_error: PropTypes.string,
+    signup_password_validation_error: PropTypes.string,
+    signup_password_confirmation_validation_error: PropTypes.string,
+    signup_name_validation_error: PropTypes.string,
+  }),
 };
 
 SignUpMobile.defaultProps = {
@@ -100,6 +103,7 @@ SignUpMobile.defaultProps = {
   onSignUpError: R.identity,
   onBackButton: R.identity,
   screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default SignUpMobile;

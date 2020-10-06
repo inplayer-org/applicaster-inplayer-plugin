@@ -28,7 +28,7 @@ const Focusable = isAndroid
 
 const FocusableGroupWrapper = isAndroid ? View : FocusableGroup;
 const FeesScrollView = React.forwardRef((props, ref) => {
-  const { screenStyles, dataSource, onPressPaymentOption } = props;
+  const { screenStyles, screenLocalizations, dataSource, onPressPaymentOption } = props;
   const [elRefs, setElRefs] = React.useState([]);
   const { isFocused, setFocus } = useFocusManager() || {};
   const isScrollViewFocused = isFocused?.("fees-scroll-view");
@@ -84,6 +84,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
                 groupId={groupId}
                 onFocus={scrollToFocusedItem}
                 screenStyles={screenStyles}
+                screenLocalizations={screenLocalizations}
                 paymentOptionItem={item}
                 key={item.productIdentifier}
                 identifier={item.productIdentifier}
@@ -99,6 +100,7 @@ const FeesScrollView = React.forwardRef((props, ref) => {
 
 FeesScrollView.propTypes = {
   screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.object,
   payload: PropTypes.object,
   dataSource: PropTypes.array,
   onPressPaymentOption: PropTypes.func,
@@ -110,6 +112,7 @@ FeesScrollView.propTypes = {
 FeesScrollView.defaultProps = {
   payload: {},
   screenStyles: {},
+  screenLocalizations: {},
   dataSource: [],
   onPressPaymentOption: () => {},
 };

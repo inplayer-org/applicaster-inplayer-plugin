@@ -10,7 +10,7 @@ import Button from "../../UIComponents/Buttons/FocusableButton";
 
 const groupId = "signup-button";
 
-const SignUpControls = ({ screenStyles, onPress, style }) => {
+const SignUpControls = ({ screenStyles, onPress, style, screenLocalizations }) => {
   const buttonTextStyles = React.useMemo(
     () => mapKeyToStyle("signup_action_button", screenStyles),
     []
@@ -22,13 +22,11 @@ const SignUpControls = ({ screenStyles, onPress, style }) => {
         <Button
           {...{
             groupId,
-            label: screenStyles.signup_action_button_text || "SIGN UP",
+            label: screenLocalizations.action_button_signup_text,
             onPress,
             backgroundColor: screenStyles.signup_action_button_background,
-            backgroundColorFocused:
-              screenStyles.signup_action_button_background_focused,
-            textColorFocused:
-              screenStyles.signup_action_button_fontcolor_focused,
+            backgroundColorFocused: screenStyles.signup_action_button_background_focused,
+            textColorFocused: screenStyles.signup_action_button_fontcolor_focused,
             textStyles: buttonTextStyles,
             borderRadius: screenStyles.signup_action_button_border_radius,
           }}
@@ -40,13 +38,22 @@ const SignUpControls = ({ screenStyles, onPress, style }) => {
 SignUpControls.propTypes = {
   style: PropTypes.object,
   onPress: PropTypes.func,
-  screenStyles: PropTypes.object,
+  screenStyles: PropTypes.shape({
+    signup_action_button_background: PropTypes.string,
+    signup_action_button_background_focused: PropTypes.string,
+    signup_action_button_fontcolor_focused: PropTypes.string,
+    signup_action_button_border_radius: PropTypes.number,
+  }),
+  screenLocalizations: PropTypes.shape({
+    action_button_signup_text: PropTypes.string,
+  }),
 };
 
 SignUpControls.defaultProps = {
   style: {},
   screenStyles: {},
   onPress: R.identity,
+  screenLocalizations: {},
 };
 
 export default SignUpControls;

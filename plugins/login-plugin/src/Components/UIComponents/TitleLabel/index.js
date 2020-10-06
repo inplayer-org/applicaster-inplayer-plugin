@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { Text } from "react-native";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
-const TitleLabel = (props) => {
-  const { screenStyles, title } = props;
-
+const TitleLabel = ({ screenStyles, title }) => {
   const style = {
     fontFamily: platformSelect({
       ios: screenStyles?.title_font_ios,
@@ -17,7 +16,22 @@ const TitleLabel = (props) => {
     alignSelf: "center",
     textAlign: "center",
   };
-  return <Text style={style}>{title || "InPlayer"}</Text>;
+
+  return <Text style={style}>{title}</Text>;
+};
+
+TitleLabel.propTypes = {
+  title: PropTypes.string,
+  screenStyles: PropTypes.shape({
+    title_font_ios: PropTypes.string,
+    title_font_android: PropTypes.string,
+    title_font_size: PropTypes.number,
+    title_font_color: PropTypes.string,
+  }),
+};
+
+TitleLabel.defaultProps = {
+  screenStyles: {},
 };
 
 export default TitleLabel;

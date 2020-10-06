@@ -10,7 +10,6 @@ import { TVEventHandlerComponent } from "@applicaster/zapp-react-native-tvos-ui-
 const scrollInterval = 50;
 
 const PrivacyPolicyTv = (props) => {
-  const { screenStyles, onHandleBack } = props;
   const [y, setY] = useState(0);
   const [yOffset, setyOffset] = useState(0);
   const [maxYOffset, setMaxYOffset] = useState(0);
@@ -18,10 +17,9 @@ const PrivacyPolicyTv = (props) => {
   const [scrollViewContentHeight, setScrollViewContentHeight] = useState();
   const scrollViewRef = useRef(null);
 
-  const {
-    privacy_screen_background_color,
-    privacy_text_area_background_color,
-  } = screenStyles;
+  const { screenStyles, onHandleBack, screenLocalization } = props;
+  const { privacy_screen_background_color, privacy_text_area_background_color } = screenStyles;
+  const { privacy_main_title_text, privacy_text } = screenLocalization;
 
   const hardwareBack = () => {
     onHandleBack();
@@ -101,7 +99,7 @@ const PrivacyPolicyTv = (props) => {
     <TVEventHandlerComponent tvEventHandler={tvosRemoteHandler}>
       <View style={styles.container}>
         <View style={styles.scrollViewWrapper}>
-          <PrivacyTitle {...props} />
+          <PrivacyTitle title={privacy_main_title_text} {...props} />
           <ScrollView
             style={styles.scrollView}
             persistentScrollbar={true}
@@ -112,7 +110,7 @@ const PrivacyPolicyTv = (props) => {
             onLayout={onLayout}
             ref={scrollViewRef}
           >
-            <PrivacyDescription {...props} />
+            <PrivacyDescription text={privacy_text} {...props} />
           </ScrollView>
         </View>
       </View>
@@ -122,11 +120,13 @@ const PrivacyPolicyTv = (props) => {
 
 PrivacyPolicyTv.propTypes = {
   screenStyles: PropTypes.object,
+  screenLocalization: PropTypes.object,
   onHandleBack: PropTypes.func,
 };
 
 PrivacyPolicyTv.defaultProps = {
   screenStyles: {},
+  screenLocalization: {},
   onHandleBack: R.identity,
 };
 

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
+const SignupControls = ({ style, errorMessage, onSignup, screenStyles, screenLocalizations }) => {
   const [fullNameValue, setFullNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPassword] = useState("");
@@ -126,9 +126,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         ref={fullNameInputRef}
         nextFocusDown={emailInputRef}
         groupId={groupId}
-        placeholder={
-          screenStyles.signup_full_name_input_placeholder || "Full Name"
-        }
+        placeholder={screenLocalizations.fields_name_text}
         value={fullNameValue}
         onChangeText={handleInputChange(setFullNameValue)}
         label="full-name-input"
@@ -141,7 +139,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         nextFocusUp={fullNameInputRef}
         nextFocusDown={passwordInputRef}
         groupId={groupId}
-        placeholder={screenStyles.signup_email_input_placeholder || "Email"}
+        placeholder={screenLocalizations.fields_email_text}
         value={emailValue}
         onChangeText={handleInputChange(setEmailValue)}
         label="email-input"
@@ -154,9 +152,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         nextFocusUp={emailInputRef}
         nextFocusDown={signupButtonRef}
         groupId={groupId}
-        placeholder={
-          screenStyles.signup_password_input_placeholder || "Password"
-        }
+        placeholder={screenLocalizations.fields_password_text}
         secureTextEntry={true}
         value={passwordValue}
         onChangeText={handleInputChange(setPassword)}
@@ -168,12 +164,11 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         ref={signupButtonRef}
         {...{
           nextFocusUp: passwordInputRef,
-          label: screenStyles.signup_action_button_text,
+          label: screenLocalizations.action_button_signup_text,
           onPress,
           groupId,
           backgroundColor: screenStyles.signup_action_button_background,
-          backgroundColorFocused:
-            screenStyles.signup_action_button_background_focused,
+          backgroundColorFocused: screenStyles.signup_action_button_background_focused,
           textColorFocused: screenStyles.signup_action_button_fontcolor_focused,
           textStyles: buttonTextStyles,
           borderRadius: screenStyles.signup_action_button_border_radius,
@@ -187,12 +182,24 @@ SignupControls.propTypes = {
   style: ViewPropTypes.style,
   onSignup: PropTypes.func,
   errorMessage: PropTypes.string,
-  screenStyles: PropTypes.object,
+  screenStyles: PropTypes.shape({
+    signup_action_button_background: PropTypes.string,
+    signup_action_button_background_focused: PropTypes.string,
+    signup_action_button_fontcolor_focused: PropTypes.string,
+    signup_action_button_border_radius: PropTypes.number,
+  }),
+  screenLocalizations: PropTypes.shape({
+    fields_name_text: PropTypes.string,
+    fields_email_text: PropTypes.string,
+    fields_password_text: PropTypes.string,
+    action_button_signup_text: PropTypes.string,
+  }),
 };
 
 SignupControls.defaultProps = {
   onSignup: identity,
   screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default SignupControls;

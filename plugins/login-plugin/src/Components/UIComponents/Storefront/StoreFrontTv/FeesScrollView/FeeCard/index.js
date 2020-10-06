@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 const FeeCard = React.forwardRef((props, ref) => {
   const {
     screenStyles,
-    payload: { extensions = {} },
+    screenLocalizations,
     onPress,
     identifier,
     groupId,
@@ -151,7 +151,7 @@ const FeeCard = React.forwardRef((props, ref) => {
 
 FeeCard.propTypes = {
   screenStyles: PropTypes.object,
-  payload: PropTypes.object,
+  screenLocalizations: PropTypes.object,
   nextFocusUp: PropTypes.object,
   nextFocusDown: PropTypes.object,
   nextFocusRight: PropTypes.object,
@@ -163,8 +163,8 @@ FeeCard.propTypes = {
 };
 
 FeeCard.defaultProps = {
-  payload: {},
   screenStyles: {},
+  screenLocalizations: {}
 };
 
 FeeCard.displayName = "FeeCard";

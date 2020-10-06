@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as R from "ramda";
-import { View, ViewPropTypes, StyleSheet, Text, Platform } from "react-native";
+import { View, ViewPropTypes, StyleSheet, Text } from "react-native";
 import PropTypes from "prop-types";
 import { identity } from "ramda";
 import { FocusableGroup } from "@applicaster/zapp-react-native-ui-components/Components/FocusableGroup";
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
+const SignupControls = ({ style, errorMessage, onSignup, screenStyles, screenLocalizations }) => {
   const [emailValue, setEmailValue] = useState("");
   const [fullNameValue, setFullNameValue] = useState("");
   const [passwordValue, setPassword] = useState("");
@@ -62,7 +62,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
      * (Bit of the hack but it works well from the UX point of view)
      */
     setTimeout(() => {
-      const signupButtonId = `${groupId}-${screenStyles.signup_action_button_text}`;
+      const signupButtonId = `${groupId}-button`;
       const focusOnItem = (item) =>
         focusManager.forceFocusOnFocusable({ itemId: item });
 
@@ -114,9 +114,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
       <FocusableGroup id={groupId} shouldUsePreferredFocus isParallaxDisabled>
         <FocusableTextInput
           groupId={groupId}
-          placeholder={
-            screenStyles.signup_full_name_input_placeholder || "Full Name"
-          }
+          placeholder={screenLocalizations.fields_name_text}
           value={fullNameValue}
           onChangeText={handleInputChange(setFullNameValue)}
           label="full-name-input"
@@ -126,7 +124,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         />
         <FocusableTextInput
           groupId={groupId}
-          placeholder={screenStyles.signup_email_input_placeholder || "Email"}
+          placeholder={screenLocalizations.fields_email_text}
           value={emailValue}
           onChangeText={handleInputChange(setEmailValue)}
           label="email-input"
@@ -136,9 +134,7 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         />
         <FocusableTextInput
           groupId={groupId}
-          placeholder={
-            screenStyles.signup_password_input_placeholder || "Password"
-          }
+          placeholder={screenLocalizations.fields_password_text}
           secureTextEntry={true}
           value={passwordValue}
           onChangeText={handleInputChange(setPassword)}
@@ -148,14 +144,12 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
         />
         <Button
           {...{
-            label: screenStyles.signup_action_button_text,
+            label: screenLocalizations.action_button_signup_text,
             onPress,
             groupId,
             backgroundColor: screenStyles.signup_action_button_background,
-            backgroundColorFocused:
-              screenStyles.signup_action_button_background_focused,
-            textColorFocused:
-              screenStyles.signup_action_button_fontcolor_focused,
+            backgroundColorFocused: screenStyles.signup_action_button_background_focused,
+            textColorFocused: screenStyles.signup_action_button_fontcolor_focused,
             textStyles: buttonTextStyles,
             borderRadius: screenStyles.signup_action_button_border_radius,
           }}
@@ -168,13 +162,26 @@ const SignupControls = ({ style, errorMessage, onSignup, screenStyles }) => {
 SignupControls.propTypes = {
   style: ViewPropTypes.style,
   onLogin: PropTypes.func,
+  onSignup: PropTypes.func,
   errorMessage: PropTypes.string,
-  screenStyles: PropTypes.object,
+  screenStyles: PropTypes.shape({
+    signup_action_button_background: PropTypes.string,
+    signup_action_button_background_focused: PropTypes.string,
+    signup_action_button_fontcolor_focused: PropTypes.string,
+    signup_action_button_border_radius: PropTypes.number,
+  }),
+  screenLocalizations: PropTypes.shape({
+    fields_name_text: PropTypes.string,
+    fields_email_text: PropTypes.string,
+    fields_password_text: PropTypes.string,
+    action_button_signup_text: PropTypes.string,
+  }),
 };
 
 SignupControls.defaultProps = {
   onLogin: identity,
   screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default SignupControls;

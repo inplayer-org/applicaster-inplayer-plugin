@@ -20,13 +20,15 @@
     "ramda": "^0.26.1",
     "react-native-actionsheet": "^2.4.0",
     "react-native-dropdownalert": "^4.2.1",
-    "react-native-keyboard-aware-scroll-view": "0.9.1"
+    "react-native-keyboard-aware-scroll-view": "0.9.1",
+    "react-redux": "^7.2.1"
   },
   "peerDependencies": {
-    "@applicaster/zapp-react-native-bridge": "^4.0.0",
-    "@applicaster/zapp-react-native-redux": "^2.3.1",
-    "@applicaster/zapp-react-native-tvos-ui-components": "^4.0.0",
-    "@applicaster/zapp-react-native-utils": "^2.3.1",
+    "@applicaster/quick-brick-xray": "*",
+    "@applicaster/zapp-react-native-bridge": "*",
+    "@applicaster/zapp-react-native-redux": "*",
+    "@applicaster/zapp-react-native-tvos-ui-components": "*",
+    "@applicaster/zapp-react-native-utils": "*",
     "react": "16.11.0",
     "react-native": "0.62.2"
   },

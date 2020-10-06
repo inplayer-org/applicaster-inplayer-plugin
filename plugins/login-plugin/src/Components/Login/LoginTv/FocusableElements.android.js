@@ -15,6 +15,7 @@ const FocusableElements = ({
   loginStyles,
   signupStyles,
   onSignup,
+  screenLocalizations,
 }) => {
   const loginControlsRef = React.useRef(null);
   const signupButtonRef = React.useRef(null);
@@ -41,6 +42,7 @@ const FocusableElements = ({
               screenStyles,
               focused,
               parentFocus,
+              screenLocalizations
             }}
           />
         )}
@@ -58,6 +60,7 @@ const FocusableElements = ({
               screenStyles,
               focused,
               parentFocus,
+              screenLocalizations
             }}
           />
         )}
@@ -73,6 +76,7 @@ FocusableElements.propTypes = {
   signupStyles: PropTypes.object,
   onSignup: PropTypes.func,
   screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.object,
 };
 
 FocusableElements.defaultProps = {
@@ -81,6 +85,7 @@ FocusableElements.defaultProps = {
   signupStyles: {},
   onSignup: () => {},
   screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default FocusableElements;

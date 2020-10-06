@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  findNodeHandle,
-  Keyboard,
-} from "react-native";
+import { View, TextInput, findNodeHandle, Keyboard } from "react-native";
+import PropTypes from "prop-types";
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { inputFieldStyle } from "../../../Utils/Customization";
 import { useBackHandler } from "../../../Utils/Hooks";
-import { validateEmail } from "../../../Utils/Account";
+import { isValidEmail } from "../../../Utils/Account";
 import { container } from "../../Styles";
 import ActionButton from "../../UIComponents/Buttons/ActionButton.js";
 import TitleLabel from "../../UIComponents/TitleLabel";
@@ -21,31 +14,33 @@ import BackButton from "../../UIComponents/Buttons/BackButton";
 
 const ForgotPasswordMobile = (props) => {
   const [email, setEmail] = useState(null);
-  const { screenStyles } = props;
-  const textInputStyle = inputFieldStyle(screenStyles);
   const { width: screenWidth } = useDimensions("window");
-  let stillMounted = true;
 
-  useBackHandler(hardwareBack);
+  const { screenStyles, screenLocalizations } = props;
+  const textInputStyle = inputFieldStyle(screenStyles);
+
+  let stillMounted = true;
 
   const hardwareBack = () => {
     props?.onBackButton();
     return true;
   };
 
+  useBackHandler(hardwareBack);
+
   const onPressRequestPasswordButton = () => {
-    Keyboard.dismiss();
     const { forgotPasswordFlowCallback, onError } = props;
-    const title = "Login form issue";
-    const validateEmailMsg = validateEmail(email);
-    if (validateEmailMsg != null) {
+
+    Keyboard.dismiss();
+
+    if (isValidEmail(email)) {
+      forgotPasswordFlowCallback({ email });
+    } else {
       onError({
-        title,
-        message: validateEmailMsg,
+        title: screenLocalizations.login_title_validation_error,
+        message: screenLocalizations.login_email_validation_error,
       });
-      return;
     }
-    forgotPasswordFlowCallback({ email });
   };
 
   const scrollToInput = (reactNode) => {
@@ -54,7 +49,11 @@ const ForgotPasswordMobile = (props) => {
 
   return (
     <View style={{ ...container, width: screenWidth }}>
-      <BackButton screenStyles={screenStyles} onPress={props?.onBackButton} />
+      <BackButton
+        title={screenLocalizations.back_button_text}
+        screenStyles={screenStyles}
+        onPress={props?.onBackButton}
+      />
       <KeyboardAwareScrollView
         innerRef={(ref) => {
           this.scroll = ref;
@@ -67,7 +66,7 @@ const ForgotPasswordMobile = (props) => {
       >
         <TitleLabel
           screenStyles={screenStyles}
-          title={screenStyles?.title_font_text}
+          title={screenLocalizations.title_font_text}
         />
         <TextInput
           onFocus={(event) => {
@@ -75,7 +74,7 @@ const ForgotPasswordMobile = (props) => {
           }}
           blurOnSubmit={false}
           autoCapitalize="none"
-          placeholder={screenStyles?.fields_email_text || "E-mail"}
+          placeholder={screenLocalizations.fields_email_text}
           placeholderTextColor={
             screenStyles?.fields_placeholder_font_color || "white"
           }
@@ -87,15 +86,34 @@ const ForgotPasswordMobile = (props) => {
         <ActionButton
           screenStyles={screenStyles}
           paddingTop={25}
-          title={
-            screenStyles?.action_button_forgot_password_text ||
-            "REQUEST NEW PASSWORD"
-          }
+          title={screenLocalizations.action_button_forgot_password_text}
           onPress={onPressRequestPasswordButton}
         />
       </KeyboardAwareScrollView>
     </View>
   );
+};
+
+ForgotPasswordMobile.propTypes = {
+  forgotPasswordFlowCallback: PropTypes.func,
+  onBackButton: PropTypes.func,
+  onError: PropTypes.func,
+  screenStyles: PropTypes.shape({
+    fields_placeholder_font_color: PropTypes.string,
+  }),
+  screenLocalizations: PropTypes.shape({
+    title_font_text: PropTypes.string,
+    fields_email_text: PropTypes.string,
+    action_button_forgot_password_text: PropTypes.string,
+    login_title_validation_error: PropTypes.string,
+    login_email_validation_error: PropTypes.string,
+    back_button_text: PropTypes.string,
+  }),
+};
+
+ForgotPasswordMobile.defaultProps = {
+  screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default ForgotPasswordMobile;

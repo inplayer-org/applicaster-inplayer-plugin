@@ -13,6 +13,7 @@ const SignUpControls = ({
   style,
   focused,
   parentFocus,
+  screenLocalizations,
 }) => {
   const buttonRef = React.useRef(null);
 
@@ -30,11 +31,10 @@ const SignUpControls = ({
         {...{
           focused,
           ...parentFocus,
-          label: screenStyles.signup_action_button_text || "SIGN UP",
+          label: screenLocalizations.action_button_signup_text,
           onPress,
           backgroundColor: screenStyles.signup_action_button_background,
-          backgroundColorFocused:
-            screenStyles.signup_action_button_background_focused,
+          backgroundColorFocused: screenStyles.signup_action_button_background_focused,
           textColorFocused: screenStyles.signup_action_button_fontcolor_focused,
           textStyles: buttonTextStyles,
           borderRadius: screenStyles.signup_action_button_border_radius,
@@ -46,9 +46,17 @@ const SignUpControls = ({
 SignUpControls.propTypes = {
   style: PropTypes.object,
   onPress: PropTypes.func,
-  screenStyles: PropTypes.object,
   focused: PropTypes.bool,
   parentFocus: PropTypes.object,
+  screenStyles: PropTypes.shape({
+    signup_action_button_background: PropTypes.string,
+    signup_action_button_background_focused: PropTypes.string,
+    signup_action_button_fontcolor_focused: PropTypes.string,
+    signup_action_button_border_radius: PropTypes.number,
+  }),
+  screenLocalizations: PropTypes.shape({
+    action_button_signup_text: PropTypes.string,
+  }),
 };
 
 SignUpControls.defaultProps = {
@@ -56,6 +64,7 @@ SignUpControls.defaultProps = {
   screenStyles: {},
   onPress: R.identity,
   parentFocus: {},
+  screenLocalizations: {},
 };
 
 export default SignUpControls;

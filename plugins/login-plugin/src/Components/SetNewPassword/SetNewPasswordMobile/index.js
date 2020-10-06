@@ -6,6 +6,7 @@ import {
   Keyboard,
   BackHandler,
 } from "react-native";
+import PropTypes from "prop-types";
 import { platformSelect } from "@applicaster/zapp-react-native-utils/reactUtils";
 
 import { useDimensions } from "@applicaster/zapp-react-native-utils/reactHooks/layout";
@@ -21,11 +22,17 @@ const SetNewPasswordMobile = (props) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState(null);
   const [password, setPassword] = useState(null);
   const [token, setToken] = useState(null);
-
-  const { screenStyles } = props;
-  const textInputStyle = inputFieldStyle(screenStyles);
   const { width: screenWidth } = useDimensions("window");
+
+  const { screenStyles, screenLocalizations } = props;
+  const textInputStyle = inputFieldStyle(screenStyles);
+
   let stillMounted = true;
+
+  const hardwareBack = () => {
+    props?.onBackButton();
+    return true;
+  };
 
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", hardwareBack);
@@ -35,32 +42,23 @@ const SetNewPasswordMobile = (props) => {
     };
   }, []);
 
-  const hardwareBack = () => {
-    props?.onBackButton();
-    return true;
-  };
-
-  const validateData = () => {
-    const title = "Set New Password form issue";
-    const newPwdData = {
-      token: token,
-      password: password,
-      passwordConfirmation: passwordConfirmation,
-    };
-    const message = validateNewPassword(newPwdData);
-    return message ? { title, message } : null;
-  };
-
   const onPressSetNewPasswordButton = () => {
-    Keyboard.dismiss();
     const { setNewPasswordCallback, onError } = props;
+    const validate = validateNewPassword({ token, password, passwordConfirmation }, screenLocalizations);
 
-    const errorData = validateData();
-    if (errorData) {
-      onError(errorData);
-      return;
+    Keyboard.dismiss();
+
+    if (validate instanceof Error) {
+      onError({
+        title: screenLocalizations.new_password_title_validation_error,
+        message: validate.message
+      });
+    } else {
+      setNewPasswordCallback({
+        token,
+        password
+      });
     }
-    setNewPasswordCallback({ token, password });
   };
 
   const scrollToInput = (reactNode) => {
@@ -69,7 +67,11 @@ const SetNewPasswordMobile = (props) => {
 
   return (
     <View style={{ ...container, width: screenWidth }}>
-      <BackButton screenStyles={screenStyles} onPress={props?.onBackButton} />
+      <BackButton
+        title={screenLocalizations.back_button_text}
+        screenStyles={screenStyles}
+        onPress={props?.onBackButton}
+      />
       <KeyboardAwareScrollView
         innerRef={(ref) => {
           this.scroll = ref;
@@ -82,7 +84,7 @@ const SetNewPasswordMobile = (props) => {
       >
         <TitleLabel
           screenStyles={screenStyles}
-          title={screenStyles?.title_font_text}
+          title={screenLocalizations.title_font_text}
         />
         <TextInput
           onSubmitEditing={() => {
@@ -94,7 +96,7 @@ const SetNewPasswordMobile = (props) => {
           }}
           blurOnSubmit={false}
           autoCapitalize="words"
-          placeholder={screenStyles?.fields_token_text || "Token"}
+          placeholder={screenLocalizations.fields_token_text}
           placeholderTextColor={
             screenStyles?.fields_placeholder_font_color || "white"
           }
@@ -115,9 +117,7 @@ const SetNewPasswordMobile = (props) => {
           }}
           blurOnSubmit={false}
           autoCapitalize="none"
-          placeholder={
-            screenStyles?.fields_set_new_password_text || "New password"
-          }
+          placeholder={screenLocalizations.fields_set_new_password_text}
           placeholderTextColor={
             screenStyles?.fields_placeholder_font_color || "white"
           }
@@ -139,10 +139,7 @@ const SetNewPasswordMobile = (props) => {
           })}
           blurOnSubmit={false}
           autoCapitalize="none"
-          placeholder={
-            screenStyles?.fields_password_confirmation_text ||
-            "Password Confirmation"
-          }
+          placeholder={screenLocalizations.fields_password_confirmation_text}
           placeholderTextColor={
             screenStyles?.fields_placeholder_font_color || "white"
           }
@@ -158,15 +155,36 @@ const SetNewPasswordMobile = (props) => {
         <ActionButton
           screenStyles={screenStyles}
           paddingTop={25}
-          title={
-            screenStyles?.action_button_set_new_password_text ||
-            "SET NEW PASSWORD"
-          }
+          title={screenLocalizations.action_button_set_new_password_text}
           onPress={onPressSetNewPasswordButton}
         />
       </KeyboardAwareScrollView>
     </View>
   );
+};
+
+SetNewPasswordMobile.propTypes = {
+  setNewPasswordCallback: PropTypes.func,
+  onBackButton: PropTypes.func,
+  onError: PropTypes.func,
+  screenStyles: PropTypes.shape({
+    fields_placeholder_font_color: PropTypes.string,
+  }),
+  screenLocalizations: PropTypes.shape({
+    fields_token_text: PropTypes.string,
+    title_font_text: PropTypes.string,
+    fields_set_new_password_text: PropTypes.string,
+    fields_password_confirmation_text: PropTypes.string,
+    action_button_set_new_password_text: PropTypes.string,
+    new_password_title_validation_error: PropTypes.string,
+    new_password_token_validation_error: PropTypes.string,
+    back_button_text: PropTypes.string,
+  }),
+};
+
+SetNewPasswordMobile.defaultProps = {
+  screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default SetNewPasswordMobile;

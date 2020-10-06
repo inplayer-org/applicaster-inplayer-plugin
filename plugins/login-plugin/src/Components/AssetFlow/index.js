@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import { Platform } from "react-native";
+import PropTypes from "prop-types";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
 import PrivacyPolicy from "../UIComponents/PrivacyPolicy";
@@ -49,9 +50,6 @@ export const logger = createLogger({
 const isAndroid = Platform.OS === "android";
 
 const AssetFlow = (props) => {
-  const { screenStyles } = props;
-  const { store } = useSelector(R.prop("appData"));
-
   const ScreensData = {
     EMPTY: "Empty",
     STOREFRONT: "Storefront",
@@ -60,15 +58,11 @@ const AssetFlow = (props) => {
   };
 
   const [screen, setScreen] = useState(ScreensData.EMPTY);
-
-  const { shouldShowParentLock, onParentLockAppeared } = props;
-
   const [dataSource, setDataSource] = useState(null);
   const [assetLoading, setAssetLoading] = useState(false);
-  const [iapInitialized, setIapInitialized] = useState(
-    isAndroid ? false : true
-  );
+  const [iapInitialized, setIapInitialized] = useState(!isAndroid);
   const [assetId, setAssetId] = useState(null);
+
   let stillMounted = true;
 
   useToggleNavBar();
@@ -86,6 +80,9 @@ const AssetFlow = (props) => {
       loadAsset({ startPurchaseFlow: true });
     }
   }, [assetId]);
+
+  const { store } = useSelector(R.prop("appData"));
+  const { shouldShowParentLock, screenLocalizations } = props;
 
   const initializeIap = async () => {
     try {
@@ -246,10 +243,10 @@ const AssetFlow = (props) => {
           };
           completeAssetFlow({ newPayload });
         } else {
-          const errorMessage =
-            screenStyles.video_stream_exception_message || "";
-          const error = new Error(errorMessage);
-          completeAssetFlow({ success: false, error });
+          completeAssetFlow({
+            success: false,
+            error: new Error(screenLocalizations.video_stream_exception_message)
+          });
         }
       })
       .catch((error) => {
@@ -380,6 +377,31 @@ const AssetFlow = (props) => {
   };
 
   return render();
+};
+
+AssetFlow.propTypes = {
+  configuration: PropTypes.object,
+  setParentLockWasPresented: PropTypes.func,
+  parentLockWasPresented: PropTypes.bool,
+  shouldShowParentLock: PropTypes.func,
+  accountFlowCallback: PropTypes.func,
+  screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.shape({
+    video_stream_exception_message: PropTypes.string,
+    asset_error_text: PropTypes.string,
+    purchase_error_required: PropTypes.string,
+    store_validation_product_empty: PropTypes.string,
+    purchase_error_title: PropTypes.string,
+    restore_purchase_success_title: PropTypes.string,
+    restore_purchase_success_text: PropTypes.string,
+    restore_purchase_error_title: PropTypes.string,
+  }),
+};
+
+AssetFlow.defaultProps = {
+  configuration: {},
+  screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default AssetFlow;

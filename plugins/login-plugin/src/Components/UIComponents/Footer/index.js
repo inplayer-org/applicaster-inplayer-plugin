@@ -1,17 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
+import PropTypes from "prop-types";
 import { mapKeyToStyle, withEndSpace } from "../../../Utils/Customization";
 import OpenURLButton from "../Buttons/OpenUrlButton";
 import React from "react";
 
 const termsOFUseStyleKeys = ["terms_of_use_instructions", "terms_of_use_link"];
 
-export default function Footer({ screenStyles }) {
-  const {
-    terms_of_use_instructions_text: termsOfUseText,
-    terms_of_use_link_text: termsOfUseLink,
-    terms_of_use_link: termsOfUseUrl,
-  } = screenStyles;
-
+export default function Footer({ screenStyles, screenLocalizations }) {
   const [
     termsOfUseStyle,
     termsOfUseLinkStyle,
@@ -24,14 +19,28 @@ export default function Footer({ screenStyles }) {
         numberOfLines={3}
         ellipsizeMode="tail"
       >
-        {withEndSpace(termsOfUseText)}
-        <OpenURLButton linkStyle={termsOfUseLinkStyle} url={termsOfUseUrl}>
-          {termsOfUseLink}
+        {withEndSpace(screenLocalizations.terms_of_use_instructions_text)}
+        <OpenURLButton linkStyle={termsOfUseLinkStyle} url={screenLocalizations.terms_of_use_link}>
+          {screenLocalizations.terms_of_use_link_text}
         </OpenURLButton>
       </Text>
     </View>
   );
 }
+
+Footer.propTypes = {
+  screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.shape({
+    terms_of_use_instructions_text: PropTypes.string,
+    terms_of_use_link: PropTypes.string,
+    terms_of_use_link_text: PropTypes.string,
+  }),
+};
+
+Footer.defaultProps = {
+  screenStyles: {},
+  screenLocalizations: {},
+};
 
 const styles = StyleSheet.create({
   footer: {
