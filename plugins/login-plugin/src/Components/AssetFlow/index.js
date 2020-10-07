@@ -210,7 +210,7 @@ const AssetFlow = (props) => {
         throw new Error(MESSAGES.validation.emptyStore);
       }
 
-      addInPlayerProductId({
+      const mappedFeeData = addInPlayerProductId({
         storeFeesData,
         inPlayerFeesData,
       });
@@ -223,7 +223,7 @@ const AssetFlow = (props) => {
       } else {
         setScreen(ScreensData.STOREFRONT);
       }
-      stillMounted && setDataSource(storeFeesData);
+      stillMounted && setDataSource(mappedFeeData);
     } catch (error) {
       stillMounted && completeAssetFlow({ success: false, error });
     }

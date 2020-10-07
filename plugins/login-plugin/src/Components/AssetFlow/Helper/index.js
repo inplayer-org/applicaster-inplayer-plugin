@@ -16,33 +16,37 @@ export function invokeCallBack(
     });
 }
 
-function findInPlayerFee(storeFee, inPlayerFeesData) {
-  let inPlayerFee = R.find(
-    R.propEq("externalFeeId", storeFee.productIdentifier)
-  )(inPlayerFeesData);
-
-  if (!inPlayerFee) {
-    inPlayerFee = R.find(
-      R.propEq("productIdentifier", storeFee.productIdentifier)
-    )(inPlayerFeesData);
-  }
-
-  if (!inPlayerFee) throw new Error(MESSAGES.validation.productId);
-  return inPlayerFee;
-}
-
 export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
-  for (let i = 0; i < storeFeesData.length; i++) {
-    const storeFee = storeFeesData[i];
+  var retVal = [];
+  for (let i = 0; i < inPlayerFeesData.length; i++) {
+    const inPlayerFee = inPlayerFeesData[i];
 
-    const inPlayerFee = findInPlayerFee(storeFee, inPlayerFeesData);
-
-    storeFee.productType = inPlayerFee?.productType || "";
-    storeFee.inPlayerProductId = inPlayerFee.productIdentifier;
-    if (inPlayerFee?.title && !storeFee.title) {
-      storeFee.title = inPlayerFee.title;
+    const storeFee = findStoreFee(inPlayerFee, storeFeesData);
+    if (storeFee) {
+      storeFee.productType = inPlayerFee?.productType || "";
+      storeFee.inPlayerProductId = inPlayerFee.productIdentifier;
+      if (inPlayerFee?.title && !storeFee.title) {
+        storeFee.title = inPlayerFee.title;
+      }
+      retVal.push(storeFee);
     }
   }
+  if (retVal.length == 0) throw new Error(MESSAGES.validation.emptyStore);
+  return retVal;
+}
+
+function findStoreFee(inPlayerFee, storeFeesData) {
+  let storeFee = R.find(
+    R.propEq("productIdentifier", inPlayerFee.externalFeeId)
+  )(storeFeesData);
+
+  if (!storeFee) {
+    storeFee = R.find(
+      R.propEq("productIdentifier", inPlayerFee.productIdentifier)
+    )(storeFeesData);
+  }
+
+  return storeFee ? { ...storeFee } : null;
 }
 
 function accessTypeToProducType({ fee, purchaseKeysMapping }) {
