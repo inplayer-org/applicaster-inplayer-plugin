@@ -40,18 +40,14 @@ export const isHomeScreen = (navigator) => {
 };
 
 const mapInputKeyToStyle = (key, obj) => {
-  const regex = new RegExp(`^${key}.*?(background|border_color).*$`);
-
-  const relevantEntries = Object.entries(obj).filter(([objKey, objValue]) => regex.test(objKey));
-  const relevantObj = Object.fromEntries(relevantEntries);
-
   return {
-    backgroundColor: relevantObj?.[`${key}_background`],
-    backgroundColor_filled: relevantObj?.[`${key}_background_filled`],
-    backgroundColor_focused: relevantObj?.[`${key}_background_focused`],
-    borderColor: relevantObj?.[`${key}_border_color`],
-    borderColor_filled: relevantObj?.[`${key}_border_color_filled`],
-    borderColor_focused: relevantObj?.[`${key}_border_color_focused`],
+    backgroundColor: obj?.[`${key}_background`],
+    backgroundColor_filled: obj?.[`${key}_background_filled`],
+    backgroundColor_focused: obj?.[`${key}_background_focused`],
+    borderColor: obj?.[`${key}_border_color`],
+    borderColor_filled: obj?.[`${key}_border_color_filled`],
+    borderColor_focused: obj?.[`${key}_border_color_focused`],
+    placeholderTextColor: obj?.[`${key}_placeholder_color`]
   }
 }
 

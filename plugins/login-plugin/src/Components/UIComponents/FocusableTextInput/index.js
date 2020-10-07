@@ -102,10 +102,14 @@ const FocusableTextInput = ({
       isWebBasedPlatform && {
         outlineWidth: 0,
         boxSizing: "border-box",
-        placeholderTextColor: colors.gray,
+        placeholderTextColor: getPlaceholderColor(),
       },
     ];
   };
+
+  const getPlaceholderColor = () => {
+    return textInputStyles.default.placeholderTextColor || colors.grey
+  }
 
   const getFocusableStyles = () => {
     const { marginBottom, height } = StyleSheet.flatten(styles.textInput);
@@ -134,7 +138,7 @@ const FocusableTextInput = ({
             value,
             secureTextEntry,
             onEndEditing,
-            placeholderTextColor: colors.gray,
+            placeholderTextColor: getPlaceholderColor(),
           }}
         />
       )}

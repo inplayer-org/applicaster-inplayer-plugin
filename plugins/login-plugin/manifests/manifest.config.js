@@ -1493,6 +1493,13 @@ const stylesTv = {
           placeholder: "Email",
         },
         {
+          key: "email_input_placeholder_color",
+          type: "color_picker_rgba",
+          label: "Email Input Placeholder Color (filled)",
+          label_tooltip: "Color for the Email Input Placeholder.",
+          initial_value: "#9B9B9B",
+        },
+        {
           key: "email_input_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Email Input Text for TvOS.",
@@ -1565,6 +1572,13 @@ const stylesTv = {
           label_tooltip: "Placeholder to show for the Password Input Field.",
           initial_value: "Password",
           placeholder: "Password",
+        },
+        {
+          key: "password_input_placeholder_color",
+          type: "color_picker_rgba",
+          label: "Password Input Placeholder Color",
+          label_tooltip: "Color for the Password Input Placeholder.",
+          initial_value: "#9B9B9B",
         },
         {
           key: "password_input_font_tvos",
@@ -2088,6 +2102,13 @@ const stylesTv = {
           placeholder: "Password",
         },
         {
+          key: "signup_password_input_placeholder_color",
+          type: "color_picker_rgba",
+          label: "Password Input Placeholder Color",
+          label_tooltip: "Color for the Password Input Placeholder.",
+          initial_value: "#9B9B9B",
+        },
+        {
           key: "signup_password_input_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Password Input Text for TvOS.",
@@ -2162,6 +2183,13 @@ const stylesTv = {
           placeholder: "Full Name",
         },
         {
+          key: "signup_full_name_input_placeholder_color",
+          type: "color_picker_rgba",
+          label: "Full Name Input Placeholder Color",
+          label_tooltip: "Color for the Full Name Input Placeholder.",
+          initial_value: "#9B9B9B",
+        },
+        {
           key: "signup_full_name_input_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Full Name Input Text for TvOS.",
@@ -2234,6 +2262,13 @@ const stylesTv = {
           label_tooltip: "Placeholder to show for the Email Input Field.",
           initial_value: "Email",
           placeholder: "Email",
+        },
+        {
+          key: "signup_email_input_placeholder_color",
+          type: "color_picker_rgba",
+          label: "Email Input Placeholder Color",
+          label_tooltip: "Color for the Email Input Placeholder.",
+          initial_value: "#9B9B9B",
         },
         {
           key: "signup_email_input_font_tvos",
