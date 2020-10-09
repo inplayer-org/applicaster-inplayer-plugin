@@ -660,7 +660,7 @@ export async function validateExternalPayment({
   }
 
   const validationURL = store && externalPurchaseValidationURL(store);
-
+  let request = null;
   try {
     if (!validationURL) {
       throw new Error("Can not retrieve validation url");
@@ -690,12 +690,7 @@ export async function validateExternalPayment({
       ...extraValidationPaymentParams({ userId, store }),
     };
 
-    event.addData({
-      validation_url: validationURL,
-      body,
-    });
-
-    const response = await fetch(validationURL, {
+    request = {
       method: "POST",
       headers: {
         Authorization: `Bearer ${InPlayer.Account.getToken().token}`,
@@ -703,7 +698,15 @@ export async function validateExternalPayment({
         Accept: "application/json",
       },
       body: params(body),
+    };
+
+    event.addData({
+      validation_url: validationURL,
+      body,
+      request,
     });
+
+    const response = await fetch(validationURL, request);
     event.addData({
       response,
     });
@@ -727,6 +730,10 @@ export async function validateExternalPayment({
       )
       .setLevel(XRayLogLevel.error)
       .attachError(error)
+      .addData({
+        error,
+        response: error?.response,
+      })
       .send();
     throw error;
   }
