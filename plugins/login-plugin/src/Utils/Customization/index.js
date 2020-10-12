@@ -39,7 +39,22 @@ export const isHomeScreen = (navigator) => {
   return R.pathOr(false, ["payload", "home"], navigator.screenData);
 };
 
+const mapInputKeyToStyle = (key, obj) => {
+  return {
+    backgroundColor: obj?.[`${key}_background`],
+    backgroundColor_filled: obj?.[`${key}_background_filled`],
+    backgroundColor_focused: obj?.[`${key}_background_focused`],
+    borderColor: obj?.[`${key}_border_color`],
+    borderColor_filled: obj?.[`${key}_border_color_filled`],
+    borderColor_focused: obj?.[`${key}_border_color_focused`],
+    placeholderTextColor: obj?.[`${key}_placeholder_color`]
+  }
+}
+
 export const mapKeyToStyle = R.curry((key, obj) => {
+  const isInputKey = key.includes('input');
+  const inputStyleObj = isInputKey ? mapInputKeyToStyle(key, obj) : null;
+
   return {
     fontFamily: platformSelect({
       ios: obj?.[`${key}_font_ios`],
@@ -52,6 +67,7 @@ export const mapKeyToStyle = R.curry((key, obj) => {
     }),
     fontSize: obj?.[`${key}_fontsize`],
     color: obj?.[`${key}_fontcolor`],
+    ... isInputKey && inputStyleObj,
   };
 });
 
@@ -106,14 +122,23 @@ function findInObject(obj, condition) {
 export const pickByKey = (key) =>
   R.pickBy((val, _key) => R.includes(key, _key));
 
+const normalizeKeys = (obj) => {
+  const objEntries = Object.entries(obj).map(([key, val]) => {
+    const keyArr = key.split('_');
+    keyArr.pop();
+    return [keyArr.join('_'), val]
+  });
+  return Object.fromEntries(objEntries);
+}
+
 export const splitInputTypeStyles = (styles) => {
   const focused = pickByKey("_focused")(styles);
   const filled = pickByKey("_filled")(styles);
   const _default = R.omit([...R.keys(filled), ...R.keys(focused)])(styles);
 
   return {
-    focused,
-    filled,
+    focused: normalizeKeys(focused),
+    filled: normalizeKeys(filled),
     default: _default,
   };
 };
