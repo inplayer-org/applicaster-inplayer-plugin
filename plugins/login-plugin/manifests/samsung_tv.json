@@ -115,8 +115,8 @@
     "quickbrick"
   ],
   "platform": "samsung_tv",
-  "dependency_version": "0.7.0-beta.105",
-  "manifest_version": "0.7.0-beta.105",
+  "dependency_version": "0.7.0-beta.106",
+  "manifest_version": "0.7.0-beta.106",
   "api": {
     "excludedNodeModules": [
       "@applicaster/applicaster-iap",
@@ -846,6 +846,13 @@
             "placeholder": "Email"
           },
           {
+            "key": "email_input_placeholder_color",
+            "type": "color_picker_rgba",
+            "label": "Email Input Placeholder Color (filled)",
+            "label_tooltip": "Color for the Email Input Placeholder.",
+            "initial_value": "#9B9B9B"
+          },
+          {
             "key": "email_input_font_tvos",
             "type": "tvos_font_selector",
             "label_tooltip": "Font for Email Input Text for TvOS.",
@@ -877,12 +884,54 @@
             "initial_value": "rgba(39, 218, 134, 1)"
           },
           {
+            "key": "password_input_background_focused",
+            "type": "color_picker_rgba",
+            "label": "Password Input Background Color (focused)",
+            "label_tooltip": "Background Color for the Focused Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "password_input_background_filled",
+            "type": "color_picker_rgba",
+            "label": "Password Input Background Color (filled)",
+            "label_tooltip": "Background Color for the Filled Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "password_input_border_color",
+            "type": "color_picker_rgba",
+            "label": "Password Input Border Color",
+            "label_tooltip": "Border Color for the Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "password_input_border_color_focused",
+            "type": "color_picker_rgba",
+            "label": "Password Input Border Color (focused)",
+            "label_tooltip": "Border Color for the Focused Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "password_input_border_color_filled",
+            "type": "color_picker_rgba",
+            "label": "Password Input Border Color (filled)",
+            "label_tooltip": "Border Color for the Filled Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
             "key": "password_input_placeholder",
             "type": "text_input",
             "label": "Password Input placeholder",
             "label_tooltip": "Placeholder to show for the Password Input Field.",
             "initial_value": "Password",
             "placeholder": "Password"
+          },
+          {
+            "key": "password_input_placeholder_color",
+            "type": "color_picker_rgba",
+            "label": "Password Input Placeholder Color",
+            "label_tooltip": "Color for the Password Input Placeholder.",
+            "initial_value": "#9B9B9B"
           },
           {
             "key": "password_input_font_tvos",
@@ -1370,12 +1419,54 @@
             "initial_value": "rgba(39, 218, 134, 1)"
           },
           {
+            "key": "signup_password_input_background_focused",
+            "type": "color_picker_rgba",
+            "label": "Password Input Background Color (focused)",
+            "label_tooltip": "Background Color for the Focused Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_password_input_background_filled",
+            "type": "color_picker_rgba",
+            "label": "Password Input Background Color (filled)",
+            "label_tooltip": "Background Color for the Filled Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_password_input_border_color",
+            "type": "color_picker_rgba",
+            "label": "Password Input Border Color",
+            "label_tooltip": "Border Color for the Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_password_input_border_color_focused",
+            "type": "color_picker_rgba",
+            "label": "Password Input Border Color (focused)",
+            "label_tooltip": "Border Color for the Focused Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_password_input_border_color_filled",
+            "type": "color_picker_rgba",
+            "label": "Password Input Border Color (filled)",
+            "label_tooltip": "Border Color for the Filled Password Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
             "key": "signup_password_input_placeholder",
             "type": "text_input",
             "label": "Password Input placeholder",
             "label_tooltip": "Placeholder to show for the Password Input Field.",
             "initial_value": "Password",
             "placeholder": "Password"
+          },
+          {
+            "key": "signup_password_input_placeholder_color",
+            "type": "color_picker_rgba",
+            "label": "Password Input Placeholder Color",
+            "label_tooltip": "Color for the Password Input Placeholder.",
+            "initial_value": "#9B9B9B"
           },
           {
             "key": "signup_password_input_font_tvos",
@@ -1409,12 +1500,54 @@
             "initial_value": "rgba(39, 218, 134, 1)"
           },
           {
+            "key": "signup_full_name_input_background_focused",
+            "type": "color_picker_rgba",
+            "label": "Full Name Input Background Color (focused)",
+            "label_tooltip": "Background Color for the Focused Full Name Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_full_name_input_background_filled",
+            "type": "color_picker_rgba",
+            "label": "Full Name Input Background Color (filled)",
+            "label_tooltip": "Background Color for the Filled Full Name Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_full_name_input_border_color",
+            "type": "color_picker_rgba",
+            "label": "Full Name Input Border Color",
+            "label_tooltip": "Border Color for the Full Name Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_full_name_input_border_color_focused",
+            "type": "color_picker_rgba",
+            "label": "Full Name Input Border Color (focused)",
+            "label_tooltip": "Border Color for the Focused Full Name Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_full_name_input_border_color_filled",
+            "type": "color_picker_rgba",
+            "label": "Full Name Input Border Color (filled)",
+            "label_tooltip": "Border Color for the Filled Full Name Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
             "key": "signup_full_name_input_placeholder",
             "type": "text_input",
             "label": "Full Name Input placeholder",
             "label_tooltip": "Placeholder to show for the Full Name Input Field.",
             "initial_value": "Full Name",
             "placeholder": "Full Name"
+          },
+          {
+            "key": "signup_full_name_input_placeholder_color",
+            "type": "color_picker_rgba",
+            "label": "Full Name Input Placeholder Color",
+            "label_tooltip": "Color for the Full Name Input Placeholder.",
+            "initial_value": "#9B9B9B"
           },
           {
             "key": "signup_full_name_input_font_tvos",
@@ -1448,12 +1581,54 @@
             "initial_value": "rgba(39, 218, 134, 1)"
           },
           {
+            "key": "signup_email_input_background_focused",
+            "type": "color_picker_rgba",
+            "label": "Email Input Background Color (focused)",
+            "label_tooltip": "Background Color for the Focused Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_email_input_background_filled",
+            "type": "color_picker_rgba",
+            "label": "Email Input Background Color (filled)",
+            "label_tooltip": "Background Color for the Filled Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_email_input_border_color",
+            "type": "color_picker_rgba",
+            "label": "Email Input Border Color",
+            "label_tooltip": "Border Color for the Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_email_input_border_color_focused",
+            "type": "color_picker_rgba",
+            "label": "Email Input Border Color (focused)",
+            "label_tooltip": "Border Color for the Focused Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
+            "key": "signup_email_input_border_color_filled",
+            "type": "color_picker_rgba",
+            "label": "Email Input Border Color (filled)",
+            "label_tooltip": "Border Color for the Filled Email Input.",
+            "initial_value": "rgba(39, 218, 134, 1)"
+          },
+          {
             "key": "signup_email_input_placeholder",
             "type": "text_input",
             "label": "Email Input placeholder",
             "label_tooltip": "Placeholder to show for the Email Input Field.",
             "initial_value": "Email",
             "placeholder": "Email"
+          },
+          {
+            "key": "signup_email_input_placeholder_color",
+            "type": "color_picker_rgba",
+            "label": "Email Input Placeholder Color",
+            "label_tooltip": "Color for the Email Input Placeholder.",
+            "initial_value": "#9B9B9B"
           },
           {
             "key": "signup_email_input_font_tvos",
