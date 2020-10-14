@@ -5,7 +5,6 @@ export const getSrcForHTML = ({ inPlayerItemAccess, inPlayerContent }) => {
     inPlayerItemAccess,
     value: "asset_type",
   });
-  console.log({ applicasterAssetType, inPlayerContent });
   return inPlayerContent && applicasterAssetType === "video"
     ? inPlayerContent
     : null;

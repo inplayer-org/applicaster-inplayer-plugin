@@ -1,7 +1,13 @@
+import {
+  InPlayerLocalStorageHack,
+  initFromNativeLocalStorage,
+} from "./InPlayerLocalStorageHack";
 
-import { InPlayerLocalStorageHack, initFromNativeLocalStorage } from "./InPlayerLocalStorageHack";
+import { isWebBasedPlatform } from "../Utils/Platform";
 
 const localStorage = new InPlayerLocalStorageHack();
-global.localStorage = localStorage;
+if (!isWebBasedPlatform) {
+  global.localStorage = localStorage;
+}
 
 export { initFromNativeLocalStorage, localStorage };

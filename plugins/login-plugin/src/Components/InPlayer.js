@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 
 import AccountFlow from "./AccountFlow";
 import AssetFlow from "./AssetFlow";
 import LogoutFlow from "./LogoutFlow";
-import R from "ramda";
+import * as R from "ramda";
 
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
@@ -21,6 +21,18 @@ import {
   getMessageOrDefault,
 } from "../Utils/Customization";
 import { isHook, isTokenInStorage } from "../Utils/UserAccount";
+import {
+  createLogger,
+  BaseSubsystem,
+  BaseCategories,
+  XRayLogLevel,
+  addContext,
+} from "../Services/LoggerService";
+
+export const logger = createLogger({
+  subsystem: BaseSubsystem,
+  category: BaseCategories.GENERAL,
+});
 
 const getScreenStyles = R.compose(
   R.prop("styles"),
@@ -47,12 +59,21 @@ const InPlayer = (props) => {
   const { import_parent_lock: showParentLock } = screenStyles;
   let stillMounted = true;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setupEnviroment();
   }, []);
 
   const checkIdToken = async () => {
+    await initFromNativeLocalStorage();
     const token = await isTokenInStorage("idToken");
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(`User token is in local storage: ${token}`)
+      .addData({ token_exists: token })
+      .send();
+
     setIdtoken(token);
   };
 
@@ -60,25 +81,66 @@ const InPlayer = (props) => {
     const {
       configuration: { in_player_environment },
     } = props;
+    addContext({ configuration: props.configuration, payload });
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(`Starting InPlayer Plugin`)
+      .addData({ in_player_environment })
+      .send();
 
     await checkIdToken();
-    initFromNativeLocalStorage();
 
     setConfig(in_player_environment);
 
-    if (isVideoEntry(payload)) {
-      if (
-        isAuthenticationRequired({ payload }) ||
-        inPlayerAssetId({ payload, configuration: props.configuration })
-      ) {
+    const videoEntry = isVideoEntry(payload);
+    let event = logger.createEvent().setLevel(XRayLogLevel.debug);
+
+    if (videoEntry) {
+      const authenticationRequired = isAuthenticationRequired({ payload });
+      const assetId = inPlayerAssetId({
+        payload,
+        configuration: props.configuration,
+      });
+
+      event.addData({
+        authentication_required: authenticationRequired,
+        inplayer_asset_id: assetId,
+        is_video_entry: videoEntry,
+      });
+      if (authenticationRequired || assetId) {
+        event
+          .setMessage(`Plugin hook_type: ${HookTypeData.PLAYER_HOOK}`)
+          .addData({
+            hook_type: HookTypeData.PLAYER_HOOK,
+          })
+          .send();
         stillMounted && setHookType(HookTypeData.PLAYER_HOOK);
       } else {
+        event
+          .setMessage(
+            "Data source not support InPlayer plugin invocation, finishing hook with: success"
+          )
+          .send();
         callback && callback({ success: true, error: null, payload });
       }
     } else {
       if (!isHook(navigator)) {
+        event
+          .setMessage(`Plugin hook_type: ${HookTypeData.USER_ACCOUNT}`)
+          .addData({
+            hook_type: HookTypeData.USER_ACCOUNT,
+          })
+          .send();
         stillMounted && setHookType(HookTypeData.USER_ACCOUNT);
       } else {
+        event
+          .setMessage(`Plugin hook_type: ${HookTypeData.SCREEN_HOOK}`)
+          .addData({
+            hook_type: HookTypeData.SCREEN_HOOK,
+          })
+          .send();
         stillMounted && setHookType(HookTypeData.SCREEN_HOOK);
       }
     }
@@ -88,10 +150,24 @@ const InPlayer = (props) => {
   };
 
   const assetFlowCallback = ({ success, payload, error }) => {
+    let eventMessage = `Asset Flow completion: success ${success}`;
+    const event = logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .addData({ payload, success });
+
     if (error) {
       const message = getMessageOrDefault(error, screenStyles);
+      event
+        .addData({ message })
+        .attachError(error)
+        .setLevel(XRayLogLevel.error);
+      eventMessage = `${eventMessage} error:${message}`;
       showAlert("General Error!", message);
     }
+
+    event.setMessage(eventMessage).send();
+
     callback &&
       callback({
         success,
@@ -101,20 +177,37 @@ const InPlayer = (props) => {
   };
 
   const accountFlowCallback = async ({ success }) => {
+    let eventMessage = `Account Flow completion: success ${success}, hook_type: ${hookType}`;
+
+    const event = logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .addData({ success, payload, hook_type: hookType });
+
     if (success) {
       const token = localStorage.getItem("inplayer_token");
+      event.addData({ token });
       await defaultStorage.setItem("idToken", token);
     }
+
     if (hookType === HookTypeData.SCREEN_HOOK && success) {
       const { callback } = props;
+      event.setMessage(`${eventMessage}, plugin finished task`).send();
       callback && callback({ success, error: null, payload: payload });
     } else if (hookType === HookTypeData.PLAYER_HOOK) {
-      success
-        ? stillMounted && setIsUserAuthenticated(true)
-        : callback && callback({ success, error: null, payload: payload });
+      if (success) {
+        event.setMessage(`${eventMessage}, next: Asset Flow`).send();
+        stillMounted && setIsUserAuthenticated(true);
+      } else {
+        event.setMessage(`${eventMessage}, plugin finished task`).send();
+        callback && callback({ success, error: null, payload: payload });
+      }
     } else if (hookType === HookTypeData.USER_ACCOUNT) {
+      event.setMessage(`${eventMessage}, plugin finished task: go back`).send();
       navigator.goBack();
     } else {
+      event.setMessage(`${eventMessage}, plugin finished task`).send();
+
       callback && callback({ success: success, error: null, payload: payload });
     }
   };

@@ -1,17 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { View, SafeAreaView } from "react-native";
-import { Keyboard } from "react-native";
+import React, { useState, useLayoutEffect } from "react";
+import { View, SafeAreaView, Keyboard, Platform } from "react-native";
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
 
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
-import { Login } from "../Login";
-import { ForgotPassword } from "../ForgotPassword";
-import { SetNewPassword } from "../SetNewPassword";
+import Login from "../Login";
+import ForgotPassword from "../ForgotPassword";
+import SetNewPassword from "../SetNewPassword";
 import LoadingScreen from "../LoadingScreen";
 import SignUp from "../SignUp";
 import { container } from "../Styles";
 import * as InPlayerService from "../../Services/inPlayerService";
+import { showAlert } from "../../Utils/Account";
+import {
+  createLogger,
+  Subsystems,
+  XRayLogLevel,
+} from "../../Services/LoggerService";
+import { isWebBasedPlatform } from "../../Utils/Platform";
+
+export const logger = createLogger({
+  subsystem: Subsystems.ACCOUNT,
+  category: "",
+});
 
 const containerStyle = (screenStyles) => {
   return {
@@ -27,38 +38,55 @@ const AccountFlow = (props) => {
     SIGN_UP: "SignUp",
     FORGOT_PASSWORD: "ForgotPassword",
     SET_NEW_PASSWORD: "SetNewPassword",
-    PARENT_LOCK: "ParentLock"
+    PARENT_LOCK: "ParentLock",
   };
   let stillMounted = true;
-
 
   const {
     configuration: {
       in_player_client_id: clientId,
-      in_player_referrer: referrer
+      in_player_referrer: referrer,
+      in_player_branding_id,
     },
-    accountFlowCallback
+    accountFlowCallback,
   } = props;
+  const brandingId = React.useMemo(() => {
+    const parsedValue = parseInt(in_player_branding_id);
+    return isNaN(parsedValue) ? null : parsedValue;
+  }, []);
 
   const { shouldShowParentLock } = props;
   const [loading, setLoading] = useState(true);
   const [screen, setScreen] = useState(ScreensData.EMPTY);
   const [lastEmailUsed, setLastEmailUsed] = useState(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     InPlayerService.isAuthenticated(clientId)
       .then(async (isAuthenticated) => {
+        let eventMessage = "Account Flow:";
+        const event = logger
+          .createEvent()
+          .setLevel(XRayLogLevel.debug)
+          .addData({ is_authenticated: isAuthenticated });
+
         if (stillMounted) {
           if (isAuthenticated) {
+            eventMessage = `${eventMessage} access granted, flow completed`;
             accountFlowCallback({ success: true });
           } else {
-            if (shouldShowParentLock && shouldShowParentLock(props.parentLockWasPresented)) {
+            if (
+              shouldShowParentLock &&
+              shouldShowParentLock(props.parentLockWasPresented)
+            ) {
+              eventMessage = `${eventMessage} not granted, present parent lock`;
               presentParentLock();
             } else {
+              eventMessage = `${eventMessage} not granted, present login screen`;
               await authenticateUser();
             }
           }
         }
+        event.setMessage(eventMessage).send();
       })
       .finally(() => {
         stillMounted && setLoading(false);
@@ -69,9 +97,7 @@ const AccountFlow = (props) => {
   }, []);
 
   const authenticateUser = async () => {
-    setLastEmailUsed(
-        (await InPlayerService.getLastEmailUsed()) || null
-    );
+    setLastEmailUsed((await InPlayerService.getLastEmailUsed()) || null);
     setScreen(ScreensData.LOGIN);
   };
 
@@ -81,15 +107,32 @@ const AccountFlow = (props) => {
   };
 
   const parentLockCallback = async (result) => {
-    if (result.success) {
+    const success = result.success;
+    let eventMessage = "Parent lock finished";
+
+    logger.createEvent().setLevel(XRayLogLevel.debug).addData({ success });
+
+    if (success) {
+      eventMessage = `${eventMessage}, no access presenting login screen`;
       await authenticateUser();
     } else {
       accountFlowCallback({ success: false });
     }
+    event.setMessage(eventMessage).send();
   };
 
   const showAlertToUser = ({ title, message, type = "warn" }) => {
-    this.dropDownAlertRef.alertWithType(type, title, message);
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.info)
+      .setMessage(
+        `Aller will be presented for user title: ${title}, message: ${message}, type: ${type}`
+      )
+      .addData({ title, message, type })
+      .send();
+    Platform.isTV || isWebBasedPlatform
+      ? showAlert(title, message)
+      : this.dropDownAlertRef.alertWithType(type, title, message);
   };
 
   const maybeShowAlertToUser = (title) => async (error) => {
@@ -99,6 +142,12 @@ const AccountFlow = (props) => {
       showAlertToUser({ title, message: json.message });
       stillMounted && setLoading(false);
     } else {
+      logger
+        .createEvent()
+        .setLevel(XRayLogLevel.info)
+        .setMessage(`Error: ${error}`)
+        .attachError(error)
+        .send();
       throw error;
     }
   };
@@ -106,6 +155,15 @@ const AccountFlow = (props) => {
   const login = ({ email, password } = params) => {
     Keyboard.dismiss();
     stillMounted && setLoading(true);
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(
+        `Perform Login In task, email: ${email}, password: ${password}`
+      )
+      .addData({ email, password })
+      .send();
+
     InPlayerService.login({
       email,
       password,
@@ -113,44 +171,102 @@ const AccountFlow = (props) => {
       referrer,
     })
       .then(() => {
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.debug)
+          .setMessage(`Login succeed, email: ${email}, password: ${password}`)
+          .addData({ email, password })
+          .send();
         accountFlowCallback({ success: true });
       })
       .catch(maybeShowAlertToUser("Login failed"))
       .catch((error) => {
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.error)
+          .setMessage(`Login failed, email: ${email}, password: ${password}`)
+          .attachError(error)
+          .addData({ email, password })
+          .send();
         stillMounted && setLoading(false);
-        console.error(error);
       });
   };
 
   const createAccount = ({ fullName, email, password } = params) => {
     Keyboard.dismiss();
     stillMounted && setLoading(true);
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(
+        `Perform Create Account task, email: ${email}, password: ${password}`
+      )
+      .addData({ email, password })
+      .send();
+
     InPlayerService.signUp({
       fullName,
       email,
       password,
       clientId,
       referrer,
+      brandingId,
     })
       .then(() => {
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.debug)
+          .setMessage(
+            `Account Creation succeed, fullName: ${fullName}, email: ${email}, password: ${password}`
+          )
+          .addData({ email, password, fullName })
+          .send();
         accountFlowCallback({ success: true });
       })
       .catch(maybeShowAlertToUser("Sign-up failed"))
       .catch((error) => {
+        logger
+          .createEvent()
+          .setLevel(XRayLogLevel.error)
+          .setMessage(
+            `Account Creation failed, fullName: ${fullName}, email: ${email}, password: ${password}`
+          )
+          .attachError(error)
+          .addData({ email, password, fullName })
+          .send();
         stillMounted && setLoading(false);
-        console.error(error);
       });
   };
 
   const setNewPasswordCallback = ({ password, token }) => {
     Keyboard.dismiss();
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(
+        `Set new password task, password: ${password}, token: ${token}`
+      )
+      .addData({ token, password })
+      .send();
+
     if (token && password) {
       stillMounted && setLoading(true);
       InPlayerService.setNewPassword({
         password,
         token,
+        brandingId,
       })
         .then(() => {
+          logger
+            .createEvent()
+            .setLevel(XRayLogLevel.debug)
+            .setMessage(
+              `Set new password task succeed, password: ${password}, token: ${token}`
+            )
+            .addData({ password, token })
+            .send();
           showAlertToUser({
             title: "Set New Password Success",
             message: "Your password was successfully updated",
@@ -160,6 +276,16 @@ const AccountFlow = (props) => {
           stillMounted && setScreen(ScreensData.LOGIN);
         })
         .catch((error) => {
+          logger
+            .createEvent()
+            .setLevel(XRayLogLevel.error)
+            .setMessage(
+              `Set new password task failed, password: ${password}, token: ${token}`
+            )
+            .attachError(error)
+            .addData({ password, token })
+            .send();
+
           stillMounted && setLoading(false);
 
           showAlertToUser({
@@ -177,11 +303,29 @@ const AccountFlow = (props) => {
     const {
       configuration: { in_player_client_id },
     } = props;
+
+    logger
+      .createEvent()
+      .setLevel(XRayLogLevel.debug)
+      .setMessage(`Request password change task, email: ${email}`)
+      .addData({ email })
+      .send();
+
     if (email) {
       stillMounted && setLoading(true);
-      InPlayerService.requestPassword({ email, clientId: in_player_client_id })
+      InPlayerService.requestPassword({
+        email,
+        clientId: in_player_client_id,
+        brandingId,
+      })
         .then((result) => {
           const { message } = result;
+          logger
+            .createEvent()
+            .setLevel(XRayLogLevel.debug)
+            .setMessage(`Request password change task, email: ${email}`)
+            .addData({ email })
+            .send();
           showAlertToUser({
             title: "Request Password Success",
             message,
@@ -191,12 +335,18 @@ const AccountFlow = (props) => {
           stillMounted && setScreen(ScreensData.SET_NEW_PASSWORD);
         })
         .catch((error) => {
+          logger
+            .createEvent()
+            .setLevel(XRayLogLevel.error)
+            .setMessage(`Request password change task failed, email: ${email}`)
+            .attachError(error)
+            .addData({ email })
+            .send();
           stillMounted && setLoading(false);
           showAlertToUser({
             title: "Request Password Fail",
             message: "Can not request password",
           });
-          console.error(error);
           stillMounted && setScreen(ScreensData.LOGIN);
         });
     } else {
@@ -264,17 +414,20 @@ const AccountFlow = (props) => {
   const { screenStyles } = props;
 
   if (screen === ScreensData.PARENT_LOCK) {
-    return (
-        <ParentLockPlugin.Component callback={parentLockCallback}/>
-    );
+    return <ParentLockPlugin.Component callback={parentLockCallback} />;
   }
+
+  const SafeArea = Platform.isTV ? View : SafeAreaView;
+
   return (
     <View style={containerStyle(screenStyles)}>
-      <SafeAreaView style={container}>
+      <SafeArea style={container}>
         {renderAuthenteficationScreen()}
         {loading && <LoadingScreen />}
-      </SafeAreaView>
-      <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
+      </SafeArea>
+      {!Platform.isTV && !isWebBasedPlatform && (
+        <DropdownAlert ref={(ref) => (this.dropDownAlertRef = ref)} />
+      )}
     </View>
   );
 };

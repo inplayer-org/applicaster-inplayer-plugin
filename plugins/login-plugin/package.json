@@ -1,6 +1,6 @@
 {
   "name": "@applicaster/quick-brick-inplayer",
-  "version": "0.6.14",
+  "version": "0.7.0-beta.106",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,19 +10,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@applicaster/applicaster-iap": "0.2.14",
+    "@applicaster/applicaster-iap": "0.3.2",
     "@applicaster/quick-brick-parent-lock": "*",
     "@inplayer-org/inplayer.js": "2.13.3",
-    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-community/blur": "3.4.1",
     "axios": "^0.19.1",
     "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
     "ramda": "^0.26.1",
     "react-native-actionsheet": "^2.4.0",
     "react-native-dropdownalert": "^4.2.1",
     "react-native-keyboard-aware-scroll-view": "0.9.1"
   },
   "peerDependencies": {
+    "@applicaster/zapp-react-native-bridge": "^4.0.0",
     "@applicaster/zapp-react-native-redux": "^2.3.1",
+    "@applicaster/zapp-react-native-tvos-ui-components": "^4.0.0",
     "@applicaster/zapp-react-native-utils": "^2.3.1",
     "react": "16.11.0",
     "react-native": "0.62.2"
@@ -32,7 +35,11 @@
       "ios",
       "android",
       "ios_for_quickbrick",
-      "android_for_quickbrick"
+      "android_for_quickbrick",
+      "tvos_for_quickbrick",
+      "android_tv_for_quickbrick",
+      "amazon_fire_tv_for_quickbrick",
+      "samsung_tv"
     ],
     "zappOwnerAccountId": "5e12fac7666333000ec0f8ab"
   }

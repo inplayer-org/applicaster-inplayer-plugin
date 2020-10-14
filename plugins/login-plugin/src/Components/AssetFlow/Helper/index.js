@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 import { externalIdForPlatform } from "../../../Services/InPlayerServiceHelper";
 import { Alert } from "react-native";
 import MESSAGES from "../Config";
@@ -16,39 +16,40 @@ export function invokeCallBack(
     });
 }
 
-function findInPlayerFee(storeFee, inPlayerFeesData) {
-  let inPlayerFee = R.find(
-    R.propEq("externalFeeId", storeFee.productIdentifier)
-  )(inPlayerFeesData);
+export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
+  var retVal = [];
+  for (let i = 0; i < inPlayerFeesData.length; i++) {
+    const inPlayerFee = inPlayerFeesData[i];
 
-  if (!inPlayerFee) {
-    inPlayerFee = R.find(
-      R.propEq("productIdentifier", storeFee.productIdentifier)
-    )(inPlayerFeesData);
+    const storeFee = findStoreFee(inPlayerFee, storeFeesData);
+    if (storeFee) {
+      storeFee.productType = inPlayerFee?.productType || "";
+      storeFee.inPlayerProductId = inPlayerFee.productIdentifier;
+      if (inPlayerFee?.title && !storeFee.title) {
+        storeFee.title = inPlayerFee.title;
+      }
+      retVal.push(storeFee);
+    }
   }
-
-  if (!inPlayerFee) throw new Error(MESSAGES.validation.productId);
-  return inPlayerFee;
+  if (retVal.length == 0) throw new Error(MESSAGES.validation.emptyStore);
+  return retVal;
 }
 
-export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
-  for (let i = 0; i < storeFeesData.length; i++) {
-    const storeFee = storeFeesData[i];
+function findStoreFee(inPlayerFee, storeFeesData) {
+  let storeFee = R.find(
+    R.propEq("productIdentifier", inPlayerFee.externalFeeId)
+  )(storeFeesData);
 
-    const inPlayerFee = findInPlayerFee(storeFee, inPlayerFeesData);
-    console.log({ inPlayerFeesData });
-
-    storeFee.productType = inPlayerFee?.productType || "";
-    storeFee.inPlayerProductId = inPlayerFee.productIdentifier;
-    if (inPlayerFee?.title && !storeFee.title) {
-      storeFee.title = inPlayerFee.title;
-    }
-    console.log({ storeFee });
+  if (!storeFee) {
+    storeFee = R.find(
+      R.propEq("productIdentifier", inPlayerFee.productIdentifier)
+    )(storeFeesData);
   }
+
+  return storeFee ? { ...storeFee } : null;
 }
 
 function accessTypeToProducType({ fee, purchaseKeysMapping }) {
-  console.log({ purchaseKeysMapping });
   const {
     consumable_type_mapper,
     non_consumable_type_mapper,
@@ -75,15 +76,16 @@ function purchaseDataForFee({
   assetId,
   purchaseKeysMapping,
   in_player_environment,
+  store,
 }) {
   const { item_type } = fee;
-  console.log({ fee, in_player_environment });
   if (item_type === "package") {
     return purchaseDataForPackageFee({
       fee,
       allPackagesData,
       purchaseKeysMapping,
       in_player_environment,
+      store,
     });
   } else {
     return purchaseDataForSingleFee({
@@ -91,6 +93,7 @@ function purchaseDataForFee({
       assetId,
       purchaseKeysMapping,
       in_player_environment,
+      store,
     });
   }
 }
@@ -100,14 +103,15 @@ function purchaseDataForSingleFee({
   assetId,
   purchaseKeysMapping,
   in_player_environment,
+  store,
 }) {
   const { id, item_title, description } = fee;
-  const externalFeeId = externalIdForPlatform({ fee, in_player_environment });
-
-  console.log({
-    productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
-    productIdentifier: `${assetId}_${id}`,
+  const externalFeeId = externalIdForPlatform({
+    fee,
+    in_player_environment,
+    store,
   });
+
   return {
     productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
     productIdentifier: `${assetId}_${id}`,
@@ -120,6 +124,7 @@ function purchaseDataForPackageFee({
   allPackagesData,
   purchaseKeysMapping,
   in_player_environment,
+  store,
 }) {
   const { id, item_title, description } = fee;
 
@@ -127,13 +132,13 @@ function purchaseDataForPackageFee({
     const packageItem = allPackagesData[i];
     const packageId = packageItem?.id;
     const access_fees = packageItem?.access_fees;
-    const externalFeeId = externalIdForPlatform({ fee, in_player_environment });
+    const externalFeeId = externalIdForPlatform({
+      fee,
+      in_player_environment,
+      store,
+    });
 
     if (access_fees && packageId && R.find(R.propEq("id", id))(access_fees)) {
-      console.log({
-        productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
-        productIdentifier: `${packageId}_${id}`,
-      });
       return {
         productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
         productIdentifier: `${packageId}_${id}`,
@@ -151,6 +156,7 @@ export function retrieveInPlayerFeesData({
   assetId,
   purchaseKeysMapping,
   in_player_environment,
+  store,
 }) {
   let purchaseDataArray = [];
 
@@ -162,13 +168,12 @@ export function retrieveInPlayerFeesData({
       assetId,
       purchaseKeysMapping,
       in_player_environment,
+      store,
     });
     if (purchaseData) {
-      console.log("Adding new Item:", { purchaseData });
       purchaseDataArray.push(purchaseData);
     }
   }
-  console.log({ purchaseDataArray });
   return purchaseDataArray;
 }
 

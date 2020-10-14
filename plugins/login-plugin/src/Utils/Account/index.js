@@ -1,7 +1,10 @@
 import { Alert } from "react-native";
+import { isWebBasedPlatform } from "../../Utils/Platform";
 
 export function showAlert(title, message) {
-  Alert.alert(title, message);
+  isWebBasedPlatform
+    ? window.alert(`${title} \n${message}`)
+    : Alert.alert(title, message);
 }
 
 export function validateEmail(email) {
@@ -48,7 +51,7 @@ function validatePassword(password) {
   if (!password) return "Password shouldn't be empty";
   const validatePwdLengthMsg = validatePasswordLength(password);
   if (validatePwdLengthMsg != null) return validatePwdLengthMsg;
-  const validatePwdCharsMsg  = validatePasswordCharacters(password);
+  const validatePwdCharsMsg = validatePasswordCharacters(password);
   if (validatePwdCharsMsg != null) return validatePwdCharsMsg;
   return null;
 }
@@ -68,7 +71,10 @@ export function validateSignUpData(signUpData) {
   if (validateEmailMsg != null) return validateEmailMsg;
   const validatePwdMsg = validatePassword(password);
   if (validatePwdMsg != null) return validatePwdMsg;
-  const validateConfirmationPwdMsg = validateConfirmationPassword(password, passwordConfirmation);
+  const validateConfirmationPwdMsg = validateConfirmationPassword(
+    password,
+    passwordConfirmation
+  );
   if (validateConfirmationPwdMsg != null) return validateConfirmationPwdMsg;
   return null;
 }
@@ -79,7 +85,10 @@ export function validateNewPassword(newPwdData) {
   if (validateTokenMsg != null) return validateTokenMsg;
   const validatePwdMsg = validatePassword(password);
   if (validatePwdMsg != null) return validatePwdMsg;
-  const validateConfirmationPwdMsg = validateConfirmationPassword(password, passwordConfirmation);
+  const validateConfirmationPwdMsg = validateConfirmationPassword(
+    password,
+    passwordConfirmation
+  );
   if (validateConfirmationPwdMsg != null) return validateConfirmationPwdMsg;
   return null;
 }

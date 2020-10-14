@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 import { parseJsonIfNeeded } from "@applicaster/zapp-react-native-utils/functionUtils";
 
 export const getInPlayerContent = (inPlayerItemAccess) => {

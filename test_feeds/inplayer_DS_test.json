@@ -1,0 +1,135 @@
+{
+  "title": "APP TEST",
+  "type": { "value": "feed" },
+  "entry": [
+    {
+      "id": "OhWpdw3n",
+      "type": { "value": "video" },
+      "title": "Jurassic World Fallen Kingdom OhWpdw3n",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_type": "jw",
+        "requires_authentication": true,
+        "event_id": 3822,
+        "event_title": "DIRTcar Summer Nationals ",
+        "event_image": "https://dirtvision.com/upload/08182020_Kankakee_SN_PPV.jpg",
+        "event_additional_image": "https://www.dirtvision.com/upload/SN8.jpg",
+        "event_content": "&amp;lt;p&amp;gt;Questions? Visit our Help Center in the top menu bar or email us at support@dirtvision.com.&amp;lt;/p&amp;gt;\r\n&amp;lt;p&amp;gt;Start Time: 7:30pm Eastern&amp;lt;/p&amp;gt;",
+        "event_description": "The 35th Annual DIRTcar Summer Nationals and 10th annual DIRTcar Summit Racing Equipment Modified Nationals has entered the final week of competition! It&amp;rsquo;s the final push for teams as they work hard towards the championship. Kankakee County Speedway is the final race in the &amp;ldquo;Land of Lincoln&amp;rdquo; before heading East. This is the 31st visit for the DIRTcar Summer Nationals to Kankakee County. The DIRTcar Summit Racing Equipment Modified Nationals also makes the return to the famous 1/3-mile clay oval.",
+        "event_location": "Kankakee County Speedway",
+        "event_date": 1597770000,
+        "event_date_end": 1597816800,
+        "event_price": "24.99",
+        "event_series": "DIRTcar Summer Nationals",
+        "event_second_series": "",
+        "event_live_status": false,
+        "event_car_types": ["latemodel", "modified"],
+        "callToAction": "Coming Soon",
+        "isLive": false,
+        "startTimeEast": "Tuesday, August 18, 5:00PM EDT"
+      }
+    },
+    {
+      "id": "1CUJ2aM1",
+      "type": { "value": "video" },
+      "title": "Red Sparrow 1CUJ2aM1",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_type": "jw",
+        "requires_authentication": true
+      }
+    },
+    {
+      "id": "IkKwwZcK",
+      "type": { "value": "video" },
+      "title": "Tomb Raider Trailer IkKwwZcK",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_type": "jw",
+        "requires_authentication": true
+      }
+    },
+    {
+      "id": "xF7Hk51k",
+      "type": { "value": "video" },
+      "title": "Hotel Transylvania 3 xF7Hk51k",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_type": "jw",
+        "requires_authentication": true
+      }
+    },
+    {
+      "id": "75777",
+      "type": { "value": "video" },
+      "title": "Test Cloudfront",
+      "summary": "",
+      "media_group": [
+        {
+          "type": "image",
+          "media_item": {
+            "key": "image_base",
+            "src": "https://dirtvision.com/upload/06062020_Knoxville_KX_PPV.jpg"
+          }
+        }
+      ],
+      "extensions": {
+        "inplayer_asset_id": "75777",
+        "requires_authentication": true,
+        "event_id": 3822,
+        "event_title": "DIRTcar Summer Nationals ",
+        "event_image": "https://dirtvision.com/upload/08182020_Kankakee_SN_PPV.jpg",
+        "event_additional_image": "https://www.dirtvision.com/upload/SN8.jpg",
+        "event_content": "&amp;lt;p&amp;gt;Questions? Visit our Help Center in the top menu bar or email us at support@dirtvision.com.&amp;lt;/p&amp;gt;\r\n&amp;lt;p&amp;gt;Start Time: 7:30pm Eastern&amp;lt;/p&amp;gt;",
+        "event_description": "The 35th Annual DIRTcar Summer Nationals and 10th annual DIRTcar Summit Racing Equipment Modified Nationals has entered the final week of competition! It&amp;rsquo;s the final push for teams as they work hard towards the championship. Kankakee County Speedway is the final race in the &amp;ldquo;Land of Lincoln&amp;rdquo; before heading East. This is the 31st visit for the DIRTcar Summer Nationals to Kankakee County. The DIRTcar Summit Racing Equipment Modified Nationals also makes the return to the famous 1/3-mile clay oval.",
+        "event_location": "Kankakee County Speedway",
+        "event_date": 1597770000,
+        "event_date_end": 1597816800,
+        "event_price": "24.99",
+        "event_series": "DIRTcar Summer Nationals",
+        "event_second_series": "",
+        "event_live_status": false,
+        "event_car_types": ["latemodel", "modified"],
+        "callToAction": "Coming Soon",
+        "isLive": false,
+        "startTimeEast": "Tuesday, August 18, 5:00PM EDT"
+      }
+    }
+  ]
+}

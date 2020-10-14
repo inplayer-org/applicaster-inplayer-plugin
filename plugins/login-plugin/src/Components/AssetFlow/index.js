@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
+import React, { useState, useLayoutEffect } from "react";
+import { Platform } from "react-native";
 import LoadingScreen from "../LoadingScreen";
 import Storefront from "../UIComponents/Storefront";
-import NavbarComponent from "../UIComponents/NavbarComponent";
+import PrivacyPolicy from "../UIComponents/PrivacyPolicy";
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
+import { useSelector } from "react-redux";
+import * as R from "ramda";
+
 import {
   getAssetByExternalId,
   checkAccessForAsset,
@@ -15,9 +18,13 @@ import {
   purchaseAnItem,
   retrieveProducts,
   restore,
+  initialize,
 } from "../../Services/iAPService";
 
 import { inPlayerAssetId } from "../../Utils/PayloadUtils";
+
+import { isWebBasedPlatform } from "../../Utils/Platform";
+
 import {
   invokeCallBack,
   addInPlayerProductId,
@@ -25,55 +32,83 @@ import {
   isRequirePurchaseError,
   showAlert,
 } from "./Helper";
-import Footer from "../UIComponents/Footer";
 import MESSAGES from "./Config";
+import {
+  createLogger,
+  Subsystems,
+  AssetCategories,
+  XRayLogLevel,
+} from "../../Services/LoggerService";
+import { useToggleNavBar } from "../../Utils/Hooks";
 
-const { height, width } = Dimensions.get("window");
-
-const styles = StyleSheet.create({
-  container: {
-    height,
-    width,
-    paddingBottom: 15,
-  },
+export const logger = createLogger({
+  subsystem: Subsystems.ASSET,
+  category: AssetCategories.GENERAL,
 });
+
+const isAndroid = Platform.OS === "android";
 
 const AssetFlow = (props) => {
   const { screenStyles } = props;
+  const { store } = useSelector(R.prop("appData"));
 
   const ScreensData = {
     EMPTY: "Empty",
     STOREFRONT: "Storefront",
     PARENT_LOCK: "ParentLock",
+    PRIVACY_POLICY: "PrivacyPolicy",
   };
 
   const [screen, setScreen] = useState(ScreensData.EMPTY);
-  const { shouldShowParentLock } = props;
-  const { onParentLockAppeared } = props;
 
-  const {
-    payment_screen_background: screenBackground = "",
-    client_logo: logoUrl = "",
-    close_button: buttonUrl = "",
-  } = screenStyles;
+  const { shouldShowParentLock, onParentLockAppeared } = props;
 
   const [dataSource, setDataSource] = useState(null);
   const [assetLoading, setAssetLoading] = useState(false);
+  const [iapInitialized, setIapInitialized] = useState(
+    isAndroid ? false : true
+  );
   const [assetId, setAssetId] = useState(null);
   let stillMounted = true;
 
-  useEffect(() => {
+  useToggleNavBar();
+
+  useLayoutEffect(() => {
     prepareAssetId();
+    initializeIap();
     return () => {
       stillMounted = false;
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (assetId) {
       loadAsset({ startPurchaseFlow: true });
     }
   }, [assetId]);
+
+  const initializeIap = async () => {
+    try {
+      logger
+        .createEvent()
+        .setLevel(XRayLogLevel.debug)
+        .setMessage(`Initializing IAP plugin`)
+        .send();
+
+      const result = await initialize(store);
+      if (result) {
+        setIapInitialized(true);
+      }
+    } catch (err) {
+      logger
+        .createEvent()
+        .setLevel(XRayLogLevel.error)
+        .setMessage(`Failed to initialize IAP plugin`)
+        .attachError(err)
+        .send();
+      completeAssetFlow({ success: false });
+    }
+  };
 
   const prepareAssetId = async () => {
     const { payload, configuration } = props;
@@ -82,13 +117,32 @@ const AssetFlow = (props) => {
       payload,
       configuration,
     });
+
+    let eventMessage = "Asset Flow:";
+    const event = logger.createEvent().setLevel(XRayLogLevel.debug);
+
     if (newAssetId) {
+      event
+        .addData({ inplayer_asset_id: newAssetId })
+        .setMessage(`${eventMessage} inplayer_asset_id: ${newAssetId}`)
+        .send();
+
       setAssetId(newAssetId);
     } else {
       newAssetId = await getAssetByExternalId(payload);
       if (newAssetId && stillMounted) {
+        event
+          .addData({ inplayer_asset_id: newAssetId })
+          .setMessage(`${eventMessage} inplayer_asset_id: ${newAssetId}`)
+          .send();
+
         setAssetId(newAssetId);
       } else {
+        event
+          .addData({ inplayer_asset_id: newAssetId })
+          .setMessage(`${eventMessage} failed, inplayer_asset_id is empty`)
+          .send();
+        event.addData({ success: false }).setMessage(eventMessage).send();
         completeAssetFlow({
           success: false,
           error: { message: MESSAGES.asset.fail },
@@ -134,10 +188,10 @@ const AssetFlow = (props) => {
       const resultPurchaseData = await Promise.all([
         getAccessFees(assetId),
         getAllPackages({
-          clientId: in_player_client_id,
-          purchaseKeysMapping,
+          in_player_client_id,
         }),
       ]);
+
       if (resultPurchaseData.length === 0) {
         throw new Error(MESSAGES.validation.noFees);
       }
@@ -147,16 +201,16 @@ const AssetFlow = (props) => {
         assetId,
         purchaseKeysMapping,
         in_player_environment,
+        store,
       });
 
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
 
-      console.log({ inPlayerFeesData, storeFeesData });
       if (storeFeesData.length === 0) {
         throw new Error(MESSAGES.validation.emptyStore);
       }
 
-      addInPlayerProductId({
+      const mappedFeeData = addInPlayerProductId({
         storeFeesData,
         inPlayerFeesData,
       });
@@ -169,29 +223,26 @@ const AssetFlow = (props) => {
       } else {
         setScreen(ScreensData.STOREFRONT);
       }
-      stillMounted && setDataSource(storeFeesData);
+      stillMounted && setDataSource(mappedFeeData);
     } catch (error) {
       stillMounted && completeAssetFlow({ success: false, error });
     }
   };
 
   const loadAsset = ({ startPurchaseFlow = false }) => {
-    console.log("LoadAsset");
     const { payload } = props;
 
     const retryInCaseFail = !startPurchaseFlow;
 
     checkAccessForAsset({ assetId, retryInCaseFail })
       .then((data) => {
-        console.log("LoadAsset2", { data });
-
         const src = data?.src;
+        const cookies = data?.cookies;
 
         if (data && src) {
-          console.log({ src, data });
           const newPayload = src && {
             ...payload,
-            content: { src },
+            content: { src, cookies },
           };
           completeAssetFlow({ newPayload });
         } else {
@@ -202,11 +253,18 @@ const AssetFlow = (props) => {
         }
       })
       .catch((error) => {
+        if (isWebBasedPlatform) {
+          //TODO:  Add handling of the redirection to the purchases website?
+          completeAssetFlow({
+            success: false,
+            error: { message: MESSAGES.asset.fail },
+          });
+        }
+
         if (error?.requestedToPurchase && startPurchaseFlow) {
           return preparePurchaseData();
         }
         let status = error?.response?.status;
-        console.log({ error, status });
 
         if (status) {
           const statusString = status.toString();
@@ -228,7 +286,11 @@ const AssetFlow = (props) => {
     invokeCallBack(props, completionObject);
   };
 
-  const buyItem = async ({ productIdentifier, inPlayerProductId }) => {
+  const buyItem = async ({
+    productIdentifier,
+    inPlayerProductId,
+    productType,
+  }) => {
     if (!productIdentifier || !inPlayerProductId) {
       const error = new Error(MESSAGES.validation.productId);
       return completeAssetFlow({ success: false, error });
@@ -236,15 +298,13 @@ const AssetFlow = (props) => {
 
     try {
       const [item_id, access_fee_id] = inPlayerProductId.split("_");
-      console.log({
-        purchaseID: productIdentifier,
-        item_id,
-        access_fee_id,
-      });
+
       await purchaseAnItem({
+        store,
         purchaseID: productIdentifier,
         item_id,
         access_fee_id,
+        productType,
       });
 
       setDataSource(null);
@@ -260,13 +320,16 @@ const AssetFlow = (props) => {
     Platform.OS === "ios" && setAssetLoading(true);
 
     const itemToPurchase = dataSource[index];
-    console.log({ itemToPurchase });
     return buyItem(itemToPurchase);
   };
 
   const onRestoreSuccess = () => {
     setDataSource(null);
     loadAsset({ startPurchaseFlow: false });
+  };
+
+  const onPressPrivacyPolicy = () => {
+    setScreen(ScreensData.PRIVACY_POLICY);
   };
 
   const onPressRestore = () => {
@@ -279,14 +342,21 @@ const AssetFlow = (props) => {
         showAlert(alertTitle, alertMessage, onRestoreSuccess);
       })
       .catch((err) => {
-        console.log(err);
         const alertTitle = MESSAGES.restore.fail;
         showAlert(alertTitle, err.message, hideLoader);
       });
   };
 
+  const onHandleBack = () => {
+    if (screen === ScreensData.PRIVACY_POLICY) {
+      setScreen(ScreensData.STOREFRONT);
+    } else if (screen === ScreensData.STOREFRONT) {
+      completeAssetFlow({ success: false });
+    }
+  };
+
   const render = () => {
-    if (!dataSource) {
+    if (!dataSource || assetLoading || !iapInitialized) {
       return <LoadingScreen />;
     }
     switch (screen) {
@@ -294,24 +364,18 @@ const AssetFlow = (props) => {
         return <ParentLockPlugin.Component callback={parentLockCallback} />;
       case ScreensData.STOREFRONT:
         return (
-          <SafeAreaView
-            style={[styles.container, { backgroundColor: screenBackground }]}
-          >
-            <NavbarComponent
-              buttonAction={completeAssetFlow}
-              logoUrl={logoUrl}
-              buttonUrl={buttonUrl}
-            />
-            <Storefront
-              screenStyles={screenStyles}
-              dataSource={dataSource}
-              onPressPaymentOption={onPressPaymentOption}
-              onPressRestore={onPressRestore}
-            />
-            <Footer screenStyles={screenStyles} />
-            {assetLoading && <LoadingScreen />}
-          </SafeAreaView>
+          <Storefront
+            {...props}
+            onHandleBack={onHandleBack}
+            completeAssetFlow={completeAssetFlow}
+            dataSource={dataSource}
+            onPressPaymentOption={onPressPaymentOption}
+            onPressRestore={onPressRestore}
+            onPressPrivacyPolicy={onPressPrivacyPolicy}
+          />
         );
+      case ScreensData.PRIVACY_POLICY:
+        return <PrivacyPolicy {...props} onHandleBack={onHandleBack} />;
     }
   };
 
