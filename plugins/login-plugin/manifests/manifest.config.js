@@ -1,5 +1,5 @@
 const R = require("ramda");
-const Localizations = require("localizations.config");
+const Localizations = require("./localizations.config");
 
 const baseManifest = {
   dependency_repository_url: [],
