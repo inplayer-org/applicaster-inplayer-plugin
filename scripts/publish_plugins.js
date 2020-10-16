@@ -114,7 +114,6 @@ async function publishPlugin(pluginFolder, latestSha) {
     : "patch";
 
   const newVersion = semver.inc(currentVersion, release, preReleaseIdentifier);
-  // newVersion = "1.0.1";
 
   console.log(`publishing ${pluginFolder} with ${newVersion}`);
   try {
