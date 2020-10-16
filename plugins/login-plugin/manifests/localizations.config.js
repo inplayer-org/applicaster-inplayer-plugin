@@ -136,7 +136,8 @@ const common = [
   {
     key: "signup_password_validation_error",
     label: "Error message for not valid PASSWORD",
-    initial_value: "Password must be at least 8 characters and contain one lower case, one upper case, one special character and one number",
+    initial_value:
+      "Password must be at least 8 characters and contain one lower case, one upper case, one special character and one number",
   },
   {
     key: "signup_password_confirmation_validation_error",
@@ -148,7 +149,7 @@ const common = [
     label: "Error message for not valid TOKEN",
     initial_value: "Token should not be empty",
   },
-]
+];
 
 const mobile = [
   // Header
@@ -223,14 +224,15 @@ const mobile = [
   {
     key: "terms_of_use_instructions_text",
     label: "Payment terms of use instruction",
-    initial_value: "By making a selection and completing this transaction, you verify that you are at least 18 years old and agree to the",
+    initial_value:
+      "By making a selection and completing this transaction, you verify that you are at least 18 years old and agree to the",
   },
   {
     key: "terms_of_use_link_text",
     label: "Payment terms of use text",
     initial_value: "terms of use.",
   },
-]
+];
 
 const tv = [
   // Subscriber agreement screen
@@ -242,7 +244,8 @@ const tv = [
   {
     key: "privacy_text",
     label: "Agreement and privacy text",
-    initial_value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet nunc dui. Sed nec dignissim erat. Praesent molestie, odio et lacinia dapibus, lacus felis interdum justo, a viverra eros mauris vel nibh. Nullam consequat urna at lorem interdum, non mattis elit interdum. Cras libero erat, mattis ut mattis in, ornare ut ante. Duis id mi condimentum elit sagittis scelerisque. Duis facilisis vel lectus eu fermentum. Etiam venenatis fermentum felis nec ornare. Nullam pretium iaculis ligula sed accumsan.\n\n\nDonec id libero sit amet ligula cursus tempor. Donec urna felis, vestibulum id fringilla in, elementum ac diam. Nunc pretium, ligula ac accumsan accumsan, ipsum ante tristique nisi, et dictum dui arcu eu ex. Duis vel lectus quis nisl fringilla dictum. Praesent vulputate justo ligula, at commodo lorem sodales sed. Cras quis rhoncus ante. Nunc ultricies orci eget purus elementum, eget posuere elit semper. Suspendisse quis dignissim elit, eget dictum sem. Sed in nisl dui. Curabitur at sapien consectetur, lacinia turpis vitae, pharetra nisl. Nullam accumsan odio orci, quis elementum ex luctus id. Cras nec eros orci. Vestibulum eget convallis lectus. Donec eu lorem at purus elementum tempo.",
+    initial_value:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet nunc dui. Sed nec dignissim erat. Praesent molestie, odio et lacinia dapibus, lacus felis interdum justo, a viverra eros mauris vel nibh. Nullam consequat urna at lorem interdum, non mattis elit interdum. Cras libero erat, mattis ut mattis in, ornare ut ante. Duis id mi condimentum elit sagittis scelerisque. Duis facilisis vel lectus eu fermentum. Etiam venenatis fermentum felis nec ornare. Nullam pretium iaculis ligula sed accumsan.\n\n\nDonec id libero sit amet ligula cursus tempor. Donec urna felis, vestibulum id fringilla in, elementum ac diam. Nunc pretium, ligula ac accumsan accumsan, ipsum ante tristique nisi, et dictum dui arcu eu ex. Duis vel lectus quis nisl fringilla dictum. Praesent vulputate justo ligula, at commodo lorem sodales sed. Cras quis rhoncus ante. Nunc ultricies orci eget purus elementum, eget posuere elit semper. Suspendisse quis dignissim elit, eget dictum sem. Sed in nisl dui. Curabitur at sapien consectetur, lacinia turpis vitae, pharetra nisl. Nullam accumsan odio orci, quis elementum ex luctus id. Cras nec eros orci. Vestibulum eget convallis lectus. Donec eu lorem at purus elementum tempo.",
   },
 
   // StoreFront screen
@@ -254,12 +257,14 @@ const tv = [
   {
     key: "policy_agreement_text",
     label: "Policy agreement text",
-    initial_value: "By clicking “Subscribe” or “Buy” below, you also agree to the [Client’s App Name] Agreement and acknowledge that you have read our Privacy Policy",
+    initial_value:
+      "By clicking “Subscribe” or “Buy” below, you also agree to the [Client’s App Name] Agreement and acknowledge that you have read our Privacy Policy",
   },
   {
     key: "subscriber_agreement_and_privacy_policy_text",
     label: "Subscriber Agreement and Privacy policy text",
-    initial_value: "[Client’s Name App] Subscriber Agreement and Privacy Policy",
+    initial_value:
+      "[Client’s Name App] Subscriber Agreement and Privacy Policy",
   },
 
   // Action buttons
@@ -288,7 +293,8 @@ const tv = [
   {
     key: "main_description_text",
     label: "Main description text",
-    initial_value: "Helping companies maximize any cloud infrastructure, reduce costs, increase engagement, and significantly improve time to market and speed of ongoing innovation.",
+    initial_value:
+      "Helping companies maximize any cloud infrastructure, reduce costs, increase engagement, and significantly improve time to market and speed of ongoing innovation.",
   },
   {
     key: "optional_instructions_1_text",
@@ -309,11 +315,11 @@ const tv = [
   },
 ];
 
-export default {
+export const Localizations = {
   mobile: {
-    fields: [ ...common, ...mobile ]
+    fields: [...common, ...mobile],
   },
   tv: {
-    fields: [ ...common, ...tv ]
-  }
-}
+    fields: [...common, ...tv],
+  },
+};
