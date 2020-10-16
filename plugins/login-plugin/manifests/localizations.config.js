@@ -325,3 +325,5 @@ const Localizations = {
     fields: [...common, ...tv],
   },
 };
+
+module.exports = { Localizations };
