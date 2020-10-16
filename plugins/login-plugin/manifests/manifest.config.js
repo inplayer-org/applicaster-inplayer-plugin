@@ -1,6 +1,6 @@
 const R = require("ramda");
 const Localizations = require("./localizations.config");
-console.error("Localizations", { Localizations });
+
 const baseManifest = {
   dependency_repository_url: [],
   dependency_name: "@applicaster/quick-brick-inplayer",
