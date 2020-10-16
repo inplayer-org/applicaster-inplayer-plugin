@@ -1,4 +1,5 @@
 const R = require("ramda");
+const Localizations = require("localizations.config");
 
 const baseManifest = {
   dependency_repository_url: [],
@@ -144,12 +145,6 @@ const stylesMobile = {
       initial_value: "#ffffffff",
     },
     {
-      key: "title_font_text",
-      type: "text_input",
-      label: "Text title",
-      initial_value: "InPlayer",
-    },
-    {
       key: "back_button_font_ios",
       type: "ios_font_selector",
       label: "iOS back button font",
@@ -172,12 +167,6 @@ const stylesMobile = {
       type: "color_picker",
       label: "Back button font color",
       initial_value: "#ffffffff",
-    },
-    {
-      key: "back_button_text",
-      type: "text_input",
-      label: "Back button title",
-      initial_value: "Back",
     },
     {
       key: "fields_font_ios",
@@ -216,42 +205,6 @@ const stylesMobile = {
       initial_value: "#a9a9a9ff",
     },
     {
-      key: "fields_email_text",
-      type: "text_input",
-      label: "Email field placeholder text",
-      initial_value: "E-mail",
-    },
-    {
-      key: "fields_password_text",
-      type: "text_input",
-      label: "Password field placeholder text",
-      initial_value: "Password",
-    },
-    {
-      key: "fields_token_text",
-      type: "text_input",
-      label: "Token field placeholder text",
-      initial_value: "Token",
-    },
-    {
-      key: "fields_password_confirmation_text",
-      type: "text_input",
-      label: "Password field confirmation placeholder text",
-      initial_value: "Password Confirmation",
-    },
-    {
-      key: "fields_set_new_password_text",
-      type: "text_input",
-      label: "New password field placeholder text",
-      initial_value: "New password",
-    },
-    {
-      key: "fields_name_text",
-      type: "text_input",
-      label: "Name field placeholder text",
-      initial_value: "Enter your name",
-    },
-    {
       key: "forgot_password_font_ios",
       type: "ios_font_selector",
       label: "iOS forgot password font",
@@ -274,12 +227,6 @@ const stylesMobile = {
       type: "color_picker",
       label: "Forgot password font color",
       initial_value: "#a9a9a9ff",
-    },
-    {
-      key: "forgot_password_text",
-      type: "text_input",
-      label: "Forgot password title",
-      initial_value: "Forgotten your Username or Password?",
     },
     {
       key: "action_button_background_color",
@@ -312,30 +259,6 @@ const stylesMobile = {
       initial_value: "#ffffffff",
     },
     {
-      key: "action_button_login_text",
-      type: "text_input",
-      label: "Action button login title",
-      initial_value: "LOG IN",
-    },
-    {
-      key: "action_button_signup_text",
-      type: "text_input",
-      label: "Action button sign up title",
-      initial_value: "SIGN UP",
-    },
-    {
-      key: "action_button_forgot_password_text",
-      type: "text_input",
-      label: "Action button request password title",
-      initial_value: "REQUEST PASSWORD",
-    },
-    {
-      key: "action_button_set_new_password_text",
-      type: "text_input",
-      label: "Action button set new password title",
-      initial_value: "SET NEW PASSWORD",
-    },
-    {
       key: "create_account_link_font_ios",
       type: "ios_font_selector",
       label: "iOS Create account link font",
@@ -358,26 +281,6 @@ const stylesMobile = {
       type: "color_picker",
       label: "Create account link font color",
       initial_value: "#a9a9a9ff",
-    },
-    {
-      key: "create_account_link_text",
-      type: "text_input",
-      label: "Create account link title",
-      initial_value: "No user? Sign Up!",
-    },
-    {
-      key: "video_stream_exception_message",
-      type: "text_input",
-      label: "Message in case video url is empty",
-      initial_value: "Video stream in not available. Please try again later",
-    },
-    {
-      key: "general_error_message",
-      type: "text_input",
-      label: "General error message",
-      tooltip:
-        "A default error message that is shown in case something goes wrong in the flow",
-      initial_value: "Something went wrong. Please try again later",
     },
     {
       key: "logout_background_color",
@@ -410,18 +313,6 @@ const stylesMobile = {
       initial_value: "#ffffffff",
     },
     {
-      key: "logout_title_succeed_text",
-      type: "text_input",
-      label: "Logout text succeed title",
-      initial_value: "Successfully Logged Out",
-    },
-    {
-      key: "logout_title_fail_text",
-      type: "text_input",
-      label: "Logout text failed title",
-      initial_value: "Logout Failed",
-    },
-    {
       group: true,
       label: "Storefront Screen Design and Text",
       tooltip: "These fields affect the design of the storefront screen.",
@@ -449,14 +340,6 @@ const stylesMobile = {
           placeholder: "W 200px x H 44px",
         },
         {
-          key: "payment_screen_title_text",
-          type: "text_input",
-          label: "Payment Screen Title Text",
-          label_tooltip: "Main Title for the payment screen.",
-          initial_value: "Choose Your Subscription",
-          placeholder: "Choose Your Subscription",
-        },
-        {
           key: "payment_screen_title_font_ios",
           type: "ios_font_selector",
           label_tooltip: "Font for Main Title for ios.",
@@ -479,14 +362,6 @@ const stylesMobile = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Main Title Text.",
           initial_value: "rgba(255, 255, 255, 1)",
-        },
-        {
-          key: "restore_purchases_text",
-          type: "text_input",
-          label: "Restore Purchases Description Text",
-          label_tooltip: "Description text for restoring purchases.",
-          initial_value: "Purchased already a subscription?",
-          placeholder: "Purchased already a subscription?",
         },
         {
           key: "restore_purchases_text_font_ios",
@@ -512,14 +387,6 @@ const stylesMobile = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Restore Purchases Description Text.",
           initial_value: "rgba(255, 255, 255, 1)",
-        },
-        {
-          key: "restore_purchases_link",
-          type: "text_input",
-          label: "Restore Purchases Link Text",
-          label_tooltip: "Text for the Restore Purchases link.",
-          initial_value: "Restore",
-          placeholder: "Restore",
         },
         {
           key: "restore_purchases_link_font_ios",
@@ -649,14 +516,6 @@ const stylesMobile = {
           initial_value: "rgba(255, 255, 255, 1)",
         },
         {
-          key: "terms_of_use_instructions_text",
-          type: "text_input",
-          label: "Payment Terms of use instructions Text",
-          label_tooltip: "Brief text to give context to the terms of use link.",
-          initial_value:
-            "By making a selection and completing this transaction, you verify that you are at least 18 years old and agree to the",
-        },
-        {
           key: "terms_of_use_instructions_font_ios",
           type: "ios_font_selector",
           label_tooltip: "Font for the Terms of Use Instructions Text for ios.",
@@ -687,13 +546,6 @@ const stylesMobile = {
           label: "Payment Terms of use Link",
           label_tooltip: "Link for the Terms of Use.",
           initial_value: "http://google.com",
-        },
-        {
-          key: "terms_of_use_link_text",
-          type: "text_input",
-          label: "Payment Terms of use Link Text",
-          label_tooltip: "Text for the Terms of Use Link.",
-          initial_value: "terms of use.",
         },
         {
           key: "terms_of_use_link_font_ios",
@@ -735,7 +587,7 @@ const stylesTv = {
     },
     {
       group: true,
-      label: "Logout Screen Design and Text",
+      label: "Logout Screen",
       tooltip: "This fields affect logout screen.",
       folded: true,
       fields: [
@@ -769,18 +621,6 @@ const stylesTv = {
           label: "Logout title font color",
           initial_value: "#ffffffff",
         },
-        {
-          key: "logout_title_succeed_text",
-          type: "text_input",
-          label: "Logout text succeed title",
-          initial_value: "Successfully Logged Out",
-        },
-        {
-          key: "logout_title_fail_text",
-          type: "text_input",
-          label: "Logout text failed title",
-          initial_value: "Logout Failed",
-        },
       ],
     },
     {
@@ -805,15 +645,6 @@ const stylesTv = {
           label_tooltip:
             "Background Color for the text area where the Agreement and Privacy are shown.",
           initial_value: "rgba(54, 60, 71, 1)",
-        },
-
-        {
-          key: "privacy_main_title_text",
-          type: "text_input",
-          label: "Main Title for the agreement and privacy screen.",
-          label_tooltip: "Main Title for the agreement and privacy screen.",
-          initial_value: "Subscriber Agreement & Privacy Policy",
-          placeholder: "Subscriber Agreement & Privacy Policy",
         },
         {
           key: "privacy_main_title_text_font_android_tv",
@@ -842,15 +673,6 @@ const stylesTv = {
           label_tooltip:
             "Font Color Main Title for the agreement and privacy screen",
           initial_value: "rgba(255, 255, 255, 1)",
-        },
-        {
-          key: "privacy_text",
-          type: "text_input",
-          label: "Text for the agreement and privacy.",
-          label_tooltip: "Text for the agreement and privacy.",
-          initial_value:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet nunc dui. Sed nec dignissim erat. Praesent molestie, odio et lacinia dapibus, lacus felis interdum justo, a viverra eros mauris vel nibh. Nullam consequat urna at lorem interdum, non mattis elit interdum. Cras libero erat, mattis ut mattis in, ornare ut ante. Duis id mi condimentum elit sagittis scelerisque. Duis facilisis vel lectus eu fermentum. Etiam venenatis fermentum felis nec ornare. Nullam pretium iaculis ligula sed accumsan.\n\n\nDonec id libero sit amet ligula cursus tempor. Donec urna felis, vestibulum id fringilla in, elementum ac diam. Nunc pretium, ligula ac accumsan accumsan, ipsum ante tristique nisi, et dictum dui arcu eu ex. Duis vel lectus quis nisl fringilla dictum. Praesent vulputate justo ligula, at commodo lorem sodales sed. Cras quis rhoncus ante. Nunc ultricies orci eget purus elementum, eget posuere elit semper. Suspendisse quis dignissim elit, eget dictum sem. Sed in nisl dui. Curabitur at sapien consectetur, lacinia turpis vitae, pharetra nisl. Nullam accumsan odio orci, quis elementum ex luctus id. Cras nec eros orci. Vestibulum eget convallis lectus. Donec eu lorem at purus elementum tempo.",
-          placeholder: "Subscriber Ageement & Privacy Policy Text",
         },
         {
           key: "privacy_text_font_android_tv",
@@ -893,14 +715,6 @@ const stylesTv = {
           label: "Storefront Screen Background Color",
           label_tooltip: "Background Color for the payment screen.",
           initial_value: "rgba(54, 61, 71, 1)",
-        },
-        {
-          key: "subscription_default_title_text",
-          type: "text_input",
-          label: "Subscription Default Title Text",
-          label_tooltip: "Main Title for the payment screen.",
-          initial_value: "Choose Your Subscription",
-          placeholder: "Choose Your Subscription",
         },
         {
           key: "subscription_default_title_text_font_android_tv",
@@ -964,14 +778,6 @@ const stylesTv = {
         },
 
         {
-          key: "subscription_default_description_text",
-          type: "text_input",
-          label: "Subscription Default Description Text",
-          label_tooltip: "Description text for the subscription.",
-          initial_value: "Enjoy premium content",
-          placeholder: "Enjoy premium content",
-        },
-        {
           key: "subscription_default_description_text_font_android_tv",
           type: "android_font_selector",
           label_tooltip:
@@ -998,15 +804,6 @@ const stylesTv = {
           label_tooltip:
             "Font Color for the Description text for the subscription",
           initial_value: "rgba(255, 255, 255, 1)",
-        },
-        {
-          key: "policy_agreement_text",
-          type: "text_input",
-          label: "Policy Agreement Text",
-          label_tooltip: "Text for the policy agreement.",
-          initial_value:
-            "By clicking “Subscribe” or “Buy” below, you also agree to the [Client’s App Name] Agreement and acknowledge that you have read our Privacy Policy",
-          placeholder: "Policy Agreement Text",
         },
         {
           key: "policy_agreement_text_font_android_tv",
@@ -1156,23 +953,6 @@ const stylesTv = {
         },
 
         {
-          key: "payment_option_action_text_type_buy",
-          type: "text_input",
-          label: "Text for the payment option action button type 'Buy'",
-          label_tooltip: "Text for the payment option action button type 'Buy'",
-          initial_value: "Buy",
-          placeholder: "Action button 'Buy' type",
-        },
-        {
-          key: "payment_option_action_text_type_subscribe",
-          type: "text_input",
-          label: "Text for the payment option action button type 'Subscribe'",
-          label_tooltip:
-            "Text for the payment option action button type 'Subscribe'",
-          initial_value: "Subscribe",
-          placeholder: "Action button 'Subscribe' type",
-        },
-        {
           key: "payment_option_action_text_font_android_tv",
           type: "android_font_selector",
           label_tooltip:
@@ -1196,14 +976,6 @@ const stylesTv = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for the payment option action button",
           initial_value: "rgba(255, 255, 255, 1)",
-        },
-        {
-          key: "restore_purchase_action_button_text",
-          type: "text_input",
-          label: "Restore Purchases Action Button Text",
-          label_tooltip: "Text for the restore purchases button.",
-          initial_value: "Restore",
-          placeholder: "Restore purchase",
         },
         {
           key: "restore_purchase_action_button_text_font_android_tv",
@@ -1246,15 +1018,6 @@ const stylesTv = {
           label_tooltip:
             "Default Background Color for the Active Restore Purchases Button.",
           initial_value: "rgba(39, 218, 134, 1)",
-        },
-        {
-          key: "subscriber_agreement_and_privacy_policy_text",
-          type: "text_input",
-          label: "Subscriber Agreement and Privacy Policy Link Text",
-          label_tooltip: "Text for the Agreement and Privacy Policy Link.",
-          initial_value:
-            "[Client’s Name App] Subscriber Agreement and Privacy Policy",
-          placeholder: "Agreement policy",
         },
         {
           key: "subscriber_agreement_and_privacy_policy_text_font_android_tv",
@@ -1300,15 +1063,6 @@ const stylesTv = {
       folded: true,
       fields: [
         {
-          key: "login_title_text",
-          type: "text_input",
-          label: "Login Title Text",
-          label_tooltip:
-            "Main text at the right of the screen. Preferably use to depict the name of the app or welcome the user.",
-          initial_value: "Welcome To The App",
-          placeholder: "Welcome To The App",
-        },
-        {
           key: "login_title_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Login Title Text for TvOS.",
@@ -1331,17 +1085,6 @@ const stylesTv = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Login Title Text.",
           initial_value: "#545A5C",
-        },
-        {
-          key: "main_description_text",
-          type: "text_input",
-          label: "Main Description Text",
-          label_tooltip:
-            "This text can be used to give a brief introduction to the product.",
-          initial_value:
-            "Helping companies maximize any cloud infrastructure, reduce costs, increase engagement, and significantly improve time to market and speed of ongoing innovation.",
-          placeholder:
-            "Helping companies maximize any cloud infrastructure, reduce costs, increase engagement, and significantly improve time to market and speed of ongoing innovation.",
         },
         {
           key: "main_description_font_tvos",
@@ -1368,15 +1111,6 @@ const stylesTv = {
           initial_value: "#545A5C",
         },
         {
-          key: "optional_instructions_1_text",
-          type: "text_input",
-          label: "Optional Instructions 1 Text",
-          label_tooltip:
-            "This text can be used to add information relevant to the user(Support/Terms of use/links).",
-          initial_value: "Optional Instructions",
-          placeholder: "Optional Instructions",
-        },
-        {
           key: "optional_instructions_1_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Optional Instructions 1 Text for TvOS.",
@@ -1400,15 +1134,6 @@ const stylesTv = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Optional Instructions 1 Text.",
           initial_value: "#545A5C",
-        },
-        {
-          key: "optional_instructions_2_text",
-          type: "text_input",
-          label: "Optional Instructions 2 Text",
-          label_tooltip:
-            "This text can be used to add information relevant to the user(Support/Terms of use/links).",
-          initial_value: "Optional Instructions",
-          placeholder: "Optional Instructions",
         },
         {
           key: "optional_instructions_2_font_tvos",
@@ -1485,14 +1210,6 @@ const stylesTv = {
           initial_value: "rgba(39, 218, 134, 1)",
         },
         {
-          key: "email_input_placeholder",
-          type: "text_input",
-          label: "Email Input placeholder",
-          label_tooltip: "Placeholder to show for the Email Input Field.",
-          initial_value: "Email",
-          placeholder: "Email",
-        },
-        {
           key: "email_input_placeholder_color",
           type: "color_picker_rgba",
           label: "Email Input Placeholder Color (filled)",
@@ -1566,14 +1283,6 @@ const stylesTv = {
           initial_value: "rgba(39, 218, 134, 1)",
         },
         {
-          key: "password_input_placeholder",
-          type: "text_input",
-          label: "Password Input placeholder",
-          label_tooltip: "Placeholder to show for the Password Input Field.",
-          initial_value: "Password",
-          placeholder: "Password",
-        },
-        {
           key: "password_input_placeholder_color",
           type: "color_picker_rgba",
           label: "Password Input Placeholder Color",
@@ -1617,14 +1326,6 @@ const stylesTv = {
           label: "Login Action Button Focused Background Color",
           label_tooltip: "Background Color for the Login Action Button",
           initial_value: "rgba(93, 2, 13, 1)",
-        },
-        {
-          key: "login_action_button_text",
-          type: "text_input",
-          label: "Login Action Button Text",
-          label_tooltip: "Text for the Login Button.",
-          initial_value: "Log In",
-          placeholder: "Log In",
         },
         {
           key: "login_action_button_font_tvos",
@@ -1677,20 +1378,6 @@ const stylesTv = {
           label: "Skip Action Button Background Color",
           label_tooltip: "Background Color for the Skip Action Button.",
           initial_value: "rgba(39, 218, 134, 1)",
-          conditional_fields: [
-            {
-              condition_value: [true],
-              key: "general/enable_skip_functionality",
-            },
-          ],
-        },
-        {
-          key: "skip_action_button_text",
-          type: "text_input",
-          label: "Skip Action Button Text",
-          label_tooltip: "Text for the Skip Button.",
-          initial_value: "Skip",
-          placeholder: "Skip",
           conditional_fields: [
             {
               condition_value: [true],
@@ -1755,14 +1442,6 @@ const stylesTv = {
       folded: true,
       fields: [
         {
-          key: "confirmation_message_text",
-          type: "text_input",
-          label: "Confirmation Message Text",
-          label_tooltip: "Text for the Confirmation message.",
-          initial_value: "Are you sure you want to logout?",
-          placeholder: "Are you sure you want to logout?",
-        },
-        {
           key: "confirmation_message_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Confirmation Text for TvOS.",
@@ -1794,14 +1473,6 @@ const stylesTv = {
           initial_value: "rgba(39, 218, 134, 1)",
         },
         {
-          key: "confirm_action_button_text",
-          type: "text_input",
-          label: "Confirm Action Button Text",
-          label_tooltip: "Text for the Confirm Button.",
-          initial_value: "Yes",
-          placeholder: "Yes",
-        },
-        {
           key: "confirm_action_button_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Confirm Button for TvOS.",
@@ -1831,14 +1502,6 @@ const stylesTv = {
           label: "Cancel Action Button Background Color",
           label_tooltip: "Background Color for the Cancel Action Button.",
           initial_value: "rgba(39, 218, 134, 1)",
-        },
-        {
-          key: "cancel_action_button_text",
-          type: "text_input",
-          label: "Cancel Action Button Text",
-          label_tooltip: "Text for the Cancel Button.",
-          initial_value: "Cancel",
-          placeholder: "Cancel",
         },
         {
           key: "cancel_action_button_font_tvos",
@@ -1873,21 +1536,6 @@ const stylesTv = {
       folded: true,
       fields: [
         {
-          key: "video_stream_exception_message",
-          type: "text_input",
-          label: "Message in case video url is empty",
-          initial_value:
-            "Video stream in not available. Please try again later",
-        },
-        {
-          key: "general_error_message",
-          type: "text_input",
-          label: "General error message",
-          tooltip:
-            "A default error message that is shown in case something goes wrong in the flow",
-          initial_value: "Something went wrong. Please try again later",
-        },
-        {
           key: "error_description_font_tvos",
           type: "tvos_font_selector",
           label_tooltip: "Font for Description Text for TvOS.",
@@ -1918,15 +1566,6 @@ const stylesTv = {
           label_tooltip:
             "Background Color for the Alert “OK” Action Button. Will be used if no assets found.",
           initial_value: "rgba(39, 218, 134, 1)",
-        },
-        {
-          key: "close_action_button_text",
-          type: "text_input",
-          label: "Alert “OK” Action Button Text",
-          label_tooltip:
-            "Text for “OK” Action button on the error overlay screen.",
-          initial_value: "Ok",
-          placeholder: "Ok",
         },
         {
           key: "close_action_button_font_tvos",
@@ -1960,14 +1599,6 @@ const stylesTv = {
       tooltip: "These fields affect the design of the signup screen",
       folded: true,
       fields: [
-        {
-          key: "signup_title_text",
-          type: "text_input",
-          label: "Signup Title Text",
-          label_tooltip: "Title text for the registration screen",
-          initial_value: "Registration",
-          placeholder: "Registration",
-        },
         {
           key: "signup_title_font_tvos",
           type: "tvos_font_selector",
@@ -2005,14 +1636,6 @@ const stylesTv = {
           label: "Sign Up Action Button Focused Background Color",
           label_tooltip: "Background Color for the Sign Up Action Button",
           initial_value: "rgba(93, 2, 13, 1)",
-        },
-        {
-          key: "signup_action_button_text",
-          type: "text_input",
-          label: "Sign Up Action Button Text",
-          label_tooltip: "Text for the Sign Up Button.",
-          initial_value: "SIGN UP",
-          placeholder: "SIGN UP",
         },
         {
           key: "signup_action_button_font_tvos",
@@ -2094,14 +1717,6 @@ const stylesTv = {
           initial_value: "rgba(39, 218, 134, 1)",
         },
         {
-          key: "signup_password_input_placeholder",
-          type: "text_input",
-          label: "Password Input placeholder",
-          label_tooltip: "Placeholder to show for the Password Input Field.",
-          initial_value: "Password",
-          placeholder: "Password",
-        },
-        {
           key: "signup_password_input_placeholder_color",
           type: "color_picker_rgba",
           label: "Password Input Placeholder Color",
@@ -2175,14 +1790,6 @@ const stylesTv = {
           initial_value: "rgba(39, 218, 134, 1)",
         },
         {
-          key: "signup_full_name_input_placeholder",
-          type: "text_input",
-          label: "Full Name Input placeholder",
-          label_tooltip: "Placeholder to show for the Full Name Input Field.",
-          initial_value: "Full Name",
-          placeholder: "Full Name",
-        },
-        {
           key: "signup_full_name_input_placeholder_color",
           type: "color_picker_rgba",
           label: "Full Name Input Placeholder Color",
@@ -2254,14 +1861,6 @@ const stylesTv = {
           label: "Email Input Border Color (filled)",
           label_tooltip: "Border Color for the Filled Email Input.",
           initial_value: "rgba(39, 218, 134, 1)",
-        },
-        {
-          key: "signup_email_input_placeholder",
-          type: "text_input",
-          label: "Email Input placeholder",
-          label_tooltip: "Placeholder to show for the Email Input Field.",
-          initial_value: "Email",
-          placeholder: "Email",
         },
         {
           key: "signup_email_input_placeholder_color",
@@ -2404,7 +2003,7 @@ function createManifest({ version, platform }) {
 
   const isTV = R.includes(platform, tvPlatforms);
 
-  const manifest = {
+  return {
     ...baseManifest,
     platform,
     dependency_version: version,
@@ -2415,9 +2014,8 @@ function createManifest({ version, platform }) {
     min_zapp_sdk: withFallback(min_zapp_sdk, platform),
     npm_dependencies: withFallback(npm_dependencies, basePlatform),
     styles: isTV ? stylesTv : stylesMobile,
+    localizations: isTV ? Localizations.tv : Localizations.mobile,
   };
-
-  return manifest;
 }
 
 module.exports = createManifest;

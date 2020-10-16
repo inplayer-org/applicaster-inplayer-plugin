@@ -7,14 +7,13 @@ import { signOut } from "../../Services/inPlayerService";
 import { removeFromLocalStorage } from "../../Utils/UserAccount";
 import PropTypes from "prop-types";
 
-const LogoutFlow = (props) => {
+const LogoutFlow = ({ configuration, screenStyles, screenLocalizations }) => {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const navigator = useNavigation();
-  const {
-    configuration: { logout_completion_action = "go_back" },
-  } = props;
-  const { screenStyles } = props;
-  var infoText = screenStyles?.logout_title_succeed_text;
+
+  const { logout_completion_action = "go_back" } = configuration;
+  const { logout_title_succeed_text, logout_title_fail_text } = screenLocalizations;
 
   useEffect(() => {
     navigator.hideNavBar();
@@ -45,9 +44,7 @@ const LogoutFlow = (props) => {
           navigator.goBack();
         }
       })
-      .catch(() => {
-        infoText = screenStyles?.logout_title_fail_text;
-      })
+      .catch(setError)
       .finally(() => {
         setLoading(false);
         setTimeout(() => {
@@ -80,7 +77,9 @@ const LogoutFlow = (props) => {
       {loading === true ? (
         <ActivityIndicator color={"white"} size={"large"} />
       ) : (
-        <Text style={textStyle}>{infoText}</Text>
+        <Text style={textStyle}>
+          {error ? logout_title_fail_text : logout_title_succeed_text}
+        </Text>
       )}
     </View>
   );
@@ -90,10 +89,23 @@ export default LogoutFlow;
 
 LogoutFlow.propTypes = {
   configuration: PropTypes.object,
-  screenStyles: PropTypes.object,
+  screenStyles: PropTypes.shape({
+    logout_title_font_ios: PropTypes.string,
+    logout_title_font_android: PropTypes.string,
+    logout_title_font_tvos: PropTypes.string,
+    logout_title_font_android_tv: PropTypes.string,
+    logout_title_font_size: PropTypes.number,
+    logout_title_font_color: PropTypes.string,
+    logout_background_color: PropTypes.string,
+  }),
+  screenLocalizations: PropTypes.shape({
+    logout_title_succeed_text: PropTypes.string,
+    logout_title_fail_text: PropTypes.string,
+  }),
 };
 
 LogoutFlow.defaultProps = {
   configuration: {},
   screenStyles: {},
+  screenLocalizations: {},
 };

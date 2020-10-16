@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import { View, SafeAreaView, Keyboard, Platform } from "react-native";
+import PropTypes from "prop-types";
 // https://github.com/testshallpass/react-native-dropdownalert#usage
 import DropdownAlert from "react-native-dropdownalert";
 
@@ -48,17 +49,17 @@ const AccountFlow = (props) => {
       in_player_referrer: referrer,
       in_player_branding_id,
     },
-    accountFlowCallback,
   } = props;
   const brandingId = React.useMemo(() => {
     const parsedValue = parseInt(in_player_branding_id);
     return isNaN(parsedValue) ? null : parsedValue;
   }, []);
 
-  const { shouldShowParentLock } = props;
   const [loading, setLoading] = useState(true);
   const [screen, setScreen] = useState(ScreensData.EMPTY);
   const [lastEmailUsed, setLastEmailUsed] = useState(null);
+
+  const { shouldShowParentLock, accountFlowCallback, screenStyles, screenLocalizations } = props;
 
   useLayoutEffect(() => {
     InPlayerService.isAuthenticated(clientId)
@@ -152,7 +153,7 @@ const AccountFlow = (props) => {
     }
   };
 
-  const login = ({ email, password } = params) => {
+  const login = ({ email, password }) => {
     Keyboard.dismiss();
     stillMounted && setLoading(true);
     logger
@@ -179,7 +180,7 @@ const AccountFlow = (props) => {
           .send();
         accountFlowCallback({ success: true });
       })
-      .catch(maybeShowAlertToUser("Login failed"))
+      .catch(maybeShowAlertToUser(screenLocalizations.login_title_error_text))
       .catch((error) => {
         logger
           .createEvent()
@@ -192,7 +193,7 @@ const AccountFlow = (props) => {
       });
   };
 
-  const createAccount = ({ fullName, email, password } = params) => {
+  const createAccount = ({ fullName, email, password }) => {
     Keyboard.dismiss();
     stillMounted && setLoading(true);
 
@@ -224,7 +225,7 @@ const AccountFlow = (props) => {
           .send();
         accountFlowCallback({ success: true });
       })
-      .catch(maybeShowAlertToUser("Sign-up failed"))
+      .catch(maybeShowAlertToUser(screenLocalizations.signup_title_error_text))
       .catch((error) => {
         logger
           .createEvent()
@@ -268,8 +269,8 @@ const AccountFlow = (props) => {
             .addData({ password, token })
             .send();
           showAlertToUser({
-            title: "Set New Password Success",
-            message: "Your password was successfully updated",
+            title: screenLocalizations.reset_password_success_title,
+            message: screenLocalizations.reset_password_success_text,
             type: "success",
           });
           stillMounted && setLoading(false);
@@ -289,8 +290,8 @@ const AccountFlow = (props) => {
           stillMounted && setLoading(false);
 
           showAlertToUser({
-            title: "Set New Password",
-            message: "New password could not be set. Please try again.",
+            title: screenLocalizations.reset_password_error_title,
+            message: screenLocalizations.reset_password_error_text,
           });
         });
     } else {
@@ -327,7 +328,7 @@ const AccountFlow = (props) => {
             .addData({ email })
             .send();
           showAlertToUser({
-            title: "Request Password Success",
+            title: screenLocalizations.request_password_success_title,
             message,
             type: "success",
           });
@@ -344,8 +345,8 @@ const AccountFlow = (props) => {
             .send();
           stillMounted && setLoading(false);
           showAlertToUser({
-            title: "Request Password Fail",
-            message: "Can not request password",
+            title: screenLocalizations.request_password_error_title,
+            message: screenLocalizations.request_password_error_text,
           });
           stillMounted && setScreen(ScreensData.LOGIN);
         });
@@ -358,7 +359,7 @@ const AccountFlow = (props) => {
     stillMounted && setScreen(ScreensData.FORGOT_PASSWORD);
   };
 
-  const renderAuthenteficationScreen = () => {
+  const renderAuthenticationScreen = () => {
     switch (screen) {
       case ScreensData.LOGIN:
         return (
@@ -411,8 +412,6 @@ const AccountFlow = (props) => {
     return null;
   };
 
-  const { screenStyles } = props;
-
   if (screen === ScreensData.PARENT_LOCK) {
     return <ParentLockPlugin.Component callback={parentLockCallback} />;
   }
@@ -422,7 +421,7 @@ const AccountFlow = (props) => {
   return (
     <View style={containerStyle(screenStyles)}>
       <SafeArea style={container}>
-        {renderAuthenteficationScreen()}
+        {renderAuthenticationScreen()}
         {loading && <LoadingScreen />}
       </SafeArea>
       {!Platform.isTV && !isWebBasedPlatform && (
@@ -430,6 +429,32 @@ const AccountFlow = (props) => {
       )}
     </View>
   );
+};
+
+AccountFlow.propTypes = {
+  configuration: PropTypes.object,
+  setParentLockWasPresented: PropTypes.func,
+  parentLockWasPresented: PropTypes.bool,
+  shouldShowParentLock: PropTypes.func,
+  accountFlowCallback: PropTypes.func,
+  screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.shape({
+    login_title_error_text: PropTypes.string,
+    signup_title_error_text: PropTypes.string,
+    reset_password_success_title: PropTypes.string,
+    reset_password_success_text: PropTypes.string,
+    reset_password_error_title: PropTypes.string,
+    reset_password_error_text: PropTypes.string,
+    request_password_success_title: PropTypes.string,
+    request_password_error_title: PropTypes.string,
+    request_password_error_text: PropTypes.string,
+  }),
+};
+
+AccountFlow.defaultProps = {
+  configuration: {},
+  screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default AccountFlow;

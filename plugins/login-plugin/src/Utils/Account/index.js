@@ -1,5 +1,5 @@
 import { Alert } from "react-native";
-import { isWebBasedPlatform } from "../../Utils/Platform";
+import { isWebBasedPlatform } from "../Platform";
 
 export function showAlert(title, message) {
   isWebBasedPlatform
@@ -7,88 +7,54 @@ export function showAlert(title, message) {
     : Alert.alert(title, message);
 }
 
-export function validateEmail(email) {
-  const message = "Email is not valid";
-  if (!email) return message;
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false)
-    return message;
-  return null;
+export function isValidEmail(email) {
+  const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return !!email && regex.test(email);
 }
 
-function validateUserName(name) {
-  if (!name || name.length == 0) {
-    return "Name can not be empty";
+function isValidUserName(name) {
+  return !!name && name.length > 0;
+}
+
+function isValidConfirmationPassword(password, passwordConfirmation) {
+  return !!password && !!passwordConfirmation && (password === passwordConfirmation);
+}
+
+function isValidPasswordLength(password) {
+  return !!password && password.length >= 8;
+}
+
+function isValidPasswordCharacters(password) {
+  const regex = /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
+  return regex.test(password);
+}
+
+function isValidPassword(password) {
+  return isValidPasswordLength(password) && isValidPasswordCharacters(password)
+}
+
+function isValidToken(token) {
+  return !!token && token.length > 0
+}
+
+export function validateSignUpData({ fullName, email, password, passwordConfirmation }, screenLocalizations) {
+  if (!isValidUserName(fullName)) {
+    return new Error(screenLocalizations.signup_name_validation_error);
+  } else if (!isValidEmail(email)) {
+    return new Error(screenLocalizations.login_email_validation_error);
+  } else if (!isValidPassword(password)) {
+    return new Error(screenLocalizations.signup_password_validation_error);
+  } else if (!isValidConfirmationPassword(password, passwordConfirmation)) {
+    return new Error(screenLocalizations.signup_password_confirmation_validation_error);
   }
-  return null;
 }
 
-function validateConfirmationPassword(password, passwordConfirmation) {
-  if (!password || !passwordConfirmation) {
-    return "Password or Password confirmation fields shouldn't be empty";
+export function validateNewPassword({ token, password, passwordConfirmation }, screenLocalizations) {
+  if (!isValidToken(token)) {
+    return new Error(screenLocalizations.new_password_token_validation_error);
+  } else if (!isValidPassword(password)) {
+    return new Error(screenLocalizations.signup_password_validation_error);
+  } else if (!isValidConfirmationPassword(password, passwordConfirmation)) {
+    return new Error(screenLocalizations.signup_password_confirmation_validation_error);
   }
-  if (password !== passwordConfirmation) {
-    return "Password not equal confirmation password";
-  }
-  return null;
-}
-
-function validatePasswordLength(password) {
-  if (password.length < 8) {
-    return "Password must be at least 8 characters long";
-  }
-  return null;
-}
-
-function validatePasswordCharacters(password) {
-  let regex = /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
-  if (regex.test(password) === false) {
-    return "Password should contain at least one lower case, one upper case, one special character and one number";
-  }
-  return null;
-}
-
-function validatePassword(password) {
-  if (!password) return "Password shouldn't be empty";
-  const validatePwdLengthMsg = validatePasswordLength(password);
-  if (validatePwdLengthMsg != null) return validatePwdLengthMsg;
-  const validatePwdCharsMsg = validatePasswordCharacters(password);
-  if (validatePwdCharsMsg != null) return validatePwdCharsMsg;
-  return null;
-}
-
-function validateToken(token) {
-  if (!token || token.length == 0) {
-    return "Token should not be empty";
-  }
-  return null;
-}
-
-export function validateSignUpData(signUpData) {
-  const { fullName, email, password, passwordConfirmation } = signUpData;
-  const validateUserNameMsg = validateUserName(fullName);
-  if (validateUserNameMsg != null) return validateUserNameMsg;
-  const validateEmailMsg = validateEmail(email);
-  if (validateEmailMsg != null) return validateEmailMsg;
-  const validatePwdMsg = validatePassword(password);
-  if (validatePwdMsg != null) return validatePwdMsg;
-  const validateConfirmationPwdMsg = validateConfirmationPassword(
-    password,
-    passwordConfirmation
-  );
-  if (validateConfirmationPwdMsg != null) return validateConfirmationPwdMsg;
-  return null;
-}
-
-export function validateNewPassword(newPwdData) {
-  const { token, password, passwordConfirmation } = newPwdData;
-  const validateTokenMsg = validateToken(token);
-  if (validateTokenMsg != null) return validateTokenMsg;
-  const validatePwdMsg = validatePassword(password);
-  if (validatePwdMsg != null) return validatePwdMsg;
-  const validateConfirmationPwdMsg = validateConfirmationPassword(
-    password,
-    passwordConfirmation
-  );
-  if (validateConfirmationPwdMsg != null) return validateConfirmationPwdMsg;
-  return null;
 }

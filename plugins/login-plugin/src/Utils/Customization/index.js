@@ -94,19 +94,19 @@ export function inputFieldStyle(screenStyles) {
   };
 }
 
-export function getMessageOrDefault(error, screenStyles) {
+export function getMessageOrDefault(error, screenLocalizations) {
   const message = error?.message;
-  const defaultMessage = screenStyles.general_error_message;
+  const defaultMessage = screenLocalizations.general_error_message;
 
-  const isStreamException = isStreamExceptionError(message, screenStyles);
+  const isStreamException = isStreamExceptionError(message, screenLocalizations);
   if (isStreamException) return message;
 
   const isUserFriendlyMessage = findInObject(MESSAGES, message);
   return isUserFriendlyMessage ? message : defaultMessage;
 }
 
-function isStreamExceptionError(message, screenStyles) {
-  const streamExceptionMessage = screenStyles.video_stream_exception_message;
+function isStreamExceptionError(message, screenLocalizations) {
+  const streamExceptionMessage = screenLocalizations.video_stream_exception_message;
   return message === streamExceptionMessage;
 }
 

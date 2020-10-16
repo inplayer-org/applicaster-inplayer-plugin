@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
 import StoreFrontContainer from "./StoreFrontContainer";
 import NavbarComponent from "../../../UIComponents/NavbarComponent";
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
 });
 
 const StoreFrontMobile = (props) => {
-  const { completeAssetFlow, screenStyles } = props;
+  const { completeAssetFlow, screenStyles, screenLocalizations } = props;
 
   const {
     payment_screen_background: screenBackground = "",
@@ -34,9 +35,20 @@ const StoreFrontMobile = (props) => {
         buttonUrl={buttonUrl}
       />
       <StoreFrontContainer {...props} />
-      <Footer screenStyles={screenStyles} />
+      <Footer screenStyles={screenStyles} screenLocalizations={screenLocalizations} />
     </SafeAreaView>
   );
+};
+
+StoreFrontMobile.propTypes = {
+  completeAssetFlow: PropTypes.func,
+  screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.object,
+};
+
+StoreFrontMobile.defaultProps = {
+  screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default StoreFrontMobile;

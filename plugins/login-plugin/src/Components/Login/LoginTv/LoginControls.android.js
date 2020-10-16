@@ -42,6 +42,7 @@ const LoginControls = ({
   screenStyles,
   focused,
   parentFocus,
+  screenLocalizations
 }) => {
   const [usernameValue, setUsername] = useState("");
   const [passwordValue, setPassword] = useState("");
@@ -112,7 +113,7 @@ const LoginControls = ({
       <Text style={styles.errorMessage}>{errorMessage}</Text>
       <FocusableTextInput
         ref={loginInputRef}
-        placeholder={screenStyles.email_input_placeholder}
+        placeholder={screenLocalizations.fields_email_text}
         value={usernameValue}
         onChangeText={handleInputChange(setUsername)}
         label="login-input"
@@ -126,7 +127,7 @@ const LoginControls = ({
       <FocusableTextInput
         groupId={groupId}
         ref={passwordInputRef}
-        placeholder={screenStyles.password_input_placeholder}
+        placeholder={screenLocalizations.fields_password_text}
         secureTextEntry={true}
         value={passwordValue}
         onChangeText={handleInputChange(setPassword)}
@@ -141,12 +142,11 @@ const LoginControls = ({
         nextFocusUp={passwordInputRef}
         nextFocusDown={parentFocus.nextFocusDown}
         {...{
-          label: screenStyles.login_action_button_text,
+          label: screenLocalizations.action_button_login_text,
           onPress,
           groupId: groupId,
           backgroundColor: screenStyles.login_action_button_background,
-          backgroundColorFocused:
-            screenStyles.login_action_button_background_focused,
+          backgroundColorFocused: screenStyles.login_action_button_background_focused,
           textColorFocused: screenStyles.login_action_button_fontcolor_focused,
           textStyles: buttonTextStyles,
           borderRadius: screenStyles.login_action_button_border_radius,
@@ -160,14 +160,25 @@ LoginControls.propTypes = {
   style: ViewPropTypes.style,
   onLogin: PropTypes.func,
   errorMessage: PropTypes.string,
-  screenStyles: PropTypes.object,
   parentFocus: PropTypes.object,
   focused: PropTypes.bool,
+  screenStyles: PropTypes.shape({
+    login_action_button_background: PropTypes.string,
+    login_action_button_background_focused: PropTypes.string,
+    login_action_button_fontcolor_focused: PropTypes.string,
+    login_action_button_border_radius: PropTypes.number,
+  }),
+  screenLocalizations: PropTypes.shape({
+    fields_email_text: PropTypes.string,
+    fields_password_text: PropTypes.string,
+    action_button_login_text: PropTypes.string,
+  }),
 };
 
 LoginControls.defaultProps = {
   onLogin: identity,
   screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default LoginControls;

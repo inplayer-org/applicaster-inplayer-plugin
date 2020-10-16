@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import { View, TextInput, findNodeHandle, Keyboard } from "react-native";
 import { inputFieldStyle } from "../../../Utils/Customization";
@@ -18,18 +19,28 @@ const SignUpMobile = (props) => {
   const [email, setEmail] = useState(null);
   const [passwordConfirmation, setPasswordConfirmation] = useState(null);
   const [password, setPassword] = useState(null);
-  const { screenStyles } = props;
-  const textInputStyle = inputFieldStyle(screenStyles);
   const { width: screenWidth } = useDimensions("window");
 
+  const { screenStyles, screenLocalizations } = props;
+  const textInputStyle = inputFieldStyle(screenStyles);
+
   const signUp = () => {
-    Keyboard.dismiss();
     const { createAccount, onSignUpError } = props;
-    const errorData = validateData();
-    if (errorData) {
-      onSignUpError(errorData);
+    const validate = validateSignUpData({ fullName, email, password, passwordConfirmation }, screenLocalizations);
+
+    Keyboard.dismiss();
+
+    if (validate instanceof Error) {
+      onSignUpError({
+        title: screenLocalizations.signup_title_validation_error,
+        message: validate.message
+      });
     } else {
-      createAccount({ fullName, email, password });
+      createAccount({
+        fullName,
+        email,
+        password
+      });
     }
   };
 
@@ -40,25 +51,17 @@ const SignUpMobile = (props) => {
 
   useBackHandler(hardwareBack);
 
-  const validateData = () => {
-    const title = "Sign Up form issue";
-    const signUpData = {
-      fullName: fullName,
-      email: email,
-      password: password,
-      passwordConfirmation: passwordConfirmation,
-    };
-    const message = validateSignUpData(signUpData);
-    return message ? { title, message } : null;
-  };
-
   const scrollToInput = (reactNode) => {
     this.scroll.props.scrollToFocusedInput(reactNode, 150, 0);
   };
 
   return (
     <View style={{ ...container, width: screenWidth }}>
-      <BackButton screenStyles={screenStyles} onPress={props?.onBackButton} />
+      <BackButton
+        title={screenLocalizations.back_button_text}
+        screenStyles={screenStyles}
+        onPress={props?.onBackButton}
+      />
       <KeyboardAwareScrollView
         innerRef={(ref) => {
           this.scroll = ref;
@@ -71,7 +74,7 @@ const SignUpMobile = (props) => {
       >
         <TitleLabel
           screenStyles={screenStyles}
-          title={screenStyles?.title_font_text}
+          title={screenLocalizations.title_font_text}
         />
         <TextInput
           onSubmitEditing={() => {
@@ -83,7 +86,7 @@ const SignUpMobile = (props) => {
           }}
           blurOnSubmit={false}
           autoCapitalize="words"
-          placeholder={screenStyles?.fields_name_text || "Enter your name"}
+          placeholder={screenLocalizations.fields_name_text}
           placeholderTextColor={
             screenStyles?.fields_placeholder_font_color || "white"
           }
@@ -103,7 +106,7 @@ const SignUpMobile = (props) => {
           }}
           blurOnSubmit={false}
           autoCapitalize="none"
-          placeholder={screenStyles?.fields_email_text || "E-mail"}
+          placeholder={screenLocalizations.fields_email_text}
           placeholderTextColor={
             screenStyles?.fields_placeholder_font_color || "white"
           }
@@ -124,7 +127,7 @@ const SignUpMobile = (props) => {
           }}
           blurOnSubmit={false}
           autoCapitalize="none"
-          placeholder={screenStyles?.fields_password_text || "Password"}
+          placeholder={screenLocalizations.fields_password_text}
           placeholderTextColor={
             screenStyles?.fields_placeholder_font_color || "white"
           }
@@ -146,10 +149,7 @@ const SignUpMobile = (props) => {
           })}
           blurOnSubmit={false}
           autoCapitalize="none"
-          placeholder={
-            screenStyles?.fields_password_confirmation_text ||
-            "Password Confirmation"
-          }
+          placeholder={screenLocalizations.fields_password_confirmation_text}
           placeholderTextColor={
             screenStyles?.fields_placeholder_font_color || "white"
           }
@@ -163,12 +163,42 @@ const SignUpMobile = (props) => {
         />
         <ActionButton
           screenStyles={screenStyles}
-          title={screenStyles?.action_button_signup_text || "SIGN UP"}
+          title={screenLocalizations.action_button_signup_text}
           onPress={signUp}
         />
       </KeyboardAwareScrollView>
     </View>
   );
 };
+
+SignUpMobile.propTypes = {
+  createAccount: PropTypes.func,
+  onBackButton: PropTypes.func,
+  onSignUpError: PropTypes.func,
+  screenStyles: PropTypes.shape({
+    fields_placeholder_font_color: PropTypes.string,
+  }),
+  screenLocalizations: PropTypes.shape({
+    title_font_text: PropTypes.string,
+    fields_email_text: PropTypes.string,
+    fields_password_text: PropTypes.string,
+    fields_name_text: PropTypes.string,
+    action_button_login_text: PropTypes.string,
+    fields_password_confirmation_text: PropTypes.string,
+    action_button_signup_text: PropTypes.string,
+    signup_title_validation_error: PropTypes.string,
+    login_email_validation_error: PropTypes.string,
+    signup_password_validation_error: PropTypes.string,
+    signup_password_confirmation_validation_error: PropTypes.string,
+    signup_name_validation_error: PropTypes.string,
+    back_button_text: PropTypes.string,
+  }),
+};
+
+SignUpMobile.defaultProps = {
+  screenStyles: {},
+  screenLocalizations: {},
+};
+
 
 export default SignUpMobile;

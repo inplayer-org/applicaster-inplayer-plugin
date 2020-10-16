@@ -14,21 +14,19 @@ const styles = StyleSheet.create({
   },
 });
 
-const PrivacyTitle = (props) => {
-  const { screenStyles } = props;
-  const { privacy_main_title_text } = screenStyles;
-
+const PrivacyTitle = ({ screenStyles, title }) => {
   const titleStyles = React.useMemo(
     () => mapKeyToStyle("privacy_main_title_text", screenStyles),
     [screenStyles]
   );
   styles.text = React.useMemo(() => [styles.text, titleStyles], []);
 
-  return <Label styles={styles} title={privacy_main_title_text} />;
+  return <Label styles={styles} title={title} />;
 };
 
 PrivacyTitle.propTypes = {
   screenStyles: PropTypes.object,
+  title: PropTypes.string,
 };
 
 PrivacyTitle.defaultProps = {

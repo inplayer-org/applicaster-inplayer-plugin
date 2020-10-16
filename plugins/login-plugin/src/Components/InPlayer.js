@@ -8,6 +8,7 @@ import * as R from "ramda";
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
 import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
 import { initFromNativeLocalStorage } from "../LocalStorageHack";
+import { getLocalizations } from "../Utils/Localizations";
 import {
   isVideoEntry,
   inPlayerAssetId,
@@ -34,12 +35,15 @@ export const logger = createLogger({
   category: BaseCategories.GENERAL,
 });
 
-const getScreenStyles = R.compose(
-  R.prop("styles"),
-  R.find(R.propEq("type", "quick-brick-inplayer")),
-  R.values,
-  R.prop("rivers")
-);
+const getRiversProp = (key, rivers = {}) => {
+  const getPropByKey = R.compose(
+    R.prop(key),
+    R.find(R.propEq("type", "quick-brick-inplayer")),
+    R.values
+  );
+
+  return getPropByKey(rivers);
+}
 
 const InPlayer = (props) => {
   const HookTypeData = {
@@ -54,13 +58,20 @@ const InPlayer = (props) => {
   const [idToken, setIdtoken] = useState(null);
   const [hookType, setHookType] = useState(HookTypeData.UNDEFINED);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
-  const { callback, payload } = props;
-  const screenStyles = getStyles(getScreenStyles(props));
+
+  const { callback, payload, rivers } = props;
+  const localizations = getRiversProp('localizations', rivers);
+  const styles = getRiversProp('styles', rivers);
+
+  const screenStyles = getStyles(styles);
+  const screenLocalizations = getLocalizations(localizations);
+
   const { import_parent_lock: showParentLock } = screenStyles;
+
   let stillMounted = true;
 
   useLayoutEffect(() => {
-    setupEnviroment();
+    setupEnvironment();
   }, []);
 
   const checkIdToken = async () => {
@@ -77,7 +88,7 @@ const InPlayer = (props) => {
     setIdtoken(token);
   };
 
-  const setupEnviroment = async () => {
+  const setupEnvironment = async () => {
     const {
       configuration: { in_player_environment },
     } = props;
@@ -157,7 +168,7 @@ const InPlayer = (props) => {
       .addData({ payload, success });
 
     if (error) {
-      const message = getMessageOrDefault(error, screenStyles);
+      const message = getMessageOrDefault(error, screenLocalizations);
       event
         .addData({ message })
         .attachError(error)
@@ -220,6 +231,7 @@ const InPlayer = (props) => {
         shouldShowParentLock={shouldShowParentLock}
         assetFlowCallback={assetFlowCallback}
         screenStyles={screenStyles}
+        screenLocalizations={screenLocalizations}
         {...props}
       />
     ) : (
@@ -230,6 +242,7 @@ const InPlayer = (props) => {
         accountFlowCallback={accountFlowCallback}
         backButton={!isHomeScreen(navigator)}
         screenStyles={screenStyles}
+        screenLocalizations={screenLocalizations}
         {...props}
       />
     );
@@ -244,25 +257,21 @@ const InPlayer = (props) => {
         accountFlowCallback={accountFlowCallback}
         backButton={!isHomeScreen(navigator)}
         screenStyles={screenStyles}
+        screenLocalizations={screenLocalizations}
         {...props}
       />
     );
   };
 
   const renderLogoutScreen = () => {
-    return <LogoutFlow screenStyles={screenStyles} {...props} />;
+    return <LogoutFlow screenStyles={screenStyles} screenLocalizations={screenLocalizations} {...props} />;
   };
 
   const renderUACFlow = () => {
     return idToken ? renderLogoutScreen() : renderScreenHook();
   };
 
-  const shouldShowParentLock = (parentLockWasPresented) => {
-    if (parentLockWasPresented || !showParentLock) {
-      return false;
-    }
-    return true;
-  };
+  const shouldShowParentLock = (parentLockWasPresented) => !(parentLockWasPresented || !showParentLock);
 
   const renderFlow = () => {
     switch (hookType) {

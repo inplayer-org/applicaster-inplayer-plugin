@@ -19,27 +19,27 @@ const styles = StyleSheet.create({
 const PolicyAgreementTitle = (props) => {
   const {
     screenStyles,
-    payload: { extensions = {} },
+    screenLocalizations,
   } = props;
-
-  const title = screenStyles?.policy_agreement_text;
 
   const fontStyles = React.useMemo(
     () => mapKeyToStyle("policy_agreement_text", screenStyles),
     [screenStyles]
   );
   styles.text = React.useMemo(() => [styles.text, fontStyles], []);
-  return title ? <Label styles={styles} title={title} /> : null;
+  return <Label styles={styles} title={screenLocalizations.policy_agreement_text} />;
 };
 
 PolicyAgreementTitle.propTypes = {
   screenStyles: PropTypes.object,
-  payload: PropTypes.object,
+  screenLocalizations: PropTypes.shape({
+    policy_agreement_text: PropTypes.string
+  }),
 };
 
 PolicyAgreementTitle.defaultProps = {
-  payload: {},
   screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default PolicyAgreementTitle;

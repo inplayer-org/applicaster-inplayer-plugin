@@ -13,13 +13,13 @@ const styles = StyleSheet.create({
 });
 
 const FeeType = (props) => {
-  const { paymentOptionItem, screenStyles } = props;
+  const { paymentOptionItem, screenStyles, screenLocalizations } = props;
 
   const { productType } = paymentOptionItem;
   const {
     payment_option_action_text_type_buy = "Buy",
     payment_option_action_text_type_subscribe = "Subscribe",
-  } = screenStyles;
+  } = screenLocalizations;
   const title =
     productType === "subscription"
       ? payment_option_action_text_type_subscribe
@@ -36,11 +36,13 @@ const FeeType = (props) => {
 FeeType.propTypes = {
   paymentOptionItem: PropTypes.object,
   screenStyles: PropTypes.object,
+  screenLocalizations: PropTypes.object,
 };
 
 FeeType.defaultProps = {
   paymentOptionItem: {},
   screenStyles: {},
+  screenLocalizations: {},
 };
 
 export default FeeType;
