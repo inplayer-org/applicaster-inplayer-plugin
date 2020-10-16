@@ -179,8 +179,8 @@ async function run() {
 
     const pluginsDir = await readdirAsync(resolve(__dirname, "../plugins"));
     console.log({ pluginsDir });
-    await exec("git checkout -- .");
-    await exec("git clean -fd");
+    // await exec("git checkout -- .");
+    // await exec("git clean -fd");
 
     const result = await Promise.all(
       R.compose(

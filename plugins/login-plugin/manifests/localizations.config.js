@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const common = [
   // Fields
   {
@@ -315,7 +317,7 @@ const tv = [
   },
 ];
 
-export const Localizations = {
+const Localizations = {
   mobile: {
     fields: [...common, ...mobile],
   },
