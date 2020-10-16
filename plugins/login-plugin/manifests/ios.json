@@ -115,8 +115,8 @@
     "quickbrick"
   ],
   "platform": "ios",
-  "dependency_version": "0.12.0",
-  "manifest_version": "0.12.0",
+  "dependency_version": "1.0.0",
+  "manifest_version": "1.0.0",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
@@ -165,12 +165,6 @@
         "initial_value": "#ffffffff"
       },
       {
-        "key": "title_font_text",
-        "type": "text_input",
-        "label": "Text title",
-        "initial_value": "InPlayer"
-      },
-      {
         "key": "back_button_font_ios",
         "type": "ios_font_selector",
         "label": "iOS back button font",
@@ -193,12 +187,6 @@
         "type": "color_picker",
         "label": "Back button font color",
         "initial_value": "#ffffffff"
-      },
-      {
-        "key": "back_button_text",
-        "type": "text_input",
-        "label": "Back button title",
-        "initial_value": "Back"
       },
       {
         "key": "fields_font_ios",
@@ -237,42 +225,6 @@
         "initial_value": "#a9a9a9ff"
       },
       {
-        "key": "fields_email_text",
-        "type": "text_input",
-        "label": "Email field placeholder text",
-        "initial_value": "E-mail"
-      },
-      {
-        "key": "fields_password_text",
-        "type": "text_input",
-        "label": "Password field placeholder text",
-        "initial_value": "Password"
-      },
-      {
-        "key": "fields_token_text",
-        "type": "text_input",
-        "label": "Token field placeholder text",
-        "initial_value": "Token"
-      },
-      {
-        "key": "fields_password_confirmation_text",
-        "type": "text_input",
-        "label": "Password field confirmation placeholder text",
-        "initial_value": "Password Confirmation"
-      },
-      {
-        "key": "fields_set_new_password_text",
-        "type": "text_input",
-        "label": "New password field placeholder text",
-        "initial_value": "New password"
-      },
-      {
-        "key": "fields_name_text",
-        "type": "text_input",
-        "label": "Name field placeholder text",
-        "initial_value": "Enter your name"
-      },
-      {
         "key": "forgot_password_font_ios",
         "type": "ios_font_selector",
         "label": "iOS forgot password font",
@@ -295,12 +247,6 @@
         "type": "color_picker",
         "label": "Forgot password font color",
         "initial_value": "#a9a9a9ff"
-      },
-      {
-        "key": "forgot_password_text",
-        "type": "text_input",
-        "label": "Forgot password title",
-        "initial_value": "Forgotten your Username or Password?"
       },
       {
         "key": "action_button_background_color",
@@ -333,30 +279,6 @@
         "initial_value": "#ffffffff"
       },
       {
-        "key": "action_button_login_text",
-        "type": "text_input",
-        "label": "Action button login title",
-        "initial_value": "LOG IN"
-      },
-      {
-        "key": "action_button_signup_text",
-        "type": "text_input",
-        "label": "Action button sign up title",
-        "initial_value": "SIGN UP"
-      },
-      {
-        "key": "action_button_forgot_password_text",
-        "type": "text_input",
-        "label": "Action button request password title",
-        "initial_value": "REQUEST PASSWORD"
-      },
-      {
-        "key": "action_button_set_new_password_text",
-        "type": "text_input",
-        "label": "Action button set new password title",
-        "initial_value": "SET NEW PASSWORD"
-      },
-      {
         "key": "create_account_link_font_ios",
         "type": "ios_font_selector",
         "label": "iOS Create account link font",
@@ -379,25 +301,6 @@
         "type": "color_picker",
         "label": "Create account link font color",
         "initial_value": "#a9a9a9ff"
-      },
-      {
-        "key": "create_account_link_text",
-        "type": "text_input",
-        "label": "Create account link title",
-        "initial_value": "No user? Sign Up!"
-      },
-      {
-        "key": "video_stream_exception_message",
-        "type": "text_input",
-        "label": "Message in case video url is empty",
-        "initial_value": "Video stream in not available. Please try again later"
-      },
-      {
-        "key": "general_error_message",
-        "type": "text_input",
-        "label": "General error message",
-        "tooltip": "A default error message that is shown in case something goes wrong in the flow",
-        "initial_value": "Something went wrong. Please try again later"
       },
       {
         "key": "logout_background_color",
@@ -430,18 +333,6 @@
         "initial_value": "#ffffffff"
       },
       {
-        "key": "logout_title_succeed_text",
-        "type": "text_input",
-        "label": "Logout text succeed title",
-        "initial_value": "Successfully Logged Out"
-      },
-      {
-        "key": "logout_title_fail_text",
-        "type": "text_input",
-        "label": "Logout text failed title",
-        "initial_value": "Logout Failed"
-      },
-      {
         "group": true,
         "label": "Storefront Screen Design and Text",
         "tooltip": "These fields affect the design of the storefront screen.",
@@ -469,14 +360,6 @@
             "placeholder": "W 200px x H 44px"
           },
           {
-            "key": "payment_screen_title_text",
-            "type": "text_input",
-            "label": "Payment Screen Title Text",
-            "label_tooltip": "Main Title for the payment screen.",
-            "initial_value": "Choose Your Subscription",
-            "placeholder": "Choose Your Subscription"
-          },
-          {
             "key": "payment_screen_title_font_ios",
             "type": "ios_font_selector",
             "label_tooltip": "Font for Main Title for ios.",
@@ -501,14 +384,6 @@
             "initial_value": "rgba(255, 255, 255, 1)"
           },
           {
-            "key": "restore_purchases_text",
-            "type": "text_input",
-            "label": "Restore Purchases Description Text",
-            "label_tooltip": "Description text for restoring purchases.",
-            "initial_value": "Purchased already a subscription?",
-            "placeholder": "Purchased already a subscription?"
-          },
-          {
             "key": "restore_purchases_text_font_ios",
             "type": "ios_font_selector",
             "label_tooltip": "Font for Restore Purchases Description Text for ios.",
@@ -531,14 +406,6 @@
             "type": "color_picker_rgba",
             "label_tooltip": "Font Color for Restore Purchases Description Text.",
             "initial_value": "rgba(255, 255, 255, 1)"
-          },
-          {
-            "key": "restore_purchases_link",
-            "type": "text_input",
-            "label": "Restore Purchases Link Text",
-            "label_tooltip": "Text for the Restore Purchases link.",
-            "initial_value": "Restore",
-            "placeholder": "Restore"
           },
           {
             "key": "restore_purchases_link_font_ios",
@@ -665,13 +532,6 @@
             "initial_value": "rgba(255, 255, 255, 1)"
           },
           {
-            "key": "terms_of_use_instructions_text",
-            "type": "text_input",
-            "label": "Payment Terms of use instructions Text",
-            "label_tooltip": "Brief text to give context to the terms of use link.",
-            "initial_value": "By making a selection and completing this transaction, you verify that you are at least 18 years old and agree to the"
-          },
-          {
             "key": "terms_of_use_instructions_font_ios",
             "type": "ios_font_selector",
             "label_tooltip": "Font for the Terms of Use Instructions Text for ios.",
@@ -701,13 +561,6 @@
             "label": "Payment Terms of use Link",
             "label_tooltip": "Link for the Terms of Use.",
             "initial_value": "http://google.com"
-          },
-          {
-            "key": "terms_of_use_link_text",
-            "type": "text_input",
-            "label": "Payment Terms of use Link Text",
-            "label_tooltip": "Text for the Terms of Use Link.",
-            "initial_value": "terms of use."
           },
           {
             "key": "terms_of_use_link_font_ios",
