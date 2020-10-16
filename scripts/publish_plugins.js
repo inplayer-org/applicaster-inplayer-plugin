@@ -100,7 +100,7 @@ async function publishPlugin(pluginFolder, latestSha) {
 
   const currentVersion = pluginPackageJson(pluginFolder).version;
   const lastCommits = R.compose(R.reject(R.isEmpty), R.split("\n"))(result);
-
+  console.log({ lastCommits });
   const minor = commitMessagesContains("feat")(lastCommits);
   const major = commitMessagesContains("BREAKING CHANGE")(lastCommits);
   const preRelease = CIRCLE_BRANCH === "development";
@@ -114,7 +114,8 @@ async function publishPlugin(pluginFolder, latestSha) {
     ? "minor"
     : "patch";
 
-  const newVersion = semver.inc(currentVersion, release, preReleaseIdentifier);
+  let newVersion = semver.inc(currentVersion, release, preReleaseIdentifier);
+  newVersion = "1.0.1";
 
   console.log(`publishing ${pluginFolder} with ${newVersion}`);
   try {
@@ -179,8 +180,8 @@ async function run() {
 
     const pluginsDir = await readdirAsync(resolve(__dirname, "../plugins"));
     console.log({ pluginsDir });
-    // await exec("git checkout -- .");
-    // await exec("git clean -fd");
+    await exec("git checkout -- .");
+    await exec("git clean -fd");
 
     const result = await Promise.all(
       R.compose(
