@@ -100,7 +100,6 @@ async function publishPlugin(pluginFolder, latestSha) {
 
   const currentVersion = pluginPackageJson(pluginFolder).version;
   const lastCommits = R.compose(R.reject(R.isEmpty), R.split("\n"))(result);
-  console.log({ lastCommits });
   const minor = commitMessagesContains("feat")(lastCommits);
   const major = commitMessagesContains("BREAKING CHANGE")(lastCommits);
   const preRelease = CIRCLE_BRANCH === "development";
@@ -114,8 +113,8 @@ async function publishPlugin(pluginFolder, latestSha) {
     ? "minor"
     : "patch";
 
-  let newVersion = semver.inc(currentVersion, release, preReleaseIdentifier);
-  newVersion = "1.0.1";
+  const newVersion = semver.inc(currentVersion, release, preReleaseIdentifier);
+  // newVersion = "1.0.1";
 
   console.log(`publishing ${pluginFolder} with ${newVersion}`);
   try {
