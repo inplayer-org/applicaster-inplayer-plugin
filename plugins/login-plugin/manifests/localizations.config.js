@@ -326,4 +326,4 @@ const Localizations = {
   },
 };
 
-module.exports = { Localizations };
+module.exports = Localizations;
