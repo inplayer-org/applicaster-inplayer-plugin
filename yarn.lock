@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@applicaster/applicaster-iap@0.3.3-alpha.0":
-  version "0.3.3-alpha.0"
-  resolved "https://registry.yarnpkg.com/@applicaster/applicaster-iap/-/applicaster-iap-0.3.3-alpha.0.tgz#ac9a4f72a1999241a4edc1414dc8bed9c229f21a"
-  integrity sha512-RhnWgB1ZdzupKJC3gQ96dOhCgskWiai3K0j+rLElUyG/tHD/Rc588h2vu72RAshPOstaGMpvpn1kssfvOnAC+w==
+"@applicaster/applicaster-iap@0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@applicaster/applicaster-iap/-/applicaster-iap-0.3.3.tgz#343e051efdc469d3454854d3c54066fe2086064f"
+  integrity sha512-vtlh33V3Hqle3BCfUW1LnLdRBHNHXwb9ogfJf65OjxOPPHmxgTyqskbrObjU/lcw8om0lvfFFnl4xNCIVfsDeg==
 
 "@applicaster/babel-preset-quick-brick@4.0.0":
   version "4.0.0"
