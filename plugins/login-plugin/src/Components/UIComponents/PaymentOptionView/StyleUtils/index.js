@@ -6,22 +6,19 @@ const paymentOptionStyleKeys = [
   "payment_option_button",
 ];
 
-function getBoxStyles(screenStyles) {
+function getBoxStyles(screenStyles, isLandscape) {
   const borderRadius = Number(screenStyles?.payment_option_corner_radius);
   const backgroundColor = screenStyles?.payment_option_background;
 
   return {
     backgroundColor,
     minHeight: 170,
-    width: "100%",
-    maxWidth: 370,
-    marginVertical: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 20,
+    width: isLandscape() ? 370 : "100%",
+    margin: 10,
+    padding: 20,
     alignItems: "center",
     justifyContent: "center",
     borderRadius,
-    alignSelf: "center",
   };
 }
 

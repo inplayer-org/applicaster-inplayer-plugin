@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Dimensions } from "react-native";
+import PropTypes from "prop-types";
 import { mapKeyToStyle } from "../../../Utils/Customization";
 import {
   paymentOptionStyleKeys,
@@ -14,11 +15,16 @@ const paymentActions = {
   buy: "Buy",
 };
 
-export default function PaymentOptionView({
+function PaymentOptionView({
   screenStyles,
   paymentOptionItem,
   onPress,
 }) {
+  const isLandscape = () => {
+    const { width, height } = Dimensions.get('window');
+    return width >= height;
+  };
+
   const {
     payment_option_button_corner_radius: radius = 50,
     payment_option_button_background: backgroundColor = "",
@@ -42,7 +48,7 @@ export default function PaymentOptionView({
   const label = `${actionForLabel} for ${price}`.toUpperCase();
 
   return (
-    <View style={getBoxStyles(screenStyles)}>
+    <View style={getBoxStyles(screenStyles, isLandscape)}>
       <Text style={titleStyle} numberOfLines={1} ellipsizeMode="tail">
         {title}
       </Text>
@@ -62,3 +68,21 @@ export default function PaymentOptionView({
     </View>
   );
 }
+
+PaymentOptionView.propTypes = {
+  screenStyles: PropTypes.objectOf(PropTypes.string),
+  paymentOptionItem: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    price: PropTypes.string,
+    productType: PropTypes.string
+  }),
+  onPress: PropTypes.func
+}
+
+PaymentOptionView.defaultProps = {
+  screenStyles: {},
+  paymentOptionItem: {}
+}
+
+export default PaymentOptionView;
