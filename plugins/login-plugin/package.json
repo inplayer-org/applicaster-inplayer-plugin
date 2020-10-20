@@ -33,9 +33,7 @@
     "react-native": "0.62.2"
   },
   "applicaster": {
-    "supportedPlatforms": [
-      "ios",
-      "android",
+    "supportedPlatforms": [ 
       "ios_for_quickbrick",
       "android_for_quickbrick",
       "tvos_for_quickbrick",
