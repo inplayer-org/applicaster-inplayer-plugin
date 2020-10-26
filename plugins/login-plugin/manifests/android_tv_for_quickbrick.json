@@ -107,16 +107,12 @@
       }
     ]
   },
-  "targets": [
-    "mobile",
-    "tv"
-  ],
   "ui_frameworks": [
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "3.0.0",
-  "manifest_version": "3.0.0",
+  "dependency_version": "3.0.2",
+  "manifest_version": "3.0.2",
   "api": {
     "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
@@ -1632,5 +1628,8 @@
         "initial_value": "Registration"
       }
     ]
-  }
+  },
+  "targets": [
+    "tv"
+  ]
 }

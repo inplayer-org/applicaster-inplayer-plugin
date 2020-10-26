@@ -107,16 +107,12 @@
       }
     ]
   },
-  "targets": [
-    "mobile",
-    "tv"
-  ],
   "ui_frameworks": [
     "quickbrick"
   ],
   "platform": "samsung_tv",
-  "dependency_version": "3.0.0",
-  "manifest_version": "3.0.0",
+  "dependency_version": "3.0.2",
+  "manifest_version": "3.0.2",
   "api": {
     "excludedNodeModules": [
       "@applicaster/applicaster-iap",
@@ -1615,5 +1611,8 @@
         "initial_value": "Registration"
       }
     ]
-  }
+  },
+  "targets": [
+    "tv"
+  ]
 }
