@@ -91,6 +91,8 @@ function pluginPackageJson(pluginFolder) {
 const commitMessagesContains = (str) =>
   R.compose(R.gt(R.__, 0), R.length, R.filter(R.includes(str)));
 
+let newVersion = null;
+let isPrerelease = false;
 async function publishPlugin(pluginFolder, latestSha) {
   const result = await exec(
     `git log ${latestSha}..HEAD --pretty=tformat:%s -- plugins/${pluginFolder}`
@@ -104,7 +106,8 @@ async function publishPlugin(pluginFolder, latestSha) {
   const major = commitMessagesContains("BREAKING CHANGE")(lastCommits);
   const preRelease = CIRCLE_BRANCH === "development";
   const preReleaseIdentifier = preRelease ? "beta" : undefined;
-
+  console.log({ currentVersion, lastCommits, minor, major, preRelease });
+  isPrerelease = preRelease ? true : false;
   const release = preRelease
     ? "prerelease"
     : major
@@ -113,7 +116,7 @@ async function publishPlugin(pluginFolder, latestSha) {
     ? "minor"
     : "patch";
 
-  const newVersion = semver.inc(currentVersion, release, preReleaseIdentifier);
+  newVersion = semver.inc(currentVersion, release, preReleaseIdentifier);
 
   console.log(`publishing ${pluginFolder} with ${newVersion}`);
   try {
@@ -188,10 +191,17 @@ async function run() {
       )(pluginsDir)
     );
 
-    console.log(`Plugins are published, pushing commits`);
+    console.log(
+      `Plugins are published, pushing commits, new plugin version ${newVersion}, isPreRelease: ${isPrerelease}`
+    );
     await exec(
       "git push origin ${CIRCLE_BRANCH} --quiet > /dev/null 2>&1" // eslint-disable-line
     );
+
+    if (!isPrerelease) {
+      await exec(`git tag ${newVersion}`);
+      await exec(`git push origin ${newVersion}`);
+    }
 
     return result;
   } catch (e) {
