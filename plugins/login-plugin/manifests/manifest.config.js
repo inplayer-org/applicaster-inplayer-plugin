@@ -108,7 +108,6 @@ const baseManifest = {
       },
     ],
   },
-  targets: ["mobile", "tv"],
   ui_frameworks: ["quickbrick"],
 };
 
@@ -2015,6 +2014,7 @@ function createManifest({ version, platform }) {
     npm_dependencies: withFallback(npm_dependencies, basePlatform),
     styles: isTV ? stylesTv : stylesMobile,
     localizations: isTV ? Localizations.tv : Localizations.mobile,
+    targets: isTV ? ["tv"] : ["mobile"],
   };
 }
 
