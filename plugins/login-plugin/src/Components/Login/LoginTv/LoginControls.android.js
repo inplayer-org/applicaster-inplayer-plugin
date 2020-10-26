@@ -42,7 +42,7 @@ const LoginControls = ({
   screenStyles,
   focused,
   parentFocus,
-  screenLocalizations
+  screenLocalizations,
 }) => {
   const [usernameValue, setUsername] = useState("");
   const [passwordValue, setPassword] = useState("");
@@ -113,6 +113,7 @@ const LoginControls = ({
       <Text style={styles.errorMessage}>{errorMessage}</Text>
       <FocusableTextInput
         ref={loginInputRef}
+        autoCompleteType={"email"}
         placeholder={screenLocalizations.fields_email_text}
         value={usernameValue}
         onChangeText={handleInputChange(setUsername)}
@@ -146,7 +147,8 @@ const LoginControls = ({
           onPress,
           groupId: groupId,
           backgroundColor: screenStyles.login_action_button_background,
-          backgroundColorFocused: screenStyles.login_action_button_background_focused,
+          backgroundColorFocused:
+            screenStyles.login_action_button_background_focused,
           textColorFocused: screenStyles.login_action_button_fontcolor_focused,
           textStyles: buttonTextStyles,
           borderRadius: screenStyles.login_action_button_border_radius,

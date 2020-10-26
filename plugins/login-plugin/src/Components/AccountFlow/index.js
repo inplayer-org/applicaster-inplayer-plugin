@@ -59,7 +59,12 @@ const AccountFlow = (props) => {
   const [screen, setScreen] = useState(ScreensData.EMPTY);
   const [lastEmailUsed, setLastEmailUsed] = useState(null);
 
-  const { shouldShowParentLock, accountFlowCallback, screenStyles, screenLocalizations } = props;
+  const {
+    shouldShowParentLock,
+    accountFlowCallback,
+    screenStyles,
+    screenLocalizations,
+  } = props;
 
   useLayoutEffect(() => {
     InPlayerService.isAuthenticated(clientId)
@@ -154,19 +159,21 @@ const AccountFlow = (props) => {
   };
 
   const login = ({ email, password }) => {
+    const trimmedEmail = email.trim();
+
     Keyboard.dismiss();
     stillMounted && setLoading(true);
     logger
       .createEvent()
       .setLevel(XRayLogLevel.debug)
       .setMessage(
-        `Perform Login In task, email: ${email}, password: ${password}`
+        `Perform Login In task, email: ${trimmedEmail}, password: ${password}`
       )
-      .addData({ email, password })
+      .addData({ email: trimmedEmail, password })
       .send();
 
     InPlayerService.login({
-      email,
+      email: trimmedEmail,
       password,
       clientId,
       referrer,
@@ -175,8 +182,10 @@ const AccountFlow = (props) => {
         logger
           .createEvent()
           .setLevel(XRayLogLevel.debug)
-          .setMessage(`Login succeed, email: ${email}, password: ${password}`)
-          .addData({ email, password })
+          .setMessage(
+            `Login succeed, email: ${trimmedEmail}, password: ${password}`
+          )
+          .addData({ email: trimmedEmail, password })
           .send();
         accountFlowCallback({ success: true });
       })
@@ -185,15 +194,19 @@ const AccountFlow = (props) => {
         logger
           .createEvent()
           .setLevel(XRayLogLevel.error)
-          .setMessage(`Login failed, email: ${email}, password: ${password}`)
+          .setMessage(
+            `Login failed, email: ${trimmedEmail}, password: ${password}`
+          )
           .attachError(error)
-          .addData({ email, password })
+          .addData({ email: trimmedEmail, password })
           .send();
         stillMounted && setLoading(false);
       });
   };
 
   const createAccount = ({ fullName, email, password }) => {
+    const trimmedEmail = email.trim();
+
     Keyboard.dismiss();
     stillMounted && setLoading(true);
 
@@ -201,14 +214,14 @@ const AccountFlow = (props) => {
       .createEvent()
       .setLevel(XRayLogLevel.debug)
       .setMessage(
-        `Perform Create Account task, email: ${email}, password: ${password}`
+        `Perform Create Account task, email: ${trimmedEmail}, password: ${password}`
       )
-      .addData({ email, password })
+      .addData({ email: trimmedEmail, password })
       .send();
 
     InPlayerService.signUp({
       fullName,
-      email,
+      email: trimmedEmail,
       password,
       clientId,
       referrer,
@@ -219,9 +232,9 @@ const AccountFlow = (props) => {
           .createEvent()
           .setLevel(XRayLogLevel.debug)
           .setMessage(
-            `Account Creation succeed, fullName: ${fullName}, email: ${email}, password: ${password}`
+            `Account Creation succeed, fullName: ${fullName}, email: ${trimmedEmail}, password: ${password}`
           )
-          .addData({ email, password, fullName })
+          .addData({ email: trimmedEmail, password, fullName })
           .send();
         accountFlowCallback({ success: true });
       })
@@ -231,10 +244,10 @@ const AccountFlow = (props) => {
           .createEvent()
           .setLevel(XRayLogLevel.error)
           .setMessage(
-            `Account Creation failed, fullName: ${fullName}, email: ${email}, password: ${password}`
+            `Account Creation failed, fullName: ${fullName}, email: ${trimmedEmail}, password: ${password}`
           )
           .attachError(error)
-          .addData({ email, password, fullName })
+          .addData({ email: trimmedEmail, password, fullName })
           .send();
         stillMounted && setLoading(false);
       });
