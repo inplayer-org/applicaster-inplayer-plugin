@@ -21,7 +21,8 @@ const PrivacyDescription = ({ screenStyles, text }) => {
     [screenStyles]
   );
   styles.text = React.useMemo(() => [styles.text, descriptionStyles], []);
-  const title = text.replace(/\\n/g, "\n");
+
+  const title = (text && text.replace(/\\n/g, "\n")) || "";
   return <Label styles={styles} title={title} />;
 };
 

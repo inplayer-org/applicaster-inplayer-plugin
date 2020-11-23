@@ -6,6 +6,7 @@ import PrivacyTitle from "./PrivacyTitle";
 import PrivacyDescription from "./PrivacyDescription";
 import { useBackHandler, useDirectionalHandler } from "../../../../Utils/Hooks";
 import { TVEventHandlerComponent } from "@applicaster/zapp-react-native-tvos-ui-components/Components/TVEventHandlerComponent";
+import { Focusable } from "@applicaster/zapp-react-native-ui-components/Components/Focusable";
 
 const scrollInterval = 50;
 
@@ -17,9 +18,16 @@ const PrivacyPolicyTv = (props) => {
   const [scrollViewContentHeight, setScrollViewContentHeight] = useState();
   const scrollViewRef = useRef(null);
 
-  const { screenStyles, onHandleBack, screenLocalization } = props;
-  const { privacy_screen_background_color, privacy_text_area_background_color } = screenStyles;
-  const { privacy_main_title_text, privacy_text } = screenLocalization;
+  const { screenStyles, onHandleBack, screenLocalizations } = props;
+  const {
+    privacy_screen_background_color,
+    privacy_text_area_background_color,
+  } = screenStyles;
+
+  const privacy_text =
+    screenLocalizations?.privacy_text || "Description - No data";
+  const privacy_main_title_text =
+    screenLocalizations?.privacy_main_title_text || "Title - No data";
 
   const hardwareBack = () => {
     onHandleBack();
@@ -97,7 +105,11 @@ const PrivacyPolicyTv = (props) => {
 
   return (
     <TVEventHandlerComponent tvEventHandler={tvosRemoteHandler}>
-      <View style={styles.container}>
+      <Focusable
+        style={styles.container}
+        isParallaxDisabled={true}
+        isPressDisabled={true}
+      >
         <View style={styles.scrollViewWrapper}>
           <PrivacyTitle title={privacy_main_title_text} {...props} />
           <ScrollView
@@ -113,20 +125,20 @@ const PrivacyPolicyTv = (props) => {
             <PrivacyDescription text={privacy_text} {...props} />
           </ScrollView>
         </View>
-      </View>
+      </Focusable>
     </TVEventHandlerComponent>
   );
 };
 
 PrivacyPolicyTv.propTypes = {
   screenStyles: PropTypes.object,
-  screenLocalization: PropTypes.object,
+  screenLocalizations: PropTypes.object,
   onHandleBack: PropTypes.func,
 };
 
 PrivacyPolicyTv.defaultProps = {
   screenStyles: {},
-  screenLocalization: {},
+  screenLocalizations: {},
   onHandleBack: R.identity,
 };
 
