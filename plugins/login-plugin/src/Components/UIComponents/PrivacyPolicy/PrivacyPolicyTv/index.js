@@ -1,5 +1,5 @@
 import React, { useRef, useMemo, useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, Platform } from "react-native";
 import PropTypes from "prop-types";
 import * as R from "ramda";
 import PrivacyTitle from "./PrivacyTitle";
@@ -32,6 +32,8 @@ const PrivacyPolicyTv = (props) => {
   const hardwareBack = () => {
     onHandleBack();
   };
+
+  const isAndroid = Platform.OS === "android";
 
   useBackHandler(hardwareBack);
 
@@ -103,29 +105,45 @@ const PrivacyPolicyTv = (props) => {
     setyOffset(quaterOfTheScrollViewHeight);
   };
 
+  function renderPolicy() {
+    return (
+      <View style={styles.scrollViewWrapper}>
+        <PrivacyTitle title={privacy_main_title_text} {...props} />
+        <ScrollView
+          style={styles.scrollView}
+          persistentScrollbar={true}
+          contentInset={{ top: 0, left: 0, bottom: 100, right: 0 }}
+          onContentSizeChange={(contentWidth, contentHeight) => {
+            setScrollViewContentHeight(contentHeight + 100);
+          }}
+          onLayout={onLayout}
+          ref={scrollViewRef}
+        >
+          <PrivacyDescription text={privacy_text} {...props} />
+        </ScrollView>
+      </View>
+    );
+  }
+  function rootComponent() {
+    if (isAndroid) {
+      return <View style={styles.container}>{renderPolicy()}</View>;
+    } else {
+      return (
+        <Focusable
+          style={styles.container}
+          isParallaxDisabled={true}
+          isPressDisabled={true}
+          id={"privacy-policy-tv"}
+        >
+          {renderPolicy()}
+        </Focusable>
+      );
+    }
+  }
+
   return (
     <TVEventHandlerComponent tvEventHandler={tvosRemoteHandler}>
-      <Focusable
-        style={styles.container}
-        isParallaxDisabled={true}
-        isPressDisabled={true}
-      >
-        <View style={styles.scrollViewWrapper}>
-          <PrivacyTitle title={privacy_main_title_text} {...props} />
-          <ScrollView
-            style={styles.scrollView}
-            persistentScrollbar={true}
-            contentInset={{ top: 0, left: 0, bottom: 100, right: 0 }}
-            onContentSizeChange={(contentWidth, contentHeight) => {
-              setScrollViewContentHeight(contentHeight + 100);
-            }}
-            onLayout={onLayout}
-            ref={scrollViewRef}
-          >
-            <PrivacyDescription text={privacy_text} {...props} />
-          </ScrollView>
-        </View>
-      </Focusable>
+      {rootComponent()}
     </TVEventHandlerComponent>
   );
 };
