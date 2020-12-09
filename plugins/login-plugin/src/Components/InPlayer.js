@@ -43,7 +43,7 @@ const getRiversProp = (key, rivers = {}) => {
   );
 
   return getPropByKey(rivers);
-}
+};
 
 const InPlayer = (props) => {
   const HookTypeData = {
@@ -60,8 +60,8 @@ const InPlayer = (props) => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
   const { callback, payload, rivers } = props;
-  const localizations = getRiversProp('localizations', rivers);
-  const styles = getRiversProp('styles', rivers);
+  const localizations = getRiversProp("localizations", rivers);
+  const styles = getRiversProp("styles", rivers);
 
   const screenStyles = getStyles(styles);
   const screenLocalizations = getLocalizations(localizations);
@@ -105,10 +105,9 @@ const InPlayer = (props) => {
 
     setConfig(in_player_environment);
 
-    const videoEntry = isVideoEntry(payload);
     let event = logger.createEvent().setLevel(XRayLogLevel.debug);
 
-    if (videoEntry) {
+    if (payload) {
       const authenticationRequired = isAuthenticationRequired({ payload });
       const assetId = inPlayerAssetId({
         payload,
@@ -118,8 +117,8 @@ const InPlayer = (props) => {
       event.addData({
         authentication_required: authenticationRequired,
         inplayer_asset_id: assetId,
-        is_video_entry: videoEntry,
       });
+
       if (authenticationRequired || assetId) {
         event
           .setMessage(`Plugin hook_type: ${HookTypeData.PLAYER_HOOK}`)
@@ -169,10 +168,7 @@ const InPlayer = (props) => {
 
     if (error) {
       const message = getMessageOrDefault(error, screenLocalizations);
-      event
-        .addData({ message })
-        .attachError(error)
-        .setLevel(XRayLogLevel.error);
+      event.addData({ message, error }).setLevel(XRayLogLevel.error);
       eventMessage = `${eventMessage} error:${message}`;
       showAlert("General Error!", message);
     }
@@ -224,6 +220,7 @@ const InPlayer = (props) => {
   };
 
   const renderPlayerHook = () => {
+    console.log({ isUserAuthenticated });
     return isUserAuthenticated ? (
       <AssetFlow
         setParentLockWasPresented={setParentLockWasPresented}
@@ -264,14 +261,21 @@ const InPlayer = (props) => {
   };
 
   const renderLogoutScreen = () => {
-    return <LogoutFlow screenStyles={screenStyles} screenLocalizations={screenLocalizations} {...props} />;
+    return (
+      <LogoutFlow
+        screenStyles={screenStyles}
+        screenLocalizations={screenLocalizations}
+        {...props}
+      />
+    );
   };
 
   const renderUACFlow = () => {
     return idToken ? renderLogoutScreen() : renderScreenHook();
   };
 
-  const shouldShowParentLock = (parentLockWasPresented) => !(parentLockWasPresented || !showParentLock);
+  const shouldShowParentLock = (parentLockWasPresented) =>
+    !(parentLockWasPresented || !showParentLock);
 
   const renderFlow = () => {
     switch (hookType) {

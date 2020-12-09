@@ -157,7 +157,6 @@ export async function purchaseAnItem({
         ...currentLogData,
         error,
       })
-      .attachError(error)
       .setMessage(`${currentMessage} >> error message:${error.message}`)
       .send();
     throw error;
@@ -218,7 +217,6 @@ export async function retrieveProducts(purchasableItems) {
           mapped_purchasable_items: mappedPurchasableItems,
           error,
         })
-        .attachError(error)
         .setMessage(
           `ApplicasterIAPModule.products >> error message: ${error.message}`
         )
@@ -298,9 +296,8 @@ async function externalPaymentValidation({
       .setLevel(XRayLogLevel.error)
       .addData({
         ...currentLogData,
-        error: error,
+        error,
       })
-      .attachError(error)
       .setMessage(`${currentLogMessage}, error message:${error.message}`)
       .send();
     throw error;
@@ -404,7 +401,6 @@ async function restoreAnItem(
         purchase_id_str: purchaseIdStr,
         error,
       })
-      .attachError(error)
       .setMessage(
         `Restore item - purchase_id:${purchaseID}, in_player_product_id:${inPlayerProductId}, purchase_id_str:${purchaseIdStr} >> error message:${error.message}`
       )
@@ -467,7 +463,6 @@ export async function restore(dataFromInPlayer) {
         data_from_in_player: dataFromInPlayer,
         error,
       })
-      .attachError(error)
       .setMessage(
         `ApplicasterIAPModule.restore >> Restore purched items >> error message:${error.message}`
       )

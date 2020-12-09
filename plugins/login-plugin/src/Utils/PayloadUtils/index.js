@@ -3,7 +3,7 @@ import {
   createLogger,
   BaseSubsystem,
   BaseCategories,
-  XRayLogLevel
+  XRayLogLevel,
 } from "../../Services/LoggerService";
 
 export const logger = createLogger({
@@ -121,24 +121,6 @@ const inPlayerAssetIdFromCustomKey = ({ payload, configuration }) => {
   } else {
     return null;
   }
-};
-
-export const isVideoEntry = (payload) => {
-  const retVal = R.compose(
-    R.equals("video"),
-    R.path(["type", "value"])
-  )(payload);
-
-  logger
-    .createEvent()
-    .setLevel(XRayLogLevel.debug)
-    .addData({
-      is_video_entry: retVal,
-    })
-    .setMessage(`Payload entry is_video_entry: ${retVal}`)
-    .send();
-
-  return retVal;
 };
 
 export const assetPaymentRequired = R.compose(

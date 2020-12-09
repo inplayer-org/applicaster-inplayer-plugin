@@ -152,7 +152,7 @@ const AccountFlow = (props) => {
         .createEvent()
         .setLevel(XRayLogLevel.info)
         .setMessage(`Error: ${error}`)
-        .attachError(error)
+        .addData({ error })
         .send();
       throw error;
     }
@@ -197,8 +197,7 @@ const AccountFlow = (props) => {
           .setMessage(
             `Login failed, email: ${trimmedEmail}, password: ${password}`
           )
-          .attachError(error)
-          .addData({ email: trimmedEmail, password })
+          .addData({ email: trimmedEmail, password, error })
           .send();
         stillMounted && setLoading(false);
       });
@@ -246,8 +245,7 @@ const AccountFlow = (props) => {
           .setMessage(
             `Account Creation failed, fullName: ${fullName}, email: ${trimmedEmail}, password: ${password}`
           )
-          .attachError(error)
-          .addData({ email: trimmedEmail, password, fullName })
+          .addData({ email: trimmedEmail, password, fullName, error })
           .send();
         stillMounted && setLoading(false);
       });
@@ -296,8 +294,7 @@ const AccountFlow = (props) => {
             .setMessage(
               `Set new password task failed, password: ${password}, token: ${token}`
             )
-            .attachError(error)
-            .addData({ password, token })
+            .addData({ password, token, error })
             .send();
 
           stillMounted && setLoading(false);
@@ -353,8 +350,7 @@ const AccountFlow = (props) => {
             .createEvent()
             .setLevel(XRayLogLevel.error)
             .setMessage(`Request password change task failed, email: ${email}`)
-            .attachError(error)
-            .addData({ email })
+            .addData({ email, error })
             .send();
           stillMounted && setLoading(false);
           showAlertToUser({

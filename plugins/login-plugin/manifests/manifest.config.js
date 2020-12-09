@@ -48,14 +48,14 @@ const baseManifest = {
       options: [
         {
           text: "Development",
-          value: "develop",
+          value: "development",
         },
         {
           text: "Production",
-          value: "prod",
+          value: "production",
         },
       ],
-      initial_value: "prod",
+      initial_value: "production",
     },
     {
       type: "tag_select",

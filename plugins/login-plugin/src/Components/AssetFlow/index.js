@@ -96,12 +96,12 @@ const AssetFlow = (props) => {
       if (result) {
         setIapInitialized(true);
       }
-    } catch (err) {
+    } catch (error) {
       logger
         .createEvent()
         .setLevel(XRayLogLevel.error)
         .setMessage(`Failed to initialize IAP plugin`)
-        .attachError(err)
+        .addData({ error })
         .send();
       completeAssetFlow({ success: false });
     }
@@ -245,7 +245,9 @@ const AssetFlow = (props) => {
         } else {
           completeAssetFlow({
             success: false,
-            error: new Error(screenLocalizations.video_stream_exception_message)
+            error: new Error(
+              screenLocalizations.video_stream_exception_message
+            ),
           });
         }
       })

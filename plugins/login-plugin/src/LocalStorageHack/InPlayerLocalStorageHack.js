@@ -44,8 +44,7 @@ export function initFromNativeLocalStorage() {
           .createEvent()
           .setLevel(XRayLogLevel.error)
           .setMessage(`Local Storage initialization error: ${error}`)
-          .attachError(error)
-          .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
+          .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY, error })
           .send();
       })
       .finally(() => {
@@ -77,8 +76,7 @@ async function persistInMemoryStoreInBackground() {
       .createEvent()
       .setLevel(XRayLogLevel.error)
       .setMessage(`Error persisting to AsyncStorage: ${error}`)
-      .attachError(error)
-      .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY })
+      .addData({ name_space: IN_PLAYER_LOCAL_STORAGE_NATIVE_KEY, error })
       .send();
   }
 }

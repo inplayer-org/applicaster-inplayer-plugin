@@ -1,5 +1,6 @@
 import * as R from "ramda";
 import InPlayer from "@inplayer-org/inplayer.js";
+
 import { checkStatus, params, errorResponse } from "./InPlayerUtils";
 import {
   getSrcFromAsset,
@@ -24,7 +25,7 @@ export const logger = createLogger({
 
 const IN_PLAYER_LAST_EMAIL_USED_KEY = "com.inplayer.lastEmailUsed";
 
-export async function setConfig(environment = "prod") {
+export async function setConfig(environment = "production") {
   logger
     .createEvent()
     .setLevel(XRayLogLevel.debug)
@@ -33,8 +34,7 @@ export async function setConfig(environment = "prod") {
     })
     .setMessage(`Set InPlayer environment: ${environment}`)
     .send();
-
-  await InPlayer.setConfig(environment);
+  await InPlayer.setConfig("development"); //TODO: Remove hard coded value
 }
 
 export async function getAssetByExternalId(payload) {
@@ -68,7 +68,7 @@ export async function getAssetByExternalId(payload) {
         externalAssetId
       );
 
-      const retVal = result?.id;
+      const retVal = result?.data?.id;
       if (retVal) {
         logger
           .createEvent()
@@ -83,6 +83,7 @@ export async function getAssetByExternalId(payload) {
               external_asset_id: externalAssetId,
               inplayer_asset_type: inplayerAssetType,
             },
+            exernal_response: result,
           })
           .send();
         return retVal;
@@ -93,6 +94,7 @@ export async function getAssetByExternalId(payload) {
               external_asset_id: externalAssetId,
               inplayer_asset_type: inplayerAssetType,
             },
+            exernal_response: result,
           })
           .send();
         return null;
@@ -155,14 +157,11 @@ export async function checkAccessForAsset({
 
     return { asset, src, cookies };
   } catch (error) {
-    const event = logger
-      .createEvent()
-      .addData({
-        response: error?.response,
-        is_purchase_required: false,
-        error,
-      })
-      .attachError(error);
+    const event = logger.createEvent().addData({
+      response: error?.response,
+      is_purchase_required: false,
+      error,
+    });
 
     if (retryInCaseFail && tries > 0) {
       await new Promise((r) => setTimeout(r, interval));
@@ -249,8 +248,8 @@ export async function getAccessFees(assetId) {
       .setLevel(XRayLogLevel.error)
       .addData({
         inplayer_asset_id: assetId,
+        error,
       })
-      .attachError(error)
       .send();
     throw error;
   }
@@ -270,7 +269,8 @@ export function getAllPackages({ in_player_client_id }) {
 
   return InPlayer.Asset.getPackage(in_player_client_id)
     .then((packagesList) => {
-      const collection = packagesList.collection;
+      console.log({ packagesList });
+      const collection = packagesList?.data?.collection;
       const titles = R.map(R.prop("title"))(collection);
       logger
         .createEvent()
@@ -297,8 +297,8 @@ export function getAllPackages({ in_player_client_id }) {
         .setLevel(XRayLogLevel.error)
         .addData({
           in_player_client_id,
+          error,
         })
-        .attachError(error)
         .send();
       throw error;
     });
@@ -343,8 +343,8 @@ export async function loadAllPackages(collection) {
       .setLevel(XRayLogLevel.error)
       .addData({
         collection,
+        error,
       })
-      .attachError(error)
       .send();
     throw error;
   }
@@ -354,7 +354,8 @@ export async function isAuthenticated(in_player_client_id) {
   try {
     // InPlayer.Account.isAuthenticated() returns true even if token expired
     // To handle this case InPlayer.Account.getAccount() was used
-    await InPlayer.Account.getAccount();
+    const getAccount = await InPlayer.Account.getAccountInfo();
+    console.log({ getAccount });
     logger
       .createEvent()
       .setMessage(`InPlayer.Account.getAccount >> isAuthenticated: true`)
@@ -366,21 +367,23 @@ export async function isAuthenticated(in_player_client_id) {
       .send();
     return true;
   } catch (error) {
-    const res = await error.response.json();
+    console.log({ error });
 
-    if (res?.code === 403) {
+    const res = await error.response;
+
+    if (res?.status === 403) {
       await InPlayer.Account.refreshToken(in_player_client_id);
       logger
         .createEvent()
         .setMessage(
-          `InPlayer.Account.getAccount >> status: ${res?.code}, is_authenticated: true`
+          `InPlayer.Account.getAccount >> status: ${res?.status}, is_authenticated: true`
         )
         .setLevel(XRayLogLevel.error)
         .addData({
           in_player_client_id,
           is_authenticated: true,
+          error,
         })
-        .attachError(error)
         .send();
       return true;
     }
@@ -388,14 +391,14 @@ export async function isAuthenticated(in_player_client_id) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Account.getAccount >> status: ${res?.code}, is_authenticated: false`
+        `InPlayer.Account.getAccount >> status: ${res?.status}, is_authenticated: false`
       )
       .setLevel(XRayLogLevel.error)
       .addData({
         in_player_client_id,
         is_authenticated: false,
+        error,
       })
-      .attachError(error)
       .send();
     return false;
   }
@@ -404,7 +407,7 @@ export async function isAuthenticated(in_player_client_id) {
 export async function login({ email, password, clientId, referrer }) {
   email && (await localStorage.setItem(IN_PLAYER_LAST_EMAIL_USED_KEY, email));
   try {
-    const retVal = await InPlayer.Account.authenticate({
+    const retVal = await InPlayer.Account.signIn({
       email,
       password,
       clientId,
@@ -413,7 +416,7 @@ export async function login({ email, password, clientId, referrer }) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Account.authenticate >> succeed: true, email: ${email}, password: ${password}, in_player_client_id:${clientId}, referrer: ${referrer}`
+        `InPlayer.Account.signIn >> succeed: true, email: ${email}, password: ${password}, in_player_client_id: ${clientId}, referrer: ${referrer}`
       )
       .setLevel(XRayLogLevel.debug)
       .addData({
@@ -427,49 +430,23 @@ export async function login({ email, password, clientId, referrer }) {
     return retVal;
   } catch (error) {
     const { response } = error;
-    if (response && response.status == 403) {
-      const refreshToken = response.headers.get("x-inplayer-token");
-      const retVal = await InPlayer.Account.authenticate({
-        refreshToken,
-        clientId,
+
+    logger
+      .createEvent()
+      .setMessage(
+        `InPlayer.Account.signIn >> status: ${response?.status}, url: ${response?.request?.responseURL}, isAuthenticated: true, email: ${email}, password: ${password}, in_player_client_id: ${clientId}, referrer: ${referrer} `
+      )
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        email,
+        password,
+        in_player_client_id: clientId,
         referrer,
-      });
-
-      logger
-        .createEvent()
-        .setMessage(
-          `InPlayer.Account.authenticate with refresh_token >> succeed: true, email: ${email}, password: ${password}, in_player_client_id:${clientId}, referrer: ${referrer}`
-        )
-        .setLevel(XRayLogLevel.debug)
-        .addData({
-          email,
-          password,
-          in_player_client_id: clientId,
-          referrer,
-          refreshToken,
-          succeed: true,
-        })
-        .send();
-
-      return retVal;
-    } else {
-      logger
-        .createEvent()
-        .setMessage(
-          `InPlayer.Account.authenticate >> status: ${response?.status}, url: ${response?.url}, isAuthenticated: true, email: ${email}, password: ${password}, in_player_client_id:${clientId}, referrer: ${referrer} `
-        )
-        .setLevel(XRayLogLevel.error)
-        .addData({
-          email,
-          password,
-          in_player_client_id: clientId,
-          referrer,
-          is_authenticated: false,
-        })
-        .attachError(error)
-        .send();
-      throw error;
-    }
+        is_authenticated: false,
+        error,
+      })
+      .send();
+    throw error;
   }
 }
 
@@ -508,10 +485,11 @@ export async function signUp(params) {
       .send();
     return retVal;
   } catch (error) {
+    console.log({ error });
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Account.authenticate >> status: ${error?.response?.status}, url: ${error?.response?.url}, succeed: false, fullName:${fullName}, email: ${email}, password: ${password}, password_confirmation: ${password}, in_player_client_id:${clientId}, referrer: ${referrer}`
+        `InPlayer.Account.signIn >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}, succeed: false, fullName: ${fullName}, email: ${email}, password: ${password}, password_confirmation: ${password}, in_player_client_id: ${clientId}, referrer: ${referrer}`
       )
       .setLevel(XRayLogLevel.error)
       .addData({
@@ -524,8 +502,8 @@ export async function signUp(params) {
         metadata: {},
         type: "consumer",
         succeed: false,
+        error,
       })
-      .attachError(error)
       .send();
     throw error;
   }
@@ -541,7 +519,7 @@ export async function requestPassword({ email, clientId, brandingId }) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Account.requestNewPassword >> succeed: true, email: ${email}, in_player_client_id:${clientId}`
+        `InPlayer.Account.requestNewPassword >> succeed: true, email: ${email}, in_player_client_id: ${clientId}`
       )
       .setLevel(XRayLogLevel.debug)
       .addData({ email, in_player_client_id: clientId, succeed: true })
@@ -551,7 +529,7 @@ export async function requestPassword({ email, clientId, brandingId }) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Account.requestNewPassword >> status: ${error?.response?.status}, url: ${error?.response?.url}, succeed: false, email: ${email}, in_player_client_id:${clientId}`
+        `InPlayer.Account.requestNewPassword >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}, succeed: false, email: ${email}, in_player_client_id: ${clientId}`
       )
       .setLevel(XRayLogLevel.error)
       .addData({
@@ -560,8 +538,8 @@ export async function requestPassword({ email, clientId, brandingId }) {
         metadata: ["Dummy"],
         type: "consumer",
         succeed: false,
+        error,
       })
-      .attachError(error)
       .send();
     throw error;
   }
@@ -580,54 +558,51 @@ export async function setNewPassword({ password, token, brandingId }) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Account.setNewPassword >> succeed: true, password: ${password}, password_confirmation:${password}`
+        `InPlayer.Account.setNewPassword >> succeed: true, password: ${password}, password_confirmation: ${password}`
       )
       .setLevel(XRayLogLevel.debug)
       .addData({ password, password_confirmation: password, succeed: true })
       .send();
   } catch (error) {
+    console.log({ error });
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Account.setNewPassword >> status: ${error?.response?.status}, url: ${error?.response?.url}, succeed: false, password: ${password}, password_confirmation:${password}`
+        `InPlayer.Account.setNewPassword >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}, succeed: false, password: ${password}, password_confirmation: ${password}`
       )
       .setLevel(XRayLogLevel.error)
       .addData({
         password,
         password_confirmation: password,
         succeed: false,
+        error,
       })
-      .attachError(error)
       .send();
     throw error;
   }
 }
 
 export async function signOut() {
-  if (!InPlayer.Account.isAuthenticated()) {
-    return false;
-  } else {
-    try {
-      const retVal = await InPlayer.Account.signOut();
-      logger
-        .createEvent()
-        .setMessage(`InPlayer.Account.signOut >> succeed: true`)
-        .setLevel(XRayLogLevel.debug)
-        .addData({ succeed: true })
-        .send();
-      return retVal;
-    } catch (error) {
-      logger
-        .createEvent()
-        .setMessage(`InPlayer.Account.signOut >> succeed: false`)
-        .setLevel(XRayLogLevel.error)
-        .addData({
-          succeed: false,
-        })
-        .attachError(error)
-        .send();
-      throw error;
-    }
+  try {
+    const retVal = await InPlayer.Account.signOut();
+    logger
+      .createEvent()
+      .setMessage(`InPlayer.Account.signOut >> succeed: true`)
+      .setLevel(XRayLogLevel.debug)
+      .addData({ succeed: true })
+      .send();
+    return retVal;
+  } catch (error) {
+    logger
+      .createEvent()
+      .setMessage(`InPlayer.Account.signOut >> succeed: false`)
+      .setLevel(XRayLogLevel.error)
+      .addData({
+        succeed: false,
+        error,
+      })
+      .send();
+    throw error;
   }
 }
 
@@ -729,7 +704,6 @@ export async function validateExternalPayment({
         `InPlayer validate external payment >> succeed: false, url:${validationURL}`
       )
       .setLevel(XRayLogLevel.error)
-      .attachError(error)
       .addData({
         error,
         response: error?.response,
@@ -737,20 +711,4 @@ export async function validateExternalPayment({
       .send();
     throw error;
   }
-}
-
-// Currently is not working
-export function unsubscribeNotifications() {
-  InPlayer.unsubscribe();
-}
-
-// Currently is not working
-export async function subscribeNotifications({ clientId, callbacks }) {
-  const iotData = await InPlayer.Notifications.getIotToken();
-
-  return await InPlayer.Notifications.handleSubscribe(
-    iotData,
-    callbacks,
-    clientId
-  );
 }

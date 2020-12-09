@@ -26,20 +26,23 @@ const SignUpMobile = (props) => {
 
   const signUp = () => {
     const { createAccount, onSignUpError } = props;
-    const validate = validateSignUpData({ fullName, email, password, passwordConfirmation }, screenLocalizations);
+    const validate = validateSignUpData(
+      { fullName, email, password, passwordConfirmation },
+      screenLocalizations
+    );
 
     Keyboard.dismiss();
 
     if (validate instanceof Error) {
       onSignUpError({
         title: screenLocalizations.signup_title_validation_error,
-        message: validate.message
+        message: validate.message,
       });
     } else {
       createAccount({
         fullName,
         email,
-        password
+        password,
       });
     }
   };
@@ -135,6 +138,7 @@ const SignUpMobile = (props) => {
           value={password}
           onChangeText={setPassword}
           secureTextEntry
+          textContentType={"password"}
         />
         <TextInput
           ref={(input) => {
@@ -199,6 +203,5 @@ SignUpMobile.defaultProps = {
   screenStyles: {},
   screenLocalizations: {},
 };
-
 
 export default SignUpMobile;
