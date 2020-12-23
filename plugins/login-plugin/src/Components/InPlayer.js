@@ -6,14 +6,18 @@ import LogoutFlow from "./LogoutFlow";
 import * as R from "ramda";
 
 import { useNavigation } from "@applicaster/zapp-react-native-utils/reactHooks/navigation";
-import { localStorage as defaultStorage } from "@applicaster/zapp-react-native-bridge/ZappStorage/LocalStorage";
-import { initFromNativeLocalStorage } from "../LocalStorageHack";
 import { getLocalizations } from "../Utils/Localizations";
 import {
-  isVideoEntry,
+  localStorageGet,
+  localStorageSet,
+  localStorageRemove,
+} from "../Services/LocalStorageService";
+import {
   inPlayerAssetId,
   isAuthenticationRequired,
 } from "../Utils/PayloadUtils";
+import InPlayerSDK from "@inplayer-org/inplayer.js";
+
 import { showAlert } from "../Utils/Account";
 import { setConfig } from "../Services/inPlayerService";
 import {
@@ -21,7 +25,7 @@ import {
   isHomeScreen,
   getMessageOrDefault,
 } from "../Utils/Customization";
-import { isHook, isTokenInStorage } from "../Utils/UserAccount";
+import { isHook } from "../Utils/UserAccount";
 import {
   createLogger,
   BaseSubsystem,
@@ -44,6 +48,8 @@ const getRiversProp = (key, rivers = {}) => {
 
   return getPropByKey(rivers);
 };
+
+const localStorageTokenKey = "in_player_token";
 
 const InPlayer = (props) => {
   const HookTypeData = {
@@ -71,22 +77,31 @@ const InPlayer = (props) => {
   let stillMounted = true;
 
   useLayoutEffect(() => {
+    InPlayerSDK.tokenStorage.overrides = {
+      setItem: async function (
+        defaultTokenKey, // 'inplayer_token'
+        tokenValue
+      ) {
+        console.log("NewTOKEN", { tokenValue });
+        await localStorageSet(localStorageTokenKey, tokenValue);
+        setIdtoken(tokenValue);
+      },
+      getItem: async function () {
+        console.log("GetTOKEN", { localStorageGet });
+
+        const token = await localStorageGet(localStorageTokenKey);
+        console.log("GetTOKEN", { token });
+        return token;
+      },
+      removeItem: async function () {
+        console.log("RemoveTOKEN");
+        await localStorageRemove(localStorageTokenKey);
+        setIdtoken(null);
+      },
+    };
+
     setupEnvironment();
   }, []);
-
-  const checkIdToken = async () => {
-    await initFromNativeLocalStorage();
-    const token = await isTokenInStorage("idToken");
-
-    logger
-      .createEvent()
-      .setLevel(XRayLogLevel.debug)
-      .setMessage(`User token is in local storage: ${token}`)
-      .addData({ token_exists: token })
-      .send();
-
-    setIdtoken(token);
-  };
 
   const setupEnvironment = async () => {
     const {
@@ -100,8 +115,6 @@ const InPlayer = (props) => {
       .setMessage(`Starting InPlayer Plugin`)
       .addData({ in_player_environment })
       .send();
-
-    await checkIdToken();
 
     setConfig(in_player_environment);
 
@@ -192,9 +205,8 @@ const InPlayer = (props) => {
       .addData({ success, payload, hook_type: hookType });
 
     if (success) {
-      const token = localStorage.getItem("inplayer_token");
+      const token = await localStorageGet(localStorageTokenKey);
       event.addData({ token });
-      await defaultStorage.setItem("idToken", token);
     }
 
     if (hookType === HookTypeData.SCREEN_HOOK && success) {

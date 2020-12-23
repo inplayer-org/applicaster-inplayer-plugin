@@ -79,6 +79,7 @@ function purchaseDataForFee({
   store,
 }) {
   const { item_type } = fee;
+  console.log({ fee, item_type });
   if (item_type === "package") {
     return purchaseDataForPackageFee({
       fee,
@@ -97,7 +98,7 @@ function purchaseDataForFee({
     });
   }
 }
-
+// 73073_17784
 function purchaseDataForSingleFee({
   fee,
   assetId,

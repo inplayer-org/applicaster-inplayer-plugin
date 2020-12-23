@@ -1,12 +1,15 @@
 import * as R from "ramda";
 import InPlayer from "@inplayer-org/inplayer.js";
 
+import {
+  localStorageGet,
+  localStorageSet,
+} from "../Services/LocalStorageService";
 import { checkStatus, params, errorResponse } from "./InPlayerUtils";
 import {
   getSrcFromAsset,
   getCookiesFromAsset,
 } from "../Utils/OVPProvidersMapper";
-import { localStorage } from "../LocalStorageHack";
 import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
 import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
 import { isAmazonPlatform } from "./../Utils/Platform";
@@ -169,7 +172,7 @@ export async function checkAccessForAsset({
       const newTries = tries - 1;
       event
         .setMessage(
-          `InPlayer.Asset.checkAccessForAsset Failed >> status: ${error?.response?.status}, url: ${error?.response?.url} >> retry to load`
+          `InPlayer.Asset.checkAccessForAsset Failed >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL} >> retry to load`
         )
         .setLevel(XRayLogLevel.debug)
         .addData({
@@ -194,7 +197,7 @@ export async function checkAccessForAsset({
             is_purchase_required: isPurchaseRequired,
           })
           .setMessage(
-            `InPlayer.Asset.checkAccessForAsset >> status: ${error?.response?.status}, url: ${error?.response?.url}, is_purchase_required: ${isPurchaseRequired}`
+            `InPlayer.Asset.checkAccessForAsset >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}, is_purchase_required: ${isPurchaseRequired}`
           )
           .setLevel(XRayLogLevel.debug)
           .send();
@@ -203,7 +206,7 @@ export async function checkAccessForAsset({
       }
       event
         .setMessage(
-          `InPlayer.Asset.checkAccessForAsset Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}`
+          `InPlayer.Asset.checkAccessForAsset Failed >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}`
         )
         .setLevel(XRayLogLevel.error)
         .send();
@@ -226,24 +229,26 @@ export async function getAccessFees(assetId) {
       .send();
 
     const retVal = await InPlayer.Asset.getAssetAccessFees(assetId);
-    const descriptions = R.map(R.prop("description"))(retVal);
+    const data = retVal?.data;
+    console.log({ acessFeesResult: data });
+    const descriptions = R.map(R.prop("description"))(data);
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Asset.getAssetAccessFees Completed >> inplayer_asset_id: ${assetId} >> fees_count: ${retVal.length}, fee_descriptions: ${descriptions}`
+        `InPlayer.Asset.getAssetAccessFees Completed >> inplayer_asset_id: ${assetId} >> fees_count: ${data.length}, fee_descriptions: ${descriptions}`
       )
       .setLevel(XRayLogLevel.debug)
       .addData({
-        inplayer_asset_access_fees: retVal,
+        inplayer_asset_access_fees: data,
         inplayer_asset_id: assetId,
       })
       .send();
-    return retVal;
+    return data;
   } catch (error) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Asset.getAssetAccessFees Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}, inplayer_asset_id: ${assetId}`
+        `InPlayer.Asset.getAssetAccessFees Failed >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}, inplayer_asset_id: ${assetId}`
       )
       .setLevel(XRayLogLevel.error)
       .addData({
@@ -292,7 +297,7 @@ export function getAllPackages({ in_player_client_id }) {
       logger
         .createEvent()
         .setMessage(
-          `InPlayer.Asset.getPackage Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}, inplayer_asset_id: ${in_player_client_id}`
+          `InPlayer.Asset.getPackage Failed >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}, inplayer_asset_id: ${in_player_client_id}`
         )
         .setLevel(XRayLogLevel.error)
         .addData({
@@ -318,11 +323,13 @@ export async function loadAllPackages(collection) {
     })
     .send();
 
-  const promises = collection.map((item) => {
-    return InPlayer.Asset.getPackage(item.id);
+  const promises = collection.map(async (item) => {
+    const result = await InPlayer.Asset.getPackage(item.id);
+    return result?.data;
   });
   try {
     const retVal = await Promise.all(promises);
+    console.log({ retVal });
     logger
       .createEvent()
       .setMessage(
@@ -338,7 +345,7 @@ export async function loadAllPackages(collection) {
     logger
       .createEvent()
       .setMessage(
-        `InPlayer.Asset.getPackage Failed >> status: ${error?.response?.status}, url: ${error?.response?.url}, packages_count: ${titles.length}, packages_titles: ${titles}`
+        `InPlayer.Asset.getPackage Failed >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}, packages_count: ${titles.length}, packages_titles: ${titles}`
       )
       .setLevel(XRayLogLevel.error)
       .addData({
@@ -370,7 +377,7 @@ export async function isAuthenticated(in_player_client_id) {
     console.log({ error });
 
     const res = await error.response;
-
+    console.log({ res });
     if (res?.status === 403) {
       await InPlayer.Account.refreshToken(in_player_client_id);
       logger
@@ -405,7 +412,7 @@ export async function isAuthenticated(in_player_client_id) {
 }
 
 export async function login({ email, password, clientId, referrer }) {
-  email && (await localStorage.setItem(IN_PLAYER_LAST_EMAIL_USED_KEY, email));
+  email && (await localStorageSet(IN_PLAYER_LAST_EMAIL_USED_KEY, email));
   try {
     const retVal = await InPlayer.Account.signIn({
       email,
@@ -607,7 +614,7 @@ export async function signOut() {
 }
 
 export async function getLastEmailUsed() {
-  return localStorage.getItem(IN_PLAYER_LAST_EMAIL_USED_KEY);
+  return localStorageGet(IN_PLAYER_LAST_EMAIL_USED_KEY);
 }
 
 function extraValidationPaymentParams({ userId, store }) {

@@ -189,6 +189,7 @@ const AssetFlow = (props) => {
         }),
       ]);
 
+      console.log({ resultPurchaseData });
       if (resultPurchaseData.length === 0) {
         throw new Error(MESSAGES.validation.noFees);
       }
@@ -200,8 +201,9 @@ const AssetFlow = (props) => {
         in_player_environment,
         store,
       });
-
+      console.log({ inPlayerFeesData });
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
+      console.log({ storeFeesData });
 
       if (storeFeesData.length === 0) {
         throw new Error(MESSAGES.validation.emptyStore);
