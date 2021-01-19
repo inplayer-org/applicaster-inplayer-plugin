@@ -205,7 +205,7 @@ const LoginMobile = (props) => {
 LoginMobile.propTypes = {
   backButton: PropTypes.bool,
   initialEmail: PropTypes.string,
-  login: PropTypes.string,
+  login: PropTypes.func,
   signUp: PropTypes.func,
   onPresentForgotPasswordScreen: PropTypes.func,
   onLoginError: PropTypes.func,

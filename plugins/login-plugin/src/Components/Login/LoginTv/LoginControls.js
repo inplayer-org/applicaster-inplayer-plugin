@@ -30,7 +30,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginControls = ({ style, errorMessage, onLogin, screenStyles, screenLocalizations }) => {
+const LoginControls = ({
+  style,
+  errorMessage,
+  onLogin,
+  screenStyles,
+  screenLocalizations,
+}) => {
   const [usernameValue, setUsername] = useState("");
   const [passwordValue, setPassword] = useState("");
 
@@ -100,7 +106,6 @@ const LoginControls = ({ style, errorMessage, onLogin, screenStyles, screenLocal
       )(screenStyles),
     []
   );
-
   return (
     <View style={style}>
       <Text style={styles.errorMessage}>{errorMessage}</Text>

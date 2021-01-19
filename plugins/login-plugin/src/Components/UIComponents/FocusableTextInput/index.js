@@ -122,7 +122,7 @@ const FocusableTextInput = ({
         placeholderTextColor: getPlaceholderColor(),
       };
     }
-    console.log({ retVal });
+    console.log({ FOO: textInputStyles, isWebBasedPlatform });
     return retVal;
   };
 

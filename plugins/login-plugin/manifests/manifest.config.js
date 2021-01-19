@@ -1228,7 +1228,7 @@ const stylesTv = {
           initial_value: "Roboto-Bold",
         },
         {
-          key: "email_input_fontsize ",
+          key: "email_input_fontsize",
           type: "number_input",
           label_tooltip: "Font Size for Email Input Field.",
           initial_value: "30",
@@ -1317,6 +1317,12 @@ const stylesTv = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Password Input Field.",
           initial_value: "#9B9B9B",
+        },
+        {
+          key: "password_input_fontcolor",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for Password Input Field.",
+          initial_value: "#FFFFFF",
         },
         {
           key: "login_action_button_background",
@@ -1753,6 +1759,12 @@ const stylesTv = {
           initial_value: "#9B9B9B",
         },
         {
+          key: "signup_password_input_fontcolor_focused",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for Password Input Field Focused.",
+          initial_value: "#FFFFFF",
+        },
+        {
           key: "signup_full_name_input_background",
           type: "color_picker_rgba",
           label: "Full Name Input Background Color",
@@ -1826,6 +1838,12 @@ const stylesTv = {
           initial_value: "#9B9B9B",
         },
         {
+          key: "signup_full_name_input_fontcolor_focused",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for Full Name Input Field Focused.",
+          initial_value: "#FFFFFF",
+        },
+        {
           key: "signup_email_input_background",
           type: "color_picker_rgba",
           label: "Email Input Background Color",
@@ -1897,6 +1915,12 @@ const stylesTv = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Email Input Field.",
           initial_value: "#9B9B9B",
+        },
+        {
+          key: "signup_email_input_fontcolor_focused",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for Email Input Field Focused.",
+          initial_value: "#FFFFFF",
         },
       ],
     },
