@@ -111,8 +111,8 @@
     "quickbrick"
   ],
   "platform": "samsung_tv",
-  "dependency_version": "3.0.13-beta.0",
-  "manifest_version": "3.0.13-beta.0",
+  "dependency_version": "3.0.13-beta.1",
+  "manifest_version": "3.0.13-beta.1",
   "api": {
     "excludedNodeModules": [
       "@applicaster/applicaster-iap",
@@ -751,7 +751,7 @@
           {
             "key": "email_input_fontcolor_focused",
             "type": "color_picker_rgba",
-            "label_tooltip": "Font Color for Email Input Field focused.",
+            "label_tooltip": "Font Color for Email Input Field Focused.",
             "initial_value": "#FFFFFF"
           },
           {
@@ -828,9 +828,9 @@
             "initial_value": "#9B9B9B"
           },
           {
-            "key": "password_input_fontcolor",
+            "key": "password_input_fontcolor_focused",
             "type": "color_picker_rgba",
-            "label_tooltip": "Font Color for Password Input Field.",
+            "label_tooltip": "Font Color for Password Input Field Focused.",
             "initial_value": "#FFFFFF"
           },
           {
