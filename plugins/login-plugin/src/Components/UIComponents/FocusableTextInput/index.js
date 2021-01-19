@@ -93,23 +93,42 @@ const FocusableTextInput = ({
   };
 
   const getTextInputStyles = (focused) => {
-    return [
-      StyleSheet.compose([styles.textInput, textInputStyles.default]),
-      value &&
-        StyleSheet.compose([styles.inputNotEmpty, textInputStyles.filled]),
-      focused &&
-        StyleSheet.compose([styles.inputFocused, textInputStyles.focused]),
-      isWebBasedPlatform && {
+    var retVal = {
+      ...styles.textInput,
+      ...textInputStyles.default,
+    };
+
+    if (value) {
+      retVal = {
+        ...retVal,
+        ...styles.inputNotEmpty,
+        ...textInputStyles.filled,
+      };
+    }
+
+    if (focused) {
+      retVal = {
+        ...retVal,
+        ...styles.inputFocused,
+        ...textInputStyles.focused,
+      };
+    }
+
+    if (isWebBasedPlatform) {
+      retVal = {
+        ...retVal,
         outlineWidth: 0,
         boxSizing: "border-box",
         placeholderTextColor: getPlaceholderColor(),
-      },
-    ];
+      };
+    }
+    console.log({ retVal });
+    return retVal;
   };
 
   const getPlaceholderColor = () => {
-    return textInputStyles.default.placeholderTextColor || colors.grey
-  }
+    return textInputStyles.default.placeholderTextColor || colors.grey;
+  };
 
   const getFocusableStyles = () => {
     const { marginBottom, height } = StyleSheet.flatten(styles.textInput);
@@ -128,20 +147,23 @@ const FocusableTextInput = ({
       isParallaxDisabled
       style={getFocusableStyles()}
     >
-      {(focused) => (
-        <TextInputTv
-          ref={inputRef}
-          style={getTextInputStyles(focused)}
-          {...{
-            placeholder,
-            onChangeText,
-            value,
-            secureTextEntry,
-            onEndEditing,
-            placeholderTextColor: getPlaceholderColor(),
-          }}
-        />
-      )}
+      {(focused) => {
+        console.log({ styles: getTextInputStyles(focused) });
+        return (
+          <TextInputTv
+            ref={inputRef}
+            style={getTextInputStyles(focused)}
+            {...{
+              placeholder,
+              onChangeText,
+              value,
+              secureTextEntry,
+              onEndEditing,
+              placeholderTextColor: getPlaceholderColor(),
+            }}
+          />
+        );
+      }}
     </Focusable>
   );
 };
