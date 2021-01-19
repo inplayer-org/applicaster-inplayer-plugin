@@ -1228,7 +1228,7 @@ const stylesTv = {
           initial_value: "Roboto-Bold",
         },
         {
-          key: "email_input_fontsize",
+          key: "email_input_fontsize ",
           type: "number_input",
           label_tooltip: "Font Size for Email Input Field.",
           initial_value: "30",
@@ -1238,6 +1238,12 @@ const stylesTv = {
           type: "color_picker_rgba",
           label_tooltip: "Font Color for Email Input Field.",
           initial_value: "#9B9B9B",
+        },
+        {
+          key: "email_input_fontcolor_focused",
+          type: "color_picker_rgba",
+          label_tooltip: "Font Color for Email Input Field focused.",
+          initial_value: "#FFFFFF",
         },
         {
           key: "password_input_background",
