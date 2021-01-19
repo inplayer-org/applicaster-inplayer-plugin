@@ -111,8 +111,8 @@
     "quickbrick"
   ],
   "platform": "tvos_for_quickbrick",
-  "dependency_version": "3.0.8",
-  "manifest_version": "3.0.8",
+  "dependency_version": "3.0.10-beta.0",
+  "manifest_version": "3.0.10-beta.0",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
@@ -741,7 +741,7 @@
             "initial_value": "Roboto-Bold"
           },
           {
-            "key": "email_input_fontsize",
+            "key": "email_input_fontsize ",
             "type": "number_input",
             "label_tooltip": "Font Size for Email Input Field.",
             "initial_value": "30"
@@ -751,6 +751,12 @@
             "type": "color_picker_rgba",
             "label_tooltip": "Font Color for Email Input Field.",
             "initial_value": "#9B9B9B"
+          },
+          {
+            "key": "email_input_fontcolor_focused",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Email Input Field focused.",
+            "initial_value": "#FFFFFF"
           },
           {
             "key": "password_input_background",
