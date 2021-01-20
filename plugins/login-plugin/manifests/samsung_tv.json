@@ -111,8 +111,8 @@
     "quickbrick"
   ],
   "platform": "samsung_tv",
-  "dependency_version": "3.0.13-beta.1",
-  "manifest_version": "3.0.13-beta.1",
+  "dependency_version": "3.0.13-beta.2",
+  "manifest_version": "3.0.13-beta.2",
   "api": {
     "excludedNodeModules": [
       "@applicaster/applicaster-iap",
@@ -828,12 +828,6 @@
             "initial_value": "#9B9B9B"
           },
           {
-            "key": "password_input_fontcolor_focused",
-            "type": "color_picker_rgba",
-            "label_tooltip": "Font Color for Password Input Field Focused.",
-            "initial_value": "#FFFFFF"
-          },
-          {
             "key": "login_action_button_background",
             "type": "color_picker_rgba",
             "label": "Login Action Button Background Color",
@@ -1276,12 +1270,6 @@
             "initial_value": "#9B9B9B"
           },
           {
-            "key": "signup_password_input_fontcolor_focused",
-            "type": "color_picker_rgba",
-            "label_tooltip": "Font Color for Password Input Field Focused.",
-            "initial_value": "#FFFFFF"
-          },
-          {
             "key": "signup_full_name_input_background",
             "type": "color_picker_rgba",
             "label": "Full Name Input Background Color",
@@ -1355,12 +1343,6 @@
             "initial_value": "#9B9B9B"
           },
           {
-            "key": "signup_full_name_input_fontcolor_focused",
-            "type": "color_picker_rgba",
-            "label_tooltip": "Font Color for Full Name Input Field Focused.",
-            "initial_value": "#FFFFFF"
-          },
-          {
             "key": "signup_email_input_background",
             "type": "color_picker_rgba",
             "label": "Email Input Background Color",
@@ -1432,12 +1414,6 @@
             "type": "color_picker_rgba",
             "label_tooltip": "Font Color for Email Input Field.",
             "initial_value": "#9B9B9B"
-          },
-          {
-            "key": "signup_email_input_fontcolor_focused",
-            "type": "color_picker_rgba",
-            "label_tooltip": "Font Color for Email Input Field Focused.",
-            "initial_value": "#FFFFFF"
           }
         ]
       }
