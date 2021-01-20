@@ -111,8 +111,8 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "3.0.8",
-  "manifest_version": "3.0.8",
+  "dependency_version": "3.0.13-beta.2",
+  "manifest_version": "3.0.13-beta.2",
   "api": {
     "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
@@ -764,6 +764,12 @@
             "type": "color_picker_rgba",
             "label_tooltip": "Font Color for Email Input Field.",
             "initial_value": "#9B9B9B"
+          },
+          {
+            "key": "email_input_fontcolor_focused",
+            "type": "color_picker_rgba",
+            "label_tooltip": "Font Color for Email Input Field Focused.",
+            "initial_value": "#FFFFFF"
           },
           {
             "key": "password_input_background",
