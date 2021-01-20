@@ -67,7 +67,6 @@ export const mapKeyToStyle = R.curry((key, obj) => {
     }),
     fontSize: obj?.[`${key}_fontsize`],
     color: obj?.[`${key}_fontcolor`],
-    color_focused: obj?.[`${key}_fontcolor_focused`],
     ...(isInputKey && inputStyleObj),
   };
 });
