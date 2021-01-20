@@ -1240,12 +1240,6 @@ const stylesTv = {
           initial_value: "#9B9B9B",
         },
         {
-          key: "email_input_fontcolor_focused",
-          type: "color_picker_rgba",
-          label_tooltip: "Font Color for Email Input Field Focused.",
-          initial_value: "#FFFFFF",
-        },
-        {
           key: "password_input_background",
           type: "color_picker_rgba",
           label: "Password Input Background Color",
