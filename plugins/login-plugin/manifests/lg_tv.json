@@ -116,6 +116,7 @@
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [],
+  "min_zapp_sdk": "1.0.0",
   "npm_dependencies": [
     "@applicaster/applicaster-iap@0.3.3",
     "@react-native-community/blur@3.4.1"
