@@ -1985,6 +1985,7 @@ const min_zapp_sdk = {
   android_tv_for_quickbrick: "0.1.0-alpha1",
   amazon_fire_tv_for_quickbrick: "0.1.0-alpha1",
   samsung_tv: "1.2.2",
+  lg_tv: "1.0.0",
 };
 
 const isApple = R.includes(R.__, applePlatforms);

@@ -110,33 +110,13 @@
   "ui_frameworks": [
     "quickbrick"
   ],
-  "platform": "android_for_quickbrick",
+  "platform": "lg_tv",
   "dependency_version": "3.0.18",
   "manifest_version": "3.0.18",
-  "api": {
-    "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
-    "react_packages": [
-      "com.applicaster.iap.reactnative.IAPPackage",
-      "com.cmcewen.blurview.BlurViewPackage"
-    ],
-    "proguard_rules": "-keep public class * extends com.facebook.react.ReactPackage {*;} -keepclasseswithmembers,includedescriptorclasses class * { @com.facebook.react.bridge.ReactMethod <methods>;} -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; } -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }"
-  },
-  "project_dependencies": [
-    {
-      "iap": "node_modules/@applicaster/applicaster-iap/android/iap"
-    },
-    {
-      "iap-uni": "node_modules/@applicaster/applicaster-iap/android/iap-uni"
-    },
-    {
-      "iap-rn": "node_modules/@applicaster/applicaster-iap/android/iap-rn"
-    },
-    {
-      "react-native-community_blur": "node_modules/@react-native-community/blur/android"
-    }
-  ],
+  "api": {},
+  "project_dependencies": [],
   "extra_dependencies": [],
-  "min_zapp_sdk": "0.1.0-alpha1",
+  "min_zapp_sdk": "1.0.0",
   "npm_dependencies": [
     "@applicaster/applicaster-iap@0.3.3",
     "@react-native-community/blur@3.4.1"

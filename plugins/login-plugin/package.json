@@ -1,6 +1,6 @@
 {
   "name": "@applicaster/quick-brick-inplayer",
-  "version": "3.0.17",
+  "version": "3.0.18",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -39,7 +39,8 @@
       "tvos_for_quickbrick",
       "android_tv_for_quickbrick",
       "amazon_fire_tv_for_quickbrick",
-      "samsung_tv"
+      "samsung_tv",
+      "lg_tv"
     ],
     "zappOwnerAccountId": "5e12fac7666333000ec0f8ab"
   }
