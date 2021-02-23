@@ -72,41 +72,11 @@ function accessTypeToProducType({ fee, purchaseKeysMapping }) {
 
 function purchaseDataForFee({
   fee,
-  allPackagesData,
-  assetId,
   purchaseKeysMapping,
   in_player_environment,
   store,
 }) {
-  const { item_type } = fee;
-  console.log({ fee, item_type });
-  if (item_type === "package") {
-    return purchaseDataForPackageFee({
-      fee,
-      allPackagesData,
-      purchaseKeysMapping,
-      in_player_environment,
-      store,
-    });
-  } else {
-    return purchaseDataForSingleFee({
-      fee,
-      assetId,
-      purchaseKeysMapping,
-      in_player_environment,
-      store,
-    });
-  }
-}
-// 73073_17784
-function purchaseDataForSingleFee({
-  fee,
-  assetId,
-  purchaseKeysMapping,
-  in_player_environment,
-  store,
-}) {
-  const { id, item_title, description } = fee;
+  const { id, item_title, description, item_id } = fee;
   const externalFeeId = externalIdForPlatform({
     fee,
     in_player_environment,
@@ -115,46 +85,14 @@ function purchaseDataForSingleFee({
 
   return {
     productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
-    productIdentifier: `${assetId}_${id}`,
+    productIdentifier: `${item_id}_${id}`,
     title: item_title || description,
     externalFeeId,
   };
 }
-function purchaseDataForPackageFee({
-  fee,
-  allPackagesData,
-  purchaseKeysMapping,
-  in_player_environment,
-  store,
-}) {
-  const { id, item_title, description } = fee;
-
-  for (let i = 0; i < allPackagesData.length; i++) {
-    const packageItem = allPackagesData[i];
-    const packageId = packageItem?.id;
-    const access_fees = packageItem?.access_fees;
-    const externalFeeId = externalIdForPlatform({
-      fee,
-      in_player_environment,
-      store,
-    });
-
-    if (access_fees && packageId && R.find(R.propEq("id", id))(access_fees)) {
-      return {
-        productType: accessTypeToProducType({ fee, purchaseKeysMapping }),
-        productIdentifier: `${packageId}_${id}`,
-        title: item_title || description,
-        externalFeeId,
-      };
-    }
-  }
-  return null;
-}
 
 export function retrieveInPlayerFeesData({
-  allPackagesData,
   feesToSearch,
-  assetId,
   purchaseKeysMapping,
   in_player_environment,
   store,
@@ -163,14 +101,14 @@ export function retrieveInPlayerFeesData({
 
   for (let i = 0; i < feesToSearch.length; i++) {
     const fee = feesToSearch[i];
+
     const purchaseData = purchaseDataForFee({
-      allPackagesData,
       fee,
-      assetId,
       purchaseKeysMapping,
       in_player_environment,
       store,
     });
+
     if (purchaseData) {
       purchaseDataArray.push(purchaseData);
     }

@@ -168,7 +168,6 @@ const AssetFlow = (props) => {
   const preparePurchaseData = async () => {
     const {
       configuration: {
-        in_player_client_id,
         consumable_type_mapper,
         non_consumable_type_mapper,
         subscription_type_mapper,
@@ -182,27 +181,25 @@ const AssetFlow = (props) => {
         subscription_type_mapper,
       };
 
-      const resultPurchaseData = await Promise.all([
-        getAccessFees(assetId),
-        getAllPackages({
-          in_player_client_id,
-        }),
-      ]);
+      const accessFees = await getAccessFees(assetId);
 
-      console.log({ resultPurchaseData });
-      if (resultPurchaseData.length === 0) {
-        throw new Error(MESSAGES.validation.noFees);
-      }
       const inPlayerFeesData = retrieveInPlayerFeesData({
-        feesToSearch: resultPurchaseData[0],
-        allPackagesData: resultPurchaseData[1],
-        assetId,
+        feesToSearch: accessFees,
         purchaseKeysMapping,
         in_player_environment,
         store,
       });
+
+      logger
+        .createEvent()
+        .setLevel(XRayLogLevel.debug)
+        .setMessage(`Purchase feee data`)
+        .addData({ in_player_fees_data: inPlayerFeesData })
+        .send();
+
       console.log({ inPlayerFeesData });
       const storeFeesData = await retrieveProducts(inPlayerFeesData);
+
       console.log({ storeFeesData });
 
       if (storeFeesData.length === 0) {
