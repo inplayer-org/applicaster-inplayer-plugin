@@ -111,8 +111,8 @@
     "quickbrick"
   ],
   "platform": "android_tv_for_quickbrick",
-  "dependency_version": "3.0.18",
-  "manifest_version": "3.0.18",
+  "dependency_version": "3.1.0-beta.0",
+  "manifest_version": "3.1.0-beta.0",
   "api": {
     "class_name": "com.applicaster.reactnative.plugins.APReactNativeAdapter",
     "react_packages": [
@@ -138,7 +138,7 @@
   "extra_dependencies": [],
   "min_zapp_sdk": "0.1.0-alpha1",
   "npm_dependencies": [
-    "@applicaster/applicaster-iap@0.3.3",
+    "@applicaster/applicaster-iap@1.0.2-alpha.0",
     "@react-native-community/blur@3.4.1"
   ],
   "styles": {
