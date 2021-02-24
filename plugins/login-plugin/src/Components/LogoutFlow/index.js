@@ -19,6 +19,7 @@ const LogoutFlow = ({ configuration, screenStyles, screenLocalizations }) => {
   } = screenLocalizations;
 
   useEffect(() => {
+    console.log("Perform Signout");
     navigator.hideNavBar();
     performSignOut();
     return () => {
@@ -34,15 +35,15 @@ const LogoutFlow = ({ configuration, screenStyles, screenLocalizations }) => {
     }
   };
 
-  const removeIdToken = async () => {
-    await removeFromLocalStorage("idToken");
-  };
+  // const removeIdToken = async () => {
+  //   await removeFromLocalStorage("idToken");
+  // };
 
   const performSignOut = () => {
     signOut()
       .then(async (didLogout) => {
         if (didLogout) {
-          await removeIdToken();
+          // await removeIdToken();
         } else {
           navigator.goBack();
         }

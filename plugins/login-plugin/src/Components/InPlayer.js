@@ -11,6 +11,8 @@ import {
   localStorageGet,
   localStorageSet,
   localStorageRemove,
+  localStorageSetUserAccount,
+  localStorageRemoveUserAccount,
 } from "../Services/LocalStorageService";
 import {
   inPlayerAssetId,
@@ -50,6 +52,7 @@ const getRiversProp = (key, rivers = {}) => {
 };
 
 const localStorageTokenKey = "in_player_token";
+const userAccountStorageTokenKey = "idToken";
 
 const InPlayer = (props) => {
   const HookTypeData = {
@@ -84,11 +87,12 @@ const InPlayer = (props) => {
       ) {
         console.log("NewTOKEN", { tokenValue });
         await localStorageSet(localStorageTokenKey, tokenValue);
-        setIdtoken(tokenValue);
+        await localStorageSetUserAccount(
+          userAccountStorageTokenKey,
+          tokenValue
+        );
       },
       getItem: async function () {
-        console.log("GetTOKEN", { localStorageGet });
-
         const token = await localStorageGet(localStorageTokenKey);
         console.log("GetTOKEN", { token });
         return token;
@@ -96,7 +100,7 @@ const InPlayer = (props) => {
       removeItem: async function () {
         console.log("RemoveTOKEN");
         await localStorageRemove(localStorageTokenKey);
-        setIdtoken(null);
+        await localStorageRemoveUserAccount(userAccountStorageTokenKey);
       },
     };
 
@@ -107,7 +111,8 @@ const InPlayer = (props) => {
     const {
       configuration: { in_player_environment },
     } = props;
-    addContext({ configuration: props.configuration, payload });
+    const token = await localStorageGet(localStorageTokenKey);
+    setIdtoken(token);
 
     logger
       .createEvent()
@@ -283,6 +288,7 @@ const InPlayer = (props) => {
   };
 
   const renderUACFlow = () => {
+    console.log("renderUACFlow", { idToken });
     return idToken ? renderLogoutScreen() : renderScreenHook();
   };
 
