@@ -35,7 +35,10 @@ const StoreFrontMobile = (props) => {
         buttonUrl={buttonUrl}
       />
       <StoreFrontContainer {...props} />
-      <Footer screenStyles={screenStyles} screenLocalizations={screenLocalizations} />
+      <Footer
+        screenStyles={screenStyles}
+        screenLocalizations={screenLocalizations}
+      />
     </SafeAreaView>
   );
 };

@@ -15,13 +15,9 @@ const paymentActions = {
   buy: "Buy",
 };
 
-function PaymentOptionView({
-  screenStyles,
-  paymentOptionItem,
-  onPress,
-}) {
+function PaymentOptionView({ screenStyles, paymentOptionItem, onPress }) {
   const isLandscape = () => {
-    const { width, height } = Dimensions.get('window');
+    const { width, height } = Dimensions.get("window");
     return width >= height;
   };
 
@@ -70,19 +66,19 @@ function PaymentOptionView({
 }
 
 PaymentOptionView.propTypes = {
-  screenStyles: PropTypes.objectOf(PropTypes.string),
+  screenStyles: PropTypes.objectOf(PropTypes.any),
   paymentOptionItem: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,
     price: PropTypes.string,
-    productType: PropTypes.string
+    productType: PropTypes.string,
   }),
-  onPress: PropTypes.func
-}
+  onPress: PropTypes.func,
+};
 
 PaymentOptionView.defaultProps = {
   screenStyles: {},
-  paymentOptionItem: {}
-}
+  paymentOptionItem: {},
+};
 
 export default PaymentOptionView;

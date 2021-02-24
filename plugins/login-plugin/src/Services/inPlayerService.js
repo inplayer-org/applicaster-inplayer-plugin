@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import InPlayer, { ReceiptValidationPlatform } from "@inplayer-org/inplayer.js";
+import InPlayer from "@inplayer-org/inplayer.js";
 
 import {
   localStorageGet,
@@ -143,8 +143,13 @@ export async function checkAccessForAsset({
       .send();
 
     const asset = await InPlayer.Asset.checkAccessForAsset(assetId);
+    console.log({ asset });
     const src = getSrcFromAsset(asset);
+    console.log({ src });
+
     const cookies = getCookiesFromAsset(asset);
+    console.log({ cookies });
+
     logger
       .createEvent()
       .setMessage(
@@ -162,6 +167,7 @@ export async function checkAccessForAsset({
 
     return { asset, src, cookies };
   } catch (error) {
+    console.log({ error });
     const event = logger.createEvent().addData({
       response: error?.response,
       is_purchase_required: false,
@@ -255,103 +261,6 @@ export async function getAccessFees(assetId) {
       .setLevel(XRayLogLevel.error)
       .addData({
         inplayer_asset_id: assetId,
-        error,
-      })
-      .send();
-    throw error;
-  }
-}
-
-export function getAllPackages({ in_player_client_id }) {
-  logger
-    .createEvent()
-    .setMessage(
-      `InPlayer.Asset.getPackage >> inplayer_asset_id: ${in_player_client_id}`
-    )
-    .setLevel(XRayLogLevel.debug)
-    .addData({
-      in_player_client_id,
-    })
-    .send();
-
-  return InPlayer.Asset.getPackage(in_player_client_id)
-    .then((packagesList) => {
-      console.log({ packagesList });
-      const collection = packagesList?.data?.collection;
-      const titles = R.map(R.prop("title"))(collection);
-      logger
-        .createEvent()
-        .setMessage(
-          `InPlayer.Asset.getPackage Completed >> inplayer_asset_id: ${in_player_client_id} >> packages_count: ${collection.length}, titles: ${titles}`
-        )
-        .setLevel(XRayLogLevel.debug)
-        .addData({
-          in_player_client_id,
-          collection,
-          packages_list: packagesList,
-        })
-        .send();
-
-      return collection;
-    })
-    .then(loadAllPackages)
-    .catch((error) => {
-      logger
-        .createEvent()
-        .setMessage(
-          `InPlayer.Asset.getPackage Failed >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}, inplayer_asset_id: ${in_player_client_id}`
-        )
-        .setLevel(XRayLogLevel.error)
-        .addData({
-          in_player_client_id,
-          error,
-        })
-        .send();
-      throw error;
-    });
-}
-
-export async function loadAllPackages(collection) {
-  const titles = R.map(R.prop("title"))(collection);
-
-  logger
-    .createEvent()
-    .setMessage(
-      `loadAllPackages >> packages_count: ${collection.length}, packages_titles: ${titles}`
-    )
-    .setLevel(XRayLogLevel.debug)
-    .addData({
-      collection,
-    })
-    .send();
-
-  const promises = collection.map(async (item) => {
-    const result = await InPlayer.Asset.getPackage(item.id);
-    return result?.data;
-  });
-  try {
-    const retVal = await Promise.all(promises);
-    console.log({ retVal });
-    logger
-      .createEvent()
-      .setMessage(
-        `InPlayer.Asset.getPackage Completed >> All Package Loaded >> packages_count: ${retVal.length}, packages_titles: ${titles}`
-      )
-      .setLevel(XRayLogLevel.debug)
-      .addData({
-        collection,
-      })
-      .send();
-    return retVal;
-  } catch (error) {
-    logger
-      .createEvent()
-      .setMessage(
-        `InPlayer.Asset.getPackage Failed >> status: ${error?.response?.status}, url: ${error?.response?.request?.responseURL}, packages_count: ${titles.length}, packages_titles: ${titles}`
-      )
-      .setLevel(XRayLogLevel.error)
-      .addData({
-        collection,
         error,
       })
       .send();
@@ -619,13 +528,13 @@ export async function getLastEmailUsed() {
   return localStorageGet(IN_PLAYER_LAST_EMAIL_USED_KEY);
 }
 
-function platformName() {
-  if (isAmazonPlatform) {
-    return ReceiptValidationPlatform.AMAZON;
+function platformName(store) {
+  if (isAmazonPlatform(store)) {
+    return "amazon";
   } else if (isAndroidPlatform) {
-    return ReceiptValidationPlatform.GOOGLE_PLAY;
+    return "google-play";
   } else if (isApplePlatform) {
-    return ReceiptValidationPlatform.APPLE;
+    return "apple";
   } else {
     throw new Error("Platform can not be received");
   }
@@ -655,9 +564,9 @@ export async function validateExternalPayment({
     if (!access_fee_id) {
       throw new Error("Payment access_fee_id is a required parameter!");
     }
-
+    console.log({ platformName: platformName(store) });
     const response = await InPlayer.Payment.validateReceipt({
-      platform: platformName(),
+      platform: platformName(store),
       itemId: item_id,
       accessFeeId: access_fee_id,
       receipt: receipt,

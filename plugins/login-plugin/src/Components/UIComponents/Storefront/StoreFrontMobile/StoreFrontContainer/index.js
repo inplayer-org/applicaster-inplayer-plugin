@@ -16,7 +16,7 @@ const storefrontStyleKeys = [
 
 export default function StoreFrontContainer(props) {
   const isLandscape = () => {
-    const { width, height } = Dimensions.get('window');
+    const { width, height } = Dimensions.get("window");
     return width >= height;
   };
 
@@ -33,9 +33,14 @@ export default function StoreFrontContainer(props) {
     restoreTextStyle,
     restoreLinkStyle,
   ] = storefrontStyleKeys.map((key) => mapKeyToStyle(key, screenStyles));
-
+  console.log({ screenStyles });
   return (
-    <View style={[styles.container, { paddingHorizontal: 25, marginHorizontal: 25}]}>
+    <View
+      style={[
+        styles.container,
+        { paddingHorizontal: 25, marginHorizontal: 25 },
+      ]}
+    >
       <Text style={paymentTitleStyle} numberOfLines={1} ellipsizeMode="tail">
         {screenLocalizations.payment_screen_title_text}
       </Text>
@@ -51,7 +56,7 @@ export default function StoreFrontContainer(props) {
           </Text>
         </Text>
       </View>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <ScrollView
           horizontal={isLandscape()}
           contentContainerStyle={styles.contentContainer}
@@ -101,5 +106,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 40,
-  }
+  },
 });

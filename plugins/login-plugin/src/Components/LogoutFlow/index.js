@@ -13,7 +13,10 @@ const LogoutFlow = ({ configuration, screenStyles, screenLocalizations }) => {
   const navigator = useNavigation();
 
   const { logout_completion_action = "go_back" } = configuration;
-  const { logout_title_succeed_text, logout_title_fail_text } = screenLocalizations;
+  const {
+    logout_title_succeed_text,
+    logout_title_fail_text,
+  } = screenLocalizations;
 
   useEffect(() => {
     navigator.hideNavBar();
