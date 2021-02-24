@@ -1,31 +1,21 @@
 import { Platform } from "react-native";
-import { isAmazonPlatform } from "../../Utils/Platform";
-import InPlayer from "@inplayer-org/inplayer.js";
+import { isAmazonPlatform, isApplePlatform } from "../../Utils/Platform";
 import * as R from "ramda";
 
-export function externalPurchaseValidationURL(store) {
-  // URL Example: https://staging-v2.inplayer.com/v2/external-payments/apple/validate
-  let platform = Platform.OS === "ios" ? "apple" : "google-play";
-  if (store && isAmazonPlatform(store)) {
-    platform = store;
-  }
-  return `${InPlayer.config.BASE_URL}/v2/external-payments/${platform}/validate`;
-}
-
 export function externalIdProviderId({ in_player_environment, store }) {
-  if (Platform.OS === "ios") {
-    if (in_player_environment == "prod") {
+  if (isApplePlatform) {
+    if (in_player_environment == "production") {
       return 13;
-    } else if (in_player_environment == "develop") {
+    } else if (in_player_environment == "development") {
       return 12;
     }
   } else if (Platform.OS === "android") {
     if (isAmazonPlatform(store)) {
       return 17;
     } else {
-      if (in_player_environment == "prod") {
+      if (in_player_environment == "production") {
         return 15;
-      } else if (in_player_environment == "develop") {
+      } else if (in_player_environment == "development") {
         return 14;
       }
     }

@@ -8,3 +8,6 @@ export const isWebBasedPlatform =
 export function isAmazonPlatform(store) {
   return store && store === "amazon";
 }
+
+export const isApplePlatform = Platform.OS === "ios";
+export const isAndroidPlatform = Platform.OS === "android";

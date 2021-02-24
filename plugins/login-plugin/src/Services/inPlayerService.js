@@ -1,18 +1,20 @@
 import * as R from "ramda";
-import InPlayer from "@inplayer-org/inplayer.js";
+import InPlayer, { ReceiptValidationPlatform } from "@inplayer-org/inplayer.js";
 
 import {
   localStorageGet,
   localStorageSet,
 } from "../Services/LocalStorageService";
-import { checkStatus, params, errorResponse } from "./InPlayerUtils";
 import {
   getSrcFromAsset,
   getCookiesFromAsset,
 } from "../Utils/OVPProvidersMapper";
 import { assetPaymentRequired, externalAssetData } from "../Utils/PayloadUtils";
-import { externalPurchaseValidationURL } from "./InPlayerServiceHelper";
-import { isAmazonPlatform } from "./../Utils/Platform";
+import {
+  isAmazonPlatform,
+  isApplePlatform,
+  isAndroidPlatform,
+} from "./../Utils/Platform";
 import { getInPlayerContent } from "../Utils/InPlayerResponse";
 import {
   createLogger,
@@ -617,8 +619,16 @@ export async function getLastEmailUsed() {
   return localStorageGet(IN_PLAYER_LAST_EMAIL_USED_KEY);
 }
 
-function extraValidationPaymentParams({ userId, store }) {
-  return isAmazonPlatform(store) ? { amazon_user_id: userId } : {};
+function platformName() {
+  if (isAmazonPlatform) {
+    return ReceiptValidationPlatform.AMAZON;
+  } else if (isAndroidPlatform) {
+    return ReceiptValidationPlatform.GOOGLE_PLAY;
+  } else if (isApplePlatform) {
+    return ReceiptValidationPlatform.APPLE;
+  } else {
+    throw new Error("Platform can not be received");
+  }
 }
 
 //TODO: This func not working with Web, implement proper way in future
@@ -635,26 +645,7 @@ export async function validateExternalPayment({
     access_fee_id,
   });
 
-  if (isAmazonPlatform(store)) {
-    event.addData({
-      amazon_user_id: userId,
-    });
-  }
-
-  const validationURL = store && externalPurchaseValidationURL(store);
-  let request = null;
   try {
-    if (!validationURL) {
-      throw new Error("Can not retrieve validation url");
-    }
-
-    if (!InPlayer.Account.isAuthenticated()) {
-      errorResponse(401, {
-        code: 401,
-        message: "User is not authenticated",
-      });
-    }
-
     if (!receipt) {
       throw new Error("Payment receipt is a required parameter!");
     }
@@ -665,51 +656,31 @@ export async function validateExternalPayment({
       throw new Error("Payment access_fee_id is a required parameter!");
     }
 
-    let body = {
-      receipt,
-      item_id,
-      access_fee_id,
-      ...extraValidationPaymentParams({ userId, store }),
-    };
-
-    request = {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${InPlayer.Account.getToken().token}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-      body: params(body),
-    };
-
-    event.addData({
-      validation_url: validationURL,
-      body,
-      request,
+    const response = await InPlayer.Payment.validateReceipt({
+      platform: platformName(),
+      itemId: item_id,
+      accessFeeId: access_fee_id,
+      receipt: receipt,
+      amazonUserId: isAmazonPlatform(store) ? userId : null,
     });
 
-    const response = await fetch(validationURL, request);
-    event.addData({
-      response,
-    });
+    if (isAmazonPlatform(store)) {
+      event.addData({
+        amazon_user_id: userId,
+      });
+    }
 
-    checkStatus(response);
-    const retVal = await response.json();
     event
       .addData({
-        parsed_response: retVal,
+        response: response,
       })
-      .setMessage(
-        `InPlayer validate external payment >> succeed: true, url:${validationURL}`
-      )
+      .setMessage(`InPlayer validate external payment >> succeed: true`)
       .send();
 
-    return retVal;
+    return response;
   } catch (error) {
     event
-      .setMessage(
-        `InPlayer validate external payment >> succeed: false, url:${validationURL}`
-      )
+      .setMessage(`InPlayer validate external payment >> succeed: false`)
       .setLevel(XRayLogLevel.error)
       .addData({
         error,

@@ -6,13 +6,13 @@ import Storefront from "../UIComponents/Storefront";
 import PrivacyPolicy from "../UIComponents/PrivacyPolicy";
 import ParentLockPlugin from "@applicaster/quick-brick-parent-lock";
 import { useSelector } from "react-redux";
+import { isApplePlatform } from "../../Utils/Platform";
 import * as R from "ramda";
 
 import {
   getAssetByExternalId,
   checkAccessForAsset,
   getAccessFees,
-  getAllPackages,
 } from "../../Services/inPlayerService";
 
 import {
@@ -310,12 +310,12 @@ const AssetFlow = (props) => {
     } catch (error) {
       const alertTitle = MESSAGES.purchase.fail;
       showAlert(alertTitle, error.message);
-      Platform.OS === "ios" && hideLoader();
+      isApplePlatform && hideLoader();
     }
   };
 
   const onPressPaymentOption = (index) => {
-    Platform.OS === "ios" && setAssetLoading(true);
+    isApplePlatform && setAssetLoading(true);
 
     const itemToPurchase = dataSource[index];
     return buyItem(itemToPurchase);
