@@ -17,7 +17,7 @@ const manifestJson = () => {
       default: require("../../../manifests/android.json"),
     });
   } catch (error) {
-    console.warn("Could not load manifest", error);
+    throw new Error("Could not load manifest at inplayer login plugin.", error);
   }
 };
 
