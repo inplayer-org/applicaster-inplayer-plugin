@@ -3,6 +3,8 @@ import { externalIdForPlatform } from "../../../Services/InPlayerServiceHelper";
 import { Alert } from "react-native";
 import MESSAGES from "../Config";
 
+const isEmptyOrNil = R.either(R.equals(NaN), R.either(R.isEmpty, R.isNil));
+
 export function invokeCallBack(
   props,
   { success = true, newPayload = null, error = null }
@@ -28,9 +30,8 @@ export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
       if (inPlayerFee?.title && !storeFee.title) {
         storeFee.title = inPlayerFee.title;
       }
-
-      if (inPlayerFee?.amount && !storeFee.price) {
-        storeFee.price = inPlayerFee.amount;
+      if (inPlayerFee?.amount && R.isEmptyOrNil(storeFee.price)) {
+        storeFee.price = `${inPlayerFee.amount}`;
       }
 
       retVal.push(storeFee);
@@ -176,7 +177,8 @@ export function retrieveInPlayerFeesData({
       store,
     });
     if (purchaseData) {
-      purchaseDataArray.push(purchaseData);
+      // If purchaseData retreives any fee data, it overwrites those provided by fee
+      purchaseDataArray.push({ ...fee, ...purchaseData });
     }
   }
   return purchaseDataArray;
