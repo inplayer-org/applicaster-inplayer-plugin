@@ -29,7 +29,7 @@ export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
         storeFee.title = inPlayerFee.title;
       }
 
-      if (inPlayerFee?.price && !storeFee.amount) {
+      if (inPlayerFee?.amount && !storeFee.price) {
         storeFee.price = inPlayerFee.amount;
       }
 
