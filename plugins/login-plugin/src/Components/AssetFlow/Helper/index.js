@@ -30,7 +30,7 @@ export function addInPlayerProductId({ storeFeesData, inPlayerFeesData }) {
       if (inPlayerFee?.title && !storeFee.title) {
         storeFee.title = inPlayerFee.title;
       }
-      if (inPlayerFee?.amount && R.isEmptyOrNil(storeFee.price)) {
+      if (inPlayerFee?.amount && isEmptyOrNil(storeFee.price)) {
         storeFee.price = `${inPlayerFee.amount}`;
       }
 
