@@ -10,7 +10,9 @@
   "react_native": true,
   "identifier": "quick-brick-inplayer",
   "ui_builder_support": true,
-  "whitelisted_account_ids": ["5c9ce7917b225c000f02dfbc"],
+  "whitelisted_account_ids": [
+    "5c9ce7917b225c000f02dfbc"
+  ],
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "preload": true,
@@ -105,10 +107,12 @@
       }
     ]
   },
-  "ui_frameworks": ["quickbrick"],
+  "ui_frameworks": [
+    "quickbrick"
+  ],
   "platform": "lg_tv",
-  "dependency_version": "3.1.1",
-  "manifest_version": "3.1.1",
+  "dependency_version": "3.1.4",
+  "manifest_version": "3.1.4",
   "api": {
     "excludedNodeModules": [
       "@applicaster/applicaster-iap",
@@ -118,7 +122,7 @@
   },
   "project_dependencies": [],
   "extra_dependencies": [],
-  "min_zapp_sdk": "1.2.2",
+  "min_zapp_sdk": "1.2.0",
   "npm_dependencies": [],
   "styles": {
     "fields": [
@@ -883,7 +887,9 @@
             "initial_value": "rgba(39, 218, 134, 1)",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -895,7 +901,9 @@
             "initial_value": "Helvetica-Bold",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -907,7 +915,9 @@
             "initial_value": "Roboto-Bold",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -919,7 +929,9 @@
             "initial_value": "40",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -931,7 +943,9 @@
             "initial_value": "#545A5C",
             "conditional_fields": [
               {
-                "condition_value": [true],
+                "condition_value": [
+                  true
+                ],
                 "key": "general/enable_skip_functionality"
               }
             ]
@@ -1598,5 +1612,7 @@
       }
     ]
   },
-  "targets": ["tv"]
+  "targets": [
+    "tv"
+  ]
 }
