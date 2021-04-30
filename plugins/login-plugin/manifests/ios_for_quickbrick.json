@@ -111,8 +111,8 @@
     "quickbrick"
   ],
   "platform": "ios_for_quickbrick",
-  "dependency_version": "3.1.4",
-  "manifest_version": "3.1.4",
+  "dependency_version": "3.2.0",
+  "manifest_version": "3.2.0",
   "api": {},
   "project_dependencies": [],
   "extra_dependencies": [
@@ -792,5 +792,15 @@
   },
   "targets": [
     "mobile"
-  ]
+  ],
+  "general": {
+    "fields": [
+      {
+        "key": "identifier",
+        "type": "text_input",
+        "initial_value": "present_full_screen",
+        "hidden": true
+      }
+    ]
+  }
 }
