@@ -2020,9 +2020,9 @@ function createManifest({ version, platform }) {
     general: {
       fields: [
         {
-          key: "identifier",
-          type: "text_input",
-          initial_value: "present_full_screen",
+          key: "present_full_screen",
+          type: "switch",
+          initial_value: true,
           hidden: true,
         },
       ],
