@@ -2017,6 +2017,16 @@ function createManifest({ version, platform }) {
     styles: isTV ? stylesTv : stylesMobile,
     localizations: isTV ? Localizations.tv : Localizations.mobile,
     targets: isTV ? ["tv"] : ["mobile"],
+    general: {
+      fields: [
+        {
+          key: "identifier",
+          type: "text_input",
+          initial_value: "present_full_screen",
+          hidden: true,
+        },
+      ],
+    },
   };
 }
 module.exports = createManifest;
